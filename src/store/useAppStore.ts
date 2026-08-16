@@ -1,12 +1,12 @@
-import { create } from "zustand";
+import { useAppDispatch, useAppSelector } from "./hooks";
+import { setUser } from "./slices/appSlice";
 
-interface AppState {
-  user: { name: string } | null;
-  setUser: (user: { name: string } | null) => void;
-  // Add more global state and actions here
+export function useAppStore() {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.app.user);
+
+  return {
+    user,
+    setUser: (user: { name: string } | null) => dispatch(setUser(user)),
+  };
 }
-
-export const useAppStore = create<AppState>((set) => ({
-  user: null,
-  setUser: (user) => set({ user }),
-}));

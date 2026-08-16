@@ -1,64 +1,153 @@
-# React TypeScript Template
+# React TypeScript Dashboard & Starter Template
 
-A clean, modern starter template for React with TypeScript, TailwindCSS, Zustand, react-hot-toast, shadcn/ui, Zod, Lucide, custom theme system, Roboto, Prettier, and ESLint.
+A modern, production-ready React starter template built with **TypeScript**, **Vite**, **Tailwind CSS v4**, **Redux Toolkit**, **TanStack React Query**, **nuqs**, and **Airbnb ESLint + Prettier**.
 
-## Features
+---
 
-- React 18 with TypeScript
-- Vite for fast development and building
-- React Router for client-side routing
-- TailwindCSS (with centralized styles in `src/styles/`)
-- Zustand for global state management
-- react-hot-toast for global, reusable notifications
-- shadcn/ui components
-- Zod for validation
-- Lucide for icons
-- Custom theme system for dark mode
-- Roboto font (all weights) globally
-- Prettier & ESLint
-- Robust featured-fetch utility
-- Global styles, components, hooks, utils, types, constants
-- Common layout, error, loading, and typography components
-- Easy environment variable management with Zod
-- Dynamic routes with React Router
-- Single Responsibility Principle (SRP) structure
+## ⚡ Tech Stack
 
-## Getting Started
+### Core
 
-1. **Install dependencies:**
+- **[React 18](https://react.dev/)** — UI Library
+- **[TypeScript](https://www.typescriptlang.org/)** — Type Safety
+- **[Vite 5](https://vitejs.dev/)** — Lightning-fast Bundler & Dev Server
+- **[React Router v6](https://reactrouter.com/)** — Declarative Client-Side Routing with dynamic rendering
+
+### State & Data Fetching
+
+- **[Redux Toolkit](https://redux-toolkit.js.org/)** — Global state management with slice-based architecture
+- **[TanStack React Query v5](https://tanstack.com/query/latest)** — Async server-state management, caching & data fetching
+- **[nuqs](https://nuqs.47ng.com/)** — Type-safe URL search params state management (wired with React Router v6 adapter)
+
+### Styling & UI
+
+- **[Tailwind CSS v4](https://tailwindcss.com/)** — Utility-first CSS framework via `@tailwindcss/vite`
+- **[Base UI](https://base-ui.com/)** — Unstyled headless UI primitives (`@base-ui/react`)
+- **[Hugeicons](https://hugeicons.com/)** — Modern SVG icon library (`@hugeicons/react` & `@hugeicons/core-free-icons`)
+- **[Inter Variable Font](https://fontsource.org/fonts/inter)** — Typography via `@fontsource-variable/inter`
+- **[tw-animate-css](https://github.com/jamiebrittain/tw-animate-css)** — Utility animations for Tailwind CSS
+- **[cva](https://cva.style/docs)** + **[tailwind-merge](https://github.com/dcastil/tailwind-merge)** — Component variant styling & class merging
+
+### Code Quality & Developer Experience
+
+- **[ESLint](https://eslint.org/)** — Configured with **Airbnb Style Guide** (`eslint-config-airbnb-typescript`) & TypeScript integration
+- **[Prettier](https://prettier.io/)** — Formatter with `@trivago/prettier-plugin-sort-imports` & `prettier-plugin-tailwindcss`
+- **[Zod](https://zod.dev/)** — Schema validation for forms and environment variables
+
+---
+
+## 📁 Project Structure
+
+```text
+├── public/                 # Static assets
+├── src/
+│   ├── components/         # Reusable UI & Layout components
+│   │   ├── ui/             # Primitive UI components (Button, etc.)
+│   │   ├── ErrorBoundary   # Global error boundary component
+│   │   ├── layout          # Layout wrapper
+│   │   ├── providers       # Global Providers (Redux, React Query, nuqs)
+│   │   ├── theme-toggle    # Light / Dark mode toggle
+│   │   └── typography      # Typography component
+│   ├── env/                # Zod-validated environment variables schema
+│   ├── hooks/              # Custom hooks (theme, mobile detection, routing)
+│   ├── lib/                # Shared utilities (cn helper)
+│   ├── pages/              # Page components (Home, NotFound, etc.)
+│   ├── routes/             # Route configurations & RouteRenderer component
+│   ├── store/              # Redux Toolkit store, slices, and custom hooks
+│   ├── styles/             # Global CSS and Tailwind v4 theme variables
+│   ├── types/              # Global TypeScript interfaces & types
+│   ├── utils/              # Helper utilities (logger, toast, sleep)
+│   ├── App.tsx             # Root Application component
+│   └── main.tsx            # Application entry point
+├── .eslintrc.json          # ESLint config (Airbnb + TS + Prettier)
+├── .prettierrc.json        # Prettier config (Import sorting + Tailwind)
+├── components.json         # shadcn UI registry configuration
+├── tsconfig.json           # TypeScript configuration
+└── vite.config.ts          # Vite configuration with Tailwind plugin & path aliases
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Node.js** `>=18.0.0`
+- **npm** `>=9.0.0`
+
+### Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone <repository-url>
+   cd dashboard
+   ```
+
+2. **Install dependencies:**
+
    ```bash
    npm install
    ```
-2. **Set up environment variables:**
-   - Copy `.env.example` to `.env` and update values as needed.
-3. **Run the development server:**
+
+3. **Configure Environment Variables:**
+   - Copy `.env.example` to `.env`:
+     ```bash
+     cp .env.example .env
+     ```
+
+4. **Start the Development Server:**
    ```bash
    npm run dev
    ```
 
-## Project Structure
+---
 
-- `src/pages/` - Page components (Home, BlogPost, UserProfile)
-- `src/components/` - Global components (Typography, Header, Footer, Providers, etc.)
-- `src/hooks/` - Global hooks (theme, localStorage, react-hot-toast, etc.)
-- `src/store/` - Zustand global state store
-- `src/utils/` - Utilities (featured-fetch, logger, localStorage, react-hot-toast, etc.)
-- `src/types/` - Global types
-- `src/constants/` - Global constants
-- `src/styles/` - Centralized global styles (Tailwind, fonts)
-- `public/` - Static assets
+## 🛠️ Available Scripts
 
-## Customization
+| Script             | Description                                                          |
+| ------------------ | -------------------------------------------------------------------- |
+| `npm run dev`      | Starts the Vite development server                                   |
+| `npm run build`    | Runs TypeScript type-checks (`tsc`) and builds the production bundle |
+| `npm run preview`  | Previews the production build locally                                |
+| `npm run lint`     | Lints source files (`src/`) with ESLint (Airbnb rules)               |
+| `npm run lint:fix` | Automatically fixes auto-fixable ESLint issues                       |
+| `npm run format`   | Formats all files using Prettier                                     |
 
-- Add your own components, hooks, and utilities as needed.
-- Use shadcn/ui components as required. Notifications are handled globally with react-hot-toast utilities and hooks.
-- Use Zustand for global state, and the provided hooks/utils for localStorage and notifications.
-- Use Zod for form and API validation.
-- Add new routes in `src/App.tsx` and create corresponding page components in `src/pages/`.
+---
 
-## Available Scripts
+## 🧱 Architecture & Patterns
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run format` - Format code with Prettier
+### 1. Global Providers
+
+All root application context providers are centralized in `src/components/providers.tsx`:
+
+- **Redux Provider** — Global state management
+- **QueryClientProvider** — TanStack React Query client (`staleTime: 5m`, no window focus refetch)
+- **NuqsAdapter** — URL state synchronization via React Router v6
+
+### 2. Path Aliases
+
+Path alias `@/` is configured in `tsconfig.json` and `vite.config.ts` pointing directly to `./src/*`:
+
+```tsx
+import { Button } from "@/components/ui/button";
+import { useAppDispatch } from "@/store/hooks";
+```
+
+### 3. Icon Usage (Hugeicons)
+
+Icons are imported using the modern Hugeicons API (`@hugeicons/core-free-icons` + `HugeiconsIcon` component):
+
+```tsx
+import { Sun01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
+<HugeiconsIcon icon={Sun01Icon} size={20} className="h-5 w-5" />;
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).

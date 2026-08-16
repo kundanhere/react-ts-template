@@ -7,7 +7,7 @@ const variantMap = {
   h4: "text-lg sm:text-xl font-medium",
   h5: "text-base sm:text-lg font-medium",
   h6: "text-base font-medium",
-  p: "text-base sm:text-lg",
+  p: "text-base",
   span: "text-base",
 };
 

@@ -8,19 +8,20 @@ import { routes } from "./routes.config";
 function LoadingSpinner() {
   return (
     <div className="flex min-h-[50vh] items-center justify-center">
-      <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
+      <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
     </div>
   );
 }
 
 // Recursive function to render routes
 function renderRoutes(routeList: typeof routes) {
-  return routeList.map((route, index) => {
-    const element = route.element;
+  return routeList.map((route) => {
+    const { element } = route;
+    const key = route.path || "index";
 
     if (route.children) {
       return (
-        <Route key={index} path={route.path} element={element}>
+        <Route key={key} path={route.path} element={element}>
           {renderRoutes(route.children)}
         </Route>
       );
@@ -28,7 +29,7 @@ function renderRoutes(routeList: typeof routes) {
 
     return (
       <Route
-        key={index}
+        key={key}
         index={route.index}
         path={route.path}
         element={<Suspense fallback={<LoadingSpinner />}>{element}</Suspense>}

@@ -30,14 +30,10 @@ export function useRoutes() {
   };
 
   // Check if current path matches a route
-  const isCurrentPath = (path: string) => {
-    return location.pathname === path;
-  };
+  const isCurrentPath = (path: string) => location.pathname === path;
 
   // Check if current path starts with a given path
-  const isPathActive = (path: string) => {
-    return location.pathname.startsWith(path);
-  };
+  const isPathActive = (path: string) => location.pathname.startsWith(path);
 
   return {
     // Current route info

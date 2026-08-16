@@ -1,19 +1,82 @@
 {
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2020": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": { "jsx": true },
+    "project": ["./tsconfig.json", "./tsconfig.node.json"]
+  },
   "extends": [
-    "eslint:recommended",
-    "@typescript-eslint/recommended",
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
-  "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "react", "react-hooks"],
+  "plugins": ["@typescript-eslint", "react"],
   "rules": {
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/no-unescaped-entities": "off",
+    "react/jsx-no-useless-fragment": ["error", { "allowExpressions": true }],
+    "react/function-component-definition": [
+      "error",
+      {
+        "namedComponents": ["function-declaration", "arrow-function"],
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "import/extensions": "off",
+    "import/no-unresolved": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": [
+          "vite.config.ts",
+          "**/*.test.{ts,tsx}",
+          "**/*.spec.{ts,tsx}"
+        ]
+      }
+    ],
+    "no-restricted-exports": "off",
+    "no-restricted-syntax": "off",
+    "no-promise-executor-return": "off",
+    "no-console": "warn",
+    "no-underscore-dangle": "off",
+    "consistent-return": "off",
+    "default-case": "off",
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": ["state", "acc", "draft"]
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "@typescript-eslint/no-unused-expressions": "off",
+    "@typescript-eslint/no-throw-literal": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
+    ]
   },
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "import/resolver": {
+      "typescript": {
+        "project": "./tsconfig.json"
+      }
     }
   }
 }

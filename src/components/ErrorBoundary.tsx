@@ -23,7 +23,7 @@ export class ErrorBoundary extends Component<
     return { hasError: true, error };
   }
 
-  componentDidCatch(_error: Error, _errorInfo: any) {
+  componentDidCatch(_error: Error, _errorInfo: unknown) {
     // You can log error info here or send to a monitoring service
     // console.error("ErrorBoundary caught an error", error, errorInfo);
   }
@@ -51,6 +51,7 @@ export class ErrorBoundary extends Component<
           </h2>
           <p className="mb-4 text-gray-700">{error.message}</p>
           <button
+            type="button"
             onClick={this.resetError}
             className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700"
           >

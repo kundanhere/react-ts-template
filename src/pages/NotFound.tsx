@@ -1,4 +1,5 @@
-import { ArrowLeft, Home } from "lucide-react";
+import { ArrowLeft01Icon, Home01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "react-router-dom";
 
 import { Typography } from "@/components/typography";
@@ -8,7 +9,11 @@ export default function NotFound() {
     <section className="flex min-h-[70vh] flex-col items-center justify-center gap-8 px-4 py-6 text-center">
       <div className="flex flex-col items-center gap-4">
         <div className="bg-destructive/10 mb-2 inline-flex h-20 w-20 items-center justify-center rounded-full">
-          <Home size={48} className="text-destructive" />
+          <HugeiconsIcon
+            icon={Home01Icon}
+            size={48}
+            className="text-destructive"
+          />
         </div>
 
         <Typography variant="h1" className="text-foreground text-6xl font-bold">
@@ -33,7 +38,7 @@ export default function NotFound() {
           to="/"
           className="bg-primary text-primary-foreground hover:bg-primary/80 flex items-center gap-2 rounded px-6 py-3 shadow transition"
         >
-          <ArrowLeft size={16} />
+          <HugeiconsIcon icon={ArrowLeft01Icon} size={16} />
           Back to Home
         </Link>
         <Link
