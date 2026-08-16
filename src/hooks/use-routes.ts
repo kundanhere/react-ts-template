@@ -54,3 +54,5 @@ export function useRoutes() {
     isPathActive,
   };
 }
+
+export default useRoutes;

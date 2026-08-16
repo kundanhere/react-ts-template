@@ -1,25 +1,28 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+import {
+  AsyncState,
+  addAsyncCases,
+  createAsyncState,
+} from "@/utils/redux-helpers";
+
 export interface User {
   id?: string;
   name: string;
   email?: string;
 }
 
-export interface AppState {
-  user: User | null;
-  status: "idle" | "loading" | "succeeded" | "failed";
-  error: string | null;
+export interface AppState extends AsyncState<User> {
+  theme: "light" | "dark" | "system";
 }
 
 const initialState: AppState = {
-  user: null,
-  status: "idle",
-  error: null,
+  ...createAsyncState<User>(null),
+  theme: "system",
 };
 
 // Async thunk for fetching user profile details asynchronously
-export const fetchUserThunk = createAsyncThunk(
+export const fetchUserThunk = createAsyncThunk<User, string>(
   "app/fetchUser",
   async (userId: string, { rejectWithValue }) => {
     try {
@@ -42,28 +45,24 @@ export const appSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action: PayloadAction<User | null>) => {
-      state.user = action.payload;
+      state.data = action.payload;
     },
     clearUser: (state) => {
-      state.user = null;
+      state.data = null;
+    },
+    setThemeMode: (
+      state,
+      action: PayloadAction<"light" | "dark" | "system">
+    ) => {
+      state.theme = action.payload;
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(fetchUserThunk.pending, (state) => {
-        state.status = "loading";
-        state.error = null;
-      })
-      .addCase(fetchUserThunk.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.user = action.payload;
-      })
-      .addCase(fetchUserThunk.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = (action.payload as string) || "Failed to load user";
-      });
+    addAsyncCases(builder, fetchUserThunk, (state, payload) => {
+      state.data = payload;
+    });
   },
 });
 
-export const { setUser, clearUser } = appSlice.actions;
+export const { setUser, clearUser, setThemeMode } = appSlice.actions;
 export default appSlice.reducer;

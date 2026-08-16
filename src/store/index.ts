@@ -6,7 +6,11 @@ export const store = configureStore({
   reducer: {
     app: appReducer,
   },
+  devTools: import.meta.env.NODE_ENV !== "production",
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+
+export * from "./hooks";
+export * from "../utils/redux-helpers";

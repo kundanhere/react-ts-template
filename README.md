@@ -45,7 +45,7 @@ A modern, production-ready React starter template built with **TypeScript**, **V
 │   │   ├── ui/             # Primitive UI components (Button, etc.)
 │   │   ├── ErrorBoundary   # Global error boundary component
 │   │   ├── layout          # Layout wrapper
-│   │   ├── providers       # Global Providers (Redux, React Query, nuqs)
+│   │   ├── providers       # Global Providers (Redux, React Query, Devtools, nuqs)
 │   │   ├── theme-toggle    # Light / Dark mode toggle
 │   │   └── typography      # Typography component
 │   ├── env/                # Zod-validated environment variables schema
@@ -54,9 +54,18 @@ A modern, production-ready React starter template built with **TypeScript**, **V
 │   ├── pages/              # Page components (Home, NotFound, etc.)
 │   ├── routes/             # Route configurations & RouteRenderer component
 │   ├── store/              # Redux Toolkit store, slices, and custom hooks
+│   │   ├── index.ts        # Configured Redux Store & exports
+│   │   ├── hooks.ts        # Typed useAppDispatch & useAppSelector
+│   │   ├── useAppStore.ts  # Custom domain-level hook wrapper
+│   │   └── slices/         # Redux Slices (appSlice, etc.)
 │   ├── styles/             # Global CSS and Tailwind v4 theme variables
 │   ├── types/              # Global TypeScript interfaces & types
-│   ├── utils/              # Helper utilities (logger, toast, sleep)
+│   ├── utils/              # Development & Helper utilities
+│   │   ├── query-client.ts # TanStack Query Client, apiFetcher, & queryHelpers
+│   │   ├── redux-helpers.ts# Redux AsyncState & addAsyncCases builder helpers
+│   │   ├── logger.ts       # Centralized logger
+│   │   ├── sleep.ts        # Async sleep helper
+│   │   └── toast.tsx       # Reusable toast notifications
 │   ├── App.tsx             # Root Application component
 │   └── main.tsx            # Application entry point
 ├── .eslintrc.json          # ESLint config (Airbnb + TS + Prettier)
@@ -116,6 +125,134 @@ A modern, production-ready React starter template built with **TypeScript**, **V
 
 ---
 
+## 🛠️ Redux Toolkit & React Query Development Utilities
+
+### 1. TanStack React Query Utilities (`@/utils/query-client`)
+
+#### **`apiFetcher<T>(url, options)`**
+
+Type-safe `fetch` wrapper designed for React Query `queryFn` and `mutationFn`. Automatically handles JSON parsing, non-2xx HTTP errors via `ApiError`, and 204 No Content responses.
+
+```tsx
+import { useQuery } from "@tanstack/react-query";
+
+import { apiFetcher } from "@/utils/query-client";
+
+interface UserProfile {
+  id: string;
+  name: string;
+}
+
+function ProfileComponent() {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["user", "123"],
+    queryFn: () => apiFetcher<UserProfile>("/api/users/123"),
+  });
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error loading profile!</p>;
+
+  return <div>Welcome, {data?.name}</div>;
+}
+```
+
+#### **`queryHelpers`**
+
+Programmatic cache helpers for use in event handlers, Redux actions, or outside React components:
+
+```tsx
+import { queryHelpers } from "@/utils/query-client";
+
+// Invalidate queries after mutation or event
+await queryHelpers.invalidate(["user", "123"]);
+
+// Prefetch query data on mouse hover or route change
+queryHelpers.prefetch(["user", "123"], () => apiFetcher("/api/users/123"));
+
+// Manually update cache data
+queryHelpers.setData(["user", "123"], (old) => ({
+  ...old,
+  name: "Updated Name",
+}));
+
+// Clear all query cache on logout
+queryHelpers.clear();
+```
+
+#### **React Query Devtools**
+
+Enabled by default in dev mode (`<ReactQueryDevtools initialIsOpen={false} />` in `Providers`), allowing visual inspection of query cache, stale timers, and refetches at the bottom-right of your screen.
+
+---
+
+### 2. Redux Toolkit Utilities (`@/utils/redux-helpers` & `@/store`)
+
+#### **`createAsyncState<T>(initialValue)`**
+
+Standardizes slice state initialization across your application (`data`, `status: 'idle' | 'loading' | 'succeeded' | 'failed'`, `error`):
+
+```ts
+import { createSlice } from "@reduxjs/toolkit";
+
+import { AsyncState, createAsyncState } from "@/utils/redux-helpers";
+
+interface ProductState extends AsyncState<Product[]> {
+  category: string;
+}
+
+const initialState: ProductState = {
+  ...createAsyncState<Product[]>([]),
+  category: "all",
+};
+```
+
+#### **`addAsyncCases(builder, asyncThunk, onSuccess)`**
+
+Eliminates boilerplate when handling `createAsyncThunk` pending/fulfilled/rejected states inside slice `extraReducers`:
+
+```ts
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+import { addAsyncCases, createAsyncState } from "@/utils/redux-helpers";
+
+export const fetchProducts = createAsyncThunk("products/fetch", async () => {
+  return apiFetcher<Product[]>("/api/products");
+});
+
+export const productsSlice = createSlice({
+  name: "products",
+  initialState: createAsyncState<Product[]>([]),
+  reducers: {},
+  extraReducers: (builder) => {
+    addAsyncCases(builder, fetchProducts, (state, payload) => {
+      state.data = payload; // Executed only on fulfilled
+    });
+  },
+});
+```
+
+#### **`useAppStore()` Custom Hook**
+
+Provides clean access to application store state and dispatchers without importing separate hooks:
+
+```tsx
+import { useAppStore } from "@/store/useAppStore";
+
+function UserWidget() {
+  const { user, isLoading, fetchUser, clearUser } = useAppStore();
+
+  return (
+    <div>
+      {isLoading ? <p>Loading...</p> : <p>User: {user?.name}</p>}
+      <button onClick={() => fetchUser("123")}>Load User</button>
+      <button onClick={clearUser}>Logout</button>
+    </div>
+  );
+}
+```
+
+---
+
 ## 🧱 Architecture & Patterns
 
 ### 1. Global Providers
@@ -123,7 +260,7 @@ A modern, production-ready React starter template built with **TypeScript**, **V
 All root application context providers are centralized in `src/components/providers.tsx`:
 
 - **Redux Provider** — Global state management
-- **QueryClientProvider** — TanStack React Query client (`staleTime: 5m`, no window focus refetch)
+- **QueryClientProvider** — TanStack React Query client with `ReactQueryDevtools`
 - **NuqsAdapter** — URL state synchronization via React Router v6
 
 ### 2. Path Aliases
@@ -133,6 +270,7 @@ Path alias `@/` is configured in `tsconfig.json` and `vite.config.ts` pointing d
 ```tsx
 import { Button } from "@/components/ui/button";
 import { useAppDispatch } from "@/store/hooks";
+import { apiFetcher } from "@/utils/query-client";
 ```
 
 ### 3. Icon Usage (Hugeicons)
@@ -150,4 +288,4 @@ import { HugeiconsIcon } from "@hugeicons/react";
 
 ## 📄 License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the [ISC License](LICENSE).
