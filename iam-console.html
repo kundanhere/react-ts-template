@@ -1,0 +1,4488 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sentry IAM · Access Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #12151c;
+        --bg-2: #0e1015;
+        --panel: #1a1f29;
+        --panel-2: #20263263;
+        --panel-raised: #20263a;
+        --border: #2a3244;
+        --border-soft: #232a38;
+        --text: #e9ecf3;
+        --text-muted: #8c94a8;
+        --text-faint: #5b6379;
+        --accent: #6c7bf0;
+        --accent-dim: #6c7bf01a;
+        --accent-soft: #3a3f6b;
+        --amber: #e8a33d;
+        --amber-dim: #e8a33d1a;
+        --allow: #34d399;
+        --allow-dim: #34d3991a;
+        --deny: #f0587b;
+        --deny-dim: #f0587b1a;
+        --radius: 10px;
+        --radius-sm: 6px;
+        --font-display: "Space Grotesk", sans-serif;
+        --font-body: "Inter", sans-serif;
+        --font-mono: "JetBrains Mono", monospace;
+        --shadow-lg: 0 20px 60px -20px rgba(0, 0, 0, 0.6);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(
+            1200px 600px at 100% -10%,
+            #1c2233 0%,
+            transparent 60%
+          ),
+          var(--bg);
+        color: var(--text);
+        font-family: var(--font-body);
+        font-size: 14px;
+        -webkit-font-smoothing: antialiased;
+      }
+      ::selection {
+        background: var(--accent-soft);
+        color: #fff;
+      }
+      a {
+        color: inherit;
+      }
+      button {
+        font-family: inherit;
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #2c3444;
+        border-radius: 8px;
+        border: 2px solid var(--bg);
+      }
+
+      /* ---------- Shell ---------- */
+      .shell {
+        display: grid;
+        grid-template-columns: 236px 1fr;
+        min-height: 100vh;
+      }
+      .rail {
+        background: var(--bg-2);
+        border-right: 1px solid var(--border-soft);
+        padding: 20px 14px;
+        display: flex;
+        flex-direction: column;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 6px 8px 22px 8px;
+      }
+      .brand-mark {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        background: linear-gradient(155deg, var(--accent), #3d3f8f);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 18px -6px #6c7bf099;
+        flex-shrink: 0;
+      }
+      .brand-mark svg {
+        width: 16px;
+        height: 16px;
+      }
+      .brand-name {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 15.5px;
+        letter-spacing: 0.2px;
+      }
+      .brand-sub {
+        font-size: 10.5px;
+        color: var(--text-faint);
+        font-family: var(--font-mono);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        margin-top: 1px;
+      }
+
+      .nav-group {
+        margin-top: 18px;
+      }
+      .nav-label {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(--text-faint);
+        padding: 0 10px 6px;
+        font-weight: 600;
+      }
+      .nav-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 10px;
+        border-radius: var(--radius-sm);
+        color: var(--text-muted);
+        cursor: pointer;
+        font-size: 13.5px;
+        font-weight: 500;
+        margin-bottom: 2px;
+        border: 1px solid transparent;
+        transition:
+          background 0.12s,
+          color 0.12s;
+        position: relative;
+        user-select: none;
+      }
+      .nav-item svg {
+        width: 16px;
+        height: 16px;
+        opacity: 0.8;
+        flex-shrink: 0;
+      }
+      .nav-item:hover {
+        background: #1f2531;
+        color: var(--text);
+      }
+      .nav-item.active {
+        background: var(--accent-dim);
+        color: #fff;
+        border-color: #6c7bf033;
+      }
+      .nav-item.active svg {
+        opacity: 1;
+        color: var(--accent);
+      }
+      .nav-item .count {
+        margin-left: auto;
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        color: var(--text-faint);
+        background: #1a2030;
+        padding: 1px 6px;
+        border-radius: 20px;
+      }
+      .nav-item.active .count {
+        color: var(--accent);
+        background: #6c7bf022;
+      }
+
+      .rail-footer {
+        margin-top: auto;
+        padding-top: 14px;
+        border-top: 1px solid var(--border-soft);
+      }
+      .session-card {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        padding: 8px;
+        border-radius: var(--radius-sm);
+      }
+      .avatar {
+        width: 28px;
+        height: 28px;
+        border-radius: 7px;
+        background: linear-gradient(155deg, #3a4260, #242b3d);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 600;
+        color: var(--accent);
+        flex-shrink: 0;
+      }
+      .session-name {
+        font-size: 12.5px;
+        font-weight: 600;
+      }
+      .session-role {
+        font-size: 10.5px;
+        color: var(--text-faint);
+        font-family: var(--font-mono);
+      }
+
+      /* ---------- Main ---------- */
+      .main {
+        padding: 26px 34px 60px;
+        max-width: 1360px;
+      }
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 22px;
+        gap: 16px;
+      }
+      .page-title {
+        font-family: var(--font-display);
+        font-size: 22px;
+        font-weight: 700;
+        letter-spacing: 0.1px;
+      }
+      .page-sub {
+        color: var(--text-muted);
+        font-size: 13px;
+        margin-top: 3px;
+      }
+      .topbar-actions {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .search-box {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 8px 12px;
+        min-width: 230px;
+      }
+      .search-box svg {
+        width: 14px;
+        height: 14px;
+        color: var(--text-faint);
+        flex-shrink: 0;
+      }
+      .search-box input {
+        background: none;
+        border: none;
+        outline: none;
+        color: var(--text);
+        font-size: 13px;
+        width: 100%;
+        font-family: inherit;
+      }
+      .search-box input::placeholder {
+        color: var(--text-faint);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 14px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+        color: var(--text);
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.12s;
+        white-space: nowrap;
+      }
+      .btn svg {
+        width: 14px;
+        height: 14px;
+      }
+      .btn:hover {
+        background: var(--panel-raised);
+        border-color: #3a4358;
+      }
+      .btn-primary {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #fff;
+      }
+      .btn-primary:hover {
+        background: #5c6ce0;
+        box-shadow: 0 6px 18px -6px #6c7bf077;
+      }
+      .btn-danger {
+        color: var(--deny);
+      }
+      .btn-danger:hover {
+        background: var(--deny-dim);
+        border-color: #f0587b55;
+      }
+      .btn-ghost {
+        background: transparent;
+        border-color: transparent;
+      }
+      .btn-ghost:hover {
+        background: var(--panel-raised);
+      }
+      .btn-sm {
+        padding: 6px 10px;
+        font-size: 12px;
+      }
+      .btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .icon-btn {
+        width: 30px;
+        height: 30px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 7px;
+        border: 1px solid var(--border);
+        background: var(--panel);
+        cursor: pointer;
+        color: var(--text-muted);
+      }
+      .icon-btn:hover {
+        color: var(--text);
+        background: var(--panel-raised);
+      }
+      .icon-btn svg {
+        width: 14px;
+        height: 14px;
+      }
+
+      /* ---------- Metric cards ---------- */
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 12px;
+        margin-bottom: 22px;
+      }
+      .metric-card {
+        background: var(--panel);
+        border: 1px solid var(--border-soft);
+        border-radius: var(--radius);
+        padding: 15px 16px;
+        position: relative;
+        overflow: hidden;
+      }
+      .metric-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: var(--m-color, var(--accent));
+        opacity: 0.7;
+      }
+      .metric-label {
+        font-size: 10.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--text-faint);
+        font-weight: 600;
+      }
+      .metric-value {
+        font-family: var(--font-display);
+        font-size: 26px;
+        font-weight: 700;
+        margin-top: 6px;
+      }
+      .metric-foot {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-top: 4px;
+        font-family: var(--font-mono);
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 16px;
+        margin-bottom: 22px;
+        align-items: start;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border-soft);
+        border-radius: var(--radius);
+        overflow: hidden;
+      }
+      .panel-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px 18px;
+        border-bottom: 1px solid var(--border-soft);
+      }
+      .panel-head h3 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 14.5px;
+        font-weight: 600;
+      }
+      .panel-body {
+        padding: 16px 18px;
+      }
+
+      .trace-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 9px 0;
+        border-bottom: 1px solid var(--border-soft);
+        font-size: 12.5px;
+      }
+      .trace-row:last-child {
+        border-bottom: none;
+      }
+      .trace-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
+      .trace-dot.allow {
+        background: var(--allow);
+        box-shadow: 0 0 0 3px var(--allow-dim);
+      }
+      .trace-dot.deny {
+        background: var(--deny);
+        box-shadow: 0 0 0 3px var(--deny-dim);
+      }
+      .trace-main {
+        flex: 1;
+        min-width: 0;
+      }
+      .trace-title {
+        color: var(--text);
+        font-weight: 500;
+      }
+      .trace-meta {
+        color: var(--text-faint);
+        font-family: var(--font-mono);
+        font-size: 11px;
+        margin-top: 1px;
+      }
+      .trace-time {
+        color: var(--text-faint);
+        font-size: 11px;
+        font-family: var(--font-mono);
+        flex-shrink: 0;
+      }
+
+      /* ---------- Table ---------- */
+      .table-wrap {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      thead th {
+        text-align: left;
+        padding: 10px 16px;
+        font-size: 10.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--text-faint);
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-soft);
+        background: #161b25;
+        white-space: nowrap;
+      }
+      tbody td {
+        padding: 12px 16px;
+        border-bottom: 1px solid var(--border-soft);
+        vertical-align: middle;
+      }
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+      tbody tr {
+        transition: background 0.1s;
+      }
+      tbody tr:hover {
+        background: #1c2230;
+      }
+      tbody tr.clickable {
+        cursor: pointer;
+      }
+      .cell-primary {
+        font-weight: 600;
+        color: var(--text);
+      }
+      .cell-muted {
+        color: var(--text-muted);
+      }
+      .cell-mono {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--text-muted);
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        padding: 3px 9px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+        font-family: var(--font-mono);
+        letter-spacing: 0.2px;
+      }
+      .pill::before {
+        content: "";
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+      }
+      .pill-active {
+        background: var(--allow-dim);
+        color: var(--allow);
+      }
+      .pill-active::before {
+        background: var(--allow);
+      }
+      .pill-locked {
+        background: var(--deny-dim);
+        color: var(--deny);
+      }
+      .pill-locked::before {
+        background: var(--deny);
+      }
+      .pill-inactive {
+        background: #5b63791a;
+        color: var(--text-faint);
+      }
+      .pill-inactive::before {
+        background: var(--text-faint);
+      }
+      .pill-allow {
+        background: var(--allow-dim);
+        color: var(--allow);
+      }
+      .pill-allow::before {
+        background: var(--allow);
+      }
+      .pill-deny {
+        background: var(--deny-dim);
+        color: var(--deny);
+      }
+      .pill-deny::before {
+        background: var(--deny);
+      }
+
+      .chip {
+        display: inline-flex;
+        align-items: center;
+        padding: 2px 8px;
+        border-radius: 5px;
+        font-size: 11px;
+        font-family: var(--font-mono);
+        background: #232b3c;
+        color: var(--text-muted);
+        border: 1px solid var(--border);
+        margin: 2px 3px 2px 0;
+      }
+      .chip.accent {
+        background: var(--accent-dim);
+        color: #aab3f7;
+        border-color: #6c7bf033;
+      }
+      .chip.amber {
+        background: var(--amber-dim);
+        color: var(--amber);
+        border-color: #e8a33d33;
+      }
+
+      .row-actions {
+        display: flex;
+        gap: 6px;
+        justify-content: flex-end;
+      }
+
+      .filters {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+      select.filter-select {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 7px 10px;
+        border-radius: 7px;
+        font-size: 12.5px;
+        font-family: inherit;
+        outline: none;
+        cursor: pointer;
+      }
+
+      .empty-state {
+        padding: 50px 20px;
+        text-align: center;
+        color: var(--text-faint);
+      }
+      .empty-state svg {
+        width: 36px;
+        height: 36px;
+        margin-bottom: 10px;
+        opacity: 0.5;
+      }
+      .empty-state .es-title {
+        color: var(--text-muted);
+        font-weight: 600;
+        font-size: 13.5px;
+      }
+      .empty-state .es-sub {
+        font-size: 12px;
+        margin-top: 4px;
+      }
+
+      /* ---------- Tree (roles/modules) ---------- */
+      .tree {
+        padding: 8px;
+      }
+      .tree-node {
+        margin-bottom: 2px;
+      }
+      .tree-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 10px;
+        border-radius: 7px;
+        cursor: pointer;
+        font-size: 13px;
+      }
+      .tree-row:hover {
+        background: #1c2230;
+      }
+      .tree-row .twist {
+        width: 14px;
+        height: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-faint);
+        flex-shrink: 0;
+        transition: transform 0.12s;
+      }
+      .tree-row .twist.open {
+        transform: rotate(90deg);
+      }
+      .tree-row .twist.leaf {
+        opacity: 0;
+      }
+      .tree-row .tname {
+        font-weight: 600;
+        flex: 1;
+      }
+      .tree-row .tslug {
+        color: var(--text-faint);
+        font-family: var(--font-mono);
+        font-size: 11px;
+      }
+      .tree-children {
+        margin-left: 22px;
+        border-left: 1px dashed var(--border);
+        padding-left: 6px;
+        display: none;
+      }
+      .tree-children.open {
+        display: block;
+      }
+      .tree-badge {
+        font-size: 10px;
+        font-family: var(--font-mono);
+        color: var(--text-faint);
+        background: #1a2030;
+        padding: 2px 6px;
+        border-radius: 5px;
+      }
+
+      /* ---------- Modal / Drawer ---------- */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: #080a0ecc;
+        backdrop-filter: blur(3px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        padding: 24px;
+      }
+      .overlay.open {
+        display: flex;
+      }
+      .modal {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        width: 100%;
+        max-width: 560px;
+        max-height: 88vh;
+        display: flex;
+        flex-direction: column;
+        box-shadow: var(--shadow-lg);
+        animation: pop 0.16s ease;
+      }
+      .modal.wide {
+        max-width: 720px;
+      }
+      @keyframes pop {
+        from {
+          opacity: 0;
+          transform: translateY(6px) scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+      .modal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--border-soft);
+        flex-shrink: 0;
+      }
+      .modal-head h3 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 16px;
+        font-weight: 600;
+      }
+      .modal-body {
+        padding: 20px;
+        overflow-y: auto;
+      }
+      .modal-foot {
+        padding: 16px 20px;
+        border-top: 1px solid var(--border-soft);
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        flex-shrink: 0;
+      }
+      .close-x {
+        width: 28px;
+        height: 28px;
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: var(--text-faint);
+        border: 1px solid transparent;
+      }
+      .close-x:hover {
+        background: var(--panel-raised);
+        color: var(--text);
+      }
+
+      .field {
+        margin-bottom: 15px;
+      }
+      .field label {
+        display: block;
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--text-muted);
+        margin-bottom: 6px;
+      }
+      .field .hint {
+        font-size: 11px;
+        color: var(--text-faint);
+        margin-top: 5px;
+      }
+      .field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="password"],
+      input[type="number"],
+      input[type="datetime-local"],
+      textarea,
+      select {
+        width: 100%;
+        background: var(--bg-2);
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 9px 11px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-family: inherit;
+        outline: none;
+        transition: border-color 0.12s;
+      }
+      input:focus,
+      textarea:focus,
+      select:focus {
+        border-color: var(--accent);
+      }
+      textarea {
+        resize: vertical;
+        min-height: 70px;
+        font-family: var(--font-mono);
+        font-size: 12.5px;
+        line-height: 1.5;
+      }
+      .checkline {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 13px;
+        color: var(--text);
+        padding: 2px 0;
+      }
+      .checkline input {
+        width: auto;
+      }
+      .toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 11px 0;
+        border-bottom: 1px solid var(--border-soft);
+      }
+      .toggle-row:last-child {
+        border-bottom: none;
+      }
+      .toggle-row .tr-label {
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .toggle-row .tr-sub {
+        font-size: 11.5px;
+        color: var(--text-faint);
+        margin-top: 2px;
+      }
+      .switch {
+        position: relative;
+        width: 36px;
+        height: 20px;
+        flex-shrink: 0;
+      }
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        inset: 0;
+        background: #2a3244;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: 0.15s;
+      }
+      .slider::before {
+        content: "";
+        position: absolute;
+        width: 14px;
+        height: 14px;
+        left: 3px;
+        top: 3px;
+        background: #c7cbdb;
+        border-radius: 50%;
+        transition: 0.15s;
+      }
+      .switch input:checked + .slider {
+        background: var(--accent);
+      }
+      .switch input:checked + .slider::before {
+        transform: translateX(16px);
+        background: #fff;
+      }
+
+      .chip-select {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+      .chip-toggle {
+        padding: 5px 11px;
+        border-radius: 20px;
+        border: 1px solid var(--border);
+        font-size: 12px;
+        font-family: var(--font-mono);
+        cursor: pointer;
+        color: var(--text-muted);
+        background: var(--bg-2);
+        user-select: none;
+      }
+      .chip-toggle.on {
+        background: var(--accent-dim);
+        color: #aab3f7;
+        border-color: #6c7bf055;
+      }
+
+      .drawer-overlay {
+        position: fixed;
+        inset: 0;
+        background: #080a0ecc;
+        backdrop-filter: blur(2px);
+        display: none;
+        z-index: 100;
+      }
+      .drawer-overlay.open {
+        display: block;
+      }
+      .drawer {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 460px;
+        max-width: 92vw;
+        background: var(--panel);
+        border-left: 1px solid var(--border);
+        box-shadow: -24px 0 60px -20px #000000aa;
+        transform: translateX(100%);
+        transition: transform 0.2s ease;
+        z-index: 101;
+        display: flex;
+        flex-direction: column;
+      }
+      .drawer.open {
+        transform: translateX(0);
+      }
+      .drawer-head {
+        padding: 20px;
+        border-bottom: 1px solid var(--border-soft);
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+        flex-shrink: 0;
+      }
+      .drawer-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .drawer-avatar {
+        width: 42px;
+        height: 42px;
+        border-radius: 10px;
+        background: linear-gradient(155deg, #3a4260, #242b3d);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: var(--font-mono);
+        font-weight: 700;
+        color: var(--accent);
+        font-size: 15px;
+        flex-shrink: 0;
+      }
+      .drawer-body {
+        padding: 0 20px 20px;
+        overflow-y: auto;
+        flex: 1;
+      }
+      .drawer-section {
+        padding: 16px 0;
+        border-bottom: 1px solid var(--border-soft);
+      }
+      .drawer-section:last-child {
+        border-bottom: none;
+      }
+      .drawer-section h4 {
+        margin: 0 0 10px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--text-faint);
+        font-weight: 700;
+      }
+      .kv-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        font-size: 12.5px;
+      }
+      .kv-row .k {
+        color: var(--text-faint);
+      }
+      .kv-row .v {
+        font-family: var(--font-mono);
+        color: var(--text);
+      }
+      .drawer-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 16px 20px;
+        border-top: 1px solid var(--border-soft);
+        flex-shrink: 0;
+      }
+
+      .toast-stack {
+        position: fixed;
+        bottom: 22px;
+        right: 22px;
+        z-index: 200;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .toast {
+        background: #1e2532;
+        border: 1px solid var(--border);
+        border-left: 3px solid var(--allow);
+        padding: 11px 16px;
+        border-radius: 8px;
+        font-size: 12.5px;
+        box-shadow: var(--shadow-lg);
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-width: 220px;
+        animation: slidein 0.18s ease;
+      }
+      .toast.err {
+        border-left-color: var(--deny);
+      }
+      .toast svg {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+      }
+      .toast.ok svg {
+        color: var(--allow);
+      }
+      .toast.err svg {
+        color: var(--deny);
+      }
+      @keyframes slidein {
+        from {
+          opacity: 0;
+          transform: translateX(16px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      .code-block {
+        background: var(--bg-2);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 12px;
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: #a9b1c4;
+        white-space: pre-wrap;
+        word-break: break-word;
+        line-height: 1.55;
+      }
+
+      .section {
+        display: none;
+      }
+      .section.active {
+        display: block;
+      }
+
+      .helpbar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--accent-dim);
+        border: 1px solid #6c7bf033;
+        color: #b6bdf5;
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: 12.5px;
+        margin-bottom: 16px;
+      }
+      .helpbar svg {
+        width: 15px;
+        height: 15px;
+        flex-shrink: 0;
+      }
+
+      .kbd {
+        font-family: var(--font-mono);
+        font-size: 10.5px;
+        background: #1a2030;
+        border: 1px solid var(--border);
+        padding: 1px 5px;
+        border-radius: 4px;
+        color: var(--text-muted);
+      }
+
+      @media (max-width: 980px) {
+        .shell {
+          grid-template-columns: 1fr;
+        }
+        .rail {
+          display: none;
+        }
+        .metrics {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        .grid-2 {
+          grid-template-columns: 1fr;
+        }
+        .main {
+          padding: 18px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <!-- ============ SIDEBAR ============ -->
+      <aside class="rail">
+        <div class="brand">
+          <div class="brand-mark">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 2L4 5.5V11c0 5.2 3.4 9.8 8 11 4.6-1.2 8-5.8 8-11V5.5L12 2z"
+                stroke="white"
+                stroke-width="1.6"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M9 12l2 2 4-4"
+                stroke="white"
+                stroke-width="1.6"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div>
+            <div class="brand-name">Sentry IAM</div>
+            <div class="brand-sub">Access Console</div>
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-item active" data-section="dashboard">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+            >
+              <rect x="3" y="3" width="7" height="9" rx="1.5" />
+              <rect x="14" y="3" width="7" height="5" rx="1.5" />
+              <rect x="14" y="12" width="7" height="9" rx="1.5" />
+              <rect x="3" y="16" width="7" height="5" rx="1.5" />
+            </svg>
+            Dashboard
+          </div>
+          <div class="nav-item" data-section="users">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+            >
+              <circle cx="9" cy="8" r="3.2" />
+              <path d="M2.5 20c1-3.8 3.8-6 6.5-6s5.5 2.2 6.5 6" />
+              <circle cx="18" cy="8.5" r="2.4" />
+              <path d="M16 12.3c2.3.2 4.3 2 5 5.2" />
+            </svg>
+            Users <span class="count" data-count="users">0</span>
+          </div>
+          <div class="nav-item" data-section="roles">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+            >
+              <path
+                d="M12 2.5l7.5 3.4v5.4c0 5-3.2 8.9-7.5 10.2-4.3-1.3-7.5-5.2-7.5-10.2V5.9L12 2.5z"
+              />
+            </svg>
+            Roles <span class="count" data-count="roles">0</span>
+          </div>
+          <div class="nav-item" data-section="policies">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+            >
+              <rect x="4" y="3.5" width="16" height="17" rx="2" />
+              <path d="M8 8h8M8 12h8M8 16h5" />
+            </svg>
+            Policies <span class="count" data-count="policies">0</span>
+          </div>
+          <div class="nav-item" data-section="modules">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+            >
+              <rect x="3" y="3" width="7.5" height="7.5" rx="1.4" />
+              <rect x="13.5" y="3" width="7.5" height="7.5" rx="1.4" />
+              <rect x="3" y="13.5" width="7.5" height="7.5" rx="1.4" />
+              <rect x="13.5" y="13.5" width="7.5" height="7.5" rx="1.4" />
+            </svg>
+            Modules <span class="count" data-count="modules">0</span>
+          </div>
+          <div class="nav-item" data-section="sessions">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+            >
+              <rect x="3" y="4" width="18" height="12" rx="2" />
+              <path d="M8 21h8M12 16v5" />
+            </svg>
+            Sessions <span class="count" data-count="sessions">0</span>
+          </div>
+          <div class="nav-item" data-section="audit">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+            >
+              <path
+                d="M6 2.5h9l4 4V21a1 1 0 01-1 1H6a1 1 0 01-1-1V3.5a1 1 0 011-1z"
+              />
+              <path d="M15 2.5V7h4M9 12h6M9 16h6" />
+            </svg>
+            Audit Log
+          </div>
+        </div>
+
+        <div class="nav-group">
+          <div class="nav-label">System</div>
+          <div class="nav-item" data-section="security">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+            >
+              <path
+                d="M12 2.5l7.5 3.4v5.4c0 5-3.2 8.9-7.5 10.2-4.3-1.3-7.5-5.2-7.5-10.2V5.9L12 2.5z"
+              />
+              <path d="M9.3 12l1.9 1.9 3.5-3.8" />
+            </svg>
+            Security Settings
+          </div>
+          <div class="nav-item" data-section="simulator">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.7"
+            >
+              <path d="M12 3v3M12 18v3M3 12h3M18 12h3" />
+              <circle cx="12" cy="12" r="5.3" />
+            </svg>
+            Policy Simulator
+          </div>
+        </div>
+
+        <div class="rail-footer">
+          <div class="session-card">
+            <div class="avatar">AR</div>
+            <div>
+              <div class="session-name">Aiden Rowe</div>
+              <div class="session-role">super-admin · you</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+      <!-- ============ MAIN ============ -->
+      <main class="main">
+        <!-- ===== DASHBOARD ===== -->
+        <section class="section active" id="section-dashboard">
+          <div class="topbar">
+            <div>
+              <div class="page-title">System overview</div>
+              <div class="page-sub">
+                Live snapshot of identity, access and policy state.
+              </div>
+            </div>
+            <div class="topbar-actions">
+              <button class="btn" id="btn-reset-data">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                >
+                  <path d="M3 12a9 9 0 1 1 3 6.7" />
+                  <path d="M3 21v-6h6" />
+                </svg>
+                Reseed demo data
+              </button>
+            </div>
+          </div>
+
+          <div class="metrics" id="dash-metrics"></div>
+
+          <div class="grid-2">
+            <div class="panel">
+              <div class="panel-head">
+                <h3>Recent audit activity</h3>
+                <div
+                  class="tree-badge"
+                  style="cursor: pointer"
+                  data-nav="audit"
+                >
+                  View all →
+                </div>
+              </div>
+              <div
+                class="panel-body"
+                id="dash-audit"
+                style="padding-top: 6px"
+              ></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h3>Policy effect balance</h3></div>
+              <div class="panel-body" id="dash-policy-balance"></div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="panel">
+              <div class="panel-head">
+                <h3>Locked / inactive accounts</h3>
+                <div
+                  class="tree-badge"
+                  style="cursor: pointer"
+                  data-nav="users"
+                >
+                  Manage →
+                </div>
+              </div>
+              <div
+                class="panel-body"
+                id="dash-locked"
+                style="padding-top: 6px"
+              ></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><h3>Active sessions</h3></div>
+              <div
+                class="panel-body"
+                id="dash-sessions"
+                style="padding-top: 6px"
+              ></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===== USERS ===== -->
+        <section class="section" id="section-users">
+          <div class="topbar">
+            <div>
+              <div class="page-title">Users</div>
+              <div class="page-sub">
+                Identity records, credentials and account state.
+              </div>
+            </div>
+            <div class="topbar-actions">
+              <div class="search-box">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="M21 21l-4.3-4.3" />
+                </svg>
+                <input
+                  type="text"
+                  id="user-search"
+                  placeholder="Search name, email, username…"
+                />
+              </div>
+              <button class="btn btn-primary" id="btn-new-user">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+                New user
+              </button>
+            </div>
+          </div>
+
+          <div class="filters">
+            <select class="filter-select" id="user-filter-status">
+              <option value="">All statuses</option>
+              <option value="active">Active</option>
+              <option value="locked">Locked</option>
+              <option value="inactive">Inactive</option>
+            </select>
+            <select class="filter-select" id="user-filter-role">
+              <option value="">All roles</option>
+            </select>
+          </div>
+
+          <div class="panel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Username</th>
+                    <th>Roles</th>
+                    <th>Status</th>
+                    <th>Last login</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="users-tbody"></tbody>
+              </table>
+            </div>
+            <div
+              id="users-empty"
+              class="empty-state"
+              style="display: none"
+            ></div>
+          </div>
+        </section>
+
+        <!-- ===== ROLES ===== -->
+        <section class="section" id="section-roles">
+          <div class="topbar">
+            <div>
+              <div class="page-title">Roles</div>
+              <div class="page-sub">
+                Hierarchical role tree. Child roles inherit nothing
+                automatically — attach policies explicitly.
+              </div>
+            </div>
+            <div class="topbar-actions">
+              <button class="btn btn-primary" id="btn-new-role">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+                New role
+              </button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="tree" id="roles-tree"></div>
+            <div
+              id="roles-empty"
+              class="empty-state"
+              style="display: none"
+            ></div>
+          </div>
+        </section>
+
+        <!-- ===== POLICIES ===== -->
+        <section class="section" id="section-policies">
+          <div class="topbar">
+            <div>
+              <div class="page-title">Policies</div>
+              <div class="page-sub">
+                Declarative ALLOW / DENY rules. Explicit deny always wins.
+              </div>
+            </div>
+            <div class="topbar-actions">
+              <div class="search-box">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="11" cy="11" r="7" />
+                  <path d="M21 21l-4.3-4.3" />
+                </svg>
+                <input
+                  type="text"
+                  id="policy-search"
+                  placeholder="Search policies…"
+                />
+              </div>
+              <button class="btn btn-primary" id="btn-new-policy">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+                New policy
+              </button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Policy</th>
+                    <th>Effect</th>
+                    <th>Actions</th>
+                    <th>Resources</th>
+                    <th>Conditions</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="policies-tbody"></tbody>
+              </table>
+            </div>
+            <div
+              id="policies-empty"
+              class="empty-state"
+              style="display: none"
+            ></div>
+          </div>
+        </section>
+
+        <!-- ===== MODULES ===== -->
+        <section class="section" id="section-modules">
+          <div class="topbar">
+            <div>
+              <div class="page-title">Modules</div>
+              <div class="page-sub">
+                CMS resource tree, ordered by priority then name.
+              </div>
+            </div>
+            <div class="topbar-actions">
+              <button class="btn btn-primary" id="btn-new-module">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+                New module
+              </button>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="tree" id="modules-tree"></div>
+            <div
+              id="modules-empty"
+              class="empty-state"
+              style="display: none"
+            ></div>
+          </div>
+        </section>
+
+        <!-- ===== SESSIONS ===== -->
+        <section class="section" id="section-sessions">
+          <div class="topbar">
+            <div>
+              <div class="page-title">Sessions</div>
+              <div class="page-sub">
+                Active refresh-token sessions across devices.
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Device</th>
+                    <th>IP address</th>
+                    <th>Created</th>
+                    <th>Last active</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody id="sessions-tbody"></tbody>
+              </table>
+            </div>
+            <div
+              id="sessions-empty"
+              class="empty-state"
+              style="display: none"
+            ></div>
+          </div>
+        </section>
+
+        <!-- ===== AUDIT LOG ===== -->
+        <section class="section" id="section-audit">
+          <div class="topbar">
+            <div>
+              <div class="page-title">Audit log</div>
+              <div class="page-sub">
+                Immutable record of every write and access decision.
+              </div>
+            </div>
+          </div>
+          <div class="filters">
+            <select class="filter-select" id="audit-filter-action">
+              <option value="">All actions</option>
+            </select>
+            <select class="filter-select" id="audit-filter-resource">
+              <option value="">All resource types</option>
+            </select>
+          </div>
+          <div class="panel">
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Resource</th>
+                    <th>Result</th>
+                    <th>IP</th>
+                  </tr>
+                </thead>
+                <tbody id="audit-tbody"></tbody>
+              </table>
+            </div>
+            <div
+              id="audit-empty"
+              class="empty-state"
+              style="display: none"
+            ></div>
+          </div>
+        </section>
+
+        <!-- ===== SECURITY SETTINGS ===== -->
+        <section class="section" id="section-security">
+          <div class="topbar">
+            <div>
+              <div class="page-title">Security settings</div>
+              <div class="page-sub">
+                Database-configurable parameters. Cached with automatic
+                invalidation on save.
+              </div>
+            </div>
+            <div class="topbar-actions">
+              <button class="btn btn-primary" id="btn-save-security">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path d="M5 12l4.5 4.5L19 7" />
+                </svg>
+                Save changes
+              </button>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="panel">
+              <div class="panel-head"><h3>Login &amp; lockout</h3></div>
+              <div class="panel-body">
+                <div class="field">
+                  <label>Max login attempts</label>
+                  <input
+                    type="number"
+                    id="sec-maxLoginAttempts"
+                    min="1"
+                    max="20"
+                  />
+                  <div class="hint">
+                    Failed attempts allowed before the account is locked.
+                  </div>
+                </div>
+                <div class="field">
+                  <label>Lockout duration (minutes)</label>
+                  <input
+                    type="number"
+                    id="sec-lockoutDurationMinutes"
+                    min="1"
+                  />
+                  <div class="hint">
+                    How long a locked account stays locked before auto-unlock.
+                  </div>
+                </div>
+                <div class="field" style="margin-bottom: 0">
+                  <label>Minimum password length</label>
+                  <input
+                    type="number"
+                    id="sec-passwordMinLength"
+                    min="6"
+                    max="64"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head"><h3>Tokens &amp; MFA</h3></div>
+              <div class="panel-body">
+                <div class="field">
+                  <label>Access token TTL (minutes)</label>
+                  <input type="number" id="sec-accessTokenTTLMinutes" min="1" />
+                </div>
+                <div class="field" style="margin-bottom: 0">
+                  <label>Refresh token TTL (days)</label>
+                  <input type="number" id="sec-refreshTokenTTLDays" min="1" />
+                </div>
+                <div class="toggle-row" style="margin-top: 15px">
+                  <div>
+                    <div class="tr-label">Require MFA</div>
+                    <div class="tr-sub">
+                      Enforce multi-factor authentication for all users.
+                    </div>
+                  </div>
+                  <label class="switch"
+                    ><input type="checkbox" id="sec-requireMFA" /><span
+                      class="slider"
+                    ></span
+                  ></label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="helpbar">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="9" />
+              <path d="M12 8v5M12 16.5h.01" />
+            </svg>
+            Dynamic parameters take priority over hardcoded defaults and are
+            cached in-memory with automatic invalidation on update.
+          </div>
+        </section>
+
+        <!-- ===== POLICY SIMULATOR ===== -->
+        <section class="section" id="section-simulator">
+          <div class="topbar">
+            <div>
+              <div class="page-title">Policy simulator</div>
+              <div class="page-sub">
+                Dry-run the policy engine for a user, action and resource.
+              </div>
+            </div>
+          </div>
+
+          <div class="grid-2" style="align-items: stretch">
+            <div class="panel">
+              <div class="panel-head"><h3>Request</h3></div>
+              <div class="panel-body">
+                <div class="field">
+                  <label>User</label>
+                  <select id="sim-user"></select>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label>Action</label>
+                    <select id="sim-action">
+                      <option>view</option>
+                      <option>add</option>
+                      <option>edit</option>
+                      <option>delete</option>
+                      <option>full</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label>Resource</label>
+                    <select id="sim-resource"></select>
+                  </div>
+                </div>
+                <button
+                  class="btn btn-primary"
+                  id="btn-run-sim"
+                  style="width: 100%; justify-content: center; margin-top: 4px"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M5 3l14 9-14 9V3z" />
+                  </svg>
+                  Evaluate
+                </button>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head"><h3>Decision trace</h3></div>
+              <div class="panel-body" id="sim-result">
+                <div class="empty-state">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  >
+                    <path d="M5 3l14 9-14 9V3z" />
+                  </svg>
+                  <div class="es-title">No evaluation yet</div>
+                  <div class="es-sub">
+                    Choose a user, action and resource, then evaluate.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ============ DRAWER (user detail) ============ -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <div class="drawer" id="user-drawer"></div>
+
+    <!-- ============ MODAL ROOT ============ -->
+    <div class="overlay" id="modal-overlay">
+      <div class="modal" id="modal-box"></div>
+    </div>
+
+    <div class="toast-stack" id="toast-stack"></div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        /* =====================================================================
+   STORAGE LAYER
+===================================================================== */
+        const LS_PREFIX = "iam_console_";
+        const KEYS = [
+          "users",
+          "roles",
+          "policies",
+          "modules",
+          "sessions",
+          "audit",
+          "rolePolicies",
+          "userRoles",
+          "userPolicies",
+          "security",
+        ];
+
+        function lsGet(key) {
+          const raw = localStorage.getItem(LS_PREFIX + key);
+          return raw ? JSON.parse(raw) : null;
+        }
+        function lsSet(key, value) {
+          localStorage.setItem(LS_PREFIX + key, JSON.stringify(value));
+        }
+
+        let DB = {};
+
+        function loadDB() {
+          DB = {};
+          KEYS.forEach((k) => (DB[k] = lsGet(k)));
+          if (!DB.users) seed();
+        }
+        function persist(key) {
+          lsSet(key, DB[key]);
+        }
+
+        function uid(prefix) {
+          return prefix + "_" + Math.random().toString(36).slice(2, 9);
+        }
+        function nowIso() {
+          return new Date().toISOString();
+        }
+        function fmtDate(iso) {
+          if (!iso) return "—";
+          const d = new Date(iso);
+          return (
+            d.toLocaleDateString(undefined, {
+              month: "short",
+              day: "numeric",
+              year: "numeric",
+            }) +
+            " · " +
+            d.toLocaleTimeString(undefined, {
+              hour: "2-digit",
+              minute: "2-digit",
+            })
+          );
+        }
+        function timeAgo(iso) {
+          if (!iso) return "—";
+          const diff = Date.now() - new Date(iso).getTime();
+          const m = Math.floor(diff / 60000);
+          if (m < 1) return "just now";
+          if (m < 60) return m + "m ago";
+          const h = Math.floor(m / 60);
+          if (h < 24) return h + "h ago";
+          const d = Math.floor(h / 24);
+          return d + "d ago";
+        }
+        function initials(name) {
+          return name
+            .split(" ")
+            .filter(Boolean)
+            .slice(0, 2)
+            .map((s) => s[0].toUpperCase())
+            .join("");
+        }
+        function esc(s) {
+          return String(s ?? "").replace(
+            /[&<>"']/g,
+            (c) =>
+              ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;",
+              })[c]
+          );
+        }
+
+        /* =====================================================================
+   SEED DATA
+===================================================================== */
+        function seed() {
+          const t = Date.now();
+          const modules = [
+            {
+              id: 1,
+              name: "Dashboard",
+              slug: "Dashboard",
+              parentId: null,
+              priority: 1,
+              active: true,
+            },
+            {
+              id: 2,
+              name: "Tasks",
+              slug: "Tasks",
+              parentId: null,
+              priority: 2,
+              active: true,
+            },
+            {
+              id: 3,
+              name: "Payments",
+              slug: "Payments",
+              parentId: null,
+              priority: 3,
+              active: true,
+            },
+            {
+              id: 4,
+              name: "Invoices",
+              slug: "Invoices",
+              parentId: 3,
+              priority: 1,
+              active: true,
+            },
+            {
+              id: 5,
+              name: "Refunds",
+              slug: "Refunds",
+              parentId: 3,
+              priority: 2,
+              active: true,
+            },
+            {
+              id: 6,
+              name: "Users",
+              slug: "Users",
+              parentId: null,
+              priority: 4,
+              active: true,
+            },
+            {
+              id: 7,
+              name: "Roles",
+              slug: "Roles",
+              parentId: null,
+              priority: 5,
+              active: true,
+            },
+            {
+              id: 8,
+              name: "Policies",
+              slug: "Policies",
+              parentId: null,
+              priority: 6,
+              active: true,
+            },
+            {
+              id: 9,
+              name: "Content",
+              slug: "Content",
+              parentId: null,
+              priority: 7,
+              active: true,
+            },
+            {
+              id: 10,
+              name: "Pages",
+              slug: "Pages",
+              parentId: 9,
+              priority: 1,
+              active: true,
+            },
+            {
+              id: 11,
+              name: "Media",
+              slug: "Media",
+              parentId: 9,
+              priority: 2,
+              active: true,
+            },
+            {
+              id: 12,
+              name: "Reports",
+              slug: "Reports",
+              parentId: null,
+              priority: 8,
+              active: false,
+            },
+          ];
+
+          const roles = [
+            {
+              id: 1,
+              name: "Super Admin",
+              slug: "super-admin",
+              parentId: null,
+              description: "Full unrestricted system access.",
+            },
+            {
+              id: 2,
+              name: "Admin",
+              slug: "admin",
+              parentId: 1,
+              description: "Manages users, roles and content.",
+            },
+            {
+              id: 3,
+              name: "Support",
+              slug: "support",
+              parentId: 2,
+              description: "Read access plus limited user actions.",
+            },
+            {
+              id: 4,
+              name: "Developer",
+              slug: "developer",
+              parentId: null,
+              description: "Task and module access for engineering.",
+            },
+            {
+              id: 5,
+              name: "Finance",
+              slug: "finance",
+              parentId: null,
+              description: "Payments and invoicing access.",
+            },
+            {
+              id: 6,
+              name: "Intern",
+              slug: "intern",
+              parentId: 4,
+              description: "Restricted developer sandbox access.",
+            },
+          ];
+
+          const policies = [
+            {
+              id: 1,
+              name: "Full System Access",
+              slug: "full-system-access",
+              effect: "ALLOW",
+              actions: ["*"],
+              resources: ["*"],
+              conditions: {},
+            },
+            {
+              id: 2,
+              name: "Admin Console Access",
+              slug: "admin-console-access",
+              effect: "ALLOW",
+              actions: ["view", "add", "edit"],
+              resources: ["Users", "Roles", "Content", "Pages", "Media"],
+              conditions: {},
+            },
+            {
+              id: 3,
+              name: "Support Read Only",
+              slug: "support-read-only",
+              effect: "ALLOW",
+              actions: ["view"],
+              resources: ["Users", "Tasks", "Content"],
+              conditions: {},
+            },
+            {
+              id: 4,
+              name: "Developer Task Access",
+              slug: "developer-task-access",
+              effect: "ALLOW",
+              actions: ["view", "add", "edit"],
+              resources: ["Tasks", "Modules"],
+              conditions: { ipAddress: ["192.168.1.*"], mfaRequired: true },
+            },
+            {
+              id: 5,
+              name: "Finance Payments Access",
+              slug: "finance-payments-access",
+              effect: "ALLOW",
+              actions: ["view", "add", "edit"],
+              resources: ["Payments", "Invoices", "Refunds"],
+              conditions: { mfaRequired: true },
+            },
+            {
+              id: 6,
+              name: "Deny Payments Delete",
+              slug: "deny-payments-delete",
+              effect: "DENY",
+              actions: ["delete"],
+              resources: ["Payments", "Refunds"],
+              conditions: {},
+            },
+            {
+              id: 7,
+              name: "Intern Sandbox",
+              slug: "intern-sandbox",
+              effect: "ALLOW",
+              actions: ["view"],
+              resources: ["Tasks"],
+              conditions: {},
+            },
+            {
+              id: 8,
+              name: "Deny Admin Panel",
+              slug: "deny-admin-panel",
+              effect: "DENY",
+              actions: ["*"],
+              resources: ["Roles", "Policies"],
+              conditions: {},
+            },
+          ];
+
+          const rolePolicies = [
+            { roleId: 1, policyId: 1 },
+            { roleId: 2, policyId: 2 },
+            { roleId: 3, policyId: 3 },
+            { roleId: 4, policyId: 4 },
+            { roleId: 5, policyId: 5 },
+            { roleId: 5, policyId: 6 },
+            { roleId: 6, policyId: 7 },
+            { roleId: 6, policyId: 8 },
+          ];
+
+          const users = [
+            {
+              id: 1,
+              firstName: "Aiden",
+              lastName: "Rowe",
+              username: "aiden.rowe",
+              email: "aiden.rowe@sentry.dev",
+              status: "active",
+              locked: false,
+              lastLoginAt: new Date(t - 1000 * 60 * 8).toISOString(),
+              createdAt: new Date(t - 1000 * 60 * 60 * 24 * 400).toISOString(),
+            },
+            {
+              id: 2,
+              firstName: "Priya",
+              lastName: "Nair",
+              username: "priya.nair",
+              email: "priya.nair@sentry.dev",
+              status: "active",
+              locked: false,
+              lastLoginAt: new Date(t - 1000 * 60 * 45).toISOString(),
+              createdAt: new Date(t - 1000 * 60 * 60 * 24 * 300).toISOString(),
+            },
+            {
+              id: 3,
+              firstName: "Marcus",
+              lastName: "Webb",
+              username: "marcus.webb",
+              email: "marcus.webb@sentry.dev",
+              status: "active",
+              locked: true,
+              lastLoginAt: new Date(t - 1000 * 60 * 60 * 24 * 6).toISOString(),
+              createdAt: new Date(t - 1000 * 60 * 60 * 24 * 250).toISOString(),
+            },
+            {
+              id: 4,
+              firstName: "Elena",
+              lastName: "Torres",
+              username: "elena.torres",
+              email: "elena.torres@sentry.dev",
+              status: "active",
+              locked: false,
+              lastLoginAt: new Date(t - 1000 * 60 * 60 * 3).toISOString(),
+              createdAt: new Date(t - 1000 * 60 * 60 * 24 * 190).toISOString(),
+            },
+            {
+              id: 5,
+              firstName: "Sam",
+              lastName: "Okafor",
+              username: "sam.okafor",
+              email: "sam.okafor@sentry.dev",
+              status: "inactive",
+              locked: false,
+              lastLoginAt: new Date(t - 1000 * 60 * 60 * 24 * 40).toISOString(),
+              createdAt: new Date(t - 1000 * 60 * 60 * 24 * 180).toISOString(),
+            },
+            {
+              id: 6,
+              firstName: "Yuki",
+              lastName: "Tanaka",
+              username: "yuki.tanaka",
+              email: "yuki.tanaka@sentry.dev",
+              status: "active",
+              locked: false,
+              lastLoginAt: new Date(t - 1000 * 60 * 60 * 20).toISOString(),
+              createdAt: new Date(t - 1000 * 60 * 60 * 24 * 120).toISOString(),
+            },
+            {
+              id: 7,
+              firstName: "Noah",
+              lastName: "Fischer",
+              username: "noah.fischer",
+              email: "noah.fischer@sentry.dev",
+              status: "active",
+              locked: false,
+              lastLoginAt: new Date(t - 1000 * 60 * 60 * 5).toISOString(),
+              createdAt: new Date(t - 1000 * 60 * 60 * 24 * 60).toISOString(),
+            },
+          ];
+
+          const userRoles = [
+            { userId: 1, roleId: 1 },
+            { userId: 2, roleId: 2 },
+            { userId: 3, roleId: 3 },
+            { userId: 4, roleId: 4 },
+            { userId: 5, roleId: 4 },
+            { userId: 5, roleId: 6 },
+            { userId: 6, roleId: 5 },
+            { userId: 7, roleId: 6 },
+          ];
+
+          const userPolicies = [
+            {
+              id: 1,
+              userId: 4,
+              policyId: 5,
+              expiresAt: new Date(t + 1000 * 60 * 60 * 24 * 3).toISOString(),
+              reason: "Temporary payments debug access",
+            },
+            {
+              id: 2,
+              userId: 7,
+              policyId: 8,
+              expiresAt: null,
+              reason: "Explicit deny — contractor offboarding pending",
+            },
+          ];
+
+          const sessions = [
+            {
+              id: uid("sess"),
+              userId: 1,
+              device: "Chrome · macOS",
+              ip: "49.207.14.22",
+              createdAt: new Date(t - 1000 * 60 * 60 * 6).toISOString(),
+              lastActiveAt: new Date(t - 1000 * 60 * 8).toISOString(),
+            },
+            {
+              id: uid("sess"),
+              userId: 2,
+              device: "Safari · iPhone",
+              ip: "103.21.244.10",
+              createdAt: new Date(t - 1000 * 60 * 60 * 30).toISOString(),
+              lastActiveAt: new Date(t - 1000 * 60 * 45).toISOString(),
+            },
+            {
+              id: uid("sess"),
+              userId: 4,
+              device: "Firefox · Windows",
+              ip: "192.168.1.14",
+              createdAt: new Date(t - 1000 * 60 * 60 * 2).toISOString(),
+              lastActiveAt: new Date(t - 1000 * 60 * 60 * 2).toISOString(),
+            },
+            {
+              id: uid("sess"),
+              userId: 6,
+              device: "Edge · Windows",
+              ip: "88.212.9.4",
+              createdAt: new Date(t - 1000 * 60 * 60 * 22).toISOString(),
+              lastActiveAt: new Date(t - 1000 * 60 * 60 * 20).toISOString(),
+            },
+            {
+              id: uid("sess"),
+              userId: 7,
+              device: "Chrome · Android",
+              ip: "41.90.12.201",
+              createdAt: new Date(t - 1000 * 60 * 60 * 8).toISOString(),
+              lastActiveAt: new Date(t - 1000 * 60 * 60 * 5).toISOString(),
+            },
+          ];
+
+          const audit = [
+            {
+              id: uid("aud"),
+              userId: 1,
+              action: "policy.attach",
+              resourceType: "Role",
+              resourceId: 5,
+              result: "ALLOW",
+              ip: "49.207.14.22",
+              ts: new Date(t - 1000 * 60 * 4).toISOString(),
+              detail: "Attached finance-payments-access to Finance",
+            },
+            {
+              id: uid("aud"),
+              userId: 2,
+              action: "user.lock",
+              resourceType: "User",
+              resourceId: 3,
+              result: "ALLOW",
+              ip: "103.21.244.10",
+              ts: new Date(t - 1000 * 60 * 40).toISOString(),
+              detail: "Locked account after failed login threshold",
+            },
+            {
+              id: uid("aud"),
+              userId: 7,
+              action: "payments.delete",
+              resourceType: "Payments",
+              resourceId: 882,
+              result: "DENY",
+              ip: "41.90.12.201",
+              ts: new Date(t - 1000 * 60 * 90).toISOString(),
+              detail: "Blocked by deny-payments-delete",
+            },
+            {
+              id: uid("aud"),
+              userId: 4,
+              action: "tasks.edit",
+              resourceType: "Tasks",
+              resourceId: 44,
+              result: "ALLOW",
+              ip: "192.168.1.14",
+              ts: new Date(t - 1000 * 60 * 150).toISOString(),
+              detail: "Updated task status",
+            },
+            {
+              id: uid("aud"),
+              userId: 6,
+              action: "invoices.view",
+              resourceType: "Invoices",
+              resourceId: 12,
+              result: "ALLOW",
+              ip: "88.212.9.4",
+              ts: new Date(t - 1000 * 60 * 60 * 5).toISOString(),
+              detail: "Viewed invoice detail",
+            },
+            {
+              id: uid("aud"),
+              userId: 5,
+              action: "auth.login",
+              resourceType: "Session",
+              resourceId: null,
+              result: "DENY",
+              ip: "77.10.44.9",
+              ts: new Date(t - 1000 * 60 * 60 * 24).toISOString(),
+              detail: "Login blocked — account inactive",
+            },
+            {
+              id: uid("aud"),
+              userId: 1,
+              action: "role.create",
+              resourceType: "Role",
+              resourceId: 6,
+              result: "ALLOW",
+              ip: "49.207.14.22",
+              ts: new Date(t - 1000 * 60 * 60 * 30).toISOString(),
+              detail: "Created role Intern",
+            },
+          ];
+
+          const security = {
+            maxLoginAttempts: 5,
+            lockoutDurationMinutes: 30,
+            accessTokenTTLMinutes: 15,
+            refreshTokenTTLDays: 30,
+            requireMFA: true,
+            passwordMinLength: 10,
+          };
+
+          DB = {
+            modules,
+            roles,
+            policies,
+            rolePolicies,
+            users,
+            userRoles,
+            userPolicies,
+            sessions,
+            audit,
+            security,
+          };
+          KEYS.forEach((k) => persist(k));
+        }
+
+        /* =====================================================================
+   TOAST
+===================================================================== */
+        function toast(msg, type) {
+          type = type || "ok";
+          const stack = document.getElementById("toast-stack");
+          const el = document.createElement("div");
+          el.className = "toast " + (type === "err" ? "err" : "ok");
+          el.innerHTML =
+            (type === "err"
+              ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5h.01"/></svg>'
+              : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.3 2.3L16 10"/></svg>') +
+            "<span>" +
+            esc(msg) +
+            "</span>";
+          stack.appendChild(el);
+          setTimeout(() => {
+            el.style.opacity = "0";
+            el.style.transform = "translateX(16px)";
+            el.style.transition = "all .18s";
+            setTimeout(() => el.remove(), 200);
+          }, 2600);
+        }
+
+        function logAudit(
+          userId,
+          action,
+          resourceType,
+          resourceId,
+          result,
+          detail
+        ) {
+          DB.audit.unshift({
+            id: uid("aud"),
+            userId,
+            action,
+            resourceType,
+            resourceId,
+            result,
+            ip: "10.0.0." + (1 + Math.floor(Math.random() * 250)),
+            ts: nowIso(),
+            detail,
+          });
+          persist("audit");
+        }
+
+        /* =====================================================================
+   DATA HELPERS
+===================================================================== */
+        function userName(u) {
+          return u ? u.firstName + " " + u.lastName : "Unknown";
+        }
+        function findUser(id) {
+          return DB.users.find((u) => u.id === id);
+        }
+        function findRole(id) {
+          return DB.roles.find((r) => r.id === id);
+        }
+        function findPolicy(id) {
+          return DB.policies.find((p) => p.id === id);
+        }
+        function findModule(id) {
+          return DB.modules.find((m) => m.id === id);
+        }
+
+        function rolesForUser(userId) {
+          return DB.userRoles
+            .filter((ur) => ur.userId === userId)
+            .map((ur) => findRole(ur.roleId))
+            .filter(Boolean);
+        }
+        function policiesForRole(roleId) {
+          return DB.rolePolicies
+            .filter((rp) => rp.roleId === roleId)
+            .map((rp) => findPolicy(rp.policyId))
+            .filter(Boolean);
+        }
+        function directPoliciesForUser(userId) {
+          const now = Date.now();
+          return DB.userPolicies.filter(
+            (up) =>
+              up.userId === userId &&
+              (!up.expiresAt || new Date(up.expiresAt).getTime() > now)
+          );
+        }
+        function sessionsForUser(userId) {
+          return DB.sessions.filter((s) => s.userId === userId);
+        }
+        function activePolicySetForUser(userId) {
+          const roles = rolesForUser(userId);
+          const rolePolicyEntries = roles.flatMap((r) =>
+            policiesForRole(r.id).map((p) => ({
+              policy: p,
+              via: "role",
+              role: r,
+            }))
+          );
+          const directEntries = directPoliciesForUser(userId)
+            .map((up) => ({
+              policy: findPolicy(up.policyId),
+              via: "direct",
+              override: up,
+            }))
+            .filter((e) => e.policy);
+          return rolePolicyEntries.concat(directEntries);
+        }
+        function policyMatches(policy, action, resource) {
+          const actOk =
+            policy.actions.includes("*") || policy.actions.includes(action);
+          const resOk =
+            policy.resources.includes("*") ||
+            policy.resources.includes(resource);
+          return actOk && resOk;
+        }
+        function evaluate(userId, action, resource) {
+          const entries = activePolicySetForUser(userId);
+          const matched = entries.filter((e) =>
+            policyMatches(e.policy, action, resource)
+          );
+          const denies = matched.filter((e) => e.policy.effect === "DENY");
+          const allows = matched.filter((e) => e.policy.effect === "ALLOW");
+          let decision, reason;
+          if (denies.length) {
+            decision = "DENY";
+            reason = "Explicit deny";
+          } else if (allows.length) {
+            decision = "ALLOW";
+            reason = "Matched allow policy";
+          } else {
+            decision = "DENY";
+            reason = "Implicit deny — no matching policy";
+          }
+          return { decision, reason, matched, denies, allows };
+        }
+        function accessMapForUser(userId) {
+          const modules = DB.modules.filter((m) => m.active);
+          return modules.map((m) => {
+            const caps = {};
+            ["view", "add", "edit", "delete"].forEach((a) => {
+              caps[a] = evaluate(userId, a, m.slug).decision === "ALLOW";
+            });
+            caps.full = caps.view && caps.add && caps.edit && caps.delete;
+            return { module: m, caps };
+          });
+        }
+
+        function moduleTree(list, parentId) {
+          return list
+            .filter((m) => (m.parentId ?? null) === parentId)
+            .sort(
+              (a, b) => (a.priority ?? 999) - (b.priority ?? 999) || a.id - b.id
+            );
+        }
+        function roleChildren(list, parentId) {
+          return list
+            .filter((r) => (r.parentId ?? null) === parentId)
+            .sort((a, b) => a.name.localeCompare(b.name));
+        }
+
+        /* =====================================================================
+   RENDER: NAV COUNTS
+===================================================================== */
+        function renderCounts() {
+          document.querySelector('[data-count="users"]').textContent =
+            DB.users.length;
+          document.querySelector('[data-count="roles"]').textContent =
+            DB.roles.length;
+          document.querySelector('[data-count="policies"]').textContent =
+            DB.policies.length;
+          document.querySelector('[data-count="modules"]').textContent =
+            DB.modules.length;
+          document.querySelector('[data-count="sessions"]').textContent =
+            DB.sessions.length;
+        }
+
+        /* =====================================================================
+   RENDER: DASHBOARD
+===================================================================== */
+        function renderDashboard() {
+          const active = DB.users.filter(
+            (u) => u.status === "active" && !u.locked
+          ).length;
+          const locked = DB.users.filter((u) => u.locked).length;
+          const metrics = [
+            {
+              label: "Total users",
+              value: DB.users.length,
+              foot: active + " active",
+              color: "var(--accent)",
+            },
+            {
+              label: "Locked accounts",
+              value: locked,
+              foot: locked ? "needs review" : "all clear",
+              color: "var(--deny)",
+            },
+            {
+              label: "Roles",
+              value: DB.roles.length,
+              foot: DB.roles.filter((r) => !r.parentId).length + " root",
+              color: "var(--amber)",
+            },
+            {
+              label: "Policies",
+              value: DB.policies.length,
+              foot:
+                DB.policies.filter((p) => p.effect === "DENY").length +
+                " deny rules",
+              color: "var(--allow)",
+            },
+            {
+              label: "Active modules",
+              value: DB.modules.filter((m) => m.active).length,
+              foot: DB.modules.length + " total",
+              color: "var(--accent)",
+            },
+            {
+              label: "Live sessions",
+              value: DB.sessions.length,
+              foot:
+                "across " +
+                new Set(DB.sessions.map((s) => s.userId)).size +
+                " users",
+              color: "var(--amber)",
+            },
+          ];
+          document.getElementById("dash-metrics").innerHTML = metrics
+            .map(
+              (m) => `
+    <div class="metric-card" style="--m-color:${m.color}">
+      <div class="metric-label">${esc(m.label)}</div>
+      <div class="metric-value">${m.value}</div>
+      <div class="metric-foot">${esc(m.foot)}</div>
+    </div>`
+            )
+            .join("");
+
+          const recent = DB.audit.slice(0, 6);
+          document.getElementById("dash-audit").innerHTML = recent.length
+            ? recent
+                .map((a) => {
+                  const u = findUser(a.userId);
+                  return `<div class="trace-row">
+      <div class="trace-dot ${a.result === "ALLOW" ? "allow" : "deny"}"></div>
+      <div class="trace-main">
+        <div class="trace-title">${esc(userName(u))} · ${esc(a.action)}</div>
+        <div class="trace-meta">${esc(a.resourceType)}${a.resourceId != null ? " #" + esc(a.resourceId) : ""} — ${esc(a.detail)}</div>
+      </div>
+      <div class="trace-time">${esc(timeAgo(a.ts))}</div>
+    </div>`;
+                })
+                .join("")
+            : emptyRow("No audit activity yet.");
+
+          const allowCount = DB.policies.filter(
+            (p) => p.effect === "ALLOW"
+          ).length;
+          const denyCount = DB.policies.filter(
+            (p) => p.effect === "DENY"
+          ).length;
+          const tot = allowCount + denyCount || 1;
+          document.getElementById("dash-policy-balance").innerHTML = `
+    <div style="display:flex; height:10px; border-radius:6px; overflow:hidden; margin-bottom:14px;">
+      <div style="width:${(allowCount / tot) * 100}%; background:var(--allow);"></div>
+      <div style="width:${(denyCount / tot) * 100}%; background:var(--deny);"></div>
+    </div>
+    <div class="kv-row"><span class="k"><span class="pill pill-allow">ALLOW</span></span><span class="v">${allowCount} policies</span></div>
+    <div class="kv-row"><span class="k"><span class="pill pill-deny">DENY</span></span><span class="v">${denyCount} policies</span></div>
+    <div class="kv-row"><span class="k">Wildcard resource (*)</span><span class="v">${DB.policies.filter((p) => p.resources.includes("*")).length}</span></div>
+    <div class="kv-row"><span class="k">Conditional policies</span><span class="v">${DB.policies.filter((p) => Object.keys(p.conditions || {}).length).length}</span></div>
+  `;
+
+          const locked_ = DB.users.filter(
+            (u) => u.locked || u.status !== "active"
+          );
+          document.getElementById("dash-locked").innerHTML = locked_.length
+            ? locked_
+                .map(
+                  (u) => `
+    <div class="trace-row">
+      <div class="trace-dot ${u.locked ? "deny" : "allow"}" style="${!u.locked ? "background:var(--text-faint);box-shadow:none;" : ""}"></div>
+      <div class="trace-main">
+        <div class="trace-title">${esc(userName(u))}</div>
+        <div class="trace-meta">${esc(u.email)}</div>
+      </div>
+      <span class="pill ${u.locked ? "pill-locked" : "pill-inactive"}">${u.locked ? "LOCKED" : "INACTIVE"}</span>
+    </div>`
+                )
+                .join("")
+            : emptyRow("No locked or inactive accounts.");
+
+          const sess = DB.sessions.slice(0, 6);
+          document.getElementById("dash-sessions").innerHTML = sess.length
+            ? sess
+                .map((s) => {
+                  const u = findUser(s.userId);
+                  return `<div class="trace-row">
+      <div class="trace-dot allow"></div>
+      <div class="trace-main">
+        <div class="trace-title">${esc(userName(u))}</div>
+        <div class="trace-meta">${esc(s.device)} · ${esc(s.ip)}</div>
+      </div>
+      <div class="trace-time">${esc(timeAgo(s.lastActiveAt))}</div>
+    </div>`;
+                })
+                .join("")
+            : emptyRow("No active sessions.");
+        }
+        function emptyRow(msg) {
+          return `<div style="padding:22px 4px; color:var(--text-faint); font-size:12.5px; text-align:center;">${esc(msg)}</div>`;
+        }
+
+        /* =====================================================================
+   RENDER: USERS
+===================================================================== */
+        function populateRoleFilter() {
+          const sel = document.getElementById("user-filter-role");
+          sel.innerHTML =
+            '<option value="">All roles</option>' +
+            DB.roles
+              .map((r) => `<option value="${r.id}">${esc(r.name)}</option>`)
+              .join("");
+        }
+
+        function renderUsers() {
+          const q = (
+            document.getElementById("user-search").value || ""
+          ).toLowerCase();
+          const statusF = document.getElementById("user-filter-status").value;
+          const roleF = document.getElementById("user-filter-role").value;
+
+          let list = DB.users.slice();
+          if (q)
+            list = list.filter((u) =>
+              (userName(u) + u.email + u.username).toLowerCase().includes(q)
+            );
+          if (statusF)
+            list = list.filter((u) =>
+              statusF === "locked"
+                ? u.locked
+                : !u.locked && u.status === statusF
+            );
+          if (roleF)
+            list = list.filter((u) =>
+              DB.userRoles.some(
+                (ur) => ur.userId === u.id && ur.roleId === Number(roleF)
+              )
+            );
+
+          const tbody = document.getElementById("users-tbody");
+          const empty = document.getElementById("users-empty");
+          if (!list.length) {
+            tbody.innerHTML = "";
+            empty.style.display = "block";
+            empty.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <div class="es-title">No users match</div><div class="es-sub">Try adjusting your search or filters.</div>`;
+            return;
+          }
+          empty.style.display = "none";
+
+          tbody.innerHTML = list
+            .map((u) => {
+              const roles = rolesForUser(u.id);
+              const status = u.locked ? "locked" : u.status;
+              const pillClass =
+                status === "active"
+                  ? "pill-active"
+                  : status === "locked"
+                    ? "pill-locked"
+                    : "pill-inactive";
+              return `<tr class="clickable" data-user-id="${u.id}">
+      <td>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="avatar" style="width:32px;height:32px;font-size:11px;">${esc(initials(userName(u)))}</div>
+          <div>
+            <div class="cell-primary">${esc(userName(u))}</div>
+            <div class="cell-mono" style="font-size:11px;">${esc(u.email)}</div>
+          </div>
+        </div>
+      </td>
+      <td class="cell-mono">${esc(u.username)}</td>
+      <td>${roles.length ? roles.map((r) => `<span class="chip">${esc(r.name)}</span>`).join("") : '<span class="cell-muted">—</span>'}</td>
+      <td><span class="pill ${pillClass}">${status.toUpperCase()}</span></td>
+      <td class="cell-muted">${esc(timeAgo(u.lastLoginAt))}</td>
+      <td>
+        <div class="row-actions">
+          <button class="icon-btn" data-open-user="${u.id}" title="Open">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+      </td>
+    </tr>`;
+            })
+            .join("");
+        }
+
+        /* -------- User drawer -------- */
+        let currentDrawerUserId = null;
+
+        function openUserDrawer(userId) {
+          currentDrawerUserId = userId;
+          const u = findUser(userId);
+          if (!u) return;
+          const roles = rolesForUser(userId);
+          const direct = directPoliciesForUser(userId);
+          const allDirect = DB.userPolicies.filter(
+            (up) => up.userId === userId
+          );
+          const sess = sessionsForUser(userId);
+          const status = u.locked ? "locked" : u.status;
+          const pillClass =
+            status === "active"
+              ? "pill-active"
+              : status === "locked"
+                ? "pill-locked"
+                : "pill-inactive";
+
+          const drawer = document.getElementById("user-drawer");
+          drawer.innerHTML = `
+    <div class="drawer-head">
+      <div class="drawer-title-wrap">
+        <div class="drawer-avatar">${esc(initials(userName(u)))}</div>
+        <div>
+          <div style="font-family:var(--font-display); font-weight:700; font-size:16px;">${esc(userName(u))}</div>
+          <div class="cell-mono" style="font-size:11.5px; color:var(--text-faint);">@${esc(u.username)}</div>
+        </div>
+      </div>
+      <div class="close-x" id="drawer-close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </div>
+    </div>
+    <div class="drawer-body">
+      <div class="drawer-section">
+        <h4>Account</h4>
+        <div class="kv-row"><span class="k">Email</span><span class="v">${esc(u.email)}</span></div>
+        <div class="kv-row"><span class="k">Status</span><span class="v"><span class="pill ${pillClass}">${status.toUpperCase()}</span></span></div>
+        <div class="kv-row"><span class="k">Created</span><span class="v">${esc(fmtDate(u.createdAt))}</span></div>
+        <div class="kv-row"><span class="k">Last login</span><span class="v">${esc(fmtDate(u.lastLoginAt))}</span></div>
+      </div>
+
+      <div class="drawer-section">
+        <h4>Roles (${roles.length})</h4>
+        ${
+          roles.length
+            ? roles
+                .map(
+                  (r) => `
+          <div class="kv-row">
+            <span class="k">${esc(r.name)} <span class="cell-mono" style="font-size:10.5px;">${esc(r.slug)}</span></span>
+            <span class="v"><span class="tree-badge" style="cursor:pointer;color:var(--deny)" data-remove-user-role="${u.id}:${r.id}">Remove</span></span>
+          </div>`
+                )
+                .join("")
+            : '<div class="es-sub" style="color:var(--text-faint);">No roles assigned.</div>'
+        }
+        <div style="margin-top:10px; display:flex; gap:8px;">
+          <select id="drawer-add-role" style="flex:1;">
+            <option value="">Attach role…</option>
+            ${DB.roles
+              .filter((r) => !roles.find((rr) => rr.id === r.id))
+              .map((r) => `<option value="${r.id}">${esc(r.name)}</option>`)
+              .join("")}
+          </select>
+          <button class="btn btn-sm" id="drawer-attach-role">Add</button>
+        </div>
+      </div>
+
+      <div class="drawer-section">
+        <h4>Direct policy overrides (${allDirect.length})</h4>
+        ${
+          allDirect.length
+            ? allDirect
+                .map((up) => {
+                  const p = findPolicy(up.policyId);
+                  const expired =
+                    up.expiresAt &&
+                    new Date(up.expiresAt).getTime() < Date.now();
+                  return `<div class="kv-row" style="align-items:flex-start;">
+            <span class="k">
+              <span class="pill ${p.effect === "ALLOW" ? "pill-allow" : "pill-deny"}">${p.effect}</span>
+              ${esc(p.name)}${expired ? ' <span style="color:var(--text-faint)">(expired)</span>' : ""}
+              ${up.expiresAt ? `<div style="color:var(--text-faint); font-size:10.5px; margin-top:2px;">expires ${esc(fmtDate(up.expiresAt))}</div>` : ""}
+            </span>
+            <span class="v"><span class="tree-badge" style="cursor:pointer;color:var(--deny)" data-remove-user-policy="${up.id}">Remove</span></span>
+          </div>`;
+                })
+                .join("")
+            : '<div class="es-sub" style="color:var(--text-faint);">No direct overrides.</div>'
+        }
+        <button class="btn btn-sm" id="drawer-add-policy" style="margin-top:10px; width:100%; justify-content:center;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;"><path d="M12 5v14M5 12h14"/></svg>
+          Attach direct policy
+        </button>
+      </div>
+
+      <div class="drawer-section">
+        <h4>Sessions (${sess.length})</h4>
+        ${
+          sess.length
+            ? sess
+                .map(
+                  (s) => `
+          <div class="kv-row">
+            <span class="k">${esc(s.device)} <span class="cell-mono" style="font-size:10.5px;">${esc(s.ip)}</span></span>
+            <span class="v" style="display:flex; align-items:center; gap:8px;">
+              ${esc(timeAgo(s.lastActiveAt))}
+              <span class="tree-badge" style="cursor:pointer;color:var(--deny)" data-revoke-session="${s.id}">Revoke</span>
+            </span>
+          </div>`
+                )
+                .join("")
+            : '<div class="es-sub" style="color:var(--text-faint);">No active sessions.</div>'
+        }
+      </div>
+
+      <div class="drawer-section">
+        <h4>Effective access map</h4>
+        <div style="overflow-x:auto;">
+        <table style="font-size:11.5px;">
+          <thead><tr><th style="padding:6px 8px;">Module</th><th style="padding:6px 6px;">V</th><th style="padding:6px 6px;">A</th><th style="padding:6px 6px;">E</th><th style="padding:6px 6px;">D</th></tr></thead>
+          <tbody>
+          ${accessMapForUser(u.id)
+            .map(
+              (row) => `
+            <tr>
+              <td style="padding:6px 8px; border-bottom:1px solid var(--border-soft);">${esc(row.module.name)}</td>
+              ${["view", "add", "edit", "delete"].map((a) => `<td style="padding:6px 6px; border-bottom:1px solid var(--border-soft); text-align:center;">${row.caps[a] ? '<span style="color:var(--allow)">●</span>' : '<span style="color:var(--text-faint)">–</span>'}</td>`).join("")}
+            </tr>`
+            )
+            .join("")}
+          </tbody>
+        </table>
+        </div>
+      </div>
+    </div>
+    <div class="drawer-actions">
+      <button class="btn btn-sm" data-edit-user="${u.id}">Edit profile</button>
+      ${
+        u.locked
+          ? `<button class="btn btn-sm" data-unlock-user="${u.id}">Unlock account</button>`
+          : `<button class="btn btn-sm" data-lock-user="${u.id}">Lock account</button>`
+      }
+      <button class="btn btn-sm" data-reset-pw="${u.id}">Reset password</button>
+      <button class="btn btn-sm btn-danger" data-logout-all="${u.id}">Log out everywhere</button>
+      <button class="btn btn-sm btn-danger" data-delete-user="${u.id}" style="margin-left:auto;">Delete user</button>
+    </div>
+  `;
+          document.getElementById("drawer-overlay").classList.add("open");
+          drawer.classList.add("open");
+
+          drawer.querySelector("#drawer-close").onclick = closeDrawer;
+          drawer.querySelectorAll("[data-remove-user-role]").forEach((el) => {
+            el.onclick = () => {
+              const [uid_, rid] = el.dataset.removeUserRole
+                .split(":")
+                .map(Number);
+              DB.userRoles = DB.userRoles.filter(
+                (ur) => !(ur.userId === uid_ && ur.roleId === rid)
+              );
+              persist("userRoles");
+              logAudit(
+                1,
+                "role.detach",
+                "User",
+                uid_,
+                "ALLOW",
+                "Removed role " + rid
+              );
+              toast("Role removed");
+              openUserDrawer(uid_);
+              renderUsers();
+            };
+          });
+          const attachBtn = drawer.querySelector("#drawer-attach-role");
+          if (attachBtn)
+            attachBtn.onclick = () => {
+              const sel = drawer.querySelector("#drawer-add-role");
+              if (!sel.value) return;
+              DB.userRoles.push({ userId: u.id, roleId: Number(sel.value) });
+              persist("userRoles");
+              logAudit(
+                1,
+                "role.attach",
+                "User",
+                u.id,
+                "ALLOW",
+                "Attached role " + sel.value
+              );
+              toast("Role attached");
+              openUserDrawer(u.id);
+              renderUsers();
+            };
+          drawer.querySelectorAll("[data-remove-user-policy]").forEach((el) => {
+            el.onclick = () => {
+              const id = Number(el.dataset.removeUserPolicy);
+              DB.userPolicies = DB.userPolicies.filter((up) => up.id !== id);
+              persist("userPolicies");
+              logAudit(
+                1,
+                "policy.detach",
+                "User",
+                u.id,
+                "ALLOW",
+                "Removed direct policy override"
+              );
+              toast("Override removed");
+              openUserDrawer(u.id);
+            };
+          });
+          const addPolicyBtn = drawer.querySelector("#drawer-add-policy");
+          if (addPolicyBtn)
+            addPolicyBtn.onclick = () => openAttachPolicyModal(u.id);
+          drawer.querySelectorAll("[data-revoke-session]").forEach((el) => {
+            el.onclick = () => {
+              DB.sessions = DB.sessions.filter(
+                (s) => s.id !== el.dataset.revokeSession
+              );
+              persist("sessions");
+              logAudit(
+                1,
+                "session.revoke",
+                "Session",
+                null,
+                "ALLOW",
+                "Revoked session for " + userName(u)
+              );
+              toast("Session revoked");
+              openUserDrawer(u.id);
+              renderSessions();
+              renderDashboard();
+            };
+          });
+          const editBtn = drawer.querySelector("[data-edit-user]");
+          if (editBtn) editBtn.onclick = () => openUserModal(u.id);
+          const lockBtn = drawer.querySelector("[data-lock-user]");
+          if (lockBtn)
+            lockBtn.onclick = () => {
+              u.locked = true;
+              persist("users");
+              logAudit(
+                1,
+                "user.lock",
+                "User",
+                u.id,
+                "ALLOW",
+                "Locked " + userName(u)
+              );
+              toast("Account locked");
+              openUserDrawer(u.id);
+              renderUsers();
+              renderDashboard();
+            };
+          const unlockBtn = drawer.querySelector("[data-unlock-user]");
+          if (unlockBtn)
+            unlockBtn.onclick = () => {
+              u.locked = false;
+              persist("users");
+              logAudit(
+                1,
+                "user.unlock",
+                "User",
+                u.id,
+                "ALLOW",
+                "Unlocked " + userName(u)
+              );
+              toast("Account unlocked");
+              openUserDrawer(u.id);
+              renderUsers();
+              renderDashboard();
+            };
+          const resetBtn = drawer.querySelector("[data-reset-pw]");
+          if (resetBtn)
+            resetBtn.onclick = () => {
+              logAudit(
+                1,
+                "user.password.reset",
+                "User",
+                u.id,
+                "ALLOW",
+                "Admin-initiated reset for " + userName(u)
+              );
+              toast("Password reset email queued");
+            };
+          const logoutAllBtn = drawer.querySelector("[data-logout-all]");
+          if (logoutAllBtn)
+            logoutAllBtn.onclick = () => {
+              const before = DB.sessions.length;
+              DB.sessions = DB.sessions.filter((s) => s.userId !== u.id);
+              persist("sessions");
+              logAudit(
+                1,
+                "user.logout_all",
+                "User",
+                u.id,
+                "ALLOW",
+                "Revoked " + (before - DB.sessions.length) + " session(s)"
+              );
+              toast("Signed out of all devices");
+              openUserDrawer(u.id);
+              renderSessions();
+              renderDashboard();
+            };
+          const deleteBtn = drawer.querySelector("[data-delete-user]");
+          if (deleteBtn)
+            deleteBtn.onclick = () => {
+              if (
+                !confirm(
+                  "Delete " +
+                    userName(u) +
+                    "? This soft-deletes the user and revokes all sessions."
+                )
+              )
+                return;
+              DB.users = DB.users.filter((x) => x.id !== u.id);
+              DB.userRoles = DB.userRoles.filter((ur) => ur.userId !== u.id);
+              DB.userPolicies = DB.userPolicies.filter(
+                (up) => up.userId !== u.id
+              );
+              DB.sessions = DB.sessions.filter((s) => s.userId !== u.id);
+              ["users", "userRoles", "userPolicies", "sessions"].forEach(
+                persist
+              );
+              logAudit(
+                1,
+                "user.delete",
+                "User",
+                u.id,
+                "ALLOW",
+                "Deleted " + userName(u)
+              );
+              toast("User deleted");
+              closeDrawer();
+              renderUsers();
+              renderDashboard();
+              renderCounts();
+            };
+        }
+        function closeDrawer() {
+          document.getElementById("drawer-overlay").classList.remove("open");
+          document.getElementById("user-drawer").classList.remove("open");
+          currentDrawerUserId = null;
+        }
+
+        /* =====================================================================
+   RENDER: ROLES (tree)
+===================================================================== */
+        function renderRoles() {
+          const root = roleChildren(DB.roles, null);
+          const wrap = document.getElementById("roles-tree");
+          const empty = document.getElementById("roles-empty");
+          if (!DB.roles.length) {
+            wrap.innerHTML = "";
+            empty.style.display = "block";
+            empty.innerHTML = `<div class="es-title">No roles yet</div><div class="es-sub">Create your first role to start building the hierarchy.</div>`;
+            return;
+          }
+          empty.style.display = "none";
+          wrap.innerHTML = root.map((r) => renderRoleNode(r)).join("");
+          bindTreeEvents(wrap);
+          bindRoleActions();
+        }
+        function renderRoleNode(role) {
+          const children = roleChildren(DB.roles, role.id);
+          const policies = policiesForRole(role.id);
+          const userCount = DB.userRoles.filter(
+            (ur) => ur.roleId === role.id
+          ).length;
+          const hasChildren = children.length > 0;
+          return `<div class="tree-node">
+    <div class="tree-row" data-toggle="${hasChildren ? "y" : "n"}">
+      <div class="twist ${hasChildren ? "open" : "leaf"}">${hasChildren ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg>' : ""}</div>
+      <span class="tname">${esc(role.name)}</span>
+      <span class="tslug">${esc(role.slug)}</span>
+      <span class="tree-badge">${userCount} user${userCount === 1 ? "" : "s"}</span>
+      <span class="tree-badge">${policies.length} polic${policies.length === 1 ? "y" : "ies"}</span>
+      <div class="row-actions">
+        <button class="icon-btn" data-role-policies="${role.id}" title="Manage policies">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3.5" width="16" height="17" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+        </button>
+        <button class="icon-btn" data-role-clone="${role.id}" title="Clone role">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M4 16V6a2 2 0 012-2h10"/></svg>
+        </button>
+        <button class="icon-btn" data-role-edit="${role.id}" title="Edit">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </button>
+        <button class="icon-btn" data-role-delete="${role.id}" title="Delete">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>
+        </button>
+      </div>
+    </div>
+    ${hasChildren ? `<div class="tree-children open">${children.map((c) => renderRoleNode(c)).join("")}</div>` : ""}
+  </div>`;
+        }
+        function bindTreeEvents(container) {
+          container
+            .querySelectorAll('.tree-row[data-toggle="y"]')
+            .forEach((row) => {
+              row.addEventListener("click", (e) => {
+                if (e.target.closest(".row-actions")) return;
+                const twist = row.querySelector(".twist");
+                const kids = row.parentElement.querySelector(".tree-children");
+                if (!kids) return;
+                kids.classList.toggle("open");
+                twist.classList.toggle("open");
+              });
+            });
+        }
+        function bindRoleActions() {
+          document.querySelectorAll("[data-role-edit]").forEach(
+            (b) =>
+              (b.onclick = (e) => {
+                e.stopPropagation();
+                openRoleModal(Number(b.dataset.roleEdit));
+              })
+          );
+          document.querySelectorAll("[data-role-delete]").forEach(
+            (b) =>
+              (b.onclick = (e) => {
+                e.stopPropagation();
+                deleteRole(Number(b.dataset.roleDelete));
+              })
+          );
+          document.querySelectorAll("[data-role-clone]").forEach(
+            (b) =>
+              (b.onclick = (e) => {
+                e.stopPropagation();
+                cloneRole(Number(b.dataset.roleClone));
+              })
+          );
+          document.querySelectorAll("[data-role-policies]").forEach(
+            (b) =>
+              (b.onclick = (e) => {
+                e.stopPropagation();
+                openRolePoliciesModal(Number(b.dataset.rolePolicies));
+              })
+          );
+        }
+        function deleteRole(id) {
+          const role = findRole(id);
+          if (!role) return;
+          if (DB.roles.some((r) => r.parentId === id)) {
+            toast("Cannot delete a role with child roles", "err");
+            return;
+          }
+          if (
+            !confirm(
+              `Delete role "${role.name}"? This also removes its policy attachments and user assignments.`
+            )
+          )
+            return;
+          DB.roles = DB.roles.filter((r) => r.id !== id);
+          DB.rolePolicies = DB.rolePolicies.filter((rp) => rp.roleId !== id);
+          DB.userRoles = DB.userRoles.filter((ur) => ur.roleId !== id);
+          ["roles", "rolePolicies", "userRoles"].forEach(persist);
+          logAudit(
+            1,
+            "role.delete",
+            "Role",
+            id,
+            "ALLOW",
+            "Deleted role " + role.name
+          );
+          toast("Role deleted");
+          renderRoles();
+          renderUsers();
+          renderCounts();
+        }
+        function cloneRole(id) {
+          const role = findRole(id);
+          if (!role) return;
+          const newId = Math.max(0, ...DB.roles.map((r) => r.id)) + 1;
+          const clone = {
+            ...role,
+            id: newId,
+            name: role.name + " (Copy)",
+            slug: role.slug + "-copy-" + newId,
+          };
+          DB.roles.push(clone);
+          policiesForRole(id).forEach((p) =>
+            DB.rolePolicies.push({ roleId: newId, policyId: p.id })
+          );
+          persist("roles");
+          persist("rolePolicies");
+          logAudit(
+            1,
+            "role.clone",
+            "Role",
+            newId,
+            "ALLOW",
+            "Cloned " + role.name
+          );
+          toast("Role cloned");
+          renderRoles();
+          renderCounts();
+        }
+
+        /* =====================================================================
+   RENDER: MODULES (tree)
+===================================================================== */
+        function renderModules() {
+          const root = moduleTree(DB.modules, null);
+          const wrap = document.getElementById("modules-tree");
+          const empty = document.getElementById("modules-empty");
+          if (!DB.modules.length) {
+            wrap.innerHTML = "";
+            empty.style.display = "block";
+            empty.innerHTML = `<div class="es-title">No modules yet</div><div class="es-sub">Add a module to expose it in the CMS.</div>`;
+            return;
+          }
+          empty.style.display = "none";
+          wrap.innerHTML = root.map((m) => renderModuleNode(m)).join("");
+          bindTreeEvents(wrap);
+          document.querySelectorAll("[data-mod-edit]").forEach(
+            (b) =>
+              (b.onclick = (e) => {
+                e.stopPropagation();
+                openModuleModal(Number(b.dataset.modEdit));
+              })
+          );
+          document.querySelectorAll("[data-mod-delete]").forEach(
+            (b) =>
+              (b.onclick = (e) => {
+                e.stopPropagation();
+                deleteModule(Number(b.dataset.modDelete));
+              })
+          );
+          document.querySelectorAll("[data-mod-toggle]").forEach(
+            (b) =>
+              (b.onclick = (e) => {
+                e.stopPropagation();
+                const m = findModule(Number(b.dataset.modToggle));
+                m.active = !m.active;
+                persist("modules");
+                logAudit(
+                  1,
+                  "module.toggle",
+                  "Module",
+                  m.id,
+                  "ALLOW",
+                  (m.active ? "Activated " : "Deactivated ") + m.name
+                );
+                toast(m.active ? "Module activated" : "Module deactivated");
+                renderModules();
+                renderDashboard();
+              })
+          );
+        }
+        function renderModuleNode(mod) {
+          const children = moduleTree(DB.modules, mod.id);
+          const hasChildren = children.length > 0;
+          return `<div class="tree-node">
+    <div class="tree-row" data-toggle="${hasChildren ? "y" : "n"}">
+      <div class="twist ${hasChildren ? "open" : "leaf"}">${hasChildren ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 6l6 6-6 6"/></svg>' : ""}</div>
+      <span class="tname">${esc(mod.name)}</span>
+      <span class="tslug">${esc(mod.slug)}</span>
+      <span class="tree-badge">priority ${mod.priority ?? "—"}</span>
+      <span class="pill ${mod.active ? "pill-active" : "pill-inactive"}">${mod.active ? "ACTIVE" : "INACTIVE"}</span>
+      <div class="row-actions">
+        <button class="icon-btn" data-mod-toggle="${mod.id}" title="${mod.active ? "Deactivate" : "Activate"}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.3 2.3L16 10"/></svg>
+        </button>
+        <button class="icon-btn" data-mod-edit="${mod.id}" title="Edit">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </button>
+        <button class="icon-btn" data-mod-delete="${mod.id}" title="Delete">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>
+        </button>
+      </div>
+    </div>
+    ${hasChildren ? `<div class="tree-children open">${children.map((c) => renderModuleNode(c)).join("")}</div>` : ""}
+  </div>`;
+        }
+        function deleteModule(id) {
+          const mod = findModule(id);
+          if (!mod) return;
+          if (DB.modules.some((m) => m.parentId === id)) {
+            toast("Cannot delete a module with sub-modules", "err");
+            return;
+          }
+          if (!confirm(`Delete module "${mod.name}"?`)) return;
+          DB.modules = DB.modules.filter((m) => m.id !== id);
+          persist("modules");
+          logAudit(
+            1,
+            "module.delete",
+            "Module",
+            id,
+            "ALLOW",
+            "Deleted module " + mod.name
+          );
+          toast("Module deleted");
+          renderModules();
+          renderCounts();
+        }
+
+        /* =====================================================================
+   RENDER: POLICIES
+===================================================================== */
+        function renderPolicies() {
+          const q = (
+            document.getElementById("policy-search").value || ""
+          ).toLowerCase();
+          let list = DB.policies.slice();
+          if (q)
+            list = list.filter((p) =>
+              (p.name + p.slug).toLowerCase().includes(q)
+            );
+
+          const tbody = document.getElementById("policies-tbody");
+          const empty = document.getElementById("policies-empty");
+          if (!list.length) {
+            tbody.innerHTML = "";
+            empty.style.display = "block";
+            empty.innerHTML = `<div class="es-title">No policies match</div><div class="es-sub">Create a policy to start granting or denying access.</div>`;
+            return;
+          }
+          empty.style.display = "none";
+          tbody.innerHTML = list
+            .map(
+              (p) => `
+    <tr>
+      <td>
+        <div class="cell-primary">${esc(p.name)}</div>
+        <div class="cell-mono" style="font-size:11px;">${esc(p.slug)}</div>
+      </td>
+      <td><span class="pill ${p.effect === "ALLOW" ? "pill-allow" : "pill-deny"}">${p.effect}</span></td>
+      <td>${p.actions.map((a) => `<span class="chip ${a === "*" ? "amber" : ""}">${esc(a)}</span>`).join("")}</td>
+      <td>${p.resources.map((r) => `<span class="chip ${r === "*" ? "amber" : "accent"}">${esc(r)}</span>`).join("")}</td>
+      <td>${
+        Object.keys(p.conditions || {}).length
+          ? Object.entries(p.conditions)
+              .map(
+                ([k, v]) =>
+                  `<span class="chip">${esc(k)}: ${esc(Array.isArray(v) ? v.join(",") : v)}</span>`
+              )
+              .join("")
+          : '<span class="cell-muted">—</span>'
+      }</td>
+      <td>
+        <div class="row-actions">
+          <button class="icon-btn" data-policy-edit="${p.id}" title="Edit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </button>
+          <button class="icon-btn" data-policy-delete="${p.id}" title="Delete">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>
+          </button>
+        </div>
+      </td>
+    </tr>`
+            )
+            .join("");
+
+          tbody
+            .querySelectorAll("[data-policy-edit]")
+            .forEach(
+              (b) =>
+                (b.onclick = () =>
+                  openPolicyModal(Number(b.dataset.policyEdit)))
+            );
+          tbody
+            .querySelectorAll("[data-policy-delete]")
+            .forEach(
+              (b) =>
+                (b.onclick = () => deletePolicy(Number(b.dataset.policyDelete)))
+            );
+        }
+        function deletePolicy(id) {
+          const p = findPolicy(id);
+          if (!p) return;
+          if (
+            !confirm(
+              `Delete policy "${p.name}"? It will be detached from all roles and users.`
+            )
+          )
+            return;
+          DB.policies = DB.policies.filter((x) => x.id !== id);
+          DB.rolePolicies = DB.rolePolicies.filter((rp) => rp.policyId !== id);
+          DB.userPolicies = DB.userPolicies.filter((up) => up.policyId !== id);
+          ["policies", "rolePolicies", "userPolicies"].forEach(persist);
+          logAudit(
+            1,
+            "policy.delete",
+            "Policy",
+            id,
+            "ALLOW",
+            "Deleted policy " + p.name
+          );
+          toast("Policy deleted");
+          renderPolicies();
+          renderRoles();
+          renderCounts();
+        }
+
+        /* =====================================================================
+   RENDER: SESSIONS
+===================================================================== */
+        function renderSessions() {
+          const tbody = document.getElementById("sessions-tbody");
+          const empty = document.getElementById("sessions-empty");
+          if (!DB.sessions.length) {
+            tbody.innerHTML = "";
+            empty.style.display = "block";
+            empty.innerHTML = `<div class="es-title">No active sessions</div><div class="es-sub">Sessions will appear here as users sign in.</div>`;
+            return;
+          }
+          empty.style.display = "none";
+          const list = DB.sessions
+            .slice()
+            .sort(
+              (a, b) => new Date(b.lastActiveAt) - new Date(a.lastActiveAt)
+            );
+          tbody.innerHTML = list
+            .map((s) => {
+              const u = findUser(s.userId);
+              return `<tr>
+      <td>
+        <div style="display:flex; align-items:center; gap:9px;">
+          <div class="avatar" style="width:28px;height:28px;font-size:10px;">${esc(initials(userName(u)))}</div>
+          <span class="cell-primary">${esc(userName(u))}</span>
+        </div>
+      </td>
+      <td class="cell-muted">${esc(s.device)}</td>
+      <td class="cell-mono">${esc(s.ip)}</td>
+      <td class="cell-muted">${esc(fmtDate(s.createdAt))}</td>
+      <td class="cell-muted">${esc(timeAgo(s.lastActiveAt))}</td>
+      <td><button class="btn btn-sm btn-danger" data-revoke="${s.id}">Revoke</button></td>
+    </tr>`;
+            })
+            .join("");
+          tbody.querySelectorAll("[data-revoke]").forEach(
+            (b) =>
+              (b.onclick = () => {
+                DB.sessions = DB.sessions.filter(
+                  (s) => s.id !== b.dataset.revoke
+                );
+                persist("sessions");
+                logAudit(
+                  1,
+                  "session.revoke",
+                  "Session",
+                  null,
+                  "ALLOW",
+                  "Revoked session"
+                );
+                toast("Session revoked");
+                renderSessions();
+                renderDashboard();
+                renderCounts();
+              })
+          );
+        }
+
+        /* =====================================================================
+   RENDER: AUDIT LOG
+===================================================================== */
+        function populateAuditFilters() {
+          const actionSel = document.getElementById("audit-filter-action");
+          const resSel = document.getElementById("audit-filter-resource");
+          const actions = [...new Set(DB.audit.map((a) => a.action))].sort();
+          const resources = [
+            ...new Set(DB.audit.map((a) => a.resourceType)),
+          ].sort();
+          actionSel.innerHTML =
+            '<option value="">All actions</option>' +
+            actions
+              .map((a) => `<option value="${esc(a)}">${esc(a)}</option>`)
+              .join("");
+          resSel.innerHTML =
+            '<option value="">All resource types</option>' +
+            resources
+              .map((r) => `<option value="${esc(r)}">${esc(r)}</option>`)
+              .join("");
+        }
+        function renderAudit() {
+          const actionF = document.getElementById("audit-filter-action").value;
+          const resF = document.getElementById("audit-filter-resource").value;
+          let list = DB.audit
+            .slice()
+            .sort((a, b) => new Date(b.ts) - new Date(a.ts));
+          if (actionF) list = list.filter((a) => a.action === actionF);
+          if (resF) list = list.filter((a) => a.resourceType === resF);
+
+          const tbody = document.getElementById("audit-tbody");
+          const empty = document.getElementById("audit-empty");
+          if (!list.length) {
+            tbody.innerHTML = "";
+            empty.style.display = "block";
+            empty.innerHTML = `<div class="es-title">No matching audit records</div><div class="es-sub">Adjust filters to see more history.</div>`;
+            return;
+          }
+          empty.style.display = "none";
+          tbody.innerHTML = list
+            .map((a) => {
+              const u = findUser(a.userId);
+              return `<tr>
+      <td class="cell-mono">${esc(fmtDate(a.ts))}</td>
+      <td class="cell-primary">${esc(userName(u))}</td>
+      <td class="cell-mono">${esc(a.action)}</td>
+      <td class="cell-muted">${esc(a.resourceType)}${a.resourceId != null ? " #" + esc(a.resourceId) : ""}</td>
+      <td><span class="pill ${a.result === "ALLOW" ? "pill-allow" : "pill-deny"}">${a.result}</span></td>
+      <td class="cell-mono">${esc(a.ip)}</td>
+    </tr>`;
+            })
+            .join("");
+        }
+
+        /* =====================================================================
+   RENDER: SECURITY SETTINGS
+===================================================================== */
+        function renderSecurity() {
+          const s = DB.security;
+          document.getElementById("sec-maxLoginAttempts").value =
+            s.maxLoginAttempts;
+          document.getElementById("sec-lockoutDurationMinutes").value =
+            s.lockoutDurationMinutes;
+          document.getElementById("sec-passwordMinLength").value =
+            s.passwordMinLength;
+          document.getElementById("sec-accessTokenTTLMinutes").value =
+            s.accessTokenTTLMinutes;
+          document.getElementById("sec-refreshTokenTTLDays").value =
+            s.refreshTokenTTLDays;
+          document.getElementById("sec-requireMFA").checked = !!s.requireMFA;
+        }
+        function saveSecurity() {
+          DB.security = {
+            maxLoginAttempts:
+              Number(document.getElementById("sec-maxLoginAttempts").value) ||
+              5,
+            lockoutDurationMinutes:
+              Number(
+                document.getElementById("sec-lockoutDurationMinutes").value
+              ) || 30,
+            passwordMinLength:
+              Number(document.getElementById("sec-passwordMinLength").value) ||
+              8,
+            accessTokenTTLMinutes:
+              Number(
+                document.getElementById("sec-accessTokenTTLMinutes").value
+              ) || 15,
+            refreshTokenTTLDays:
+              Number(
+                document.getElementById("sec-refreshTokenTTLDays").value
+              ) || 30,
+            requireMFA: document.getElementById("sec-requireMFA").checked,
+          };
+          persist("security");
+          logAudit(
+            1,
+            "security.settings.update",
+            "SecuritySettings",
+            null,
+            "ALLOW",
+            "Updated security parameters"
+          );
+          toast("Security settings saved");
+        }
+
+        /* =====================================================================
+   POLICY SIMULATOR
+===================================================================== */
+        function populateSimulator() {
+          document.getElementById("sim-user").innerHTML = DB.users
+            .map((u) => `<option value="${u.id}">${esc(userName(u))}</option>`)
+            .join("");
+          document.getElementById("sim-resource").innerHTML =
+            DB.modules
+              .map(
+                (m) => `<option value="${esc(m.slug)}">${esc(m.slug)}</option>`
+              )
+              .join("") + '<option value="*">* (wildcard)</option>';
+        }
+        function runSimulation() {
+          const userId = Number(document.getElementById("sim-user").value);
+          const action = document.getElementById("sim-action").value;
+          const resource = document.getElementById("sim-resource").value;
+          const res = evaluate(userId, action, resource);
+          const u = findUser(userId);
+
+          const html = `
+    <div style="display:flex; align-items:center; gap:10px; padding:14px 16px; border-radius:10px; margin-bottom:16px; background:${res.decision === "ALLOW" ? "var(--allow-dim)" : "var(--deny-dim)"}; border:1px solid ${res.decision === "ALLOW" ? "#34d39944" : "#f0587b44"};">
+      <span class="pill ${res.decision === "ALLOW" ? "pill-allow" : "pill-deny"}" style="font-size:13px; padding:5px 12px;">${res.decision}</span>
+      <div>
+        <div style="font-weight:600; font-size:13px;">${esc(userName(u))} → ${esc(action)} on ${esc(resource)}</div>
+        <div style="font-size:11.5px; color:var(--text-muted); margin-top:2px;">${esc(res.reason)}</div>
+      </div>
+    </div>
+    <h4 style="font-size:11px; text-transform:uppercase; letter-spacing:.6px; color:var(--text-faint); margin:0 0 8px;">Matched policies (${res.matched.length})</h4>
+    ${
+      res.matched.length
+        ? res.matched
+            .map(
+              (e) => `
+      <div class="trace-row">
+        <div class="trace-dot ${e.policy.effect === "ALLOW" ? "allow" : "deny"}"></div>
+        <div class="trace-main">
+          <div class="trace-title">${esc(e.policy.name)}</div>
+          <div class="trace-meta">via ${e.via === "role" ? "role · " + esc(e.role.name) : "direct override"}</div>
+        </div>
+        <span class="pill ${e.policy.effect === "ALLOW" ? "pill-allow" : "pill-deny"}">${e.policy.effect}</span>
+      </div>`
+            )
+            .join("")
+        : emptyRow(
+            "No policies matched this action/resource — implicit deny applies."
+          )
+    }
+  `;
+          document.getElementById("sim-result").innerHTML = html;
+          logAudit(
+            userId,
+            action + "." + resource,
+            resource,
+            null,
+            res.decision,
+            "Simulated by admin"
+          );
+        }
+
+        /* =====================================================================
+   MODALS: USER
+===================================================================== */
+        function openModal(html, wide) {
+          const box = document.getElementById("modal-box");
+          box.className = "modal" + (wide ? " wide" : "");
+          box.innerHTML = html;
+          document.getElementById("modal-overlay").classList.add("open");
+          box
+            .querySelectorAll("[data-close-modal]")
+            .forEach((b) => (b.onclick = closeModal));
+        }
+        function closeModal() {
+          document.getElementById("modal-overlay").classList.remove("open");
+        }
+
+        function openUserModal(userId) {
+          const editing = !!userId;
+          const u = editing ? findUser(userId) : null;
+          openModal(`
+    <div class="modal-head"><h3>${editing ? "Edit user" : "New user"}</h3><div class="close-x" data-close-modal><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></div></div>
+    <div class="modal-body">
+      <div class="field-row">
+        <div class="field"><label>First name</label><input type="text" id="f-firstName" value="${editing ? esc(u.firstName) : ""}"></div>
+        <div class="field"><label>Last name</label><input type="text" id="f-lastName" value="${editing ? esc(u.lastName) : ""}"></div>
+      </div>
+      <div class="field"><label>Username</label><input type="text" id="f-username" value="${editing ? esc(u.username) : ""}"></div>
+      <div class="field"><label>Email</label><input type="email" id="f-email" value="${editing ? esc(u.email) : ""}"></div>
+      ${!editing ? `<div class="field"><label>Temporary password</label><input type="password" id="f-password" placeholder="Min ${DB.security.passwordMinLength} characters"></div>` : ""}
+      <div class="field" style="margin-bottom:0;">
+        <label>Status</label>
+        <select id="f-status">
+          <option value="active" ${editing && u.status === "active" ? "selected" : ""}>Active</option>
+          <option value="inactive" ${editing && u.status === "inactive" ? "selected" : ""}>Inactive</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" data-close-modal>Cancel</button>
+      <button class="btn btn-primary" id="save-user-btn">${editing ? "Save changes" : "Create user"}</button>
+    </div>
+  `);
+          document.getElementById("save-user-btn").onclick = () => {
+            const firstName = document
+              .getElementById("f-firstName")
+              .value.trim();
+            const lastName = document.getElementById("f-lastName").value.trim();
+            const username = document.getElementById("f-username").value.trim();
+            const email = document.getElementById("f-email").value.trim();
+            const status = document.getElementById("f-status").value;
+            if (!firstName || !lastName || !username || !email) {
+              toast("Please fill in all required fields", "err");
+              return;
+            }
+            if (editing) {
+              Object.assign(u, {
+                firstName,
+                lastName,
+                username,
+                email,
+                status,
+              });
+              logAudit(
+                1,
+                "user.update",
+                "User",
+                u.id,
+                "ALLOW",
+                "Updated profile for " + userName(u)
+              );
+              toast("User updated");
+            } else {
+              const newId = Math.max(0, ...DB.users.map((x) => x.id)) + 1;
+              DB.users.push({
+                id: newId,
+                firstName,
+                lastName,
+                username,
+                email,
+                status,
+                locked: false,
+                lastLoginAt: null,
+                createdAt: nowIso(),
+              });
+              persist("users");
+              logAudit(
+                1,
+                "user.create",
+                "User",
+                newId,
+                "ALLOW",
+                "Registered " + firstName + " " + lastName
+              );
+              toast("User created");
+            }
+            persist("users");
+            closeModal();
+            renderUsers();
+            renderCounts();
+            renderDashboard();
+            populateSimulator();
+            if (editing && currentDrawerUserId === u.id) openUserDrawer(u.id);
+          };
+        }
+
+        function openAttachPolicyModal(userId) {
+          openModal(`
+    <div class="modal-head"><h3>Attach direct policy</h3><div class="close-x" data-close-modal><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></div></div>
+    <div class="modal-body">
+      <div class="field">
+        <label>Policy</label>
+        <select id="ap-policy">${DB.policies.map((p) => `<option value="${p.id}">${esc(p.name)} (${p.effect})</option>`).join("")}</select>
+      </div>
+      <div class="field">
+        <label>Expires at <span style="color:var(--text-faint); font-weight:400;">(optional)</span></label>
+        <input type="datetime-local" id="ap-expires">
+        <div class="hint">Leave blank for a permanent override. The engine drops it automatically once expired.</div>
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Reason</label>
+        <input type="text" id="ap-reason" placeholder="e.g. Temporary debug access">
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" data-close-modal>Cancel</button>
+      <button class="btn btn-primary" id="ap-save">Attach policy</button>
+    </div>
+  `);
+          document.getElementById("ap-save").onclick = () => {
+            const policyId = Number(document.getElementById("ap-policy").value);
+            const expiresRaw = document.getElementById("ap-expires").value;
+            const reason = document.getElementById("ap-reason").value.trim();
+            const newId =
+              Math.max(0, ...DB.userPolicies.map((x) => x.id), 0) + 1;
+            DB.userPolicies.push({
+              id: newId,
+              userId,
+              policyId,
+              expiresAt: expiresRaw ? new Date(expiresRaw).toISOString() : null,
+              reason,
+            });
+            persist("userPolicies");
+            logAudit(
+              1,
+              "policy.attach",
+              "User",
+              userId,
+              "ALLOW",
+              "Attached direct policy " + findPolicy(policyId).name
+            );
+            toast("Policy attached");
+            closeModal();
+            openUserDrawer(userId);
+          };
+        }
+
+        /* =====================================================================
+   MODALS: ROLE
+===================================================================== */
+        function openRoleModal(roleId) {
+          const editing = !!roleId;
+          const r = editing ? findRole(roleId) : null;
+          openModal(`
+    <div class="modal-head"><h3>${editing ? "Edit role" : "New role"}</h3><div class="close-x" data-close-modal><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></div></div>
+    <div class="modal-body">
+      <div class="field"><label>Name</label><input type="text" id="rf-name" value="${editing ? esc(r.name) : ""}"></div>
+      <div class="field"><label>Slug</label><input type="text" id="rf-slug" value="${editing ? esc(r.slug) : ""}" placeholder="e.g. content-editor"></div>
+      <div class="field">
+        <label>Parent role <span style="color:var(--text-faint); font-weight:400;">(optional)</span></label>
+        <select id="rf-parent">
+          <option value="">None — root role</option>
+          ${DB.roles
+            .filter((x) => !editing || x.id !== roleId)
+            .map(
+              (x) =>
+                `<option value="${x.id}" ${editing && r.parentId === x.id ? "selected" : ""}>${esc(x.name)}</option>`
+            )
+            .join("")}
+        </select>
+      </div>
+      <div class="field" style="margin-bottom:0;"><label>Description</label><textarea id="rf-desc" style="font-family:inherit; min-height:60px;">${editing ? esc(r.description || "") : ""}</textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" data-close-modal>Cancel</button>
+      <button class="btn btn-primary" id="rf-save">${editing ? "Save changes" : "Create role"}</button>
+    </div>
+  `);
+          document.getElementById("rf-save").onclick = () => {
+            const name = document.getElementById("rf-name").value.trim();
+            let slug = document.getElementById("rf-slug").value.trim();
+            const parentVal = document.getElementById("rf-parent").value;
+            const description = document.getElementById("rf-desc").value.trim();
+            if (!name) {
+              toast("Role name is required", "err");
+              return;
+            }
+            if (!slug)
+              slug = name
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/(^-|-$)/g, "");
+            const parentId = parentVal ? Number(parentVal) : null;
+
+            if (editing) {
+              // cycle detection: cannot set parent to self or a descendant
+              if (parentId !== null) {
+                let cur = findRole(parentId);
+                const visited = new Set();
+                while (cur) {
+                  if (cur.id === roleId) {
+                    toast("Cyclic parent reference detected", "err");
+                    return;
+                  }
+                  if (visited.has(cur.id)) break;
+                  visited.add(cur.id);
+                  cur = cur.parentId ? findRole(cur.parentId) : null;
+                }
+              }
+              Object.assign(r, { name, slug, parentId, description });
+              logAudit(
+                1,
+                "role.update",
+                "Role",
+                r.id,
+                "ALLOW",
+                "Updated role " + name
+              );
+              toast("Role updated");
+            } else {
+              const newId = Math.max(0, ...DB.roles.map((x) => x.id), 0) + 1;
+              DB.roles.push({ id: newId, name, slug, parentId, description });
+              logAudit(
+                1,
+                "role.create",
+                "Role",
+                newId,
+                "ALLOW",
+                "Created role " + name
+              );
+              toast("Role created");
+            }
+            persist("roles");
+            closeModal();
+            renderRoles();
+            renderCounts();
+            populateRoleFilter();
+          };
+        }
+
+        function openRolePoliciesModal(roleId) {
+          const role = findRole(roleId);
+          const attached = new Set(policiesForRole(roleId).map((p) => p.id));
+          openModal(
+            `
+    <div class="modal-head"><h3>Policies · ${esc(role.name)}</h3><div class="close-x" data-close-modal><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></div></div>
+    <div class="modal-body">
+      <div class="hint" style="margin-bottom:12px;">Toggle policies attached to this role. DENY policies always take precedence over ALLOW.</div>
+      <div class="chip-select">
+        ${DB.policies
+          .map(
+            (
+              p
+            ) => `<div class="chip-toggle ${attached.has(p.id) ? "on" : ""}" data-toggle-policy="${p.id}">
+          <span class="pill ${p.effect === "ALLOW" ? "pill-allow" : "pill-deny"}" style="margin-right:6px;">${p.effect}</span>${esc(p.name)}
+        </div>`
+          )
+          .join("")}
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn btn-primary" data-close-modal>Done</button>
+    </div>
+  `,
+            true
+          );
+          document.querySelectorAll("[data-toggle-policy]").forEach((chip) => {
+            chip.onclick = () => {
+              const pid = Number(chip.dataset.togglePolicy);
+              const exists = DB.rolePolicies.find(
+                (rp) => rp.roleId === roleId && rp.policyId === pid
+              );
+              if (exists) {
+                DB.rolePolicies = DB.rolePolicies.filter(
+                  (rp) => !(rp.roleId === roleId && rp.policyId === pid)
+                );
+                chip.classList.remove("on");
+                logAudit(
+                  1,
+                  "policy.detach",
+                  "Role",
+                  roleId,
+                  "ALLOW",
+                  "Detached " + findPolicy(pid).name + " from " + role.name
+                );
+              } else {
+                DB.rolePolicies.push({ roleId, policyId: pid });
+                chip.classList.add("on");
+                logAudit(
+                  1,
+                  "policy.attach",
+                  "Role",
+                  roleId,
+                  "ALLOW",
+                  "Attached " + findPolicy(pid).name + " to " + role.name
+                );
+              }
+              persist("rolePolicies");
+              renderRoles();
+            };
+          });
+        }
+
+        /* =====================================================================
+   MODALS: POLICY
+===================================================================== */
+        function openPolicyModal(policyId) {
+          const editing = !!policyId;
+          const p = editing ? findPolicy(policyId) : null;
+          const allActions = ["view", "add", "edit", "delete", "*"];
+          const currentActions = editing ? p.actions : [];
+          openModal(
+            `
+    <div class="modal-head"><h3>${editing ? "Edit policy" : "New policy"}</h3><div class="close-x" data-close-modal><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></div></div>
+    <div class="modal-body">
+      <div class="field-row">
+        <div class="field"><label>Name</label><input type="text" id="pf-name" value="${editing ? esc(p.name) : ""}"></div>
+        <div class="field">
+          <label>Effect</label>
+          <select id="pf-effect">
+            <option value="ALLOW" ${editing && p.effect === "ALLOW" ? "selected" : ""}>ALLOW</option>
+            <option value="DENY" ${editing && p.effect === "DENY" ? "selected" : ""}>DENY</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Slug</label><input type="text" id="pf-slug" value="${editing ? esc(p.slug) : ""}" placeholder="e.g. developer-task-access"></div>
+      <div class="field">
+        <label>Actions</label>
+        <div class="chip-select" id="pf-actions">
+          ${allActions.map((a) => `<div class="chip-toggle ${currentActions.includes(a) ? "on" : ""}" data-action="${a}">${a}</div>`).join("")}
+        </div>
+      </div>
+      <div class="field">
+        <label>Resources <span style="color:var(--text-faint); font-weight:400;">(comma-separated module slugs, or *)</span></label>
+        <input type="text" id="pf-resources" value="${editing ? esc(p.resources.join(", ")) : ""}" placeholder="Tasks, Payments">
+      </div>
+      <div class="field" style="margin-bottom:0;">
+        <label>Conditions <span style="color:var(--text-faint); font-weight:400;">(JSON, optional)</span></label>
+        <textarea id="pf-conditions">${editing ? esc(JSON.stringify(p.conditions || {}, null, 2)) : "{}"}</textarea>
+        <div class="hint">e.g. { "mfaRequired": true, "ipAddress": ["192.168.1.*"] }</div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" data-close-modal>Cancel</button>
+      <button class="btn btn-primary" id="pf-save">${editing ? "Save changes" : "Create policy"}</button>
+    </div>
+  `,
+            true
+          );
+
+          document.querySelectorAll("#pf-actions .chip-toggle").forEach((c) => {
+            c.onclick = () => c.classList.toggle("on");
+          });
+
+          document.getElementById("pf-save").onclick = () => {
+            const name = document.getElementById("pf-name").value.trim();
+            let slug = document.getElementById("pf-slug").value.trim();
+            const effect = document.getElementById("pf-effect").value;
+            const actions = [
+              ...document.querySelectorAll("#pf-actions .chip-toggle.on"),
+            ].map((c) => c.dataset.action);
+            const resources = document
+              .getElementById("pf-resources")
+              .value.split(",")
+              .map((s) => s.trim())
+              .filter(Boolean);
+            let conditions = {};
+            try {
+              const raw = document.getElementById("pf-conditions").value.trim();
+              conditions = raw ? JSON.parse(raw) : {};
+            } catch (err) {
+              toast("Conditions must be valid JSON", "err");
+              return;
+            }
+            if (!name) {
+              toast("Policy name is required", "err");
+              return;
+            }
+            if (!actions.length) {
+              toast("Select at least one action", "err");
+              return;
+            }
+            if (!resources.length) {
+              toast("Provide at least one resource", "err");
+              return;
+            }
+            if (!slug)
+              slug = name
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/(^-|-$)/g, "");
+
+            if (editing) {
+              Object.assign(p, {
+                name,
+                slug,
+                effect,
+                actions,
+                resources,
+                conditions,
+              });
+              logAudit(
+                1,
+                "policy.update",
+                "Policy",
+                p.id,
+                "ALLOW",
+                "Updated policy " + name
+              );
+              toast("Policy updated");
+            } else {
+              const newId = Math.max(0, ...DB.policies.map((x) => x.id), 0) + 1;
+              DB.policies.push({
+                id: newId,
+                name,
+                slug,
+                effect,
+                actions,
+                resources,
+                conditions,
+              });
+              logAudit(
+                1,
+                "policy.create",
+                "Policy",
+                newId,
+                "ALLOW",
+                "Created policy " + name
+              );
+              toast("Policy created");
+            }
+            persist("policies");
+            closeModal();
+            renderPolicies();
+            renderRoles();
+            renderCounts();
+            renderDashboard();
+          };
+        }
+
+        /* =====================================================================
+   MODALS: MODULE
+===================================================================== */
+        function openModuleModal(moduleId) {
+          const editing = !!moduleId;
+          const m = editing ? findModule(moduleId) : null;
+          openModal(`
+    <div class="modal-head"><h3>${editing ? "Edit module" : "New module"}</h3><div class="close-x" data-close-modal><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></div></div>
+    <div class="modal-body">
+      <div class="field"><label>Name</label><input type="text" id="mf-name" value="${editing ? esc(m.name) : ""}"></div>
+      <div class="field"><label>Slug</label><input type="text" id="mf-slug" value="${editing ? esc(m.slug) : ""}" placeholder="e.g. Invoices"></div>
+      <div class="field-row">
+        <div class="field">
+          <label>Parent module <span style="color:var(--text-faint); font-weight:400;">(optional)</span></label>
+          <select id="mf-parent">
+            <option value="">None — root module</option>
+            ${DB.modules
+              .filter((x) => !editing || x.id !== moduleId)
+              .map(
+                (x) =>
+                  `<option value="${x.id}" ${editing && m.parentId === x.id ? "selected" : ""}>${esc(x.name)}</option>`
+              )
+              .join("")}
+          </select>
+        </div>
+        <div class="field"><label>Priority</label><input type="number" id="mf-priority" value="${editing ? (m.priority ?? "") : ""}" placeholder="Lower shows first"></div>
+      </div>
+      <div class="toggle-row" style="border:none; padding:4px 0 0;">
+        <div><div class="tr-label">Active</div><div class="tr-sub">Inactive modules are hidden from menus.</div></div>
+        <label class="switch"><input type="checkbox" id="mf-active" ${!editing || m.active ? "checked" : ""}><span class="slider"></span></label>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn" data-close-modal>Cancel</button>
+      <button class="btn btn-primary" id="mf-save">${editing ? "Save changes" : "Create module"}</button>
+    </div>
+  `);
+          document.getElementById("mf-save").onclick = () => {
+            const name = document.getElementById("mf-name").value.trim();
+            let slug = document.getElementById("mf-slug").value.trim();
+            const parentVal = document.getElementById("mf-parent").value;
+            const priorityVal = document.getElementById("mf-priority").value;
+            const active = document.getElementById("mf-active").checked;
+            if (!name) {
+              toast("Module name is required", "err");
+              return;
+            }
+            if (!slug) slug = name;
+            const parentId = parentVal ? Number(parentVal) : null;
+            const priority = priorityVal === "" ? null : Number(priorityVal);
+
+            if (editing) {
+              if (parentId !== null) {
+                let cur = findModule(parentId);
+                const visited = new Set();
+                while (cur) {
+                  if (cur.id === moduleId) {
+                    toast("Cyclic parent reference detected", "err");
+                    return;
+                  }
+                  if (visited.has(cur.id)) break;
+                  visited.add(cur.id);
+                  cur = cur.parentId ? findModule(cur.parentId) : null;
+                }
+              }
+              Object.assign(m, { name, slug, parentId, priority, active });
+              logAudit(
+                1,
+                "module.update",
+                "Module",
+                m.id,
+                "ALLOW",
+                "Updated module " + name
+              );
+              toast("Module updated");
+            } else {
+              const newId = Math.max(0, ...DB.modules.map((x) => x.id), 0) + 1;
+              DB.modules.push({
+                id: newId,
+                name,
+                slug,
+                parentId,
+                priority,
+                active,
+              });
+              logAudit(
+                1,
+                "module.create",
+                "Module",
+                newId,
+                "ALLOW",
+                "Created module " + name
+              );
+              toast("Module created");
+            }
+            persist("modules");
+            closeModal();
+            renderModules();
+            renderCounts();
+            populateSimulator();
+            renderDashboard();
+          };
+        }
+
+        /* =====================================================================
+   NAVIGATION
+===================================================================== */
+        const renderers = {
+          dashboard: renderDashboard,
+          users: () => {
+            populateRoleFilter();
+            renderUsers();
+          },
+          roles: renderRoles,
+          policies: renderPolicies,
+          modules: renderModules,
+          sessions: renderSessions,
+          audit: () => {
+            populateAuditFilters();
+            renderAudit();
+          },
+          security: renderSecurity,
+          simulator: populateSimulator,
+        };
+
+        function goTo(section) {
+          document
+            .querySelectorAll(".nav-item[data-section]")
+            .forEach((n) =>
+              n.classList.toggle("active", n.dataset.section === section)
+            );
+          document
+            .querySelectorAll(".section")
+            .forEach((s) =>
+              s.classList.toggle("active", s.id === "section-" + section)
+            );
+          if (renderers[section]) renderers[section]();
+        }
+
+        function bindNav() {
+          document
+            .querySelectorAll(".nav-item[data-section]")
+            .forEach((item) => {
+              item.addEventListener("click", () => goTo(item.dataset.section));
+            });
+          document.querySelectorAll("[data-nav]").forEach((el) => {
+            el.addEventListener("click", () => goTo(el.dataset.nav));
+          });
+        }
+
+        /* =====================================================================
+   GLOBAL EVENT WIRING
+===================================================================== */
+        function bindGlobal() {
+          document
+            .getElementById("user-search")
+            .addEventListener("input", renderUsers);
+          document
+            .getElementById("user-filter-status")
+            .addEventListener("change", renderUsers);
+          document
+            .getElementById("user-filter-role")
+            .addEventListener("change", renderUsers);
+          document
+            .getElementById("btn-new-user")
+            .addEventListener("click", () => openUserModal(null));
+
+          document
+            .getElementById("policy-search")
+            .addEventListener("input", renderPolicies);
+          document
+            .getElementById("btn-new-policy")
+            .addEventListener("click", () => openPolicyModal(null));
+
+          document
+            .getElementById("btn-new-role")
+            .addEventListener("click", () => openRoleModal(null));
+          document
+            .getElementById("btn-new-module")
+            .addEventListener("click", () => openModuleModal(null));
+
+          document
+            .getElementById("audit-filter-action")
+            .addEventListener("change", renderAudit);
+          document
+            .getElementById("audit-filter-resource")
+            .addEventListener("change", renderAudit);
+
+          document
+            .getElementById("btn-save-security")
+            .addEventListener("click", saveSecurity);
+          document
+            .getElementById("btn-run-sim")
+            .addEventListener("click", runSimulation);
+
+          document
+            .getElementById("btn-reset-data")
+            .addEventListener("click", () => {
+              if (
+                !confirm(
+                  "Reseed demo data? This clears everything stored in this browser and restores the sample dataset."
+                )
+              )
+                return;
+              seed();
+              renderCounts();
+              goTo(document.querySelector(".nav-item.active").dataset.section);
+              toast("Demo data reseeded");
+            });
+
+          document
+            .getElementById("modal-overlay")
+            .addEventListener("click", (e) => {
+              if (e.target.id === "modal-overlay") closeModal();
+            });
+          document
+            .getElementById("drawer-overlay")
+            .addEventListener("click", closeDrawer);
+          document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") {
+              closeModal();
+              closeDrawer();
+            }
+          });
+
+          document
+            .getElementById("users-tbody")
+            .addEventListener("click", (e) => {
+              const row = e.target.closest("[data-user-id]");
+              if (row) openUserDrawer(Number(row.dataset.userId));
+            });
+        }
+
+        /* =====================================================================
+   INIT
+===================================================================== */
+        loadDB();
+        bindNav();
+        bindGlobal();
+        renderCounts();
+        renderDashboard();
+      })();
+    </script>
+  </body>
+</html>

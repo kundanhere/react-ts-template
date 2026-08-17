@@ -1,57 +1,111 @@
-import { ArrowLeft01Icon, Home01Icon } from "@hugeicons/core-free-icons";
+"use client";
+
+import { useEffect } from "react";
+
+import { FileEmpty02Icon, Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Link } from "react-router-dom";
 
 import { Typography } from "@/components/typography";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+} from "@/components/ui/empty";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+} from "@/components/ui/input-group";
+import { Kbd } from "@/components/ui/kbd";
 
 export default function NotFound() {
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      // "/" key
+      if (event.code !== "Slash") return;
+
+      // Don't steal "/" when already typing in a field
+      const target = event.target as HTMLElement | null;
+
+      if (
+        target?.tagName === "INPUT" ||
+        target?.tagName === "TEXTAREA" ||
+        target?.tagName === "SELECT" ||
+        target?.isContentEditable
+      ) {
+        return;
+      }
+
+      event.preventDefault();
+
+      const input = document.getElementById("404-search");
+
+      if (input instanceof HTMLInputElement) {
+        input.focus();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
   return (
-    <section className="flex min-h-[70vh] flex-col items-center justify-center gap-8 px-4 py-6 text-center">
-      <div className="flex flex-col items-center gap-4">
-        <div className="bg-destructive/10 mb-2 inline-flex h-20 w-20 items-center justify-center rounded-full">
+    <Empty className="py-20">
+      <EmptyHeader className="max-w-lg">
+        <div className="mb-3 flex size-12 items-center justify-center rounded-lg bg-amber-500/10">
           <HugeiconsIcon
-            icon={Home01Icon}
-            size={48}
-            className="text-destructive"
+            icon={FileEmpty02Icon}
+            size={24}
+            className="text-amber-600 dark:text-amber-400"
           />
         </div>
 
-        <Typography variant="h1" className="text-foreground text-6xl font-bold">
-          404
+        <span className="text-muted-foreground text-sm font-medium uppercase">
+          Error 404
+        </span>
+
+        <Typography variant="h3" className="mt-2 tracking-tight">
+          Page not found
         </Typography>
 
-        <Typography
-          variant="h2"
-          className="text-muted-foreground text-2xl font-semibold"
-        >
-          Page Not Found
-        </Typography>
+        <EmptyDescription className="mt-2 max-w-md text-sm">
+          Sorry, we couldn&apos;t find the page you&apos;re looking for. It may
+          have been moved or no longer exists.
+        </EmptyDescription>
+      </EmptyHeader>
 
-        <Typography variant="p" className="text-muted-foreground max-w-md">
-          The page you're looking for doesn't exist or has been moved. Let's get
-          you back on track.
-        </Typography>
-      </div>
+      <EmptyContent className="w-full max-w-md">
+        <InputGroup className="sm:w-3/4">
+          <InputGroupInput
+            id="404-search"
+            placeholder="Try searching for pages..."
+          />
+          <InputGroupAddon>
+            <HugeiconsIcon
+              icon={Search01Icon}
+              size={18}
+              className="text-muted-foreground"
+            />
+          </InputGroupAddon>
+          <InputGroupAddon align="inline-end">
+            <Kbd>/</Kbd>
+          </InputGroupAddon>
+        </InputGroup>
 
-      <div className="mt-6 flex flex-wrap justify-center gap-4">
-        <Link
-          to="/"
-          className="bg-primary text-primary-foreground hover:bg-primary/80 flex items-center gap-2 rounded px-6 py-3 shadow transition"
-        >
-          <HugeiconsIcon icon={ArrowLeft01Icon} size={16} />
-          Back to Home
-        </Link>
-        <Link
-          to="/blog/hello-world"
-          className="border-primary bg-background text-primary hover:bg-accent rounded border px-6 py-3 shadow transition"
-        >
-          View Blog
-        </Link>
-      </div>
-
-      <Typography variant="p" className="text-muted-foreground mt-8 text-sm">
-        If you believe this is an error, please contact support.
-      </Typography>
-    </section>
+        <p className="text-muted-foreground mt-3 text-sm">
+          Need help?{" "}
+          <a
+            href="/"
+            className="text-foreground font-medium underline underline-offset-4"
+          >
+            Contact support
+          </a>
+        </p>
+      </EmptyContent>
+    </Empty>
   );
 }

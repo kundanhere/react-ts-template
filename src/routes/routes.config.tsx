@@ -1,6 +1,6 @@
 import { lazy } from "react";
 
-import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { ErrorBoundary } from "@/components/error-boundary";
 import { Layout } from "@/components/layout";
 import { RouteGuard } from "@/components/route-guard";
 

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-import { Moon01Icon, Sun01Icon } from "@hugeicons/core-free-icons";
+import { Moon02Icon, Sun01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import { useTheme } from "@/hooks/use-theme";
@@ -23,15 +23,17 @@ export function ThemeToggle() {
 
   return (
     <Button
+      variant="ghost"
+      size="icon-lg"
       aria-label="Toggle theme"
       onClick={() => setTheme(isDark ? "light" : "dark")}
     >
       {isDark ? (
-        <HugeiconsIcon icon={Sun01Icon} size={20} className="h-5 w-5" />
+        <HugeiconsIcon icon={Moon02Icon} size={20} className="h-8 w-8" />
       ) : (
-        <HugeiconsIcon icon={Moon01Icon} size={20} className="h-5 w-5" />
+        <HugeiconsIcon icon={Sun01Icon} size={20} className="h-8 w-8" />
       )}
-      <span className="hidden sm:inline">{isDark ? "Light" : "Dark"} Mode</span>
+      {/* <span className="hidden sm:inline">{isDark ? "Light" : "Dark"} Mode</span> */}
     </Button>
   );
 }

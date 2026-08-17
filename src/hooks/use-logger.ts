@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 export function useLogger() {
   return {
     log: (...args: any[]) => console.log("[LOG]:", ...args),
