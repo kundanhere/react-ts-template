@@ -2,6 +2,8 @@
 
 import * as React from "react";
 
+import { Link, useLocation } from "react-router-dom";
+
 import {
   SidebarGroup,
   SidebarMenu,
@@ -21,22 +23,32 @@ export function NavMain({
     badge?: string;
   }[];
 }) {
+  const location = useLocation();
+
   return (
     <SidebarGroup>
       <SidebarMenu>
-        {items.map((item) => (
-          <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton
-              tooltip={item.title}
-              render={<a href={item.url} />}
-              isActive={item.isActive}
-            >
-              {item.icon}
-              <span>{item.title}</span>
-            </SidebarMenuButton>
-            {item.badge && <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>}
-          </SidebarMenuItem>
-        ))}
+        {items.map((item) => {
+          const isCurrentActive =
+            item.url === "/"
+              ? location.pathname === "/"
+              : location.pathname === item.url ||
+                location.pathname.startsWith(`${item.url}/`);
+
+          return (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton
+                tooltip={item.title}
+                render={<Link to={item.url} />}
+                isActive={isCurrentActive}
+              >
+                {item.icon}
+                <span>{item.title}</span>
+              </SidebarMenuButton>
+              {item.badge && <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>}
+            </SidebarMenuItem>
+          );
+        })}
       </SidebarMenu>
     </SidebarGroup>
   );

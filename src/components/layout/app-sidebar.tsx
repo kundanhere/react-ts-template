@@ -6,6 +6,9 @@ import {
   Audit02Icon,
   BellPlusIcon,
   CommandIcon,
+  CpuIcon,
+  DashboardSquare01Icon,
+  GridIcon,
   Home03Icon,
   InboxIcon,
   LaptopPhoneSyncIcon,
@@ -15,6 +18,7 @@ import {
   ShieldKeyIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { Link } from "react-router-dom";
 
 import { NavMain } from "@/components/layout/nav-main";
 import { NavPrimary } from "@/components/layout/nav-primary";
@@ -40,86 +44,113 @@ const data = {
   navMain: [
     {
       title: "Home",
-      url: "#",
+      url: "/",
       icon: <HugeiconsIcon icon={Home03Icon} strokeWidth={2} />,
-      isActive: true,
+    },
+    {
+      title: "Overview",
+      url: "/dashboard",
+      icon: <HugeiconsIcon icon={DashboardSquare01Icon} strokeWidth={2} />,
     },
     {
       title: "Updates",
-      url: "#",
+      url: "/updates",
       icon: <HugeiconsIcon icon={BellPlusIcon} strokeWidth={2} />,
       badge: "40",
     },
     {
       title: "Inbox",
-      url: "#",
+      url: "/inbox",
       icon: <HugeiconsIcon icon={InboxIcon} strokeWidth={2} />,
       badge: "10",
     },
   ],
   navPrimary: [
     {
-      title: "Identity & Access Management",
-      url: "#",
+      title: "Identity & Access",
+      url: "/iam/dashboard",
       icon: <HugeiconsIcon icon={Shield01Icon} strokeWidth={2} />,
       isActive: true,
       items: [
         {
           title: "Users",
-          url: "#",
+          url: "/iam/users",
         },
         {
           title: "Roles",
-          url: "#",
+          url: "/iam/roles",
         },
         {
           title: "Policies",
-          url: "#",
+          url: "/iam/policies",
         },
         {
           title: "Modules",
-          url: "#",
+          url: "/iam/modules",
         },
       ],
     },
     {
+      title: "Audit Trail",
+      url: "/iam/audit/logs",
+      icon: <HugeiconsIcon icon={Audit02Icon} strokeWidth={2} />,
+      items: [
+        {
+          title: "My Activity Log",
+          url: "/iam/audit/me",
+        },
+        {
+          title: "System Audit Logs",
+          url: "/iam/audit/logs",
+        },
+      ],
+    },
+  ],
+  navGovernance: [
+    {
+      title: "Access Matrix",
+      url: "/iam/access-matrix",
+      icon: <HugeiconsIcon icon={GridIcon} strokeWidth={2} />,
+    },
+    {
+      title: "Policy Simulator",
+      url: "/iam/access/simulate",
+      icon: <HugeiconsIcon icon={CpuIcon} strokeWidth={2} />,
+    },
+  ],
+  navSystem: [
+    {
       title: "Active Sessions",
-      url: "#",
+      url: "/iam/sessions",
       icon: <HugeiconsIcon icon={LaptopPhoneSyncIcon} strokeWidth={2} />,
     },
     {
-      title: "Audit Logs",
-      url: "#",
-      icon: <HugeiconsIcon icon={Audit02Icon} strokeWidth={2} />,
+      title: "Security Settings",
+      url: "/iam/security/settings",
+      icon: <HugeiconsIcon icon={ShieldKeyIcon} strokeWidth={2} />,
     },
   ],
   navSecondary: [
     {
       title: "Support",
-      url: "#",
+      url: "/support",
       icon: <HugeiconsIcon icon={Quiz05Icon} strokeWidth={2} />,
     },
     {
       title: "Feedback",
-      url: "#",
+      url: "/feedback",
       icon: <HugeiconsIcon icon={SentIcon} strokeWidth={2} />,
     },
   ],
-  navSystem: [
-    {
-      title: "Security Settings",
-      url: "#",
-      icon: <HugeiconsIcon icon={ShieldKeyIcon} strokeWidth={2} />,
-    },
-  ],
 };
+
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" render={<a href="/" />}>
+            <SidebarMenuButton size="lg" render={<Link to="/" />}>
               <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
                 <HugeiconsIcon
                   icon={CommandIcon}
@@ -137,8 +168,15 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavPrimary items={data.navPrimary} />
-        <NavSystem items={data.navSystem} />
+        <NavPrimary
+          groupLabel="Identity & Access Management"
+          items={data.navPrimary}
+        />
+        <NavPrimary
+          groupLabel="Governance & Tools"
+          items={data.navGovernance}
+        />
+        <NavSystem groupLabel="Security & System" items={data.navSystem} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

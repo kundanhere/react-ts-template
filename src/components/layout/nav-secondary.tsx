@@ -1,5 +1,7 @@
 import * as React from "react";
 
+import { Link, useLocation } from "react-router-dom";
+
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -18,22 +20,28 @@ export function NavSecondary({
     icon: React.ReactNode;
   }[];
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+  const location = useLocation();
+
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
         <SidebarMenu>
-          {items.map((item) => (
-            <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton
-                tooltip={item.title}
-                size="sm"
-                render={<a href={item.url} />}
-              >
-                {item.icon}
-                <span>{item.title}</span>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
+          {items.map((item) => {
+            const isActive = location.pathname === item.url;
+            return (
+              <SidebarMenuItem key={item.title}>
+                <SidebarMenuButton
+                  tooltip={item.title}
+                  size="sm"
+                  render={<Link to={item.url} />}
+                  isActive={isActive}
+                >
+                  {item.icon}
+                  <span>{item.title}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            );
+          })}
         </SidebarMenu>
       </SidebarGroupContent>
     </SidebarGroup>
