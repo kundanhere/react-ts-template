@@ -1,5 +1,7 @@
 import type { Table } from "@tanstack/react-table";
 
+import { getSelectedTableRows } from "@/lib/data-table";
+
 export function exportTableToCSV<TData>(
   table: Table<TData>,
   opts: {
@@ -22,7 +24,7 @@ export function exportTableToCSV<TData>(
   const csvContent = [
     headers.join(","),
     ...(onlySelected
-      ? table.getFilteredSelectedRowModel().rows
+      ? getSelectedTableRows(table)
       : table.getRowModel().rows
     ).map((row) =>
       headers

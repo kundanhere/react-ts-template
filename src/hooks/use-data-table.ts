@@ -2,6 +2,7 @@ import * as React from "react";
 
 import {
   type ColumnFiltersState,
+  type ExpandedState,
   type PaginationState,
   type RowSelectionState,
   type SortingState,
@@ -10,6 +11,7 @@ import {
   type Updater,
   type VisibilityState,
   getCoreRowModel,
+  getExpandedRowModel,
   getFacetedMinMaxValues,
   getFacetedRowModel,
   getFacetedUniqueValues,
@@ -62,6 +64,8 @@ interface UseDataTableProps<TData>
   throttleMs?: number;
   clearOnDefault?: boolean;
   enableAdvancedFilter?: boolean;
+  enableNestedRows?: boolean;
+  getSubRows?: (originalRow: TData, index: number) => TData[] | undefined;
   scroll?: boolean;
   shallow?: boolean;
   startTransition?: React.TransitionStartFunction;
@@ -78,6 +82,8 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
     throttleMs = THROTTLE_MS,
     clearOnDefault = false,
     enableAdvancedFilter = false,
+    enableNestedRows = false,
+    getSubRows,
     scroll = false,
     shallow = true,
     startTransition,
@@ -117,6 +123,62 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>(initialState?.columnVisibility ?? {});
+  const [expanded, setExpanded] = React.useState<ExpandedState>(
+    initialState?.expanded ?? {}
+  );
+
+  const getSubRowsFn = React.useCallback(
+    (row: TData, index: number) => {
+      if (getSubRows) return getSubRows(row, index);
+      if ((tableProps as any).getSubRows)
+        return (tableProps as any).getSubRows(row, index);
+      return (row as any)?.children ?? (row as any)?.subRows;
+    },
+    [getSubRows, tableProps]
+  );
+
+  const validRowIds = React.useMemo(() => {
+    const ids = new Set<string>();
+    const getRowIdFn = props.getRowId;
+    const collect = (items: TData[], parent?: any) => {
+      if (!Array.isArray(items)) return;
+      items.forEach((item, index) => {
+        const id = getRowIdFn
+          ? getRowIdFn(item, index, parent)
+          : ((item as any)?.id ?? String(index));
+        if (id !== undefined && id !== null) {
+          ids.add(String(id));
+        }
+        const sub = getSubRowsFn(item, index);
+        if (sub) {
+          collect(sub, item);
+        }
+      });
+    };
+    collect(props.data);
+    return ids;
+  }, [props.data, props.getRowId, getSubRowsFn]);
+
+  const sanitizedExpanded = React.useMemo(() => {
+    if (typeof expanded === "boolean") return expanded;
+    const next: Record<string, boolean> = {};
+    for (const [key, value] of Object.entries(expanded)) {
+      if (value && validRowIds.has(key)) {
+        next[key] = value;
+      }
+    }
+    return next as ExpandedState;
+  }, [expanded, validRowIds]);
+
+  const sanitizedRowSelection = React.useMemo(() => {
+    const next: RowSelectionState = {};
+    for (const [key, value] of Object.entries(rowSelection)) {
+      if (value && validRowIds.has(key)) {
+        next[key] = value;
+      }
+    }
+    return next;
+  }, [rowSelection, validRowIds]);
 
   const [page, setPage] = useQueryState(
     pageKey,
@@ -284,20 +346,25 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
       pagination,
       sorting,
       columnVisibility,
-      rowSelection,
+      rowSelection: sanitizedRowSelection,
       columnFilters,
+      expanded: sanitizedExpanded,
     },
     defaultColumn: {
       ...tableProps.defaultColumn,
       enableColumnFilter: false,
     },
     enableRowSelection: true,
+    enableExpanding: true,
+    getSubRows: getSubRowsFn,
     onRowSelectionChange: setRowSelection,
+    onExpandedChange: setExpanded,
     onPaginationChange,
     onSortingChange,
     onColumnFiltersChange,
     onColumnVisibilityChange: setColumnVisibility,
     getCoreRowModel: getCoreRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -309,6 +376,7 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
     manualFiltering: true,
     meta: {
       ...tableProps.meta,
+      enableNestedRows,
       queryKeys: {
         page: pageKey,
         perPage: perPageKey,

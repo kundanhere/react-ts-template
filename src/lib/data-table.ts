@@ -1,4 +1,4 @@
-import type { Column } from "@tanstack/react-table";
+import type { Column, Row, Table } from "@tanstack/react-table";
 
 import { dataTableConfig } from "@/config/data-table";
 import type {
@@ -78,4 +78,22 @@ export function getValidFilters<TData>(
           filter.value !== null &&
           filter.value !== undefined)
   );
+}
+
+export function getSelectedTableRows<TData>(table: Table<TData>): Row<TData>[] {
+  const selection = table.getState().rowSelection;
+  if (!selection) return [];
+  const selectedIds = Object.keys(selection).filter((id) => selection[id]);
+  if (selectedIds.length === 0) return [];
+
+  const selectedRows: Row<TData>[] = [];
+  for (const id of selectedIds) {
+    try {
+      const row = table.getRow(id);
+      if (row) selectedRows.push(row);
+    } catch {
+      // ignore rows that might not be found
+    }
+  }
+  return selectedRows;
 }

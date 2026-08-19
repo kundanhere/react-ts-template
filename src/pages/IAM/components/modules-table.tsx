@@ -25,67 +25,96 @@ const INITIAL_MODULES: Module[] = [
     description:
       "Core authentication, authorization, and token management service",
     createdAt: new Date("2023-01-10"),
-  },
-  {
-    id: "mod-2",
-    code: "MOD-1002",
-    name: "User Management",
-    route: "/iam/users",
-    priority: 2,
-    category: "system",
-    status: "active",
-    isSystem: true,
-    description: "User lifecycle, profiles, credentials, and directory sync",
-    createdAt: new Date("2023-01-15"),
-  },
-  {
-    id: "mod-3",
-    code: "MOD-1003",
-    name: "Roles & Permissions",
-    route: "/iam/roles",
-    priority: 3,
-    category: "system",
-    status: "active",
-    isSystem: true,
-    description:
-      "Role-based access controls and granular permission definitions",
-    createdAt: new Date("2023-01-20"),
-  },
-  {
-    id: "mod-4",
-    code: "MOD-1004",
-    name: "Policies Registry",
-    route: "/iam/policies",
-    priority: 4,
-    category: "system",
-    status: "active",
-    isSystem: true,
-    description: "Attribute-based policy rules engine and policy simulator",
-    createdAt: new Date("2023-02-01"),
-  },
-  {
-    id: "mod-5",
-    code: "MOD-1005",
-    name: "Security & Audit",
-    route: "/iam/audit",
-    priority: 5,
-    category: "governance",
-    status: "active",
-    isSystem: false,
-    description: "Compliance logging, security events, and audit trails",
-    createdAt: new Date("2023-02-15"),
-  },
-  {
-    id: "mod-6",
-    code: "MOD-1006",
-    name: "Governance & Tools",
-    route: "/iam/access-matrix",
-    priority: 6,
-    category: "governance",
-    status: "maintenance",
-    isSystem: false,
-    description: "Access matrix breakdown and privilege elevation analyzer",
-    createdAt: new Date("2023-03-01"),
+    children: [
+      {
+        id: "mod-2",
+        code: "MOD-1002",
+        name: "User Management",
+        route: "/iam/users",
+        priority: 2,
+        category: "system",
+        status: "active",
+        isSystem: true,
+        description:
+          "User lifecycle, profiles, credentials, and directory sync",
+        createdAt: new Date("2023-01-15"),
+      },
+      {
+        id: "mod-3",
+        code: "MOD-1003",
+        name: "Roles & Permissions",
+        route: "/iam/roles",
+        priority: 3,
+        category: "system",
+        status: "active",
+        isSystem: true,
+        description:
+          "Role-based access controls and granular permission definitions",
+        createdAt: new Date("2023-01-20"),
+      },
+      {
+        id: "mod-4",
+        code: "MOD-1004",
+        name: "Policies Registry",
+        route: "/iam/policies",
+        priority: 4,
+        category: "system",
+        status: "active",
+        isSystem: true,
+        description: "Attribute-based policy rules engine and policy simulator",
+        createdAt: new Date("2023-02-01"),
+        children: [
+          {
+            id: "mod-4-1",
+            code: "MOD-1004-A",
+            name: "ABAC Rule Compiler",
+            route: "/iam/policies/rules",
+            priority: 41,
+            category: "system",
+            status: "active",
+            isSystem: true,
+            description: "Attribute expression compiler and validator engine",
+            createdAt: new Date("2023-02-05"),
+          },
+          {
+            id: "mod-4-2",
+            code: "MOD-1004-B",
+            name: "Policy Simulator Engine",
+            route: "/iam/policies/simulator",
+            priority: 42,
+            category: "governance",
+            status: "active",
+            isSystem: false,
+            description: "Dry-run access evaluation and impact testing",
+            createdAt: new Date("2023-02-10"),
+          },
+        ],
+      },
+      {
+        id: "mod-5",
+        code: "MOD-1005",
+        name: "Security & Audit",
+        route: "/iam/audit",
+        priority: 5,
+        category: "governance",
+        status: "active",
+        isSystem: false,
+        description: "Compliance logging, security events, and audit trails",
+        createdAt: new Date("2023-02-15"),
+      },
+      {
+        id: "mod-6",
+        code: "MOD-1006",
+        name: "Governance & Tools",
+        route: "/iam/access-matrix",
+        priority: 6,
+        category: "governance",
+        status: "maintenance",
+        isSystem: false,
+        description: "Access matrix breakdown and privilege elevation analyzer",
+        createdAt: new Date("2023-03-01"),
+      },
+    ],
   },
   {
     id: "mod-7",
@@ -150,42 +179,45 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
   const [isFormOpen, setIsFormOpen] = React.useState(false);
   const [editingModule, setEditingModule] = React.useState<Module | null>(null);
 
-  const statusCounts = React.useMemo(
-    () =>
-      modules.reduce(
-        (acc, mod) => {
-          acc[mod.status] = (acc[mod.status] || 0) + 1;
-          return acc;
-        },
-        { active: 0, inactive: 0, maintenance: 0, beta: 0 } as Record<
-          Module["status"],
-          number
-        >
-      ),
-    [modules]
-  );
+  const statusCounts = React.useMemo(() => {
+    const acc: Record<Module["status"], number> = {
+      active: 0,
+      inactive: 0,
+      maintenance: 0,
+      beta: 0,
+    };
+    const countItem = (item: Module) => {
+      acc[item.status] = (acc[item.status] || 0) + 1;
+      item.children?.forEach(countItem);
+    };
+    modules.forEach(countItem);
+    return acc;
+  }, [modules]);
 
-  const categoryCounts = React.useMemo(
-    () =>
-      modules.reduce(
-        (acc, mod) => {
-          acc[mod.category] = (acc[mod.category] || 0) + 1;
-          return acc;
-        },
-        {
-          core: 0,
-          system: 0,
-          feature: 0,
-          integration: 0,
-          governance: 0,
-        } as Record<Module["category"], number>
-      ),
-    [modules]
-  );
+  const categoryCounts = React.useMemo(() => {
+    const acc: Record<Module["category"], number> = {
+      core: 0,
+      system: 0,
+      feature: 0,
+      integration: 0,
+      governance: 0,
+    };
+    const countItem = (item: Module) => {
+      acc[item.category] = (acc[item.category] || 0) + 1;
+      item.children?.forEach(countItem);
+    };
+    modules.forEach(countItem);
+    return acc;
+  }, [modules]);
 
   const priorityRange = React.useMemo(() => {
-    if (modules.length === 0) return { min: 1, max: 10 };
-    const priorities = modules.map((m) => m.priority);
+    const priorities: number[] = [];
+    const collectPriorities = (item: Module) => {
+      priorities.push(item.priority);
+      item.children?.forEach(collectPriorities);
+    };
+    modules.forEach(collectPriorities);
+    if (priorities.length === 0) return { min: 1, max: 10 };
     return {
       min: Math.min(...priorities),
       max: Math.max(...priorities),
@@ -205,9 +237,14 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
   const handleSaveModule = React.useCallback(
     (values: Omit<Module, "id" | "code" | "createdAt">) => {
       if (editingModule) {
-        setModules((prev) =>
-          prev.map((m) => (m.id === editingModule.id ? { ...m, ...values } : m))
-        );
+        const updateRecursive = (list: Module[]): Module[] =>
+          list.map((m) => {
+            if (m.id === editingModule.id) return { ...m, ...values };
+            if (m.children?.length)
+              return { ...m, children: updateRecursive(m.children) };
+            return m;
+          });
+        setModules(updateRecursive);
         toast.success(`Updated module "${values.name}"`);
       } else {
         const nextIdNum = modules.length + 1;
@@ -226,16 +263,21 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
 
   const handleUpdateStatus = React.useCallback(
     (moduleId: string, status: Module["status"]) => {
-      setModules((prev) =>
-        prev.map((m) => (m.id === moduleId ? { ...m, status } : m))
-      );
+      const updateRecursive = (list: Module[]): Module[] =>
+        list.map((m) => {
+          if (m.id === moduleId) return { ...m, status };
+          if (m.children?.length)
+            return { ...m, children: updateRecursive(m.children) };
+          return m;
+        });
+      setModules(updateRecursive);
     },
     []
   );
 
   const handleToggleSystem = React.useCallback((moduleId: string) => {
-    setModules((prev) =>
-      prev.map((m) => {
+    const updateRecursive = (list: Module[]): Module[] =>
+      list.map((m) => {
         if (m.id === moduleId) {
           const nextVal = !m.isSystem;
           toast.success(
@@ -243,31 +285,59 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
           );
           return { ...m, isSystem: nextVal };
         }
+        if (m.children?.length)
+          return { ...m, children: updateRecursive(m.children) };
         return m;
-      })
-    );
+      });
+    setModules(updateRecursive);
   }, []);
 
   const handleBulkUpdateStatus = React.useCallback(
     (moduleIds: string[], status: Module["status"]) => {
-      setModules((prev) =>
-        prev.map((m) => (moduleIds.includes(m.id) ? { ...m, status } : m))
-      );
+      const updateRecursive = (list: Module[]): Module[] =>
+        list.map((m) => {
+          const updated = moduleIds.includes(m.id) ? { ...m, status } : m;
+          if (updated.children?.length) {
+            return {
+              ...updated,
+              children: updateRecursive(updated.children),
+            };
+          }
+          return updated;
+        });
+      setModules(updateRecursive);
     },
     []
   );
 
   const handleBulkUpdateCategory = React.useCallback(
     (moduleIds: string[], category: Module["category"]) => {
-      setModules((prev) =>
-        prev.map((m) => (moduleIds.includes(m.id) ? { ...m, category } : m))
-      );
+      const updateRecursive = (list: Module[]): Module[] =>
+        list.map((m) => {
+          const updated = moduleIds.includes(m.id) ? { ...m, category } : m;
+          if (updated.children?.length) {
+            return {
+              ...updated,
+              children: updateRecursive(updated.children),
+            };
+          }
+          return updated;
+        });
+      setModules(updateRecursive);
     },
     []
   );
 
   const handleBulkDelete = React.useCallback((moduleIds: string[]) => {
-    setModules((prev) => prev.filter((m) => !moduleIds.includes(m.id)));
+    const filterRecursive = (list: Module[]): Module[] =>
+      list
+        .filter((m) => !moduleIds.includes(m.id))
+        .map((m) =>
+          m.children?.length
+            ? { ...m, children: filterRecursive(m.children) }
+            : m
+        );
+    setModules(filterRecursive);
   }, []);
 
   const columns = React.useMemo(
@@ -296,6 +366,8 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
     columns,
     pageCount: 1,
     enableAdvancedFilter: false,
+    enableNestedRows: true,
+    getSubRows: (row) => row.children,
     initialState: {
       sorting: [{ id: "priority", desc: false }],
       columnPinning: { right: ["actions"] },
@@ -310,6 +382,7 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
     <>
       <DataTable
         table={table}
+        enableNestedRows
         actionBar={
           <ModulesTableActionBar
             table={table}

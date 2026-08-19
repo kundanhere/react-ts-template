@@ -25,6 +25,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/toast";
+import { getSelectedTableRows } from "@/lib/data-table";
 import { exportTableToCSV } from "@/lib/export";
 
 import { USER_ROLES, USER_STATUSES, type User } from "./users-table-columns";
@@ -42,7 +43,11 @@ export function UsersTableActionBar({
   onBulkUpdateRole,
   onBulkDelete,
 }: UsersTableActionBarProps) {
-  const { rows } = table.getFilteredSelectedRowModel();
+  const { rowSelection } = table.getState();
+  const rows = React.useMemo(() => {
+    if (!rowSelection) return [];
+    return getSelectedTableRows(table);
+  }, [table, rowSelection]);
 
   const onOpenChange = React.useCallback(
     (open: boolean) => {

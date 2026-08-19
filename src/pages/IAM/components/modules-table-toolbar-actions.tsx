@@ -25,7 +25,7 @@ export function ModulesTableToolbarActions({
           className="mr-1 size-4"
           aria-hidden="true"
         />
-        Add New Module
+        New module
       </Button>
       <Button
         variant="outline"

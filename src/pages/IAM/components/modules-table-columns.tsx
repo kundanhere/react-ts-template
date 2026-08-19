@@ -51,6 +51,7 @@ export interface Module {
   isSystem: boolean;
   description: string;
   createdAt: Date;
+  children?: Module[];
 }
 
 export const MODULE_CATEGORIES = [
