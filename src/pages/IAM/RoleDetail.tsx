@@ -1,11 +1,11 @@
 import {
   ArrowLeft01Icon,
   CheckmarkCircle02Icon,
-  Shield01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link, useParams } from "react-router-dom";
 
+import { PageWrapper } from "@/components/page-wrapper";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
@@ -51,35 +51,17 @@ export default function RoleDetailPage() {
   ];
 
   return (
-    <div className="flex flex-col gap-6 py-4">
-      <div>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="mb-2"
-          render={<Link to="/iam/roles" />}
-        >
+    <PageWrapper
+      title={`Role Details: ${id?.replace(/-/g, " ")}`}
+      subtitle="Role ID: role-admin-01"
+      backButton={
+        <Button variant="ghost" size="sm" render={<Link to="/iam/roles" />}>
           <HugeiconsIcon icon={ArrowLeft01Icon} size={16} className="mr-1" />
           Back to Roles
         </Button>
-        <div className="flex items-center gap-3">
-          <div className="bg-primary/10 text-primary rounded-xl p-3">
-            <HugeiconsIcon icon={Shield01Icon} size={24} strokeWidth={2} />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-semibold tracking-tight capitalize">
-                Role Details: {id?.replace(/-/g, " ")}
-              </h1>
-              <Badge variant="secondary">Active Role</Badge>
-            </div>
-            <p className="text-muted-foreground text-sm">
-              Role ID: <code className="font-mono text-xs">{id}</code>
-            </p>
-          </div>
-        </div>
-      </div>
-
+      }
+      badge={<Badge variant="secondary">Active Role</Badge>}
+    >
       <div className="bg-card flex flex-col gap-4 rounded-xl border p-6 shadow-xs">
         <h2 className="text-lg font-semibold">Role Capability Matrix</h2>
         <div className="overflow-x-auto">
@@ -139,6 +121,6 @@ export default function RoleDetailPage() {
           </table>
         </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 }

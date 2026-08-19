@@ -52,7 +52,13 @@ export interface PageWrapperProps
   title?: React.ReactNode;
   /** Subtitle or description - string or custom ReactNode */
   subtitle?: React.ReactNode;
+  /** Optional badge element displayed next to title */
+  badge?: React.ReactNode;
+  /** Optional back button element displayed top of title */
+  backButton?: React.ReactNode;
   /** Right-side element (button, text, dropdown, badge, form, etc.) */
+  rightElement?: React.ReactNode;
+  /** Alias for rightElement */
   action?: React.ReactNode;
   /** Main content of the page */
   children?: React.ReactNode;
@@ -65,6 +71,9 @@ export interface PageWrapperProps
 export function PageWrapper({
   title,
   subtitle,
+  badge,
+  backButton,
+  rightElement,
   action,
   children,
   variant,
@@ -75,41 +84,56 @@ export function PageWrapper({
   contentClassName,
   ...props
 }: PageWrapperProps) {
-  const hasHeader = Boolean(title) || Boolean(subtitle) || Boolean(action);
+  const rightContent = rightElement ?? action;
+  const hasHeader =
+    Boolean(title) ||
+    Boolean(subtitle) ||
+    Boolean(badge) ||
+    Boolean(backButton) ||
+    Boolean(rightContent);
 
   return (
     <div className={cn(pageWrapperVariants({ variant, className }))} {...props}>
       {hasHeader && (
-        <div
-          className={cn(
-            pageHeaderVariants({ headerAlign, headerBorder }),
-            headerClassName
-          )}
-        >
-          {(title || subtitle) && (
-            <div className="flex min-w-0 flex-col gap-1">
-              {typeof title === "string" ? (
-                <Typography variant="h3" className="truncate">
-                  {title}
-                </Typography>
-              ) : (
-                title
-              )}
-              {typeof subtitle === "string" ? (
-                <Typography className="text-muted-foreground text-sm">
-                  {subtitle}
-                </Typography>
-              ) : (
-                subtitle
-              )}
-            </div>
-          )}
+        <div className="flex flex-col gap-2">
+          {backButton && <div className="w-full">{backButton}</div>}
 
-          {action && (
-            <div className="flex shrink-0 flex-wrap items-center gap-2">
-              {action}
-            </div>
-          )}
+          <div
+            className={cn(
+              pageHeaderVariants({ headerAlign, headerBorder }),
+              headerClassName
+            )}
+          >
+            {(title || subtitle || badge) && (
+              <div className="flex min-w-0 flex-col gap-1">
+                {(title || badge) && (
+                  <div className="flex min-w-0 flex-wrap items-center gap-2 capitalize">
+                    {typeof title === "string" ? (
+                      <Typography variant="h3" className="truncate">
+                        {title}
+                      </Typography>
+                    ) : (
+                      title
+                    )}
+                    {badge}
+                  </div>
+                )}
+                {typeof subtitle === "string" ? (
+                  <Typography className="text-muted-foreground text-sm">
+                    {subtitle}
+                  </Typography>
+                ) : (
+                  subtitle
+                )}
+              </div>
+            )}
+
+            {rightContent && (
+              <div className="flex shrink-0 flex-wrap items-center gap-2">
+                {rightContent}
+              </div>
+            )}
+          </div>
         </div>
       )}
 
