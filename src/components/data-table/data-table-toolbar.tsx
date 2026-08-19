@@ -6,24 +6,43 @@ import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { Column, Table } from "@tanstack/react-table";
 
+import { useDataTableContext } from "@/components/data-table/data-table";
 import { DataTableDateFilter } from "@/components/data-table/data-table-date-filter";
 import { DataTableFacetedFilter } from "@/components/data-table/data-table-faceted-filter";
 import { DataTableSliderFilter } from "@/components/data-table/data-table-slider-filter";
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options";
+import {
+  type DataTableViewMode,
+  DataTableViewToggle,
+} from "@/components/data-table/data-table-view-toggle";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 interface DataTableToolbarProps<TData> extends React.ComponentProps<"div"> {
   table: Table<TData>;
+  viewMode?: DataTableViewMode;
+  onViewModeChange?: (mode: DataTableViewMode) => void;
+  enableViewToggle?: boolean;
 }
 
 export function DataTableToolbar<TData>({
   table,
+  viewMode: propViewMode,
+  onViewModeChange: propOnViewModeChange,
+  enableViewToggle: propEnableViewToggle,
   children,
   className,
   ...props
 }: DataTableToolbarProps<TData>) {
+  const context = useDataTableContext();
+
+  const viewMode = propViewMode ?? context?.viewMode ?? "list";
+  const onViewModeChange =
+    propOnViewModeChange ?? context?.setViewMode ?? (() => {});
+  const enableViewToggle =
+    propEnableViewToggle ?? context?.enableViewToggle ?? false;
+
   const isFiltered = table.getState().columnFilters.length > 0;
 
   const columns = React.useMemo(
@@ -63,11 +82,18 @@ export function DataTableToolbar<TData>({
       </div>
       <div className="flex items-center gap-2">
         {children}
+        {enableViewToggle && (
+          <DataTableViewToggle
+            viewMode={viewMode}
+            onViewModeChange={onViewModeChange}
+          />
+        )}
         <DataTableViewOptions table={table} align="end" />
       </div>
     </div>
   );
 }
+
 interface DataTableToolbarFilterProps<TData> {
   column: Column<TData>;
 }
@@ -100,7 +126,7 @@ function DataTableToolbarFilter<TData>({
               placeholder={columnMeta.placeholder ?? columnMeta.label}
               value={(column.getFilterValue() as string) ?? ""}
               onChange={(event) => column.setFilterValue(event.target.value)}
-              className={cn("h-8 w-[120px]", columnMeta.unit && "pr-8")}
+              className={cn("h-8 w-30", columnMeta.unit && "pr-8")}
             />
             {columnMeta.unit && (
               <span className="bg-accent text-muted-foreground absolute top-0 right-0 bottom-0 flex items-center rounded-r-md px-2 text-sm">
