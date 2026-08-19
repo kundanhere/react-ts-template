@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 
 import { Menu as MenuPrimitive } from "@base-ui/react/menu";
@@ -18,14 +16,23 @@ function DropdownMenuPortal({ ...props }: MenuPrimitive.Portal.Props) {
 
 const DropdownMenuTrigger = React.forwardRef<
   HTMLButtonElement,
-  MenuPrimitive.Trigger.Props
->((props, ref) => (
-  <MenuPrimitive.Trigger
-    ref={ref}
-    data-slot="dropdown-menu-trigger"
-    {...props}
-  />
-));
+  MenuPrimitive.Trigger.Props & { asChild?: boolean }
+>(({ asChild, children, render, ...props }, ref) => {
+  const renderElement =
+    render ??
+    (asChild && React.isValidElement(children) ? children : undefined);
+  return (
+    <MenuPrimitive.Trigger
+      ref={ref}
+      data-slot="dropdown-menu-trigger"
+      render={renderElement}
+      {...props}
+    >
+      {asChild ? undefined : children}
+    </MenuPrimitive.Trigger>
+  );
+});
+DropdownMenuTrigger.displayName = "DropdownMenuTrigger";
 
 const DropdownMenuContent = React.forwardRef<
   HTMLDivElement,
@@ -58,7 +65,7 @@ const DropdownMenuContent = React.forwardRef<
           ref={ref}
           data-slot="dropdown-menu-content"
           className={cn(
-            "bg-popover text-popover-foreground ring-foreground/10 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 z-50 max-h-(--available-height) w-(--anchor-width) min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg p-1 shadow-md ring-1 duration-100 outline-none data-closed:overflow-hidden",
+            "bg-popover text-popover-foreground ring-foreground/10 data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95 z-50 max-h-(--available-height) min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg p-1 shadow-md ring-1 duration-100 outline-none data-closed:overflow-hidden",
             className
           )}
           {...props}
@@ -67,6 +74,7 @@ const DropdownMenuContent = React.forwardRef<
     </MenuPrimitive.Portal>
   )
 );
+DropdownMenuContent.displayName = "DropdownMenuContent";
 
 function DropdownMenuGroup({ ...props }: MenuPrimitive.Group.Props) {
   return <MenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />;
@@ -96,16 +104,28 @@ function DropdownMenuItem({
   className,
   inset,
   variant = "default",
+  onClick,
+  onSelect,
   ...props
 }: MenuPrimitive.Item.Props & {
   inset?: boolean;
   variant?: "default" | "destructive";
+  onSelect?: (event: React.SyntheticEvent) => void;
 }) {
+  const handleClick = (event: any) => {
+    if (onClick) {
+      onClick(event);
+    } else if (onSelect) {
+      onSelect(event);
+    }
+  };
+
   return (
     <MenuPrimitive.Item
       data-slot="dropdown-menu-item"
       data-inset={inset}
       data-variant={variant}
+      onClick={handleClick}
       className={cn(
         "group/dropdown-menu-item focus:bg-accent focus:text-accent-foreground not-data-[variant=destructive]:focus:**:text-accent-foreground data-[variant=destructive]:text-destructive data-[variant=destructive]:focus:bg-destructive/10 data-[variant=destructive]:focus:text-destructive dark:data-[variant=destructive]:focus:bg-destructive/20 data-[variant=destructive]:*:[svg]:text-destructive relative flex min-h-7 cursor-default items-center gap-2 rounded-md px-2 py-1 text-xs/relaxed outline-hidden select-none data-disabled:pointer-events-none data-disabled:opacity-50 data-inset:pl-7.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
         className

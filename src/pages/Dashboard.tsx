@@ -1,6 +1,6 @@
 import { Typography } from "@/components/typography";
 
-export default function Dashboard() {
+export default function DashboardPage() {
   return (
     <div className="mx-auto max-w-2xl py-12">
       <Typography variant="h1" className="mb-4">

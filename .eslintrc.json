@@ -22,6 +22,7 @@
   "rules": {
     "jsx-a11y/anchor-has-content": "off",
     "jsx-a11y/control-has-associated-label": "off",
+    "jsx-a11y/label-has-associated-control": "off",
     "react/react-in-jsx-scope": "off",
     "react/require-default-props": "off",
     "react/jsx-props-no-spreading": "off",

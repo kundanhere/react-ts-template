@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 
 import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
@@ -25,10 +23,25 @@ function Tooltip({ ...props }: TooltipPrimitive.Root.Props) {
 
 const TooltipTrigger = React.forwardRef<
   HTMLButtonElement,
-  TooltipPrimitive.Trigger.Props
->((props, ref) => (
-  <TooltipPrimitive.Trigger ref={ref} data-slot="tooltip-trigger" {...props} />
-));
+  TooltipPrimitive.Trigger.Props & { asChild?: boolean; delayDuration?: number }
+>(({ asChild, children, delayDuration: _delayDuration, ...props }, ref) => {
+  if (asChild && React.isValidElement(children)) {
+    return (
+      <TooltipPrimitive.Trigger
+        ref={ref}
+        data-slot="tooltip-trigger"
+        render={children}
+        {...props}
+      />
+    );
+  }
+  return (
+    <TooltipPrimitive.Trigger ref={ref} data-slot="tooltip-trigger" {...props}>
+      {children}
+    </TooltipPrimitive.Trigger>
+  );
+});
+TooltipTrigger.displayName = "TooltipTrigger";
 
 const TooltipContent = React.forwardRef<
   HTMLDivElement,
@@ -74,5 +87,6 @@ const TooltipContent = React.forwardRef<
     </TooltipPrimitive.Portal>
   )
 );
+TooltipContent.displayName = "TooltipContent";
 
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };

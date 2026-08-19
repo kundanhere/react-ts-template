@@ -1,0 +1,48 @@
+import { Add01Icon, Download01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import type { Table } from "@tanstack/react-table";
+
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/toast";
+import { exportTableToCSV } from "@/lib/export";
+
+import type { User } from "./users-table-columns";
+
+interface UsersTableToolbarActionsProps {
+  table: Table<User>;
+}
+
+export function UsersTableToolbarActions({
+  table,
+}: UsersTableToolbarActionsProps) {
+  return (
+    <div className="flex items-center gap-2">
+      <Button onClick={() => toast.info("New user clicked")}>
+        <HugeiconsIcon
+          icon={Add01Icon}
+          strokeWidth={2}
+          className="mr-1 size-4"
+          aria-hidden="true"
+        />
+        New user
+      </Button>
+      <Button
+        variant="outline"
+        onClick={() =>
+          exportTableToCSV(table, {
+            filename: "users",
+            excludeColumns: ["select", "actions"],
+          })
+        }
+      >
+        <HugeiconsIcon
+          icon={Download01Icon}
+          strokeWidth={2}
+          className="mr-1 size-3"
+          aria-hidden="true"
+        />
+        Export
+      </Button>
+    </div>
+  );
+}

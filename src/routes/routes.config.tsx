@@ -15,15 +15,16 @@ interface RouteConfig {
 }
 
 // Lazy load components for better performance
-const Home = lazy(() => import("@/pages/Home"));
-const NotFound = lazy(() => import("@/pages/NotFound"));
-const Dashboard = lazy(() => import("@/pages/Dashboard"));
+const HomePage = lazy(() => import("@/pages/Home"));
+const NotFoundPage = lazy(() => import("@/pages/NotFound"));
+const DashboardPage = lazy(() => import("@/pages/Dashboard"));
+const UsersPage = lazy(() => import("@/pages/IAM/Users"));
 
 // DashboardProtected wrapper
 const DashboardProtected = () => (
   <ErrorBoundary>
     <RouteGuard requireAuth redirectTo="/">
-      <Dashboard />
+      <DashboardPage />
     </RouteGuard>
   </ErrorBoundary>
 );
@@ -36,7 +37,7 @@ export const routes: RouteConfig[] = [
     children: [
       {
         index: true,
-        element: <Home />,
+        element: <HomePage />,
         title: "Home",
         description: "Welcome to React TS Template",
       },
@@ -47,8 +48,14 @@ export const routes: RouteConfig[] = [
         description: "Protected dashboard page",
       },
       {
+        path: "iam/users",
+        element: <UsersPage />,
+        title: "Users",
+        description: "Users page - IAM",
+      },
+      {
         path: "*",
-        element: <NotFound />,
+        element: <NotFoundPage />,
         title: "404 - Not Found",
         description: "Page not found",
       },

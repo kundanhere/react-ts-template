@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/input-group";
 import { Kbd } from "@/components/ui/kbd";
 
-export default function NotFound() {
+export default function NotFoundPage() {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       // "/" key
