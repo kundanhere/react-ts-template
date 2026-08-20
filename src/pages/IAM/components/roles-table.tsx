@@ -191,7 +191,9 @@ export function RolesTable({ queryKeys, onNewRoleClick }: RolesTableProps) {
               </CardTitle>
               <CardAction>
                 {role.isSystem ? (
-                  <Badge variant="secondary">System Role</Badge>
+                  <Badge variant="secondary" className="border-border border">
+                    System Role
+                  </Badge>
                 ) : (
                   <Badge variant="outline">Custom</Badge>
                 )}

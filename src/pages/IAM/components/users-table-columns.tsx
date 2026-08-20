@@ -314,7 +314,10 @@ export function getUsersTableColumns({
         const dept = cell.getValue<User["department"]>();
         if (!dept) return null;
         return (
-          <Badge variant="secondary" className="py-1 capitalize">
+          <Badge
+            variant="secondary"
+            className="border-border border py-1 capitalize"
+          >
             {dept}
           </Badge>
         );

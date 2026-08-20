@@ -365,7 +365,10 @@ export function getModulesTableColumns({
       cell: ({ row }) => {
         const isSystem = row.getValue<boolean>("isSystem");
         return isSystem ? (
-          <Badge variant="secondary" className="gap-1 text-xs font-normal">
+          <Badge
+            variant="secondary"
+            className="border-border gap-1 border text-xs font-normal"
+          >
             <ShieldIconComp className="text-primary size-3" />
             System
           </Badge>

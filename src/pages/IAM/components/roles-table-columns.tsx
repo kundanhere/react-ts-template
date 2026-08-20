@@ -138,7 +138,9 @@ export function getRolesTableColumns({
       ),
       cell: ({ row }) =>
         row.original.isSystem ? (
-          <Badge variant="secondary">System Role</Badge>
+          <Badge variant="secondary" className="border-border border">
+            System Role
+          </Badge>
         ) : (
           <Badge variant="outline">Custom</Badge>
         ),
