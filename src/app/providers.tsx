@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 
 import { QueryClientProvider } from "@tanstack/react-query";
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { NuqsAdapter } from "nuqs/adapters/react-router/v6";
 import { Provider } from "react-redux";

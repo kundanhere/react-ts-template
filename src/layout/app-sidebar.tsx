@@ -20,11 +20,6 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "react-router-dom";
 
-import { NavMain } from "@/components/layout/nav-main";
-import { NavPrimary } from "@/components/layout/nav-primary";
-import { NavSecondary } from "@/components/layout/nav-secondary";
-import { NavSystem } from "@/components/layout/nav-system";
-import { NavUser } from "@/components/layout/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -34,6 +29,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { NavMain } from "@/layout/nav-main";
+import { NavPrimary } from "@/layout/nav-primary";
+import { NavSecondary } from "@/layout/nav-secondary";
+import { NavSystem } from "@/layout/nav-system";
+import { NavUser } from "@/layout/nav-user";
 
 const data = {
   user: {

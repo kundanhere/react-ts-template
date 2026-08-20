@@ -1,8 +1,8 @@
 import { lazy } from "react";
 
-import { ErrorBoundary } from "@/components/error-boundary";
-import { Layout } from "@/components/layout";
-import { RouteGuard } from "@/components/route-guard";
+import { ErrorBoundary } from "@/app/error-boundary";
+import { Layout } from "@/layout";
+import { RouteGuard } from "@/routes/route-guard";
 
 // Define route types
 export interface RouteConfig {
@@ -15,28 +15,36 @@ export interface RouteConfig {
 }
 
 // Lazy load page components
-const HomePage = lazy(() => import("@/pages/Home"));
-const NotFoundPage = lazy(() => import("@/pages/NotFound"));
-const DashboardPage = lazy(() => import("@/pages/Dashboard"));
-const AnalyticsPage = lazy(() => import("@/pages/IAM/Analytics"));
-const UsersPage = lazy(() => import("@/pages/IAM/Users"));
-const UserDetailPage = lazy(() => import("@/pages/IAM/UserDetail"));
-const RolesPage = lazy(() => import("@/pages/IAM/Roles"));
-const RoleDetailPage = lazy(() => import("@/pages/IAM/RoleDetail"));
-const PoliciesPage = lazy(() => import("@/pages/IAM/Policies"));
-const PolicyBuilderPage = lazy(() => import("@/pages/IAM/PolicyBuilder"));
-const PolicyDetailPage = lazy(() => import("@/pages/IAM/PolicyDetail"));
-const ModulesPage = lazy(() => import("@/pages/IAM/Modules"));
-const SecuritySettingsPage = lazy(() => import("@/pages/IAM/SecuritySettings"));
-const SessionsPage = lazy(() => import("@/pages/IAM/Sessions"));
-const AuditLogsPage = lazy(() => import("@/pages/IAM/AuditLogs"));
-const MyActivityPage = lazy(() => import("@/pages/IAM/MyActivity"));
-const AccessMatrixPage = lazy(() => import("@/pages/IAM/AccessMatrix"));
-const PolicySimulatorPage = lazy(() => import("@/pages/IAM/PolicySimulator"));
-const UpdatesPage = lazy(() => import("@/pages/Updates"));
-const InboxPage = lazy(() => import("@/pages/Inbox"));
-const SupportPage = lazy(() => import("@/pages/Support"));
-const FeedbackPage = lazy(() => import("@/pages/Feedback"));
+const HomePage = lazy(() => import("@/pages/home/page"));
+const NotFoundPage = lazy(() => import("@/pages/not-found/page"));
+const DashboardPage = lazy(() => import("@/pages/dashboard/page"));
+const AnalyticsPage = lazy(() => import("@/pages/monitoring/analytics/page"));
+const UsersPage = lazy(() => import("@/pages/iam/users/page"));
+const UserDetailPage = lazy(() => import("@/pages/iam/users/UserDetail"));
+const RolesPage = lazy(() => import("@/pages/iam/roles/page"));
+const RoleDetailPage = lazy(() => import("@/pages/iam/roles/RoleDetail"));
+const PoliciesPage = lazy(() => import("@/pages/iam/policies/page"));
+const PolicyBuilderPage = lazy(
+  () => import("@/pages/iam/policies/PolicyBuilder")
+);
+const PolicyDetailPage = lazy(
+  () => import("@/pages/iam/policies/PolicyDetail")
+);
+const ModulesPage = lazy(() => import("@/pages/iam/modules/page"));
+const SecuritySettingsPage = lazy(
+  () => import("@/pages/settings/components/security-tab")
+);
+const SessionsPage = lazy(() => import("@/pages/monitoring/sessions/page"));
+const AuditLogsPage = lazy(() => import("@/pages/monitoring/audit-logs/page"));
+const MyActivityPage = lazy(() => import("@/pages/monitoring/activity/page"));
+const AccessMatrixPage = lazy(() => import("@/pages/iam/access-matrix/page"));
+const PolicySimulatorPage = lazy(
+  () => import("@/pages/iam/policies/PolicySimulator")
+);
+const UpdatesPage = lazy(() => import("@/pages/updates/page"));
+const InboxPage = lazy(() => import("@/pages/inbox/page"));
+const SupportPage = lazy(() => import("@/pages/support/page"));
+const FeedbackPage = lazy(() => import("@/pages/feedback/page"));
 
 // DashboardProtected wrapper
 const DashboardProtected = () => (

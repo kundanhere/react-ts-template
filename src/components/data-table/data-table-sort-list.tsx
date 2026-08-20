@@ -198,7 +198,7 @@ export function DataTableSortList<TData>({
           aria-labelledby={labelId}
           aria-describedby={descriptionId}
           className={cn(
-            "flex w-full max-w-(--radix-popover-content-available-width) flex-col gap-3.5 p-4 sm:min-w-[380px]",
+            "flex w-full max-w-(--radix-popover-content-available-width) flex-col gap-3.5 p-4 sm:min-w-95",
             className
           )}
           {...props}
@@ -223,7 +223,7 @@ export function DataTableSortList<TData>({
             <SortableContent asChild>
               <div
                 role="list"
-                className="flex max-h-[300px] flex-col gap-2 overflow-y-auto p-1"
+                className="flex max-h-75 flex-col gap-2 overflow-y-auto p-1"
               >
                 {sorting.map((sort) => (
                   <DataTableSortItem
@@ -262,7 +262,7 @@ export function DataTableSortList<TData>({
       </Popover>
       <SortableOverlay>
         <div className="flex items-center gap-2">
-          <div className="bg-primary/10 h-8 w-[180px] rounded-sm" />
+          <div className="bg-primary/10 h-8 w-45 rounded-sm" />
           <div className="bg-primary/10 h-8 w-24 rounded-sm" />
           <div className="bg-primary/10 size-8 shrink-0 rounded-sm" />
           <div className="bg-primary/10 size-8 shrink-0 rounded-sm" />

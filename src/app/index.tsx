@@ -1,5 +1,6 @@
-import { Providers } from "./components/providers";
-import { RouteRenderer } from "./routes/RouteRenderer";
+import { RouteRenderer } from "@/routes/route-renderer";
+
+import { Providers } from "./providers";
 
 function App() {
   return (

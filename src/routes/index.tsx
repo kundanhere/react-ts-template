@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
 
-import { Layout } from "@/components/layout";
-import HomePage from "@/pages/Home";
-import NotFoundPage from "@/pages/NotFound";
+import { Layout } from "@/layout";
+import HomePage from "@/pages/home/page";
+import NotFoundPage from "@/pages/not-found/page";
 
 export function AppRoutes() {
   return (

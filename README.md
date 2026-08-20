@@ -39,35 +39,37 @@ A modern, production-ready React starter template built with **TypeScript**, **V
 ## 📁 Project Structure
 
 ```text
-├── public/                 # Static assets
+├── public/                 # Static assets & icons
 ├── src/
-│   ├── components/         # Reusable UI & Layout components
-│   │   ├── ui/             # Primitive UI components (Button, etc.)
-│   │   ├── ErrorBoundary   # Global error boundary component
-│   │   ├── layout          # Layout wrapper
-│   │   ├── providers       # Global Providers (Redux, React Query, Devtools, nuqs)
-│   │   ├── theme-toggle    # Light / Dark mode toggle
-│   │   └── typography      # Typography component
+│   ├── api/                # API client modules
+│   │   └── iam/            # IAM endpoints (users, roles, policies, modules)
+│   ├── app/                # Root providers and error boundaries
+│   │   ├── error-boundary.tsx
+│   │   ├── index.tsx       # Root entry render wrapper
+│   │   └── providers.tsx   # Redux, React Query, and URL param providers
+│   ├── components/         # Shared visual components
+│   │   ├── data-table/     # Fully featured server-side data tables
+│   │   ├── empty/          # Empty states
+│   │   ├── ui/             # Radix / Base UI primitives
+│   │   ├── page-wrapper.tsx# Page layout wrapper
+│   │   ├── theme-toggle.tsx# Theme toggle component
+│   │   └── typography.tsx  # Typography primitives
+│   ├── config/             # Config files (data table filters, feature flags)
+│   ├── constants/          # Global application constants
 │   ├── env/                # Zod-validated environment variables schema
-│   ├── hooks/              # Custom hooks (theme, mobile detection, routing)
-│   ├── lib/                # Shared utilities (cn helper)
-│   ├── pages/              # Page components (Home, NotFound, etc.)
-│   ├── routes/             # Route configurations & RouteRenderer component
-│   ├── store/              # Redux Toolkit store, slices, and custom hooks
-│   │   ├── index.ts        # Configured Redux Store & exports
-│   │   ├── hooks.ts        # Typed useAppDispatch & useAppSelector
-│   │   ├── useAppStore.ts  # Custom domain-level hook wrapper
-│   │   └── slices/         # Redux Slices (appSlice, etc.)
-│   ├── styles/             # Global CSS and Tailwind v4 theme variables
-│   ├── types/              # Global TypeScript interfaces & types
-│   ├── utils/              # Development & Helper utilities
-│   │   ├── query-client.ts # TanStack Query Client, apiFetcher, & queryHelpers
-│   │   ├── redux-helpers.ts# Redux AsyncState & addAsyncCases builder helpers
-│   │   ├── logger.ts       # Centralized logger
-│   │   ├── sleep.ts        # Async sleep helper
-│   │   └── toast.tsx       # Reusable toast notifications
-│   ├── App.tsx             # Root Application component
-│   └── main.tsx            # Application entry point
+│   ├── hooks/              # Reusable React hooks
+│   ├── layout/             # Master app sidebar and layout shell
+│   ├── lib/                # Shared utility functions and formatting libraries
+│   ├── pages/              # Domain pages (IAM, dashboard, settings, inbox, etc.)
+│   │   ├── iam/            # Access control management pages (users, roles, etc.)
+│   │   └── settings/       # Settings tabs (profile, appearance, security)
+│   ├── routes/             # Client-side router configuration & RouteRenderer
+│   ├── store/              # Redux Toolkit global store state & app-slice
+│   ├── styles/             # Global CSS styles (Tailwind CSS v4)
+│   ├── types/              # Domain-specific TypeScript declarations
+│   ├── utils/              # Core utility modules (apiClient, queryClient, logger)
+│   ├── main.tsx            # Vite entry-point script
+│   └── vite-env.d.ts       # Vite TypeScript env types
 ├── .eslintrc.json          # ESLint config (Airbnb + TS + Prettier)
 ├── .prettierrc.json        # Prettier config (Import sorting + Tailwind)
 ├── components.json         # shadcn UI registry configuration
@@ -236,7 +238,7 @@ export const productsSlice = createSlice({
 Provides clean access to application store state and dispatchers without importing separate hooks:
 
 ```tsx
-import { useAppStore } from "@/store/useAppStore";
+import { useAppStore } from "@/store/use-app-store";
 
 function UserWidget() {
   const { user, isLoading, fetchUser, clearUser } = useAppStore();
@@ -257,7 +259,7 @@ function UserWidget() {
 
 ### 1. Global Providers
 
-All root application context providers are centralized in `src/components/providers.tsx`:
+All root application context providers are centralized in `src/app/providers.tsx`:
 
 - **Redux Provider** — Global state management
 - **QueryClientProvider** — TanStack React Query client with `ReactQueryDevtools`

@@ -5,7 +5,7 @@ import {
   getItem,
   removeItem,
   setItem,
-} from "../utils/local-storage";
+} from "@/utils/local-storage";
 
 export function useLocalStorage<T = any>(key: string) {
   const set = useCallback((value: T) => setItem(key, value), [key]);

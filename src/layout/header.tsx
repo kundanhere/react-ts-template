@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,9 +13,8 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { useBreadcrumbs } from "@/hooks/use-breadcrumbs";
 
-import { ThemeToggle } from "../theme-toggle";
+import { User } from "./nav-profile";
 import { SearchForm } from "./search-form";
-import { User } from "./user";
 
 export function Header() {
   const breadcrumbs = useBreadcrumbs();

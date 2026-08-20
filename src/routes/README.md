@@ -14,24 +14,24 @@ This application uses a modular, type-safe routing architecture built on **React
   - `getRouteByPath(path)` — Looks up route metadata by current path.
   - `getAllRoutePaths()` — Returns an array of all registered route paths.
 
-### 2. Recursive Route Renderer (`src/routes/RouteRenderer.tsx`)
+### 2. Recursive Route Renderer (`src/routes/route-renderer.tsx`)
 
 - Dynamically maps route objects into `<Route>` components.
 - Recursively handles nested child routes (`route.children`).
-- Wraps non-layout routes in `React.Suspense` with a custom `LoadingSpinner` fallback UI.
+- Wraps non-layout routes in `React.Suspense` with a custom loader fallback UI.
 
-### 3. Route Guard (`src/components/route-guard.tsx`)
+### 3. Route Guard (`src/routes/route-guard.tsx`)
 
 - Protects private routes (e.g. `/dashboard`).
 - Checks for authentication tokens (or custom state) and redirects unauthenticated users to `/`.
 
-### 4. Error Boundary Integration (`src/components/ErrorBoundary.tsx`)
+### 4. Error Boundary Integration (`src/app/error-boundary.tsx`)
 
 - Wraps protected or critical routes to catch rendering errors gracefully without crashing the whole layout.
 
-### 5. Layout Component (`src/components/layout.tsx`)
+### 5. Layout Component (`src/layout/index.tsx`)
 
-- Master layout with `<Header />`, `<Footer />`, and React Router's `<Outlet />` for rendering matched sub-routes.
+- Master layout with sidebar navigation, header, footer, and React Router's `<Outlet />` for rendering matched sub-routes.
 
 ### 6. Navigation Utility Hook (`src/hooks/use-routes.ts`)
 
@@ -43,20 +43,21 @@ This application uses a modular, type-safe routing architecture built on **React
 
 ```text
 src/
-├── components/
-│   ├── layout.tsx          # Main layout shell with <Outlet />
-│   ├── route-guard.tsx     # Route protection logic
-│   └── ErrorBoundary.tsx   # React Error Boundary
+├── app/
+│   └── error-boundary.tsx  # React Error Boundary
 ├── hooks/
 │   └── use-routes.ts       # Navigation & route checking hook
-├── pages/
-│   ├── Home.tsx            # Home page (/)
-│   ├── Dashboard.tsx       # Protected Dashboard page (/dashboard)
-│   └── NotFound.tsx        # Fallback 404 page (*)
+├── layout/
+│   └── index.tsx           # Main layout shell with <Outlet />
+├── pages/                  # Folder-per-page routing setup
+│   ├── home/page.tsx       # Home page (/)
+│   ├── dashboard/page.tsx  # Protected Dashboard page (/dashboard)
+│   └── not-found/page.tsx  # Fallback 404 page (*)
 └── routes/
-    ├── index.tsx           # Static routes fallback export (AppRoutes)
-    ├── routes.config.tsx   # Central route configuration & helper functions
-    ├── RouteRenderer.tsx   # Dynamic Suspense-enabled route renderer
+    ├── index.tsx           # Static routes entry / wrapper (AppRoutes)
+    ├── route-guard.tsx     # Route protection guard component
+    ├── route-renderer.tsx  # Dynamic Suspense-enabled route renderer
+    ├── routes.config.tsx   # Central routes configuration & metadata helper
     └── README.md           # This documentation
 ```
 
@@ -68,7 +69,7 @@ src/
 
 To add a new page (e.g. Settings):
 
-1. **Create the lazy-loaded page component in `src/pages/Settings.tsx`**:
+1. **Create the lazy-loaded page component in `src/pages/settings/page.tsx`**:
 
    ```tsx
    export default function Settings() {
@@ -78,7 +79,7 @@ To add a new page (e.g. Settings):
 
 2. **Add to `src/routes/routes.config.tsx`**:
    ```tsx
-   const Settings = lazy(() => import("@/pages/Settings"));
+   const Settings = lazy(() => import("@/pages/settings/page"));
 
    export const routes: RouteConfig[] = [
      {
