@@ -268,7 +268,7 @@ export function RolesTable({ queryKeys, onNewRoleClick }: RolesTableProps) {
                     <Button
                       variant="ghost"
                       size="icon-xs"
-                      className="text-destructive hover:bg-destructive/10 hover:text-destructive size-7 rounded-md transition-all"
+                      className="text-destructive hover:bg-destructive/10 hover:text-destructive dark:hover:bg-destructive/25 dark:hover:text-destructive size-7 rounded-md transition-all"
                       onClick={() => handleDeleteRole(role)}
                       aria-label="Delete Role"
                     >

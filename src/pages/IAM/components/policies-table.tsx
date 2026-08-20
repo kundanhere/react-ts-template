@@ -50,7 +50,7 @@ const INITIAL_POLICIES: Policy[] = [
     type: "custom",
     status: "active",
     resource: "security/settings:*",
-    actions: ["update", "delete"],
+    actions: ["read", "update", "delete"],
     createdAt: new Date("2023-02-01"),
     updatedAt: new Date("2026-08-17"),
   },

@@ -4,11 +4,8 @@ import {
   ApartmentIcon,
   BadgeInfoIcon,
   CellsIcon,
-  Copy01Icon,
-  Delete02Icon,
   LockedIcon,
   MoreHorizontalIcon,
-  PencilEdit01Icon,
   ShieldCheck,
   UserIcon,
 } from "@hugeicons/core-free-icons";
@@ -191,31 +188,16 @@ export function getRolesTableColumns({
                   />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-44">
+              <DropdownMenuContent align="end" className="w-40">
                 <DropdownMenuItem onClick={() => onEditRole?.(role)}>
-                  <HugeiconsIcon
-                    icon={PencilEdit01Icon}
-                    strokeWidth={2}
-                    className="text-muted-foreground mr-2 size-4"
-                  />
                   Edit Role
                 </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => onDuplicateRole?.(role)}>
-                  <HugeiconsIcon
-                    icon={Copy01Icon}
-                    strokeWidth={2}
-                    className="text-muted-foreground mr-2 size-4"
-                  />
                   Duplicate Role
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   render={<Link to={`/iam/roles/${role.id}`} />}
                 >
-                  <HugeiconsIcon
-                    icon={ShieldCheck}
-                    strokeWidth={2}
-                    className="text-muted-foreground mr-2 size-4"
-                  />
                   Manage Policy
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
@@ -223,11 +205,6 @@ export function getRolesTableColumns({
                   variant="destructive"
                   onClick={() => onDeleteRole?.(role)}
                 >
-                  <HugeiconsIcon
-                    icon={Delete02Icon}
-                    strokeWidth={2}
-                    className="mr-2 size-4"
-                  />
                   Delete Role
                 </DropdownMenuItem>
               </DropdownMenuContent>

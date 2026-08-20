@@ -33,11 +33,11 @@ export function RolesTableToolbarActions({
         }
         className="text-xs"
       >
-        <HugeiconsIcon icon={Add01Icon} strokeWidth={2} />
+        <HugeiconsIcon icon={Add01Icon} strokeWidth={2} className="mr-1" />
         New Role
       </Button>
       <Button variant="outline" onClick={onExport} className="text-xs">
-        <HugeiconsIcon icon={Download01Icon} strokeWidth={2} />
+        <HugeiconsIcon icon={Download01Icon} strokeWidth={2} className="mr-1" />
         Export
       </Button>
     </div>

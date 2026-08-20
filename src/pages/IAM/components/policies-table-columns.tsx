@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import {
+  Asterisk02Icon,
   Calendar01Icon,
   CancelCircleIcon,
   CheckmarkCircle01Icon,
@@ -339,11 +340,28 @@ export function getPoliciesTableColumns({
       header: ({ column }) => (
         <DataTableColumnHeader column={column} label="Resource" />
       ),
-      cell: ({ row }) => (
-        <code className="bg-muted/60 text-muted-foreground rounded-md border px-2 py-0.5 font-mono text-xs">
-          {row.getValue("resource")}
-        </code>
-      ),
+      cell: ({ row }) => {
+        const resource = row.getValue<string>("resource");
+        if (resource === "*") {
+          return (
+            <Badge
+              variant="outline"
+              className="bg-muted/40 flex size-5 items-center justify-center p-0"
+            >
+              <HugeiconsIcon
+                icon={Asterisk02Icon}
+                strokeWidth={2}
+                className="size-1!"
+              />
+            </Badge>
+          );
+        }
+        return (
+          <code className="bg-muted/60 text-muted-foreground rounded-md border px-2 py-0.5 font-mono text-xs">
+            {resource}
+          </code>
+        );
+      },
       enableColumnFilter: true,
     },
     {
@@ -354,6 +372,33 @@ export function getPoliciesTableColumns({
       ),
       cell: ({ row }) => {
         const actionsList: string[] = row.getValue("actionsList") || [];
+        const ALL_ACTIONS = ["create", "read", "update", "delete"];
+        const hasAllActions =
+          actionsList.includes("*") ||
+          (actionsList.length >= 4 &&
+            ALL_ACTIONS.every((act) =>
+              actionsList.some(
+                (a) =>
+                  a.toLowerCase() === act ||
+                  (act === "read" && a.toLowerCase() === "write")
+              )
+            ));
+
+        if (hasAllActions) {
+          return (
+            <Badge
+              variant="outline"
+              className="bg-muted/40 flex size-5 items-center justify-center p-0"
+            >
+              <HugeiconsIcon
+                icon={Asterisk02Icon}
+                strokeWidth={2}
+                className="size-1!"
+              />
+            </Badge>
+          );
+        }
+
         const maxDisplay = 2;
         const displayed = actionsList.slice(0, maxDisplay);
         const remaining = actionsList.length - maxDisplay;

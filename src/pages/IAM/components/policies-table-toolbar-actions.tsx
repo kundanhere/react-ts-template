@@ -25,7 +25,7 @@ export function PoliciesTableToolbarActions({
             className="mr-1 size-4"
             aria-hidden="true"
           />
-          Create Policy
+          New Policy
         </Link>
       </Button>
       <Button

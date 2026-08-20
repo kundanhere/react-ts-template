@@ -24,7 +24,7 @@ export function UsersTableToolbarActions({
           className="mr-1 size-4"
           aria-hidden="true"
         />
-        New user
+        New User
       </Button>
       <Button
         variant="outline"
