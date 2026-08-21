@@ -98,11 +98,17 @@ export function ModulesTableActionBar({
     table.toggleAllRowsSelected(false);
     toast.success(`Deleted ${ids.length} modules`);
   }, [rows, onBulkDelete, table]);
+  const displayCount = React.useMemo(
+    () =>
+      rows.filter((r) => r.depth === 0 || !r.getParentRow()?.getIsSelected())
+        .length,
+    [rows]
+  );
 
   return (
-    <ActionBar open={rows.length > 0} onOpenChange={onOpenChange}>
+    <ActionBar open={displayCount > 0} onOpenChange={onOpenChange}>
       <ActionBarSelection>
-        <span className="font-medium">{rows.length}</span>
+        <span className="font-medium">{displayCount}</span>
         <span>selected</span>
         <ActionBarSeparator />
         <ActionBarClose>
