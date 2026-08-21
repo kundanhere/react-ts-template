@@ -31,6 +31,7 @@ const PolicyDetailPage = lazy(
   () => import("@/pages/iam/policies/PolicyDetail")
 );
 const ModulesPage = lazy(() => import("@/pages/iam/modules/page"));
+const SettingsPage = lazy(() => import("@/pages/settings/page"));
 const SecuritySettingsPage = lazy(
   () => import("@/pages/settings/components/security-tab")
 );
@@ -132,6 +133,12 @@ export const routes: RouteConfig[] = [
         element: <SecuritySettingsPage />,
         title: "Security Settings",
         description: "Security and MFA settings",
+      },
+      {
+        path: "/settings",
+        element: <SettingsPage />,
+        title: "Settings",
+        description: "System settings",
       },
       {
         path: "iam/sessions",

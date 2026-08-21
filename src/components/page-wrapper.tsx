@@ -95,7 +95,7 @@ export function PageWrapper({
   return (
     <div className={cn(pageWrapperVariants({ variant, className }))} {...props}>
       {hasHeader && (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 px-1">
           {backButton && <div className="w-full">{backButton}</div>}
 
           <div

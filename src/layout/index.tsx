@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/layout/app-sidebar";
 
@@ -8,14 +9,19 @@ import { Header } from "./header";
 
 export function Layout() {
   return (
-    <div className="flex min-h-screen flex-col">
-      <SidebarProvider>
+    <div className="flex h-screen overflow-hidden">
+      <SidebarProvider className="min-h-0 flex-1">
         <AppSidebar />
-        <SidebarInset>
+
+        <SidebarInset className="flex min-h-0 flex-1 flex-col overflow-hidden">
           <Header />
-          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-            <Outlet />
-          </div>
+
+          <ScrollArea className="min-h-0 flex-1">
+            <div className="flex min-h-full flex-col gap-4 p-4 pt-0">
+              <Outlet />
+            </div>
+          </ScrollArea>
+
           <Footer />
         </SidebarInset>
       </SidebarProvider>

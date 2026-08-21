@@ -14,6 +14,7 @@ import {
   LaptopPhoneSyncIcon,
   Quiz05Icon,
   SentIcon,
+  Settings01Icon,
   Shield01Icon,
   ShieldKeyIcon,
 } from "@hugeicons/core-free-icons";
@@ -131,6 +132,11 @@ const data = {
     },
   ],
   navSecondary: [
+    {
+      title: "Settings",
+      url: "/settings",
+      icon: <HugeiconsIcon icon={Settings01Icon} strokeWidth={2} />,
+    },
     {
       title: "Support",
       url: "/support",
