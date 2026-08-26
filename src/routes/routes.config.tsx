@@ -35,7 +35,7 @@ const SettingsPage = lazy(() => import("@/pages/settings/page"));
 const SecuritySettingsPage = lazy(
   () => import("@/pages/settings/components/security-tab")
 );
-const SessionsPage = lazy(() => import("@/pages/monitoring/sessions/page"));
+const SessionsPage = lazy(() => import("@/pages/iam/sessions/page"));
 const AuditLogsPage = lazy(() => import("@/pages/monitoring/audit-logs/page"));
 const MyActivityPage = lazy(() => import("@/pages/monitoring/activity/page"));
 const AccessMatrixPage = lazy(() => import("@/pages/iam/access-matrix/page"));
