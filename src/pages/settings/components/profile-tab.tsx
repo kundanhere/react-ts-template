@@ -2,22 +2,59 @@ import * as React from "react";
 
 import {
   AddCircleIcon,
+  Building03Icon,
   Cancel01Icon,
   CheckmarkCircle02Icon,
+  Facebook02Icon,
+  Github01Icon,
+  InstagramIcon,
+  InternetIcon,
   Link04Icon,
+  Linkedin02Icon,
+  Location01Icon,
+  NewTwitterIcon,
   UserIcon,
+  YoutubeIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+  InputGroupText,
+} from "@/components/ui/input-group";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
 interface SocialLink {
   id: string;
   url: string;
+}
+
+function getSocialIcon(url: string) {
+  const lower = url.toLowerCase();
+  if (lower.includes("github.com")) return Github01Icon;
+  if (lower.includes("x.com") || lower.includes("twitter.com"))
+    return NewTwitterIcon;
+  if (lower.includes("linkedin.com")) return Linkedin02Icon;
+  if (lower.includes("instagram.com")) return InstagramIcon;
+  if (lower.includes("youtube.com") || lower.includes("youtu.be"))
+    return YoutubeIcon;
+  if (lower.includes("facebook.com") || lower.includes("fb.com"))
+    return Facebook02Icon;
+  return Link04Icon;
 }
 
 export default function ProfileTab() {
@@ -154,17 +191,19 @@ export default function ProfileTab() {
             <Label htmlFor="email" className="text-xs font-semibold">
               Public email
             </Label>
-            <select
-              id="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="border-input bg-input/20 placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/30 dark:bg-input/30 w-full rounded-md border px-2 py-1 text-xs/relaxed outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              <option value="kundan@example.com">kundan@example.com</option>
-              <option value="private-user@users.noreply.com">
-                Private (noreply)
-              </option>
-            </select>
+            <Select value={email} onValueChange={(val) => val && setEmail(val)}>
+              <SelectTrigger id="email" className="w-full">
+                <SelectValue placeholder="Select email" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="kundan@example.com">
+                  kundan@example.com
+                </SelectItem>
+                <SelectItem value="private-user@users.noreply.com">
+                  Private (noreply)
+                </SelectItem>
+              </SelectContent>
+            </Select>
             <p className="text-muted-foreground text-[11px] leading-normal">
               This email will be displayed to other signed-in users on your
               profile.
@@ -195,18 +234,21 @@ export default function ProfileTab() {
             <Label htmlFor="pronouns" className="text-xs font-semibold">
               Pronouns
             </Label>
-            <select
-              id="pronouns"
+            <Select
               value={pronouns}
-              onChange={(e) => setPronouns(e.target.value)}
-              className="border-input bg-input/20 placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-ring/30 dark:bg-input/30 w-full rounded-md border px-2 py-1 text-xs/relaxed outline-none focus-visible:ring-2 disabled:cursor-not-allowed disabled:opacity-50"
+              onValueChange={(val) => val && setPronouns(val)}
             >
-              <option value="">Don't specify</option>
-              <option value="he/him">he/him</option>
-              <option value="she/her">she/her</option>
-              <option value="they/them">they/them</option>
-              <option value="other">custom</option>
-            </select>
+              <SelectTrigger id="pronouns" className="w-full">
+                <SelectValue placeholder="Select pronouns" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="none">Don't specify</SelectItem>
+                <SelectItem value="he/him">he/him</SelectItem>
+                <SelectItem value="she/her">she/her</SelectItem>
+                <SelectItem value="they/them">they/them</SelectItem>
+                <SelectItem value="other">custom</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           {/* Company */}
@@ -214,12 +256,23 @@ export default function ProfileTab() {
             <Label htmlFor="company" className="text-xs font-semibold">
               Company
             </Label>
-            <Input
-              id="company"
-              value={company}
-              onChange={(e) => setCompany(e.target.value)}
-              placeholder="Company or organization"
-            />
+            <InputGroup>
+              <InputGroupAddon>
+                <InputGroupText className="gap-1.5">
+                  <HugeiconsIcon
+                    icon={Building03Icon}
+                    className="text-muted-foreground size-3.5 transition-colors"
+                    strokeWidth={2}
+                  />
+                </InputGroupText>
+              </InputGroupAddon>
+              <InputGroupInput
+                id="company"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
+                placeholder="Company or organization"
+              />
+            </InputGroup>
           </div>
 
           {/* Location */}
@@ -227,25 +280,60 @@ export default function ProfileTab() {
             <Label htmlFor="location" className="text-xs font-semibold">
               Location
             </Label>
-            <Input
-              id="location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="e.g. San Francisco, CA"
-            />
+            <InputGroup>
+              <InputGroupAddon>
+                <InputGroupText className="gap-1.5">
+                  <HugeiconsIcon
+                    icon={Location01Icon}
+                    className="text-muted-foreground size-3.5 transition-colors"
+                    strokeWidth={2}
+                  />
+                </InputGroupText>
+              </InputGroupAddon>
+              <InputGroupInput
+                id="location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="e.g. San Francisco, CA"
+              />
+            </InputGroup>
           </div>
 
           {/* Website */}
           <div className="space-y-1.5">
             <Label htmlFor="website" className="text-xs font-semibold">
-              Website
+              Website URL
             </Label>
-            <Input
-              id="website"
-              value={website}
-              onChange={(e) => setWebsite(e.target.value)}
-              placeholder="e.g. https://example.com"
-            />
+            <InputGroup>
+              <InputGroupAddon>
+                <InputGroupText className="gap-1.5">
+                  <HugeiconsIcon
+                    icon={getSocialIcon(website)}
+                    className="text-muted-foreground size-3.5 transition-colors"
+                    strokeWidth={2}
+                  />
+                  <span>https://</span>
+                </InputGroupText>
+              </InputGroupAddon>
+              <InputGroupInput
+                id="website"
+                value={website.replace(/^https?:\/\//, "")}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setWebsite(
+                    val ? `https://${val.replace(/^https?:\/\//, "")}` : ""
+                  );
+                }}
+                placeholder="example.com"
+              />
+              <InputGroupAddon align="inline-end">
+                <HugeiconsIcon
+                  icon={InternetIcon}
+                  className="text-muted-foreground size-3.5"
+                  strokeWidth={2}
+                />
+              </InputGroupAddon>
+            </InputGroup>
           </div>
 
           {/* Social Accounts */}
@@ -255,40 +343,71 @@ export default function ProfileTab() {
             {/* Added social accounts list */}
             {socials.length > 0 && (
               <div className="space-y-2">
-                {socials.map((social) => (
-                  <div
-                    key={social.id}
-                    className="bg-muted/30 flex items-center justify-between rounded-md border px-3 py-1.5 text-xs"
-                  >
-                    <div className="flex items-center gap-2 truncate">
-                      <HugeiconsIcon
-                        icon={Link04Icon}
-                        className="text-muted-foreground size-3.5"
-                      />
-                      <span className="text-muted-foreground truncate">
-                        {social.url}
-                      </span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={() => removeSocial(social.id)}
-                      className="text-muted-foreground hover:text-destructive p-0.5 transition-colors"
+                {socials.map((social) => {
+                  const SocialIcon = getSocialIcon(social.url);
+                  return (
+                    <div
+                      key={social.id}
+                      className="bg-muted/30 flex items-center justify-between rounded-md border px-3 py-1.5 text-xs"
                     >
-                      <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
-                    </button>
-                  </div>
-                ))}
+                      <div className="flex items-center gap-2 truncate">
+                        <HugeiconsIcon
+                          icon={SocialIcon}
+                          className="text-muted-foreground size-3.5"
+                          strokeWidth={2}
+                        />
+                        <span className="text-muted-foreground truncate">
+                          {social.url}
+                        </span>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => removeSocial(social.id)}
+                        className="text-muted-foreground hover:text-destructive p-0.5 transition-colors"
+                      >
+                        <HugeiconsIcon
+                          icon={Cancel01Icon}
+                          className="size-3.5"
+                          strokeWidth={2}
+                        />
+                      </button>
+                    </div>
+                  );
+                })}
               </div>
             )}
 
             {/* Add social account form input */}
             <div className="flex gap-2">
-              <Input
-                placeholder="Link to social profile (X, LinkedIn, etc.)"
-                value={newSocialUrl}
-                onChange={(e) => setNewSocialUrl(e.target.value)}
-                className="flex-1"
-              />
+              <InputGroup className="flex-1">
+                <InputGroupAddon>
+                  <InputGroupText className="gap-1.5">
+                    <HugeiconsIcon
+                      icon={getSocialIcon(newSocialUrl)}
+                      className="text-muted-foreground size-3.5 transition-colors"
+                      strokeWidth={2}
+                    />
+                    <span>https://</span>
+                  </InputGroupText>
+                </InputGroupAddon>
+                <InputGroupInput
+                  placeholder="x.com/username or linkedin.com/in/username"
+                  value={newSocialUrl.replace(/^https?:\/\//, "")}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setNewSocialUrl(
+                      val ? `https://${val.replace(/^https?:\/\//, "")}` : ""
+                    );
+                  }}
+                />
+                <InputGroupAddon align="inline-end">
+                  <HugeiconsIcon
+                    icon={Link04Icon}
+                    className="text-muted-foreground size-3.5"
+                    strokeWidth={2}
+                  />
+                </InputGroupAddon>
+              </InputGroup>
               <Button
                 type="button"
                 variant="outline"
@@ -305,12 +424,11 @@ export default function ProfileTab() {
           {/* Checkboxes */}
           <div className="space-y-4 pt-2">
             <div className="flex items-start gap-2.5">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="showStatus"
                 checked={showStatus}
-                onChange={(e) => setShowStatus(e.target.checked)}
-                className="accent-primary focus:ring-primary mt-0.5 size-3.5 rounded border-gray-300"
+                onCheckedChange={(checked) => setShowStatus(!!checked)}
+                className="mt-0.5"
               />
               <div className="grid gap-0.5">
                 <Label
@@ -326,12 +444,11 @@ export default function ProfileTab() {
             </div>
 
             <div className="flex items-start gap-2.5">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="availableForHire"
                 checked={availableForHire}
-                onChange={(e) => setAvailableForHire(e.target.checked)}
-                className="accent-primary focus:ring-primary mt-0.5 size-3.5 rounded border-gray-300"
+                onCheckedChange={(checked) => setAvailableForHire(!!checked)}
+                className="mt-0.5"
               />
               <div className="grid gap-0.5">
                 <Label
@@ -366,17 +483,16 @@ export default function ProfileTab() {
           </Label>
           <div className="group relative">
             <Avatar className="border-border size-36 border">
-              {avatarUrl ? (
+              {avatarUrl && (
                 <AvatarImage
                   src={avatarUrl}
                   alt="Avatar Preview"
                   className="object-cover"
                 />
-              ) : (
-                <AvatarFallback className="bg-muted text-muted-foreground">
-                  <HugeiconsIcon icon={UserIcon} className="size-10" />
-                </AvatarFallback>
               )}
+              <AvatarFallback className="bg-muted text-muted-foreground">
+                <HugeiconsIcon icon={UserIcon} className="size-10" />
+              </AvatarFallback>
             </Avatar>
           </div>
 

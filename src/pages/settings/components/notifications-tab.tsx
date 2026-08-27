@@ -4,9 +4,16 @@ import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 export default function NotificationsTab() {
   const [success, setSuccess] = React.useState(false);
+
+  const [emailNotif, setEmailNotif] = React.useState(true);
+  const [pushNotif, setPushNotif] = React.useState(true);
+  const [loginAlert, setLoginAlert] = React.useState(true);
+  const [roleChange, setRoleChange] = React.useState(true);
 
   const handleSave = () => {
     setSuccess(true);
@@ -41,19 +48,19 @@ export default function NotificationsTab() {
 
           <div className="bg-muted/10 space-y-3 rounded-lg border p-4">
             <div className="flex items-start gap-3">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="email-notif"
-                defaultChecked
-                className="accent-primary mt-1 size-3.5"
+                checked={emailNotif}
+                onCheckedChange={(checked) => setEmailNotif(!!checked)}
+                className="mt-0.5"
               />
-              <div>
-                <label
+              <div className="space-y-0.5">
+                <Label
                   htmlFor="email-notif"
                   className="cursor-pointer text-xs font-semibold"
                 >
                   Email notifications
-                </label>
+                </Label>
                 <p className="text-muted-foreground text-[11px] leading-normal">
                   Receive alerts, weekly summaries, and system status updates at
                   your public email address.
@@ -64,19 +71,19 @@ export default function NotificationsTab() {
             <div className="border-border/40 my-2 border-t" />
 
             <div className="flex items-start gap-3">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="push-notif"
-                defaultChecked
-                className="accent-primary mt-1 size-3.5"
+                checked={pushNotif}
+                onCheckedChange={(checked) => setPushNotif(!!checked)}
+                className="mt-0.5"
               />
-              <div>
-                <label
+              <div className="space-y-0.5">
+                <Label
                   htmlFor="push-notif"
                   className="cursor-pointer text-xs font-semibold"
                 >
                   Push notifications
-                </label>
+                </Label>
                 <p className="text-muted-foreground text-[11px] leading-normal">
                   Receive real-time in-app dashboard alerts while logged in.
                 </p>
@@ -93,19 +100,19 @@ export default function NotificationsTab() {
 
           <div className="bg-muted/10 space-y-3 rounded-lg border p-4">
             <div className="flex items-start gap-3">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="login-alert"
-                defaultChecked
-                className="accent-primary mt-1 size-3.5"
+                checked={loginAlert}
+                onCheckedChange={(checked) => setLoginAlert(!!checked)}
+                className="mt-0.5"
               />
-              <div>
-                <label
+              <div className="space-y-0.5">
+                <Label
                   htmlFor="login-alert"
                   className="cursor-pointer text-xs font-semibold"
                 >
                   New device log-in
-                </label>
+                </Label>
                 <p className="text-muted-foreground text-[11px] leading-normal">
                   Alert me immediately when my account is accessed from a new IP
                   or device.
@@ -116,19 +123,19 @@ export default function NotificationsTab() {
             <div className="border-border/40 my-2 border-t" />
 
             <div className="flex items-start gap-3">
-              <input
-                type="checkbox"
+              <Checkbox
                 id="role-change"
-                defaultChecked
-                className="accent-primary mt-1 size-3.5"
+                checked={roleChange}
+                onCheckedChange={(checked) => setRoleChange(!!checked)}
+                className="mt-0.5"
               />
-              <div>
-                <label
+              <div className="space-y-0.5">
+                <Label
                   htmlFor="role-change"
                   className="cursor-pointer text-xs font-semibold"
                 >
                   Role changes & policy updates
-                </label>
+                </Label>
                 <p className="text-muted-foreground text-[11px] leading-normal">
                   Send notifications whenever my permissions, roles, or access
                   policies are modified.

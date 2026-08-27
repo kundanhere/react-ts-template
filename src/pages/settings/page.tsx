@@ -30,8 +30,8 @@ import {
 
 import AppearanceTab from "./components/appearance-tab";
 import NotificationsTab from "./components/notifications-tab";
-// Import settings tab components
 import ProfileTab from "./components/profile-tab";
+import SecurityTab from "./components/security-tab";
 
 const data = {
   groups: [
@@ -108,6 +108,8 @@ const SettingsPage = () => {
         return <NotificationsTab />;
       case "appearance":
         return <AppearanceTab />;
+      case "advanced":
+        return <SecurityTab />;
       default:
         return (
           <div className="flex h-87.5 flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">

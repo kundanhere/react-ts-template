@@ -1,7 +1,12 @@
+import * as React from "react";
+
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { useTheme } from "@/hooks/use-theme";
 
 export default function AppearanceTab() {
   const { setTheme, theme } = useTheme();
+  const [compactMode, setCompactMode] = React.useState(true);
 
   return (
     <div className="max-w-4xl space-y-6">
@@ -106,17 +111,21 @@ export default function AppearanceTab() {
         <div className="space-y-4">
           <h3 className="text-sm font-semibold">Accessibility & Font Size</h3>
           <div className="bg-muted/20 flex items-center justify-between rounded-lg border p-4">
-            <div>
-              <p className="text-xs font-semibold">Compact density mode</p>
+            <div className="space-y-0.5">
+              <Label
+                htmlFor="compact-mode"
+                className="cursor-pointer text-xs font-semibold"
+              >
+                Compact density mode
+              </Label>
               <p className="text-muted-foreground text-[11px]">
                 Shrink row heights and spacing to show more content.
               </p>
             </div>
-            <input
-              type="checkbox"
+            <Checkbox
               id="compact-mode"
-              defaultChecked
-              className="accent-primary size-4"
+              checked={compactMode}
+              onCheckedChange={(checked) => setCompactMode(!!checked)}
             />
           </div>
         </div>
