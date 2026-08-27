@@ -16,7 +16,6 @@ export interface IUser {
   loginCount: number;
   createdAt: Date;
 }
-export type User = IUser;
 
 export interface IGetUsersTableColumnsProps {
   statusCounts: Record<IUser["status"], number>;
@@ -28,12 +27,10 @@ export interface IGetUsersTableColumnsProps {
   >;
   onUpdateUserRole?: (userId: string, role: IUser["role"]) => void;
 }
-export type GetUsersTableColumnsProps = IGetUsersTableColumnsProps;
 
 export interface IUsersTableProps {
   queryKeys?: Partial<IQueryKeys>;
 }
-export type UsersTableProps = IUsersTableProps;
 
 export interface IUsersTableActionBarProps {
   table: Table<IUser>;
@@ -41,12 +38,10 @@ export interface IUsersTableActionBarProps {
   onBulkUpdateRole?: (userIds: string[], role: IUser["role"]) => void;
   onBulkDelete?: (userIds: string[]) => void;
 }
-export type UsersTableActionBarProps = IUsersTableActionBarProps;
 
 export interface IUsersTableToolbarActionsProps {
   table: Table<IUser>;
 }
-export type UsersTableToolbarActionsProps = IUsersTableToolbarActionsProps;
 
 export interface IUserFormProps {
   initialValues?: Partial<IUser>;
@@ -56,7 +51,6 @@ export interface IUserFormProps {
   onCancel?: () => void;
   submitText?: string;
 }
-export type UserFormProps = IUserFormProps;
 
 export interface IDeleteUsersDialogProps extends React.ComponentPropsWithoutRef<
   typeof AlertDialog
@@ -66,4 +60,3 @@ export interface IDeleteUsersDialogProps extends React.ComponentPropsWithoutRef<
   showTrigger?: boolean;
   onDeleteUsers?: (userIds: string[]) => void;
 }
-export type DeleteUsersDialogProps = IDeleteUsersDialogProps;

@@ -4,21 +4,19 @@ import type { Column } from "@tanstack/react-table";
 
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import type { ExtendedColumnFilter } from "@/types/data-table";
+import type { IExtendedColumnFilter } from "@/types/data-table";
 
 export interface IDataTableRangeFilterProps<
   TData,
 > extends React.ComponentProps<"div"> {
-  filter: ExtendedColumnFilter<TData>;
+  filter: IExtendedColumnFilter<TData>;
   column: Column<TData>;
   inputId: string;
   onFilterUpdate: (
     filterId: string,
-    updates: Partial<Omit<ExtendedColumnFilter<TData>, "filterId">>
+    updates: Partial<Omit<IExtendedColumnFilter<TData>, "filterId">>
   ) => void;
 }
-export type DataTableRangeFilterProps<TData> =
-  IDataTableRangeFilterProps<TData>;
 
 export function DataTableRangeFilter<TData>({
   filter,
@@ -27,7 +25,7 @@ export function DataTableRangeFilter<TData>({
   onFilterUpdate,
   className,
   ...props
-}: DataTableRangeFilterProps<TData>) {
+}: IDataTableRangeFilterProps<TData>) {
   const { meta } = column.columnDef;
 
   const [min, max] = React.useMemo(() => {

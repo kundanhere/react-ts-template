@@ -18,7 +18,6 @@ export interface IPolicy {
   createdAt: Date;
   updatedAt: Date;
 }
-export type Policy = IPolicy;
 
 export interface IGetPoliciesTableColumnsProps {
   effectCounts: Record<IPolicy["effect"], number>;
@@ -30,12 +29,10 @@ export interface IGetPoliciesTableColumnsProps {
   onUpdatePolicyEffect?: (policyId: string, effect: IPolicy["effect"]) => void;
   onDuplicatePolicy?: (policy: IPolicy) => void;
 }
-export type GetPoliciesTableColumnsProps = IGetPoliciesTableColumnsProps;
 
 export interface IPoliciesTableProps {
   queryKeys?: Partial<IQueryKeys>;
 }
-export type PoliciesTableProps = IPoliciesTableProps;
 
 export interface IPoliciesTableActionBarProps {
   table: Table<IPolicy>;
@@ -43,13 +40,10 @@ export interface IPoliciesTableActionBarProps {
   onBulkUpdateStatus?: (policyIds: string[], status: IPolicy["status"]) => void;
   onBulkDelete?: (policyIds: string[]) => void;
 }
-export type PoliciesTableActionBarProps = IPoliciesTableActionBarProps;
 
 export interface IPoliciesTableToolbarActionsProps {
   table: Table<IPolicy>;
 }
-export type PoliciesTableToolbarActionsProps =
-  IPoliciesTableToolbarActionsProps;
 
 export interface IDeletePoliciesDialogProps extends React.ComponentPropsWithoutRef<
   typeof AlertDialog
@@ -59,4 +53,3 @@ export interface IDeletePoliciesDialogProps extends React.ComponentPropsWithoutR
   showTrigger?: boolean;
   onDeletePolicies?: (policyIds: string[]) => void;
 }
-export type DeletePoliciesDialogProps = IDeletePoliciesDialogProps;

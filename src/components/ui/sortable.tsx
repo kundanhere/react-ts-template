@@ -76,7 +76,6 @@ export interface ISortableRootContextValue<T> {
   getItemValue: (item: T) => UniqueIdentifier;
   flatCursor: boolean;
 }
-export type SortableRootContextValue<T> = ISortableRootContextValue<T>;
 
 const SortableRootContext =
   React.createContext<ISortableRootContextValue<unknown> | null>(null);
@@ -92,10 +91,9 @@ function useSortableContext(consumerName: string) {
 export interface IGetItemValue<T> {
   getItemValue: (item: T) => UniqueIdentifier;
 }
-export type GetItemValue<T> = IGetItemValue<T>;
 
-type SortableProps<T> = DndContextProps &
-  (T extends object ? GetItemValue<T> : Partial<GetItemValue<T>>) & {
+export type SortableProps<T> = DndContextProps &
+  (T extends object ? IGetItemValue<T> : Partial<IGetItemValue<T>>) & {
     value: T[];
     onValueChange?: (items: T[]) => void;
     onMove?: (
@@ -290,7 +288,7 @@ function Sortable<T>(props: SortableProps<T>) {
 
   return (
     <SortableRootContext.Provider
-      value={contextValue as SortableRootContextValue<unknown>}
+      value={contextValue as ISortableRootContextValue<unknown>}
     >
       <DndContext
         collisionDetection={collisionDetection ?? config.collisionDetection}
@@ -319,9 +317,8 @@ export interface ISortableContentProps extends React.ComponentProps<"div"> {
   asChild?: boolean;
   withoutSlot?: boolean;
 }
-export type SortableContentProps = ISortableContentProps;
 
-function SortableContent(props: SortableContentProps) {
+function SortableContent(props: ISortableContentProps) {
   const {
     strategy: strategyProp,
     asChild,
@@ -365,7 +362,6 @@ export interface ISortableItemContextValue {
   isDragging?: boolean;
   disabled?: boolean;
 }
-export type SortableItemContextValue = ISortableItemContextValue;
 
 const SortableItemContext =
   React.createContext<ISortableItemContextValue | null>(null);
@@ -384,9 +380,8 @@ export interface ISortableItemProps extends React.ComponentProps<"div"> {
   asChild?: boolean;
   disabled?: boolean;
 }
-export type SortableItemProps = ISortableItemProps;
 
-function SortableItem(props: SortableItemProps) {
+function SortableItem(props: ISortableItemProps) {
   const {
     value,
     style,
@@ -438,7 +433,7 @@ function SortableItem(props: SortableItemProps) {
     [transform, transition, style]
   );
 
-  const itemContext = React.useMemo<SortableItemContextValue>(
+  const itemContext = React.useMemo<ISortableItemContextValue>(
     () => ({
       id,
       attributes,
@@ -484,9 +479,8 @@ function SortableItem(props: SortableItemProps) {
 export interface ISortableItemHandleProps extends React.ComponentProps<"button"> {
   asChild?: boolean;
 }
-export type SortableItemHandleProps = ISortableItemHandleProps;
 
-function SortableItemHandle(props: SortableItemHandleProps) {
+function SortableItemHandle(props: ISortableItemHandleProps) {
   const { asChild, disabled, className, ref, ...itemHandleProps } = props;
 
   const context = useSortableContext(ITEM_HANDLE_NAME);
@@ -545,9 +539,8 @@ export interface ISortableOverlayProps extends Omit<
     | ((params: { value: UniqueIdentifier }) => React.ReactNode)
     | React.ReactNode;
 }
-export type SortableOverlayProps = ISortableOverlayProps;
 
-function SortableOverlay(props: SortableOverlayProps) {
+function SortableOverlay(props: ISortableOverlayProps) {
   const { container: containerProp, children, ...overlayProps } = props;
 
   const context = useSortableContext(OVERLAY_NAME);
@@ -585,5 +578,4 @@ export {
   SortableItem,
   SortableItemHandle,
   SortableOverlay,
-  type SortableProps,
 };

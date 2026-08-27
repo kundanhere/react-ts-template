@@ -18,12 +18,12 @@ import {
 import { toast } from "@/components/ui/toast";
 import { getSelectedTableRows } from "@/lib/data-table";
 import { exportTableToCSV } from "@/lib/export";
-import type { RolesTableActionBarProps } from "@/types/iam/roles";
+import type { IRolesTableActionBarProps } from "@/types/iam/roles";
 
 export function RolesTableActionBar({
   table,
   onBulkDelete,
-}: RolesTableActionBarProps) {
+}: IRolesTableActionBarProps) {
   const { rowSelection } = table.getState();
   const rows = React.useMemo(() => {
     if (!rowSelection) return [];

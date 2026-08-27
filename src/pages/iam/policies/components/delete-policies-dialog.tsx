@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
-import type { DeletePoliciesDialogProps } from "@/types/iam/policies";
+import type { IDeletePoliciesDialogProps } from "@/types/iam/policies";
 
 export function DeletePoliciesDialog({
   policies,
@@ -22,7 +22,7 @@ export function DeletePoliciesDialog({
   showTrigger = true,
   onDeletePolicies,
   ...props
-}: DeletePoliciesDialogProps) {
+}: IDeletePoliciesDialogProps) {
   const onDelete = () => {
     const ids = policies.map((p) => p.id);
     onDeletePolicies?.(ids);

@@ -25,14 +25,14 @@ import {
 import { toast } from "@/components/ui/toast";
 import { formatDate } from "@/lib/format";
 import type {
-  AuditLog,
-  GetAuditLogsTableColumnsProps,
+  IAuditLog,
+  IGetAuditLogsTableColumnsProps,
 } from "@/types/monitoring/audit-logs";
 
 export const AUDIT_STATUSES = ["SUCCESS", "DENIED", "WARNING"] as const;
 export const AUDIT_SEVERITIES = ["info", "warning", "error"] as const;
 
-export function getStatusIcon(status: AuditLog["status"]) {
+export function getStatusIcon(status: IAuditLog["status"]) {
   switch (status) {
     case "SUCCESS":
       return (props: any) => (
@@ -53,7 +53,7 @@ export function getStatusIcon(status: AuditLog["status"]) {
   }
 }
 
-export function getSeverityIcon(severity: AuditLog["severity"]) {
+export function getSeverityIcon(severity: IAuditLog["severity"]) {
   switch (severity) {
     case "info":
       return (props: any) => (
@@ -92,7 +92,7 @@ export function getAuditLogsTableColumns({
   severityCounts,
   setRowAction,
   onViewDetails,
-}: GetAuditLogsTableColumnsProps): ColumnDef<AuditLog>[] {
+}: IGetAuditLogsTableColumnsProps): ColumnDef<IAuditLog>[] {
   return [
     {
       id: "select",
@@ -210,7 +210,7 @@ export function getAuditLogsTableColumns({
         <DataTableColumnHeader column={column} label="Status" />
       ),
       cell: ({ cell }) => {
-        const status = cell.getValue<AuditLog["status"]>();
+        const status = cell.getValue<IAuditLog["status"]>();
         if (!status) return null;
 
         let dotColorClass = "bg-amber-500";
@@ -255,7 +255,7 @@ export function getAuditLogsTableColumns({
         <DataTableColumnHeader column={column} label="Severity" />
       ),
       cell: ({ cell }) => {
-        const severity = cell.getValue<AuditLog["severity"]>();
+        const severity = cell.getValue<IAuditLog["severity"]>();
         if (!severity) return null;
         const Icon = getSeverityIcon(severity);
 

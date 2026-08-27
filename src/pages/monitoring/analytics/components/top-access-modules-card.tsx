@@ -16,9 +16,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import type { TopAccessModulesCardProps } from "@/types/monitoring/analytics";
+import type { ITopAccessModulesCardProps } from "@/types/monitoring/analytics";
 
-export function TopAccessModulesCard({ modules }: TopAccessModulesCardProps) {
+export function TopAccessModulesCard({ modules }: ITopAccessModulesCardProps) {
   const moduleTrafficData = [
     { module: "Users", requests: 1420, fill: "var(--chart-1, #10b981)" },
     { module: "Payments", requests: 980, fill: "var(--chart-2, #0ea5e9)" },

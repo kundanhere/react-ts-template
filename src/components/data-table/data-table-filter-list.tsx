@@ -65,8 +65,8 @@ import { generateId } from "@/lib/id";
 import { getFiltersStateParser } from "@/lib/parsers";
 import { cn } from "@/lib/utils";
 import type {
-  ExtendedColumnFilter,
   FilterOperator,
+  IExtendedColumnFilter,
   JoinOperator,
 } from "@/types/data-table";
 
@@ -84,8 +84,6 @@ export interface IDataTableFilterListProps<TData> extends React.ComponentProps<
   shallow?: boolean;
   disabled?: boolean;
 }
-export type DataTableFilterListProps<TData> = IDataTableFilterListProps<TData>;
-
 export function DataTableFilterList<TData>({
   table,
   debounceMs = DEBOUNCE_MS,
@@ -93,7 +91,7 @@ export function DataTableFilterList<TData>({
   shallow = true,
   disabled,
   ...props
-}: DataTableFilterListProps<TData>) {
+}: IDataTableFilterListProps<TData>) {
   const id = React.useId();
   const labelId = React.useId();
   const descriptionId = React.useId();
@@ -150,12 +148,12 @@ export function DataTableFilterList<TData>({
   const onFilterUpdate = React.useCallback(
     (
       filterId: string,
-      updates: Partial<Omit<ExtendedColumnFilter<TData>, "filterId">>
+      updates: Partial<Omit<IExtendedColumnFilter<TData>, "filterId">>
     ) => {
       debouncedSetFilters((prevFilters) => {
         const updatedFilters = prevFilters.map((filter) => {
           if (filter.filterId === filterId) {
-            return { ...filter, ...updates } as ExtendedColumnFilter<TData>;
+            return { ...filter, ...updates } as IExtendedColumnFilter<TData>;
           }
           return filter;
         });
@@ -330,7 +328,7 @@ export function DataTableFilterList<TData>({
 }
 
 export interface IDataTableFilterItemProps<TData> {
-  filter: ExtendedColumnFilter<TData>;
+  filter: IExtendedColumnFilter<TData>;
   index: number;
   filterItemId: string;
   joinOperator: JoinOperator;
@@ -338,11 +336,10 @@ export interface IDataTableFilterItemProps<TData> {
   columns: Column<TData>[];
   onFilterUpdate: (
     filterId: string,
-    updates: Partial<Omit<ExtendedColumnFilter<TData>, "filterId">>
+    updates: Partial<Omit<IExtendedColumnFilter<TData>, "filterId">>
   ) => void;
   onFilterRemove: (filterId: string) => void;
 }
-export type DataTableFilterItemProps<TData> = IDataTableFilterItemProps<TData>;
 
 function DataTableFilterItem<TData>({
   filter,
@@ -353,7 +350,7 @@ function DataTableFilterItem<TData>({
   columns,
   onFilterUpdate,
   onFilterRemove,
-}: DataTableFilterItemProps<TData>) {
+}: IDataTableFilterItemProps<TData>) {
   const [showFieldSelector, setShowFieldSelector] = React.useState(false);
   const [showOperatorSelector, setShowOperatorSelector] = React.useState(false);
   const [showValueSelector, setShowValueSelector] = React.useState(false);
@@ -587,13 +584,13 @@ function onFilterInputRender<TData>({
   showValueSelector,
   setShowValueSelector,
 }: {
-  filter: ExtendedColumnFilter<TData>;
+  filter: IExtendedColumnFilter<TData>;
   inputId: string;
   column: Column<TData>;
   columnMeta?: ColumnMeta<TData, unknown>;
   onFilterUpdate: (
     filterId: string,
-    updates: Partial<Omit<ExtendedColumnFilter<TData>, "filterId">>
+    updates: Partial<Omit<IExtendedColumnFilter<TData>, "filterId">>
   ) => void;
   showValueSelector: boolean;
   setShowValueSelector: (value: boolean) => void;

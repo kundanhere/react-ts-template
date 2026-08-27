@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import type { AnalyticsDomainBannerProps } from "@/types/monitoring/analytics";
+import type { IAnalyticsDomainBannerProps } from "@/types/monitoring/analytics";
 
 export function AnalyticsDomainBanner({
   moduleCount,
-}: AnalyticsDomainBannerProps) {
+}: IAnalyticsDomainBannerProps) {
   return (
     <div className="border-border bg-card flex flex-col justify-between gap-4 rounded-xl border p-4 shadow-xs sm:flex-row sm:items-center">
       <div className="flex items-center gap-3.5">

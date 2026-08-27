@@ -26,8 +26,8 @@ import { toast } from "@/components/ui/toast";
 import { getSelectedTableRows } from "@/lib/data-table";
 import { exportTableToCSV } from "@/lib/export";
 import type {
-  Session,
-  SessionsTableActionBarProps,
+  ISession,
+  ISessionsTableActionBarProps,
 } from "@/types/iam/sessions";
 
 import { SESSION_STATUSES } from "./sessions-table-columns";
@@ -36,7 +36,7 @@ export function SessionsTableActionBar({
   table,
   onBulkUpdateStatus,
   onBulkRevoke,
-}: SessionsTableActionBarProps) {
+}: ISessionsTableActionBarProps) {
   const { rowSelection } = table.getState();
   const rows = React.useMemo(() => {
     if (!rowSelection) return [];
@@ -53,7 +53,7 @@ export function SessionsTableActionBar({
   );
 
   const onStatusChange = React.useCallback(
-    (status: Session["status"]) => {
+    (status: ISession["status"]) => {
       const ids = rows.map((r) => r.original.id);
       onBulkUpdateStatus?.(ids, status);
       toast.success(`Updated ${ids.length} sessions status to ${status}`);

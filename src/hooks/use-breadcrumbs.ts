@@ -4,9 +4,8 @@ export interface IBreadcrumbItem {
   title: string;
   href?: string;
 }
-export type BreadcrumbItem = IBreadcrumbItem;
 
-export function useBreadcrumbs(): BreadcrumbItem[] {
+export function useBreadcrumbs(): IBreadcrumbItem[] {
   const location = useLocation();
   const { pathname } = location;
 
@@ -14,7 +13,7 @@ export function useBreadcrumbs(): BreadcrumbItem[] {
     return [{ title: "Home" }];
   }
 
-  const items: BreadcrumbItem[] = [{ title: "Home", href: "/" }];
+  const items: IBreadcrumbItem[] = [{ title: "Home", href: "/" }];
 
   const routeMap: Record<
     string,

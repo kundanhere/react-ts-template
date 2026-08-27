@@ -20,7 +20,6 @@ export interface IDataTableSkeletonProps extends React.ComponentProps<"div"> {
   withPagination?: boolean;
   shrinkZero?: boolean;
 }
-export type DataTableSkeletonProps = IDataTableSkeletonProps;
 
 export function DataTableSkeleton({
   columnCount,
@@ -32,7 +31,7 @@ export function DataTableSkeleton({
   shrinkZero = false,
   className,
   ...props
-}: DataTableSkeletonProps) {
+}: IDataTableSkeletonProps) {
   const id = React.useId();
   const cozyCellWidths = Array.from(
     { length: columnCount },

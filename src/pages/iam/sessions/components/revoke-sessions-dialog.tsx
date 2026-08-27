@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
-import type { RevokeSessionsDialogProps } from "@/types/iam/sessions";
+import type { IRevokeSessionsDialogProps } from "@/types/iam/sessions";
 
 export function RevokeSessionsDialog({
   sessions,
@@ -24,7 +24,7 @@ export function RevokeSessionsDialog({
   onRevokeSessions,
   onRevokeAllOtherSessions,
   ...props
-}: RevokeSessionsDialogProps) {
+}: IRevokeSessionsDialogProps) {
   const onConfirm = () => {
     if (isRevokeAllOther) {
       onRevokeAllOtherSessions?.();

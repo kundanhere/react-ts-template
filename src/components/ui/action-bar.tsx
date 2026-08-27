@@ -25,7 +25,6 @@ type Orientation = "horizontal" | "vertical";
 export interface IDivProps extends React.ComponentProps<"div"> {
   asChild?: boolean;
 }
-export type DivProps = IDivProps;
 
 type ItemElement = HTMLButtonElement;
 
@@ -62,7 +61,6 @@ export interface IItemData {
   ref: React.RefObject<ItemElement | null>;
   disabled: boolean;
 }
-export type ItemData = IItemData;
 
 export interface IActionBarContextValue {
   onOpenChange?: (open: boolean) => void;
@@ -70,7 +68,6 @@ export interface IActionBarContextValue {
   orientation: Orientation;
   loop: boolean;
 }
-export type ActionBarContextValue = IActionBarContextValue;
 
 const ActionBarContext = React.createContext<IActionBarContextValue | null>(
   null
@@ -94,7 +91,6 @@ export interface IFocusContextValue {
   onItemUnregister: (id: string) => void;
   getItems: () => IItemData[];
 }
-export type FocusContextValue = IFocusContextValue;
 
 const FocusContext = React.createContext<IFocusContextValue | null>(null);
 
@@ -121,9 +117,8 @@ export interface IActionBarProps extends IDivProps {
   orientation?: Orientation;
   loop?: boolean;
 }
-export type ActionBarProps = IActionBarProps;
 
-const ActionBar = React.forwardRef<HTMLDivElement, ActionBarProps>(
+const ActionBar = React.forwardRef<HTMLDivElement, IActionBarProps>(
   (props, ref) => {
     const {
       open = false,
@@ -177,7 +172,7 @@ const ActionBar = React.forwardRef<HTMLDivElement, ActionBarProps>(
       return () => ownerDocument.removeEventListener("keydown", onKeyDown);
     }, [open, propsRef]);
 
-    const contextValue = React.useMemo<ActionBarContextValue>(
+    const contextValue = React.useMemo<IActionBarContextValue>(
       () => ({
         onOpenChange,
         dir,
@@ -236,7 +231,7 @@ const ActionBar = React.forwardRef<HTMLDivElement, ActionBarProps>(
 );
 ActionBar.displayName = "ActionBar";
 
-const ActionBarSelection = React.forwardRef<HTMLDivElement, DivProps>(
+const ActionBarSelection = React.forwardRef<HTMLDivElement, IDivProps>(
   (props, ref) => {
     const { className, asChild, ...selectionProps } = props;
 
@@ -257,7 +252,7 @@ const ActionBarSelection = React.forwardRef<HTMLDivElement, DivProps>(
 );
 ActionBarSelection.displayName = "ActionBarSelection";
 
-const ActionBarGroup = React.forwardRef<HTMLDivElement, DivProps>(
+const ActionBarGroup = React.forwardRef<HTMLDivElement, IDivProps>(
   (props, ref) => {
     const {
       onBlur: onBlurProp,
@@ -275,7 +270,7 @@ const ActionBarGroup = React.forwardRef<HTMLDivElement, DivProps>(
     const groupRef = React.useRef<HTMLDivElement>(null);
     const composedRef = useComposedRefs(ref as any, groupRef);
     const isClickFocusRef = React.useRef(false);
-    const itemsRef = React.useRef<Map<string, ItemData>>(new Map());
+    const itemsRef = React.useRef<Map<string, IItemData>>(new Map());
 
     const { dir, orientation } = useActionBarContext(GROUP_NAME);
 
@@ -295,7 +290,7 @@ const ActionBarGroup = React.forwardRef<HTMLDivElement, DivProps>(
       setFocusableItemCount((prevCount) => prevCount - 1);
     }, []);
 
-    const onItemRegister = React.useCallback((item: ItemData) => {
+    const onItemRegister = React.useCallback((item: IItemData) => {
       itemsRef.current.set(item.id, item);
     }, []);
 
@@ -357,7 +352,7 @@ const ActionBarGroup = React.forwardRef<HTMLDivElement, DivProps>(
 
             const candidateItems = [currentItem, ...items].filter(
               Boolean
-            ) as ItemData[];
+            ) as IItemData[];
             const candidateRefs = candidateItems.map((item) => item.ref);
             focusFirst(candidateRefs, false);
           }
@@ -377,7 +372,7 @@ const ActionBarGroup = React.forwardRef<HTMLDivElement, DivProps>(
       [onMouseDownProp]
     );
 
-    const focusContextValue = React.useMemo<FocusContextValue>(
+    const focusContextValue = React.useMemo<IFocusContextValue>(
       () => ({
         tabStopId,
         onItemFocus,
@@ -435,9 +430,8 @@ export interface IActionBarItemProps extends Omit<
 > {
   onSelect?: (event: Event) => void;
 }
-export type ActionBarItemProps = IActionBarItemProps;
 
-const ActionBarItem = React.forwardRef<HTMLButtonElement, ActionBarItemProps>(
+const ActionBarItem = React.forwardRef<HTMLButtonElement, IActionBarItemProps>(
   (props, ref) => {
     const {
       onSelect,
@@ -604,51 +598,50 @@ ActionBarItem.displayName = "ActionBarItem";
 export interface IActionBarCloseProps extends React.ComponentProps<"button"> {
   asChild?: boolean;
 }
-export type ActionBarCloseProps = IActionBarCloseProps;
 
-const ActionBarClose = React.forwardRef<HTMLButtonElement, ActionBarCloseProps>(
-  (props, ref) => {
-    const { asChild, className, onClick, ...closeProps } = props;
+const ActionBarClose = React.forwardRef<
+  HTMLButtonElement,
+  IActionBarCloseProps
+>((props, ref) => {
+  const { asChild, className, onClick, ...closeProps } = props;
 
-    const { onOpenChange } = useActionBarContext(CLOSE_NAME);
+  const { onOpenChange } = useActionBarContext(CLOSE_NAME);
 
-    const onCloseClick = React.useCallback(
-      (event: React.MouseEvent<HTMLButtonElement>) => {
-        onClick?.(event);
-        if (event.defaultPrevented) return;
+  const onCloseClick = React.useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      onClick?.(event);
+      if (event.defaultPrevented) return;
 
-        onOpenChange?.(false);
-      },
-      [onOpenChange, onClick]
-    );
+      onOpenChange?.(false);
+    },
+    [onOpenChange, onClick]
+  );
 
-    const ClosePrimitive = asChild ? SlotPrimitive : "button";
+  const ClosePrimitive = asChild ? SlotPrimitive : "button";
 
-    return (
-      <ClosePrimitive
-        ref={ref as any}
-        type="button"
-        data-slot="action-bar-close"
-        {...closeProps}
-        className={cn(
-          "focus-visible:border-ring focus-visible:ring-ring/50 rounded-xs opacity-70 outline-none hover:opacity-100 focus-visible:ring-2 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
-          className
-        )}
-        onClick={onCloseClick}
-      />
-    );
-  }
-);
+  return (
+    <ClosePrimitive
+      ref={ref as any}
+      type="button"
+      data-slot="action-bar-close"
+      {...closeProps}
+      className={cn(
+        "focus-visible:border-ring focus-visible:ring-ring/50 rounded-xs opacity-70 outline-none hover:opacity-100 focus-visible:ring-2 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-3.5",
+        className
+      )}
+      onClick={onCloseClick}
+    />
+  );
+});
 ActionBarClose.displayName = "ActionBarClose";
 
 export interface IActionBarSeparatorProps extends IDivProps {
   orientation?: Orientation;
 }
-export type ActionBarSeparatorProps = IActionBarSeparatorProps;
 
 const ActionBarSeparator = React.forwardRef<
   HTMLDivElement,
-  ActionBarSeparatorProps
+  IActionBarSeparatorProps
 >((props, ref) => {
   const {
     orientation: orientationProp,

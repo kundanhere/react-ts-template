@@ -18,7 +18,6 @@ export interface IModule {
   createdAt: Date;
   children?: IModule[];
 }
-export type Module = IModule;
 
 export interface IGetModulesTableColumnsProps {
   statusCounts: Record<IModule["status"], number>;
@@ -31,12 +30,10 @@ export interface IGetModulesTableColumnsProps {
   onUpdateStatus?: (moduleId: string, status: IModule["status"]) => void;
   onToggleSystem?: (moduleId: string) => void;
 }
-export type GetModulesTableColumnsProps = IGetModulesTableColumnsProps;
 
 export interface IModulesTableProps {
   queryKeys?: Partial<IQueryKeys>;
 }
-export type ModulesTableProps = IModulesTableProps;
 
 export interface IModulesTableActionBarProps {
   table: Table<IModule>;
@@ -47,13 +44,11 @@ export interface IModulesTableActionBarProps {
   ) => void;
   onBulkDelete?: (moduleIds: string[]) => void;
 }
-export type ModulesTableActionBarProps = IModulesTableActionBarProps;
 
 export interface IModulesTableToolbarActionsProps {
   table: Table<IModule>;
   onAddModule?: () => void;
 }
-export type ModulesTableToolbarActionsProps = IModulesTableToolbarActionsProps;
 
 export interface IModuleFormDialogProps {
   open: boolean;
@@ -61,7 +56,6 @@ export interface IModuleFormDialogProps {
   initialValues?: Partial<IModule> | null;
   onSubmit: (values: Omit<IModule, "id" | "code" | "createdAt">) => void;
 }
-export type ModuleFormDialogProps = IModuleFormDialogProps;
 
 export interface IDeleteModulesDialogProps extends React.ComponentPropsWithoutRef<
   typeof AlertDialog
@@ -71,4 +65,3 @@ export interface IDeleteModulesDialogProps extends React.ComponentPropsWithoutRe
   showTrigger?: boolean;
   onDeleteModules?: (moduleIds: string[]) => void;
 }
-export type DeleteModulesDialogProps = IDeleteModulesDialogProps;

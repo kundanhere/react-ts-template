@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { formatDate } from "@/lib/format";
-import type { AuditLogDetailsDialogProps } from "@/types/monitoring/audit-logs";
+import type { IAuditLogDetailsDialogProps } from "@/types/monitoring/audit-logs";
 
 import { getSeverityIcon } from "./audit-logs-table-columns";
 
@@ -21,7 +21,7 @@ export function AuditLogDetailsDialog({
   open,
   onOpenChange,
   log,
-}: AuditLogDetailsDialogProps) {
+}: IAuditLogDetailsDialogProps) {
   if (!log) return null;
 
   const SeverityIcon = getSeverityIcon(log.severity);

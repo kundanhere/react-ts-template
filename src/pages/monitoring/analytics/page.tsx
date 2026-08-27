@@ -8,13 +8,13 @@ import { PageWrapper } from "@/components/page-wrapper";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import type {
-  AnalyticsAuditLog,
-  AnalyticsModule,
-  AnalyticsPolicy,
-  AnalyticsRole,
-  AnalyticsSession,
-  AnalyticsUser,
   AuditFilter,
+  IAnalyticsAuditLog,
+  IAnalyticsModule,
+  IAnalyticsPolicy,
+  IAnalyticsRole,
+  IAnalyticsSession,
+  IAnalyticsUser,
   TimeRange,
 } from "@/types/monitoring/analytics";
 import { getItem, setItem } from "@/utils/local-storage";
@@ -33,19 +33,19 @@ import {
 const LS_PREFIX = "iam_console_";
 
 export default function AnalyticsPage() {
-  const [users, setUsers] = React.useState<AnalyticsUser[]>([]);
-  const [roles, setRoles] = React.useState<AnalyticsRole[]>([]);
-  const [policies, setPolicies] = React.useState<AnalyticsPolicy[]>([]);
-  const [modules, setModules] = React.useState<AnalyticsModule[]>([]);
-  const [sessions, setSessions] = React.useState<AnalyticsSession[]>([]);
-  const [auditLogs, setAuditLogs] = React.useState<AnalyticsAuditLog[]>([]);
+  const [users, setUsers] = React.useState<IAnalyticsUser[]>([]);
+  const [roles, setRoles] = React.useState<IAnalyticsRole[]>([]);
+  const [policies, setPolicies] = React.useState<IAnalyticsPolicy[]>([]);
+  const [modules, setModules] = React.useState<IAnalyticsModule[]>([]);
+  const [sessions, setSessions] = React.useState<IAnalyticsSession[]>([]);
+  const [auditLogs, setAuditLogs] = React.useState<IAnalyticsAuditLog[]>([]);
   const [timeRange, setTimeRange] = React.useState<TimeRange>("24h");
   const [auditFilter, setAuditFilter] = React.useState<AuditFilter>("ALL");
 
   const seedData = React.useCallback(() => {
     const t = Date.now();
 
-    const initialModules: AnalyticsModule[] = [
+    const initialModules: IAnalyticsModule[] = [
       {
         id: 1,
         name: "Dashboard",
@@ -144,7 +144,7 @@ export default function AnalyticsPage() {
       },
     ];
 
-    const initialRoles: AnalyticsRole[] = [
+    const initialRoles: IAnalyticsRole[] = [
       {
         id: 1,
         name: "Super Admin",
@@ -190,7 +190,7 @@ export default function AnalyticsPage() {
       },
     ];
 
-    const initialPolicies: AnalyticsPolicy[] = [
+    const initialPolicies: IAnalyticsPolicy[] = [
       {
         id: 1,
         name: "Full System Access",
@@ -265,7 +265,7 @@ export default function AnalyticsPage() {
       },
     ];
 
-    const initialUsers: AnalyticsUser[] = [
+    const initialUsers: IAnalyticsUser[] = [
       {
         id: 1,
         firstName: "Aiden",
@@ -345,7 +345,7 @@ export default function AnalyticsPage() {
       },
     ];
 
-    const initialSessions: AnalyticsSession[] = [
+    const initialSessions: IAnalyticsSession[] = [
       {
         id: "sess_1",
         userId: 1,
@@ -388,7 +388,7 @@ export default function AnalyticsPage() {
       },
     ];
 
-    const initialAuditLogs: AnalyticsAuditLog[] = [
+    const initialAuditLogs: IAnalyticsAuditLog[] = [
       {
         id: "aud_1",
         userId: 1,
@@ -484,12 +484,12 @@ export default function AnalyticsPage() {
   }, []);
 
   const loadData = React.useCallback(() => {
-    const localUsers = getItem<AnalyticsUser[]>(`${LS_PREFIX}users`);
-    const localSessions = getItem<AnalyticsSession[]>(`${LS_PREFIX}sessions`);
-    const localRoles = getItem<AnalyticsRole[]>(`${LS_PREFIX}roles`);
-    const localPolicies = getItem<AnalyticsPolicy[]>(`${LS_PREFIX}policies`);
-    const localModules = getItem<AnalyticsModule[]>(`${LS_PREFIX}modules`);
-    const localAudit = getItem<AnalyticsAuditLog[]>(`${LS_PREFIX}audit`);
+    const localUsers = getItem<IAnalyticsUser[]>(`${LS_PREFIX}users`);
+    const localSessions = getItem<IAnalyticsSession[]>(`${LS_PREFIX}sessions`);
+    const localRoles = getItem<IAnalyticsRole[]>(`${LS_PREFIX}roles`);
+    const localPolicies = getItem<IAnalyticsPolicy[]>(`${LS_PREFIX}policies`);
+    const localModules = getItem<IAnalyticsModule[]>(`${LS_PREFIX}modules`);
+    const localAudit = getItem<IAnalyticsAuditLog[]>(`${LS_PREFIX}audit`);
 
     if (!localUsers || !localSessions || localSessions.length === 0) {
       seedData();

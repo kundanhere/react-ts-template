@@ -22,7 +22,6 @@ export interface IRange {
   min: number;
   max: number;
 }
-export type Range = IRange;
 
 type RangeValue = [number, number];
 
@@ -54,13 +53,11 @@ export interface IDataTableSliderFilterProps<TData> {
   column: Column<TData, unknown>;
   title?: string;
 }
-export type DataTableSliderFilterProps<TData> =
-  IDataTableSliderFilterProps<TData>;
 
 export function DataTableSliderFilter<TData>({
   column,
   title,
-}: DataTableSliderFilterProps<TData>) {
+}: IDataTableSliderFilterProps<TData>) {
   const id = React.useId();
 
   const columnFilterValue = parseValuesAsNumbers(column.getFilterValue());
@@ -68,7 +65,7 @@ export function DataTableSliderFilter<TData>({
   const defaultRange = column.columnDef.meta?.range;
   const unit = column.columnDef.meta?.unit;
 
-  const { min, max, step } = React.useMemo<Range & { step: number }>(() => {
+  const { min, max, step } = React.useMemo<IRange & { step: number }>(() => {
     let minValue = 0;
     let maxValue = 100;
 

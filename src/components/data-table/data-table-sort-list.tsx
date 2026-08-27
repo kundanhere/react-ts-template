@@ -52,14 +52,12 @@ export interface IDataTableSortListProps<TData> extends React.ComponentProps<
   table: Table<TData>;
   disabled?: boolean;
 }
-export type DataTableSortListProps<TData> = IDataTableSortListProps<TData>;
-
 export function DataTableSortList<TData>({
   table,
   disabled,
   className,
   ...props
-}: DataTableSortListProps<TData>) {
+}: IDataTableSortListProps<TData>) {
   const id = React.useId();
   const labelId = React.useId();
   const descriptionId = React.useId();
@@ -281,7 +279,6 @@ export interface IDataTableSortItemProps {
   onSortUpdate: (sortId: string, updates: Partial<ColumnSort>) => void;
   onSortRemove: (sortId: string) => void;
 }
-export type DataTableSortItemProps = IDataTableSortItemProps;
 
 function DataTableSortItem({
   sort,
@@ -290,7 +287,7 @@ function DataTableSortItem({
   columnLabels,
   onSortUpdate,
   onSortRemove,
-}: DataTableSortItemProps) {
+}: IDataTableSortItemProps) {
   const fieldListboxId = `${sortItemId}-field-listbox`;
   const fieldTriggerId = `${sortItemId}-field-trigger`;
   const directionListboxId = `${sortItemId}-direction-listbox`;

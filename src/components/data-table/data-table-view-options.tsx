@@ -28,15 +28,12 @@ export interface IDataTableViewOptionsProps<TData> extends React.ComponentProps<
   table: Table<TData>;
   disabled?: boolean;
 }
-export type DataTableViewOptionsProps<TData> =
-  IDataTableViewOptionsProps<TData>;
-
 export function DataTableViewOptions<TData>({
   table,
   disabled,
   className,
   ...props
-}: DataTableViewOptionsProps<TData>) {
+}: IDataTableViewOptionsProps<TData>) {
   const columns = React.useMemo(
     () =>
       table

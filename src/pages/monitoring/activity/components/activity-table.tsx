@@ -3,10 +3,10 @@ import * as React from "react";
 import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { useDataTable } from "@/hooks/use-data-table";
-import type { DataTableRowAction } from "@/types/data-table";
+import type { IDataTableRowAction } from "@/types/data-table";
 import type {
-  ActivityItem,
-  ActivityTableProps,
+  IActivityItem,
+  IActivityTableProps,
 } from "@/types/monitoring/activity";
 
 import { ActivityDetailsDialog } from "./activity-details-dialog";
@@ -15,7 +15,7 @@ import { getActivityTableColumns } from "./activity-table-columns";
 import { ActivityTableToolbarActions } from "./activity-table-toolbar-actions";
 import { DeleteActivityDialog } from "./delete-activity-dialog";
 
-const INITIAL_ACTIVITIES: ActivityItem[] = [
+const INITIAL_ACTIVITIES: IActivityItem[] = [
   {
     id: "act-101",
     code: "ACT-101",
@@ -117,13 +117,13 @@ const INITIAL_ACTIVITIES: ActivityItem[] = [
   },
 ];
 
-export function ActivityTable({ queryKeys }: ActivityTableProps) {
+export function ActivityTable({ queryKeys }: IActivityTableProps) {
   const [activities, setActivities] =
-    React.useState<ActivityItem[]>(INITIAL_ACTIVITIES);
+    React.useState<IActivityItem[]>(INITIAL_ACTIVITIES);
   const [rowAction, setRowAction] =
-    React.useState<DataTableRowAction<ActivityItem> | null>(null);
+    React.useState<IDataTableRowAction<IActivityItem> | null>(null);
   const [selectedItemForDetails, setSelectedItemForDetails] =
-    React.useState<ActivityItem | null>(null);
+    React.useState<IActivityItem | null>(null);
 
   const statusCounts = React.useMemo(
     () =>
@@ -133,7 +133,7 @@ export function ActivityTable({ queryKeys }: ActivityTableProps) {
           return acc;
         },
         { SUCCESS: 0, DENIED: 0, WARNING: 0 } as Record<
-          ActivityItem["status"],
+          IActivityItem["status"],
           number
         >
       ),
@@ -148,7 +148,7 @@ export function ActivityTable({ queryKeys }: ActivityTableProps) {
           return acc;
         },
         { info: 0, warning: 0, error: 0 } as Record<
-          ActivityItem["severity"],
+          IActivityItem["severity"],
           number
         >
       ),
@@ -156,10 +156,10 @@ export function ActivityTable({ queryKeys }: ActivityTableProps) {
   );
 
   const handleBulkDelete = React.useCallback((itemIds: string[]) => {
-    setActivities((prev) => prev.filter((i) => !itemIds.includes(i.id)));
+    setActivities((prev) => prev.filter((item) => !itemIds.includes(item.id)));
   }, []);
 
-  const handleViewDetails = React.useCallback((item: ActivityItem) => {
+  const handleViewDetails = React.useCallback((item: IActivityItem) => {
     setSelectedItemForDetails(item);
   }, []);
 

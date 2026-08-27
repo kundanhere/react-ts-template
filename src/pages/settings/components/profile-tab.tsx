@@ -37,7 +37,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import type { SocialLink } from "@/types/settings";
+import type { ISocialLink } from "@/types/settings";
 
 function getSocialIcon(url: string) {
   const lower = url.toLowerCase();
@@ -68,7 +68,7 @@ export default function ProfileTab() {
   const [showStatus, setShowStatus] = React.useState(true);
 
   // State for social accounts
-  const [socials, setSocials] = React.useState<SocialLink[]>([
+  const [socials, setSocials] = React.useState<ISocialLink[]>([
     { id: "1", url: "https://x.com/kundanhere" },
     { id: "2", url: "https://linkedin.com/in/kundanhere" },
   ]);

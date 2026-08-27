@@ -16,7 +16,10 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/lib/format";
-import type { Session, SessionDetailsDialogProps } from "@/types/iam/sessions";
+import type {
+  ISession,
+  ISessionDetailsDialogProps,
+} from "@/types/iam/sessions";
 
 function Row({
   label,
@@ -38,7 +41,7 @@ export function SessionDetailsDialog({
   open,
   onOpenChange,
   onRevoke,
-}: SessionDetailsDialogProps) {
+}: ISessionDetailsDialogProps) {
   if (!session) return null;
 
   const initials = session.user.name
@@ -47,20 +50,20 @@ export function SessionDetailsDialog({
     .join("")
     .toUpperCase();
 
-  const statusColor: Record<Session["status"], string> = {
+  const statusColor: Record<ISession["status"], string> = {
     active: "bg-emerald-500",
     idle: "bg-amber-500",
     revoked: "bg-rose-500",
     expired: "bg-muted-foreground",
   };
 
-  const riskColor: Record<Session["riskScore"], string> = {
+  const riskColor: Record<ISession["riskScore"], string> = {
     low: "bg-emerald-500",
     medium: "bg-amber-500",
     high: "bg-rose-500",
   };
 
-  const authLabel: Record<Session["authMethod"], string> = {
+  const authLabel: Record<ISession["authMethod"], string> = {
     mfa: "MFA",
     sso: "SSO / SAML",
     password: "Password",

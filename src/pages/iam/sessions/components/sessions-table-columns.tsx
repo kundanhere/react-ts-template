@@ -40,8 +40,8 @@ import {
 import { toast } from "@/components/ui/toast";
 import { formatDate } from "@/lib/format";
 import type {
-  GetSessionsTableColumnsProps,
-  Session,
+  IGetSessionsTableColumnsProps,
+  ISession,
 } from "@/types/iam/sessions";
 
 export const SESSION_STATUSES = [
@@ -64,7 +64,7 @@ export const SESSION_AUTH_METHODS = [
 ] as const;
 export const SESSION_RISK_SCORES = ["low", "medium", "high"] as const;
 
-export function getStatusIcon(status: Session["status"]) {
+export function getStatusIcon(status: ISession["status"]) {
   switch (status) {
     case "active":
       return (props: any) => (
@@ -89,7 +89,7 @@ export function getStatusIcon(status: Session["status"]) {
   }
 }
 
-export function getDeviceTypeIcon(deviceType: Session["deviceType"]) {
+export function getDeviceTypeIcon(deviceType: ISession["deviceType"]) {
   switch (deviceType) {
     case "desktop":
       return (props: any) => (
@@ -110,7 +110,7 @@ export function getDeviceTypeIcon(deviceType: Session["deviceType"]) {
   }
 }
 
-export function getAuthMethodIcon(authMethod: Session["authMethod"]) {
+export function getAuthMethodIcon(authMethod: ISession["authMethod"]) {
   switch (authMethod) {
     case "mfa":
       return (props: any) => (
@@ -152,7 +152,7 @@ export function getSessionsTableColumns({
   setRowAction,
   onViewDetails,
   onUpdateStatus,
-}: GetSessionsTableColumnsProps): ColumnDef<Session>[] {
+}: IGetSessionsTableColumnsProps): ColumnDef<ISession>[] {
   return [
     {
       id: "select",
@@ -261,7 +261,9 @@ export function getSessionsTableColumns({
         return (
           <div className="flex items-center gap-2">
             <div className="bg-muted/40 flex size-7 shrink-0 items-center justify-center rounded border">
-              <DeviceIcon className="text-muted-foreground size-3.5" />
+              {DeviceIcon && (
+                <DeviceIcon className="text-muted-foreground size-3.5" />
+              )}
             </div>
             <span className="text-foreground max-w-52 truncate text-xs font-medium">
               {device}
@@ -315,11 +317,11 @@ export function getSessionsTableColumns({
         <DataTableColumnHeader column={column} label="Auth Method" />
       ),
       cell: ({ cell }) => {
-        const authMethod = cell.getValue<Session["authMethod"]>();
+        const authMethod = cell.getValue<ISession["authMethod"]>();
         if (!authMethod) return null;
         const AuthIcon = getAuthMethodIcon(authMethod);
 
-        const labelMap: Record<Session["authMethod"], string> = {
+        const labelMap: Record<ISession["authMethod"], string> = {
           mfa: "MFA Active",
           sso: "SSO / SAML",
           password: "Password",
@@ -331,7 +333,7 @@ export function getSessionsTableColumns({
             variant="secondary"
             className="border-border gap-1 border px-2 py-0.5 text-xs capitalize [&>svg]:size-3"
           >
-            <AuthIcon />
+            {AuthIcon && <AuthIcon />}
             {labelMap[authMethod]}
           </Badge>
         );
@@ -356,16 +358,16 @@ export function getSessionsTableColumns({
         <DataTableColumnHeader column={column} label="Risk Level" />
       ),
       cell: ({ cell }) => {
-        const riskScore = cell.getValue<Session["riskScore"]>();
+        const riskScore = cell.getValue<ISession["riskScore"]>();
         if (!riskScore) return null;
 
-        const variantMap: Record<Session["riskScore"], string> = {
+        const variantMap: Record<ISession["riskScore"], string> = {
           low: "text-emerald-600 border-emerald-500/30 bg-emerald-50/50 dark:bg-emerald-950/20 dark:text-emerald-400",
           medium:
             "text-amber-600 border-amber-500/30 bg-amber-50/50 dark:bg-amber-950/20 dark:text-amber-400",
           high: "text-rose-600 border-rose-500/30 bg-rose-50/50 dark:bg-rose-950/20 dark:text-rose-400",
         };
-        const dotColorMap: Record<Session["riskScore"], string> = {
+        const dotColorMap: Record<ISession["riskScore"], string> = {
           low: "bg-emerald-500",
           medium: "bg-amber-500",
           high: "bg-rose-500",
@@ -402,11 +404,11 @@ export function getSessionsTableColumns({
         <DataTableColumnHeader column={column} label="Status" />
       ),
       cell: ({ cell }) => {
-        const status = cell.getValue<Session["status"]>();
+        const status = cell.getValue<ISession["status"]>();
         if (!status) return null;
         const Icon = getStatusIcon(status);
 
-        const variantMap: Record<Session["status"], string> = {
+        const variantMap: Record<ISession["status"], string> = {
           active:
             "text-emerald-600 border-emerald-500/30 bg-emerald-50/50 dark:bg-emerald-950/20 dark:text-emerald-400",
           idle: "text-amber-600 border-amber-500/30 bg-amber-50/50 dark:bg-amber-950/20 dark:text-amber-400",
@@ -420,7 +422,7 @@ export function getSessionsTableColumns({
             variant="outline"
             className={`gap-1 px-2 py-0.5 text-xs capitalize [&>svg]:size-3 ${variantMap[status]}`}
           >
-            <Icon />
+            {Icon && <Icon />}
             {status}
           </Badge>
         );
@@ -485,7 +487,7 @@ export function getSessionsTableColumns({
                     onValueChange={(val) => {
                       onUpdateStatus?.(
                         row.original.id,
-                        val as Session["status"]
+                        val as ISession["status"]
                       );
                       toast.success(
                         `Session ${row.original.code} status set to ${val}`

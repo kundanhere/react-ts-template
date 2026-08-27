@@ -4,13 +4,11 @@ export interface IErrorBoundaryProps {
   children: ReactNode;
   fallback?: ReactNode | ((error: Error, reset: () => void) => ReactNode);
 }
-export type ErrorBoundaryProps = IErrorBoundaryProps;
 
 export interface IErrorBoundaryState {
   hasError: boolean;
   error: Error | null;
 }
-export type ErrorBoundaryState = IErrorBoundaryState;
 
 export class ErrorBoundary extends Component<
   IErrorBoundaryProps,

@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import {
-  AsyncState,
+  IAsyncState,
   addAsyncCases,
   createAsyncState,
 } from "@/utils/redux-helpers";
@@ -11,20 +11,18 @@ export interface IUser {
   name: string;
   email?: string;
 }
-export type User = IUser;
 
-export interface IAppState extends AsyncState<IUser> {
+export interface IAppState extends IAsyncState<IUser> {
   theme: "light" | "dark" | "system";
 }
-export type AppState = IAppState;
 
-const initialState: AppState = {
-  ...createAsyncState<User>(null),
+const initialState: IAppState = {
+  ...createAsyncState<IUser>(null),
   theme: "system",
 };
 
 // Async thunk for fetching user profile details asynchronously
-export const fetchUserThunk = createAsyncThunk<User, string>(
+export const fetchUserThunk = createAsyncThunk<IUser, string>(
   "app/fetchUser",
   async (userId: string, { rejectWithValue }) => {
     try {
@@ -46,7 +44,7 @@ export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<User | null>) => {
+    setUser: (state, action: PayloadAction<IUser | null>) => {
       state.data = action.payload;
     },
     clearUser: (state) => {

@@ -10,15 +10,12 @@ export interface IDataTableAdvancedToolbarProps<
 > extends React.ComponentProps<"div"> {
   table: Table<TData>;
 }
-export type DataTableAdvancedToolbarProps<TData> =
-  IDataTableAdvancedToolbarProps<TData>;
-
 export function DataTableAdvancedToolbar<TData>({
   table,
   children,
   className,
   ...props
-}: DataTableAdvancedToolbarProps<TData>) {
+}: IDataTableAdvancedToolbarProps<TData>) {
   return (
     <div
       role="toolbar"

@@ -27,7 +27,6 @@ export interface IDataTableContextValue {
   setViewMode: (mode: DataTableViewMode) => void;
   enableViewToggle: boolean;
 }
-export type DataTableContextValue = IDataTableContextValue;
 
 export const DataTableContext =
   React.createContext<IDataTableContextValue | null>(null);
@@ -46,7 +45,6 @@ export interface IDataTableProps<TData> extends React.ComponentProps<"div"> {
   enableViewToggle?: boolean;
   renderCard?: (row: Row<TData>) => React.ReactNode;
 }
-export type DataTableProps<TData> = IDataTableProps<TData>;
 
 function renderTreeExpander<TData>(row: Row<TData>, showSpacer: boolean) {
   if (row.getCanExpand()) {
@@ -90,7 +88,7 @@ export function DataTable<TData>({
   children,
   className,
   ...props
-}: DataTableProps<TData>) {
+}: IDataTableProps<TData>) {
   const [internalViewMode, setInternalViewMode] =
     React.useState<DataTableViewMode>(defaultViewMode);
 
@@ -103,7 +101,7 @@ export function DataTable<TData>({
     [controlledOnViewModeChange]
   );
 
-  const contextValue = React.useMemo<DataTableContextValue>(
+  const contextValue = React.useMemo<IDataTableContextValue>(
     () => ({
       viewMode,
       setViewMode,

@@ -31,13 +31,13 @@ import {
 } from "@/components/ui/tooltip";
 import { useDataTable } from "@/hooks/use-data-table";
 import { cn } from "@/lib/utils";
-import type { RoleItem, RolesTableProps } from "@/types/iam/roles";
+import type { IRoleItem, IRolesTableProps } from "@/types/iam/roles";
 
 import { RolesTableActionBar } from "./roles-table-action-bar";
 import { getRoleIcon, getRolesTableColumns } from "./roles-table-columns";
 import { RolesTableToolbarActions } from "./roles-table-toolbar-actions";
 
-const INITIAL_ROLES: RoleItem[] = [
+const INITIAL_ROLES: IRoleItem[] = [
   {
     id: "super-admin",
     name: "Super Admin",
@@ -75,19 +75,19 @@ const INITIAL_ROLES: RoleItem[] = [
   },
 ];
 
-export function RolesTable({ queryKeys, onNewRoleClick }: RolesTableProps) {
-  const [roles, setRoles] = React.useState<RoleItem[]>(INITIAL_ROLES);
+export function RolesTable({ queryKeys, onNewRoleClick }: IRolesTableProps) {
+  const [roles, setRoles] = React.useState<IRoleItem[]>(INITIAL_ROLES);
 
   const handleBulkDelete = React.useCallback((ids: string[]) => {
     setRoles((prev) => prev.filter((r) => !ids.includes(r.id)));
   }, []);
 
-  const handleEditRole = React.useCallback((role: RoleItem) => {
+  const handleEditRole = React.useCallback((role: IRoleItem) => {
     toast.info(`Editing role: ${role.name}`);
   }, []);
 
-  const handleDuplicateRole = React.useCallback((role: RoleItem) => {
-    const newRole: RoleItem = {
+  const handleDuplicateRole = React.useCallback((role: IRoleItem) => {
+    const newRole: IRoleItem = {
       ...role,
       id: `${role.id}-copy-${Date.now()}`,
       name: `${role.name} (Copy)`,
@@ -97,7 +97,7 @@ export function RolesTable({ queryKeys, onNewRoleClick }: RolesTableProps) {
     toast.success(`Duplicated role: ${role.name}`);
   }, []);
 
-  const handleDeleteRole = React.useCallback((role: RoleItem) => {
+  const handleDeleteRole = React.useCallback((role: IRoleItem) => {
     setRoles((prev) => prev.filter((r) => r.id !== role.id));
     toast.success(`Deleted role: ${role.name}`);
   }, []);

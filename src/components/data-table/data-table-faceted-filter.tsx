@@ -28,23 +28,21 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
-import type { Option } from "@/types/data-table";
+import type { IOption } from "@/types/data-table";
 
 export interface IDataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
   title?: string;
-  options: Option[];
+  options: IOption[];
   multiple?: boolean;
 }
-export type DataTableFacetedFilterProps<TData, TValue> =
-  IDataTableFacetedFilterProps<TData, TValue>;
 
 export function DataTableFacetedFilter<TData, TValue>({
   column,
   title,
   options,
   multiple,
-}: DataTableFacetedFilterProps<TData, TValue>) {
+}: IDataTableFacetedFilterProps<TData, TValue>) {
   const [open, setOpen] = React.useState(false);
 
   const columnFilterValue = column?.getFilterValue();
@@ -54,7 +52,7 @@ export function DataTableFacetedFilter<TData, TValue>({
   );
 
   const onItemSelect = React.useCallback(
-    (option: Option, isSelected: boolean) => {
+    (option: IOption, isSelected: boolean) => {
       if (!column) return;
 
       if (multiple) {

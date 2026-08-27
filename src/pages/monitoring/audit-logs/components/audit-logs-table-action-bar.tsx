@@ -18,12 +18,12 @@ import {
 import { toast } from "@/components/ui/toast";
 import { getSelectedTableRows } from "@/lib/data-table";
 import { exportTableToCSV } from "@/lib/export";
-import type { AuditLogsTableActionBarProps } from "@/types/monitoring/audit-logs";
+import type { IAuditLogsTableActionBarProps } from "@/types/monitoring/audit-logs";
 
 export function AuditLogsTableActionBar({
   table,
   onBulkDelete,
-}: AuditLogsTableActionBarProps) {
+}: IAuditLogsTableActionBarProps) {
   const { rowSelection } = table.getState();
   const rows = React.useMemo(() => {
     if (!rowSelection) return [];

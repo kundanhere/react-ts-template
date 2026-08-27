@@ -3,12 +3,12 @@ import { HugeiconsIcon } from "@hugeicons/react";
 
 import { Button } from "@/components/ui/button";
 import { exportTableToCSV } from "@/lib/export";
-import type { ModulesTableToolbarActionsProps } from "@/types/iam/modules";
+import type { IModulesTableToolbarActionsProps } from "@/types/iam/modules";
 
 export function ModulesTableToolbarActions({
   table,
   onAddModule,
-}: ModulesTableToolbarActionsProps) {
+}: IModulesTableToolbarActionsProps) {
   return (
     <div className="flex items-center gap-2">
       <Button onClick={onAddModule}>

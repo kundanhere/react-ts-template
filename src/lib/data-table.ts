@@ -2,9 +2,9 @@ import type { Column, Row, Table } from "@tanstack/react-table";
 
 import { dataTableConfig } from "@/config/data-table";
 import type {
-  ExtendedColumnFilter,
   FilterOperator,
   FilterVariant,
+  IExtendedColumnFilter,
 } from "@/types/data-table";
 
 export function getColumnPinningStyle<TData>({
@@ -66,8 +66,8 @@ export function getDefaultFilterOperator(filterVariant: FilterVariant) {
 }
 
 export function getValidFilters<TData>(
-  filters: ExtendedColumnFilter<TData>[]
-): ExtendedColumnFilter<TData>[] {
+  filters: IExtendedColumnFilter<TData>[]
+): IExtendedColumnFilter<TData>[] {
   return filters.filter(
     (filter) =>
       filter.operator === "isEmpty" ||

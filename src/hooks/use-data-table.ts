@@ -32,7 +32,7 @@ import {
 
 import { useDebouncedCallback } from "@/hooks/use-debounced-callback";
 import { getSortingStateParser } from "@/lib/parsers";
-import type { ExtendedColumnSort, QueryKeys } from "@/types/data-table";
+import type { IExtendedColumnSort, IQueryKeys } from "@/types/data-table";
 
 const PAGE_KEY = "page";
 const PER_PAGE_KEY = "perPage";
@@ -56,9 +56,9 @@ export interface IUseDataTableProps<TData>
     >,
     Required<Pick<TableOptions<TData>, "pageCount">> {
   initialState?: Omit<Partial<TableState>, "sorting"> & {
-    sorting?: ExtendedColumnSort<TData>[];
+    sorting?: IExtendedColumnSort<TData>[];
   };
-  queryKeys?: Partial<QueryKeys>;
+  queryKeys?: Partial<IQueryKeys>;
   history?: "push" | "replace";
   debounceMs?: number;
   throttleMs?: number;
@@ -70,9 +70,8 @@ export interface IUseDataTableProps<TData>
   shallow?: boolean;
   startTransition?: React.TransitionStartFunction;
 }
-export type UseDataTableProps<TData> = IUseDataTableProps<TData>;
 
-export function useDataTable<TData>(props: UseDataTableProps<TData>) {
+export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
   const {
     columns,
     pageCount = -1,
@@ -233,9 +232,9 @@ export function useDataTable<TData>(props: UseDataTableProps<TData>) {
     (updaterOrValue: Updater<SortingState>) => {
       if (typeof updaterOrValue === "function") {
         const newSorting = updaterOrValue(sorting ?? []);
-        setSorting(newSorting as ExtendedColumnSort<TData>[]);
+        setSorting(newSorting as IExtendedColumnSort<TData>[]);
       } else {
-        setSorting(updaterOrValue as ExtendedColumnSort<TData>[]);
+        setSorting(updaterOrValue as IExtendedColumnSort<TData>[]);
       }
     },
     [sorting, setSorting]

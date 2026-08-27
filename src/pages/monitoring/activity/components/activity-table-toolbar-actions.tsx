@@ -4,12 +4,12 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import { exportTableToCSV } from "@/lib/export";
-import type { ActivityTableToolbarActionsProps } from "@/types/monitoring/activity";
+import type { IActivityTableToolbarActionsProps } from "@/types/monitoring/activity";
 
 export function ActivityTableToolbarActions({
   table,
   onRefresh,
-}: ActivityTableToolbarActionsProps) {
+}: IActivityTableToolbarActionsProps) {
   return (
     <div className="flex items-center gap-2">
       <Button

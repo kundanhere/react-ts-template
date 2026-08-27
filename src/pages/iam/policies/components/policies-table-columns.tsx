@@ -34,15 +34,15 @@ import {
 import { toast } from "@/components/ui/toast";
 import { formatDate } from "@/lib/format";
 import type {
-  GetPoliciesTableColumnsProps,
-  Policy,
+  IGetPoliciesTableColumnsProps,
+  IPolicy,
 } from "@/types/iam/policies";
 
 export const POLICY_EFFECTS = ["ALLOW", "DENY"] as const;
 export const POLICY_TYPES = ["system", "custom", "inline"] as const;
 export const POLICY_STATUSES = ["active", "inactive", "deprecated"] as const;
 
-export function getEffectIcon(effect: Policy["effect"]) {
+export function getEffectIcon(effect: IPolicy["effect"]) {
   switch (effect) {
     case "ALLOW":
       return (props: any) => (
@@ -59,7 +59,7 @@ export function getEffectIcon(effect: Policy["effect"]) {
   }
 }
 
-export function getTypeIcon(type: Policy["type"]) {
+export function getTypeIcon(type: IPolicy["type"]) {
   switch (type) {
     case "system":
       return (props: any) => (
@@ -76,7 +76,7 @@ export function getTypeIcon(type: Policy["type"]) {
   }
 }
 
-export function getStatusIcon(status: Policy["status"]) {
+export function getStatusIcon(status: IPolicy["status"]) {
   switch (status) {
     case "active":
       return (props: any) => (
@@ -117,7 +117,7 @@ export function getPoliciesTableColumns({
   setRowAction,
   onUpdatePolicyEffect,
   onDuplicatePolicy,
-}: GetPoliciesTableColumnsProps): ColumnDef<Policy>[] {
+}: IGetPoliciesTableColumnsProps): ColumnDef<IPolicy>[] {
   return [
     {
       id: "select",
@@ -200,7 +200,7 @@ export function getPoliciesTableColumns({
         <DataTableColumnHeader column={column} label="Effect" />
       ),
       cell: ({ cell }) => {
-        const effect = cell.getValue<Policy["effect"]>();
+        const effect = cell.getValue<IPolicy["effect"]>();
         if (!effect) return null;
         const isAllow = effect.toUpperCase() === "ALLOW";
 
@@ -239,7 +239,7 @@ export function getPoliciesTableColumns({
         <DataTableColumnHeader column={column} label="Type" />
       ),
       cell: ({ cell }) => {
-        const type = cell.getValue<Policy["type"]>();
+        const type = cell.getValue<IPolicy["type"]>();
         if (!type) return null;
         const Icon = getTypeIcon(type);
 
@@ -274,11 +274,11 @@ export function getPoliciesTableColumns({
         <DataTableColumnHeader column={column} label="Status" />
       ),
       cell: ({ cell }) => {
-        const status = cell.getValue<Policy["status"]>();
+        const status = cell.getValue<IPolicy["status"]>();
         if (!status) return null;
         const Icon = getStatusIcon(status);
 
-        const variantMap: Record<Policy["status"], string> = {
+        const variantMap: Record<IPolicy["status"], string> = {
           active:
             "text-emerald-600 border-emerald-500/30 bg-emerald-50/50 dark:bg-emerald-950/20 dark:text-emerald-400",
           inactive: "text-muted-foreground border-muted bg-muted/40",
@@ -457,7 +457,7 @@ export function getPoliciesTableColumns({
                     onValueChange={(value) => {
                       onUpdatePolicyEffect?.(
                         row.original.id,
-                        value as Policy["effect"]
+                        value as IPolicy["effect"]
                       );
                       toast.success(`Effect updated to ${value}`);
                     }}

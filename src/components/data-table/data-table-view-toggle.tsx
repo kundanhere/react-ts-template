@@ -13,13 +13,12 @@ export interface IDataTableViewToggleProps {
   onViewModeChange: (mode: DataTableViewMode) => void;
   className?: string;
 }
-export type DataTableViewToggleProps = IDataTableViewToggleProps;
 
 export function DataTableViewToggle({
   viewMode,
   onViewModeChange,
   className,
-}: DataTableViewToggleProps) {
+}: IDataTableViewToggleProps) {
   return (
     <div
       className={cn(

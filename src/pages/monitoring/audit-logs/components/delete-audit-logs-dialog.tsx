@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
-import type { DeleteAuditLogsDialogProps } from "@/types/monitoring/audit-logs";
+import type { IDeleteAuditLogsDialogProps } from "@/types/monitoring/audit-logs";
 
 export function DeleteAuditLogsDialog({
   logs,
@@ -22,7 +22,7 @@ export function DeleteAuditLogsDialog({
   showTrigger = true,
   onDeleteLogs,
   ...props
-}: DeleteAuditLogsDialogProps) {
+}: IDeleteAuditLogsDialogProps) {
   const onDelete = () => {
     const ids = logs.map((l) => l.id);
     onDeleteLogs?.(ids);

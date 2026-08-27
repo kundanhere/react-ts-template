@@ -7,14 +7,13 @@ export interface IAsyncState<T> {
   status: AsyncStatus;
   error: string | null;
 }
-export type AsyncState<T> = IAsyncState<T>;
 
 /**
  * Creates a standardized initial state object for async slice operations
  */
 export function createAsyncState<T>(
   initialData: T | null = null
-): AsyncState<T> {
+): IAsyncState<T> {
   return {
     data: initialData,
     status: "idle",
@@ -30,7 +29,6 @@ export interface IAsyncThunkLike {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   rejected: any;
 }
-export type AsyncThunkLike = IAsyncThunkLike;
 
 /**
  * Standardized builder callback helper to handle pending/fulfilled/rejected cases for an AsyncThunk.
@@ -44,7 +42,7 @@ export type AsyncThunkLike = IAsyncThunkLike;
  */
 export function addAsyncCases<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Thunk extends AsyncThunkLike,
+  Thunk extends IAsyncThunkLike,
 >(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   builder: ActionReducerMapBuilder<any>,

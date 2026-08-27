@@ -22,7 +22,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import type { GetRolesTableColumnsProps, RoleItem } from "@/types/iam/roles";
+import type { IGetRolesTableColumnsProps, IRoleItem } from "@/types/iam/roles";
 
 export function getRoleIcon(roleId: string) {
   switch (roleId) {
@@ -45,7 +45,7 @@ export function getRolesTableColumns({
   onEditRole,
   onDuplicateRole,
   onDeleteRole,
-}: GetRolesTableColumnsProps = {}): ColumnDef<RoleItem>[] {
+}: IGetRolesTableColumnsProps = {}): ColumnDef<IRoleItem>[] {
   return [
     {
       id: "select",

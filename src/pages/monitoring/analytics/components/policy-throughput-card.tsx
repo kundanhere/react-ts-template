@@ -21,14 +21,14 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import type {
-  PolicyThroughputCardProps,
+  IPolicyThroughputCardProps,
   TimeRange,
 } from "@/types/monitoring/analytics";
 
 export function PolicyThroughputCard({
   timeRange,
   setTimeRange,
-}: PolicyThroughputCardProps) {
+}: IPolicyThroughputCardProps) {
   const traffic24h = React.useMemo(
     () => [
       { time: "00:00", allowed: 45, denied: 3 },

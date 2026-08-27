@@ -5,11 +5,10 @@ export interface IGenerateIdOptions {
   alphabet?: string;
   length?: number;
 }
-export type GenerateIdOptions = IGenerateIdOptions;
 
 export function generateId(
-  prefixOrOptions?: string | GenerateIdOptions,
-  inputOptions: GenerateIdOptions = {}
+  prefixOrOptions?: string | IGenerateIdOptions,
+  inputOptions: IGenerateIdOptions = {}
 ): string {
   const options =
     typeof prefixOrOptions === "object" ? prefixOrOptions : inputOptions;

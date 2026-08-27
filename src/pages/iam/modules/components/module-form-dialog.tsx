@@ -19,7 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import type { Module, ModuleFormDialogProps } from "@/types/iam/modules";
+import type { IModule, IModuleFormDialogProps } from "@/types/iam/modules";
 
 import { MODULE_CATEGORIES, MODULE_STATUSES } from "./modules-table-columns";
 
@@ -28,14 +28,14 @@ export function ModuleFormDialog({
   onOpenChange,
   initialValues,
   onSubmit,
-}: ModuleFormDialogProps) {
+}: IModuleFormDialogProps) {
   const isEditing = !!initialValues?.id;
 
   const [name, setName] = React.useState("");
   const [route, setRoute] = React.useState("");
   const [priority, setPriority] = React.useState<number>(1);
-  const [category, setCategory] = React.useState<Module["category"]>("system");
-  const [status, setStatus] = React.useState<Module["status"]>("active");
+  const [category, setCategory] = React.useState<IModule["category"]>("system");
+  const [status, setStatus] = React.useState<IModule["status"]>("active");
   const [isSystem, setIsSystem] = React.useState<boolean>(false);
   const [description, setDescription] = React.useState("");
 
@@ -131,7 +131,7 @@ export function ModuleFormDialog({
                 <Label htmlFor="module-category">Category</Label>
                 <Select
                   value={category}
-                  onValueChange={(v) => setCategory(v as Module["category"])}
+                  onValueChange={(v) => setCategory(v as IModule["category"])}
                 >
                   <SelectTrigger id="module-category" className="capitalize">
                     <SelectValue placeholder="Select category" />
@@ -150,7 +150,7 @@ export function ModuleFormDialog({
                 <Label htmlFor="module-status">Status</Label>
                 <Select
                   value={status}
-                  onValueChange={(v) => setStatus(v as Module["status"])}
+                  onValueChange={(v) => setStatus(v as IModule["status"])}
                 >
                   <SelectTrigger id="module-status" className="capitalize">
                     <SelectValue placeholder="Select status" />

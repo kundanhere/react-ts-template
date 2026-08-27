@@ -1,14 +1,14 @@
 import { Area, AreaChart, ResponsiveContainer } from "recharts";
 
 import { Badge } from "@/components/ui/badge";
-import type { AnalyticsKpiCardsProps } from "@/types/monitoring/analytics";
+import type { IAnalyticsKpiCardsProps } from "@/types/monitoring/analytics";
 
 export function AnalyticsKpiCards({
   users,
   sessions,
   roles,
   policies,
-}: AnalyticsKpiCardsProps) {
+}: IAnalyticsKpiCardsProps) {
   const activeCount = users.filter(
     (u) => u.status === "active" && !u.locked
   ).length;

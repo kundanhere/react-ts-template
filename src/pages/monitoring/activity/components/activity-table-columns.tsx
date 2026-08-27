@@ -25,14 +25,14 @@ import {
 import { toast } from "@/components/ui/toast";
 import { formatDate } from "@/lib/format";
 import type {
-  ActivityItem,
-  GetActivityTableColumnsProps,
+  IActivityItem,
+  IGetActivityTableColumnsProps,
 } from "@/types/monitoring/activity";
 
 export const ACTIVITY_STATUSES = ["SUCCESS", "DENIED", "WARNING"] as const;
 export const ACTIVITY_SEVERITIES = ["info", "warning", "error"] as const;
 
-export function getStatusIcon(status: ActivityItem["status"]) {
+export function getStatusIcon(status: IActivityItem["status"]) {
   switch (status) {
     case "SUCCESS":
       return (props: any) => (
@@ -53,7 +53,7 @@ export function getStatusIcon(status: ActivityItem["status"]) {
   }
 }
 
-export function getSeverityIcon(severity: ActivityItem["severity"]) {
+export function getSeverityIcon(severity: IActivityItem["severity"]) {
   switch (severity) {
     case "info":
       return (props: any) => (
@@ -92,7 +92,7 @@ export function getActivityTableColumns({
   severityCounts,
   setRowAction,
   onViewDetails,
-}: GetActivityTableColumnsProps): ColumnDef<ActivityItem>[] {
+}: IGetActivityTableColumnsProps): ColumnDef<IActivityItem>[] {
   return [
     {
       id: "select",
@@ -210,7 +210,7 @@ export function getActivityTableColumns({
         <DataTableColumnHeader column={column} label="Status" />
       ),
       cell: ({ cell }) => {
-        const status = cell.getValue<ActivityItem["status"]>();
+        const status = cell.getValue<IActivityItem["status"]>();
         if (!status) return null;
 
         let dotColorClass = "bg-amber-500";
@@ -255,7 +255,7 @@ export function getActivityTableColumns({
         <DataTableColumnHeader column={column} label="Severity" />
       ),
       cell: ({ cell }) => {
-        const severity = cell.getValue<ActivityItem["severity"]>();
+        const severity = cell.getValue<IActivityItem["severity"]>();
         if (!severity) return null;
         const Icon = getSeverityIcon(severity);
 

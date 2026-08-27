@@ -15,7 +15,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { ActiveSessionsCardProps } from "@/types/monitoring/analytics";
+import type { IActiveSessionsCardProps } from "@/types/monitoring/analytics";
 
 import { getUserInitials, getUserName, timeAgo } from "../utils";
 
@@ -23,7 +23,7 @@ export function ActiveSessionsCard({
   sessions,
   users,
   onRevokeSession,
-}: ActiveSessionsCardProps) {
+}: IActiveSessionsCardProps) {
   const uniqueUsersInSessions = new Set(sessions.map((s) => s.userId)).size;
 
   return (

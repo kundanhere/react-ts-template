@@ -4,12 +4,12 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import { exportTableToCSV } from "@/lib/export";
-import type { RolesTableToolbarActionsProps } from "@/types/iam/roles";
+import type { IRolesTableToolbarActionsProps } from "@/types/iam/roles";
 
 export function RolesTableToolbarActions({
   table,
   onNewRoleClick,
-}: RolesTableToolbarActionsProps) {
+}: IRolesTableToolbarActionsProps) {
   const onExport = () => {
     exportTableToCSV(table, {
       filename: "roles-export",

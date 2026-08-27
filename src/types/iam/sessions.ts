@@ -26,7 +26,6 @@ export interface ISession {
   lastActiveAt: Date;
   expiresAt: Date;
 }
-export type Session = ISession;
 
 export interface IGetSessionsTableColumnsProps {
   statusCounts: Record<ISession["status"], number>;
@@ -39,12 +38,10 @@ export interface IGetSessionsTableColumnsProps {
   onViewDetails?: (session: ISession) => void;
   onUpdateStatus?: (sessionId: string, status: ISession["status"]) => void;
 }
-export type GetSessionsTableColumnsProps = IGetSessionsTableColumnsProps;
 
 export interface ISessionsTableProps {
   queryKeys?: Partial<IQueryKeys>;
 }
-export type SessionsTableProps = ISessionsTableProps;
 
 export interface ISessionsTableActionBarProps {
   table: Table<ISession>;
@@ -54,14 +51,11 @@ export interface ISessionsTableActionBarProps {
   ) => void;
   onBulkRevoke?: (sessionIds: string[]) => void;
 }
-export type SessionsTableActionBarProps = ISessionsTableActionBarProps;
 
 export interface ISessionsTableToolbarActionsProps {
   table: Table<ISession>;
   onRevokeAllOther?: () => void;
 }
-export type SessionsTableToolbarActionsProps =
-  ISessionsTableToolbarActionsProps;
 
 export interface ISessionDetailsDialogProps {
   session: ISession | null;
@@ -69,7 +63,6 @@ export interface ISessionDetailsDialogProps {
   onOpenChange: (open: boolean) => void;
   onRevoke?: (session: ISession) => void;
 }
-export type SessionDetailsDialogProps = ISessionDetailsDialogProps;
 
 export interface IRevokeSessionsDialogProps extends React.ComponentPropsWithoutRef<
   typeof AlertDialog
@@ -81,4 +74,3 @@ export interface IRevokeSessionsDialogProps extends React.ComponentPropsWithoutR
   onRevokeSessions?: (sessionIds: string[]) => void;
   onRevokeAllOtherSessions?: () => void;
 }
-export type RevokeSessionsDialogProps = IRevokeSessionsDialogProps;

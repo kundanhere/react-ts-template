@@ -3,15 +3,15 @@ import * as React from "react";
 import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { useDataTable } from "@/hooks/use-data-table";
-import type { DataTableRowAction } from "@/types/data-table";
-import type { User, UsersTableProps } from "@/types/iam/users";
+import type { IDataTableRowAction } from "@/types/data-table";
+import type { IUser, IUsersTableProps } from "@/types/iam/users";
 
 import { DeleteUsersDialog } from "./delete-users-dialog";
 import { UsersTableActionBar } from "./users-table-action-bar";
 import { getUsersTableColumns } from "./users-table-columns";
 import { UsersTableToolbarActions } from "./users-table-toolbar-actions";
 
-const INITIAL_USERS: User[] = [
+const INITIAL_USERS: IUser[] = [
   {
     id: "usr_1",
     code: "USR-1001",
@@ -124,10 +124,10 @@ const INITIAL_USERS: User[] = [
   },
 ];
 
-export function UsersTable({ queryKeys }: UsersTableProps) {
-  const [users, setUsers] = React.useState<User[]>(INITIAL_USERS);
+export function UsersTable({ queryKeys }: IUsersTableProps) {
+  const [users, setUsers] = React.useState<IUser[]>(INITIAL_USERS);
   const [rowAction, setRowAction] =
-    React.useState<DataTableRowAction<User> | null>(null);
+    React.useState<IDataTableRowAction<IUser> | null>(null);
 
   const statusCounts = React.useMemo(
     () =>
@@ -137,7 +137,7 @@ export function UsersTable({ queryKeys }: UsersTableProps) {
           return acc;
         },
         { active: 0, inactive: 0, pending: 0, suspended: 0 } as Record<
-          User["status"],
+          IUser["status"],
           number
         >
       ),
@@ -152,7 +152,7 @@ export function UsersTable({ queryKeys }: UsersTableProps) {
           return acc;
         },
         { owner: 0, admin: 0, member: 0, viewer: 0 } as Record<
-          User["role"],
+          IUser["role"],
           number
         >
       ),
@@ -172,7 +172,7 @@ export function UsersTable({ queryKeys }: UsersTableProps) {
           marketing: 0,
           sales: 0,
           support: 0,
-        } as Record<User["department"], number>
+        } as Record<IUser["department"], number>
       ),
     [users]
   );
@@ -187,7 +187,7 @@ export function UsersTable({ queryKeys }: UsersTableProps) {
   }, [users]);
 
   const handleUpdateRole = React.useCallback(
-    (userId: string, role: User["role"]) => {
+    (userId: string, role: IUser["role"]) => {
       setUsers((prev) =>
         prev.map((u) => (u.id === userId ? { ...u, role } : u))
       );
@@ -196,7 +196,7 @@ export function UsersTable({ queryKeys }: UsersTableProps) {
   );
 
   const handleBulkUpdateStatus = React.useCallback(
-    (userIds: string[], status: User["status"]) => {
+    (userIds: string[], status: IUser["status"]) => {
       setUsers((prev) =>
         prev.map((u) => (userIds.includes(u.id) ? { ...u, status } : u))
       );
@@ -205,7 +205,7 @@ export function UsersTable({ queryKeys }: UsersTableProps) {
   );
 
   const handleBulkUpdateRole = React.useCallback(
-    (userIds: string[], role: User["role"]) => {
+    (userIds: string[], role: IUser["role"]) => {
       setUsers((prev) =>
         prev.map((u) => (userIds.includes(u.id) ? { ...u, role } : u))
       );

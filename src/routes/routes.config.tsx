@@ -13,7 +13,6 @@ export interface IRouteConfig {
   description?: string;
   children?: IRouteConfig[];
 }
-export type RouteConfig = IRouteConfig;
 
 // Lazy load page components
 const HomePage = lazy(() => import("@/pages/home/page"));
@@ -58,7 +57,7 @@ const DashboardProtected = () => (
 );
 
 // Route configuration object
-export const routes: RouteConfig[] = [
+export const routes: IRouteConfig[] = [
   {
     path: "/",
     element: <Layout />,
@@ -212,11 +211,11 @@ export const routes: RouteConfig[] = [
 ];
 
 // Helper function to get route by path
-export const getRouteByPath = (path: string): RouteConfig | null => {
+export const getRouteByPath = (path: string): IRouteConfig | null => {
   const findRoute = (
-    routeList: RouteConfig[],
+    routeList: IRouteConfig[],
     targetPath: string
-  ): RouteConfig | null => {
+  ): IRouteConfig | null => {
     for (const route of routeList) {
       if (route.path === targetPath) {
         return route;
@@ -236,8 +235,8 @@ export const getRouteByPath = (path: string): RouteConfig | null => {
 export const getAllRoutePaths = (): string[] => {
   const paths: string[] = [];
 
-  const extractPaths = (routeList: RouteConfig[]) => {
-    routeList.forEach((route: RouteConfig) => {
+  const extractPaths = (routeList: IRouteConfig[]) => {
+    routeList.forEach((route: IRouteConfig) => {
       if (route.path) {
         paths.push(route.path);
       }

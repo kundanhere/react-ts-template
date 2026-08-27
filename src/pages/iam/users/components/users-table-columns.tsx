@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/toast";
 import { formatDate } from "@/lib/format";
-import type { GetUsersTableColumnsProps, User } from "@/types/iam/users";
+import type { IGetUsersTableColumnsProps, IUser } from "@/types/iam/users";
 
 export const USER_ROLES = ["owner", "admin", "member", "viewer"] as const;
 export const USER_STATUSES = [
@@ -51,7 +51,7 @@ export const USER_DEPARTMENTS = [
   "support",
 ] as const;
 
-export function getRoleIcon(role: User["role"]) {
+export function getRoleIcon(role: IUser["role"]) {
   switch (role) {
     case "owner":
       return (props: any) => (
@@ -69,10 +69,14 @@ export function getRoleIcon(role: User["role"]) {
       return (props: any) => (
         <HugeiconsIcon icon={ViewIcon} strokeWidth={2} {...props} />
       );
+    default:
+      return (props: any) => (
+        <HugeiconsIcon icon={UserIcon} strokeWidth={2} {...props} />
+      );
   }
 }
 
-export function getStatusIcon(status: User["status"]) {
+export function getStatusIcon(status: IUser["status"]) {
   switch (status) {
     case "active":
       return (props: any) => (
@@ -94,12 +98,19 @@ export function getStatusIcon(status: User["status"]) {
       return (props: any) => (
         <HugeiconsIcon icon={UserBlock01Icon} strokeWidth={2} {...props} />
       );
+    default:
+      return (props: any) => (
+        <HugeiconsIcon icon={Clock01Icon} strokeWidth={2} {...props} />
+      );
   }
 }
 
-const BuildingIconComp = (props: any) => (
-  <HugeiconsIcon icon={ApartmentIcon} strokeWidth={2} {...props} />
-);
+export function getDepartmentIcon(_dept: IUser["department"]) {
+  return (props: any) => (
+    <HugeiconsIcon icon={ApartmentIcon} strokeWidth={2} {...props} />
+  );
+}
+
 const TextIconComp = (props: any) => (
   <HugeiconsIcon icon={TextFontIcon} strokeWidth={2} {...props} />
 );
@@ -108,6 +119,9 @@ const SortingIconComp = (props: any) => (
 );
 const CheckmarkIconComp = (props: any) => (
   <HugeiconsIcon icon={CheckmarkCircle01Icon} strokeWidth={2} {...props} />
+);
+const BuildingIconComp = (props: any) => (
+  <HugeiconsIcon icon={ApartmentIcon} strokeWidth={2} {...props} />
 );
 const ClockIconComp = (props: any) => (
   <HugeiconsIcon icon={Clock01Icon} strokeWidth={2} {...props} />
@@ -123,7 +137,7 @@ export function getUsersTableColumns({
   loginCountRange,
   setRowAction,
   onUpdateUserRole,
-}: GetUsersTableColumnsProps): ColumnDef<User>[] {
+}: IGetUsersTableColumnsProps): ColumnDef<IUser>[] {
   return [
     {
       id: "select",
@@ -218,7 +232,7 @@ export function getUsersTableColumns({
         <DataTableColumnHeader column={column} label="Role" />
       ),
       cell: ({ cell }) => {
-        const role = cell.getValue<User["role"]>();
+        const role = cell.getValue<IUser["role"]>();
         if (!role) return null;
         const Icon = getRoleIcon(role);
 
@@ -252,7 +266,7 @@ export function getUsersTableColumns({
         <DataTableColumnHeader column={column} label="Status" />
       ),
       cell: ({ cell }) => {
-        const status = cell.getValue<User["status"]>();
+        const status = cell.getValue<IUser["status"]>();
         if (!status) return null;
         const Icon = getStatusIcon(status);
 
@@ -286,7 +300,7 @@ export function getUsersTableColumns({
         <DataTableColumnHeader column={column} label="Department" />
       ),
       cell: ({ cell }) => {
-        const dept = cell.getValue<User["department"]>();
+        const dept = cell.getValue<IUser["department"]>();
         if (!dept) return null;
         return (
           <Badge
@@ -374,7 +388,7 @@ export function getUsersTableColumns({
                     onValueChange={(value) => {
                       onUpdateUserRole?.(
                         row.original.id,
-                        value as User["role"]
+                        value as IUser["role"]
                       );
                       toast.success(`Role updated to ${value}`);
                     }}

@@ -43,7 +43,7 @@ import { formatDate } from "@/lib/format";
 import { generateId } from "@/lib/id";
 import { getFiltersStateParser } from "@/lib/parsers";
 import { cn } from "@/lib/utils";
-import type { ExtendedColumnFilter, FilterOperator } from "@/types/data-table";
+import type { FilterOperator, IExtendedColumnFilter } from "@/types/data-table";
 
 const DEBOUNCE_MS = 300;
 const THROTTLE_MS = 50;
@@ -59,8 +59,6 @@ export interface IDataTableFilterMenuProps<TData> extends React.ComponentProps<
   shallow?: boolean;
   disabled?: boolean;
 }
-export type DataTableFilterMenuProps<TData> = IDataTableFilterMenuProps<TData>;
-
 export function DataTableFilterMenu<TData>({
   table,
   debounceMs = DEBOUNCE_MS,
@@ -69,7 +67,7 @@ export function DataTableFilterMenu<TData>({
   disabled,
   className,
   ...props
-}: DataTableFilterMenuProps<TData>) {
+}: IDataTableFilterMenuProps<TData>) {
   const id = React.useId();
 
   const columns = React.useMemo(
@@ -133,7 +131,7 @@ export function DataTableFilterMenu<TData>({
       const filterValue =
         column.columnDef.meta?.variant === "multiSelect" ? [value] : value;
 
-      const newFilter: ExtendedColumnFilter<TData> = {
+      const newFilter: IExtendedColumnFilter<TData> = {
         id: column.id as Extract<keyof TData, string>,
         value: filterValue,
         variant: column.columnDef.meta?.variant ?? "text",
@@ -170,12 +168,12 @@ export function DataTableFilterMenu<TData>({
   const onFilterUpdate = React.useCallback(
     (
       filterId: string,
-      updates: Partial<Omit<ExtendedColumnFilter<TData>, "filterId">>
+      updates: Partial<Omit<IExtendedColumnFilter<TData>, "filterId">>
     ) => {
       debouncedSetFilters((prevFilters) => {
         const updatedFilters = prevFilters.map((filter) => {
           if (filter.filterId === filterId) {
-            return { ...filter, ...updates } as ExtendedColumnFilter<TData>;
+            return { ...filter, ...updates } as IExtendedColumnFilter<TData>;
           }
           return filter;
         });
@@ -336,16 +334,15 @@ export function DataTableFilterMenu<TData>({
 }
 
 export interface IDataTableFilterItemProps<TData> {
-  filter: ExtendedColumnFilter<TData>;
+  filter: IExtendedColumnFilter<TData>;
   filterItemId: string;
   columns: Column<TData>[];
   onFilterUpdate: (
     filterId: string,
-    updates: Partial<Omit<ExtendedColumnFilter<TData>, "filterId">>
+    updates: Partial<Omit<IExtendedColumnFilter<TData>, "filterId">>
   ) => void;
   onFilterRemove: (filterId: string) => void;
 }
-export type DataTableFilterItemProps<TData> = IDataTableFilterItemProps<TData>;
 
 function DataTableFilterItem<TData>({
   filter,
@@ -353,7 +350,7 @@ function DataTableFilterItem<TData>({
   columns,
   onFilterUpdate,
   onFilterRemove,
-}: DataTableFilterItemProps<TData>) {
+}: IDataTableFilterItemProps<TData>) {
   const [showFieldSelector, setShowFieldSelector] = React.useState(false);
   const [showOperatorSelector, setShowOperatorSelector] = React.useState(false);
   const [showValueSelector, setShowValueSelector] = React.useState(false);
@@ -517,13 +514,11 @@ export interface IFilterValueSelectorProps<TData> {
   value: string;
   onSelect: (value: string) => void;
 }
-export type FilterValueSelectorProps<TData> = IFilterValueSelectorProps<TData>;
-
 function FilterValueSelector<TData>({
   column,
   value,
   onSelect,
-}: FilterValueSelectorProps<TData>) {
+}: IFilterValueSelectorProps<TData>) {
   const variant = column.columnDef.meta?.variant ?? "text";
 
   switch (variant) {
@@ -609,12 +604,12 @@ function onFilterInputRender<TData>({
   showValueSelector,
   setShowValueSelector,
 }: {
-  filter: ExtendedColumnFilter<TData>;
+  filter: IExtendedColumnFilter<TData>;
   column: Column<TData>;
   inputId: string;
   onFilterUpdate: (
     filterId: string,
-    updates: Partial<Omit<ExtendedColumnFilter<TData>, "filterId">>
+    updates: Partial<Omit<IExtendedColumnFilter<TData>, "filterId">>
   ) => void;
   showValueSelector: boolean;
   setShowValueSelector: (value: boolean) => void;

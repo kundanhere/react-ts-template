@@ -25,14 +25,12 @@ export interface IDataTablePaginationProps<
   table: Table<TData>;
   pageSizeOptions?: number[];
 }
-export type DataTablePaginationProps<TData> = IDataTablePaginationProps<TData>;
-
 export function DataTablePagination<TData>({
   table,
   pageSizeOptions = [10, 20, 30, 40, 50],
   className,
   ...props
-}: DataTablePaginationProps<TData>) {
+}: IDataTablePaginationProps<TData>) {
   return (
     <div
       className={cn(

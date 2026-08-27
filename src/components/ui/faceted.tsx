@@ -29,8 +29,6 @@ export interface IFacetedContextValue<Multiple extends boolean = boolean> {
   onItemSelect?: (value: string) => void;
   multiple?: Multiple;
 }
-export type FacetedContextValue<Multiple extends boolean = boolean> =
-  IFacetedContextValue<Multiple>;
 
 const FacetedContext =
   React.createContext<IFacetedContextValue<boolean> | null>(null);
@@ -42,7 +40,6 @@ function useFacetedContext(name: string) {
   }
   return context;
 }
-
 export interface IFacetedProps<
   Multiple extends boolean = false,
 > extends React.ComponentProps<typeof Popover> {
@@ -51,11 +48,9 @@ export interface IFacetedProps<
   children?: React.ReactNode;
   multiple?: Multiple;
 }
-export type FacetedProps<Multiple extends boolean = false> =
-  IFacetedProps<Multiple>;
 
 function Faceted<Multiple extends boolean = false>(
-  props: FacetedProps<Multiple>
+  props: IFacetedProps<Multiple>
 ) {
   const {
     open: openProp,
@@ -104,7 +99,7 @@ function Faceted<Multiple extends boolean = false>(
     [multiple, value, onValueChange, onOpenChange]
   );
 
-  const contextValue = React.useMemo<FacetedContextValue<typeof multiple>>(
+  const contextValue = React.useMemo<IFacetedContextValue<typeof multiple>>(
     () => ({ value, onItemSelect, multiple }),
     [value, onItemSelect, multiple]
   );
@@ -137,9 +132,8 @@ export interface IFacetedBadgeListProps extends React.ComponentProps<"div"> {
   badgeClassName?: string;
   placeholder?: string;
 }
-export type FacetedBadgeListProps = IFacetedBadgeListProps;
 
-function FacetedBadgeList(props: FacetedBadgeListProps) {
+function FacetedBadgeList(props: IFacetedBadgeListProps) {
   const {
     options = [],
     max = 2,
@@ -235,9 +229,8 @@ export interface IFacetedItemProps extends React.ComponentProps<
 > {
   value: string;
 }
-export type FacetedItemProps = IFacetedItemProps;
 
-function FacetedItem(props: FacetedItemProps) {
+function FacetedItem(props: IFacetedItemProps) {
   const { value, onSelect, className, children, ...itemProps } = props;
   const context = useFacetedContext("FacetedItem");
 

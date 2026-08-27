@@ -1,9 +1,7 @@
 import {
-  ApartmentIcon,
   Calendar01Icon,
   CancelCircleIcon,
   CheckmarkCircle01Icon,
-  CheckmarkCircle02Icon,
   Clock01Icon,
   CpuIcon,
   Grid02Icon,
@@ -36,7 +34,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/toast";
 import { formatDate } from "@/lib/format";
-import type { GetModulesTableColumnsProps, Module } from "@/types/iam/modules";
+import type {
+  IGetModulesTableColumnsProps,
+  IModule,
+} from "@/types/iam/modules";
 
 export const MODULE_CATEGORIES = [
   "core",
@@ -53,7 +54,7 @@ export const MODULE_STATUSES = [
   "beta",
 ] as const;
 
-export function getCategoryIcon(category: Module["category"]) {
+export function getCategoryIcon(category: IModule["category"]) {
   switch (category) {
     case "core":
       return (props: any) => (
@@ -69,16 +70,16 @@ export function getCategoryIcon(category: Module["category"]) {
       );
     case "integration":
       return (props: any) => (
-        <HugeiconsIcon icon={ApartmentIcon} strokeWidth={2} {...props} />
+        <HugeiconsIcon icon={Settings01Icon} strokeWidth={2} {...props} />
       );
     case "governance":
       return (props: any) => (
-        <HugeiconsIcon icon={ShieldCheck} strokeWidth={2} {...props} />
+        <HugeiconsIcon icon={Shield01Icon} strokeWidth={2} {...props} />
       );
   }
 }
 
-export function getStatusIcon(status: Module["status"]) {
+export function getStatusIcon(status: IModule["status"]) {
   switch (status) {
     case "active":
       return (props: any) => (
@@ -94,15 +95,11 @@ export function getStatusIcon(status: Module["status"]) {
       );
     case "maintenance":
       return (props: any) => (
-        <HugeiconsIcon icon={Settings01Icon} strokeWidth={2} {...props} />
+        <HugeiconsIcon icon={Clock01Icon} strokeWidth={2} {...props} />
       );
     case "beta":
       return (props: any) => (
-        <HugeiconsIcon
-          icon={CheckmarkCircle02Icon}
-          strokeWidth={2}
-          {...props}
-        />
+        <HugeiconsIcon icon={ShieldCheck} strokeWidth={2} {...props} />
       );
   }
 }
@@ -113,17 +110,17 @@ const TextIconComp = (props: any) => (
 const SortingIconComp = (props: any) => (
   <HugeiconsIcon icon={Sorting01Icon} strokeWidth={2} {...props} />
 );
-const CheckmarkIconComp = (props: any) => (
-  <HugeiconsIcon icon={CheckmarkCircle01Icon} strokeWidth={2} {...props} />
-);
 const ClockIconComp = (props: any) => (
   <HugeiconsIcon icon={Clock01Icon} strokeWidth={2} {...props} />
 );
-const CalendarIconComp = (props: any) => (
-  <HugeiconsIcon icon={Calendar01Icon} strokeWidth={2} {...props} />
+const CheckmarkIconComp = (props: any) => (
+  <HugeiconsIcon icon={CheckmarkCircle01Icon} strokeWidth={2} {...props} />
 );
 const ShieldIconComp = (props: any) => (
   <HugeiconsIcon icon={Shield01Icon} strokeWidth={2} {...props} />
+);
+const CalendarIconComp = (props: any) => (
+  <HugeiconsIcon icon={Calendar01Icon} strokeWidth={2} {...props} />
 );
 
 export function getModulesTableColumns({
@@ -134,7 +131,7 @@ export function getModulesTableColumns({
   onEditModule,
   onUpdateStatus,
   onToggleSystem,
-}: GetModulesTableColumnsProps): ColumnDef<Module>[] {
+}: IGetModulesTableColumnsProps): ColumnDef<IModule>[] {
   return [
     {
       id: "select",
@@ -235,7 +232,7 @@ export function getModulesTableColumns({
         <DataTableColumnHeader column={column} label="Category" />
       ),
       cell: ({ cell }) => {
-        const category = cell.getValue<Module["category"]>();
+        const category = cell.getValue<IModule["category"]>();
         if (!category) return null;
         const Icon = getCategoryIcon(category);
 
@@ -292,11 +289,11 @@ export function getModulesTableColumns({
         <DataTableColumnHeader column={column} label="Status" />
       ),
       cell: ({ cell }) => {
-        const status = cell.getValue<Module["status"]>();
+        const status = cell.getValue<IModule["status"]>();
         if (!status) return null;
         const Icon = getStatusIcon(status);
 
-        const variantMap: Record<Module["status"], string> = {
+        const variantMap: Record<IModule["status"], string> = {
           active:
             "text-emerald-600 border-emerald-500/30 bg-emerald-50/50 dark:bg-emerald-950/20",
           inactive: "text-muted-foreground border-muted",
@@ -424,7 +421,7 @@ export function getModulesTableColumns({
                     onValueChange={(value) => {
                       onUpdateStatus?.(
                         row.original.id,
-                        value as Module["status"]
+                        value as IModule["status"]
                       );
                       toast.success(`Module status updated to ${value}`);
                     }}

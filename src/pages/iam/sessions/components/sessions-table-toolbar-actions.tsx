@@ -3,12 +3,12 @@ import { HugeiconsIcon } from "@hugeicons/react";
 
 import { Button } from "@/components/ui/button";
 import { exportTableToCSV } from "@/lib/export";
-import type { SessionsTableToolbarActionsProps } from "@/types/iam/sessions";
+import type { ISessionsTableToolbarActionsProps } from "@/types/iam/sessions";
 
 export function SessionsTableToolbarActions({
   table,
   onRevokeAllOther,
-}: SessionsTableToolbarActionsProps) {
+}: ISessionsTableToolbarActionsProps) {
   return (
     <div className="flex items-center gap-2">
       <Button variant="destructive" onClick={onRevokeAllOther}>

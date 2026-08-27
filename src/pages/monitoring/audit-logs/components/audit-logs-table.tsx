@@ -3,10 +3,10 @@ import * as React from "react";
 import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { useDataTable } from "@/hooks/use-data-table";
-import type { DataTableRowAction } from "@/types/data-table";
+import type { IDataTableRowAction } from "@/types/data-table";
 import type {
-  AuditLog,
-  AuditLogsTableProps,
+  IAuditLog,
+  IAuditLogsTableProps,
 } from "@/types/monitoring/audit-logs";
 
 import { AuditLogDetailsDialog } from "./audit-log-details-dialog";
@@ -15,7 +15,7 @@ import { getAuditLogsTableColumns } from "./audit-logs-table-columns";
 import { AuditLogsTableToolbarActions } from "./audit-logs-table-toolbar-actions";
 import { DeleteAuditLogsDialog } from "./delete-audit-logs-dialog";
 
-const INITIAL_AUDIT_LOGS: AuditLog[] = [
+const INITIAL_AUDIT_LOGS: IAuditLog[] = [
   {
     id: "log-501",
     code: "LOG-501",
@@ -150,12 +150,12 @@ const INITIAL_AUDIT_LOGS: AuditLog[] = [
   },
 ];
 
-export function AuditLogsTable({ queryKeys }: AuditLogsTableProps) {
-  const [logs, setLogs] = React.useState<AuditLog[]>(INITIAL_AUDIT_LOGS);
+export function AuditLogsTable({ queryKeys }: IAuditLogsTableProps) {
+  const [logs, setLogs] = React.useState<IAuditLog[]>(INITIAL_AUDIT_LOGS);
   const [rowAction, setRowAction] =
-    React.useState<DataTableRowAction<AuditLog> | null>(null);
+    React.useState<IDataTableRowAction<IAuditLog> | null>(null);
   const [selectedLogForDetails, setSelectedLogForDetails] =
-    React.useState<AuditLog | null>(null);
+    React.useState<IAuditLog | null>(null);
 
   const statusCounts = React.useMemo(
     () =>
@@ -165,7 +165,7 @@ export function AuditLogsTable({ queryKeys }: AuditLogsTableProps) {
           return acc;
         },
         { SUCCESS: 0, DENIED: 0, WARNING: 0 } as Record<
-          AuditLog["status"],
+          IAuditLog["status"],
           number
         >
       ),
@@ -180,7 +180,7 @@ export function AuditLogsTable({ queryKeys }: AuditLogsTableProps) {
           return acc;
         },
         { info: 0, warning: 0, error: 0 } as Record<
-          AuditLog["severity"],
+          IAuditLog["severity"],
           number
         >
       ),
@@ -188,10 +188,10 @@ export function AuditLogsTable({ queryKeys }: AuditLogsTableProps) {
   );
 
   const handleBulkDelete = React.useCallback((logIds: string[]) => {
-    setLogs((prev) => prev.filter((l) => !logIds.includes(l.id)));
+    setLogs((prev) => prev.filter((log) => !logIds.includes(log.id)));
   }, []);
 
-  const handleViewDetails = React.useCallback((log: AuditLog) => {
+  const handleViewDetails = React.useCallback((log: IAuditLog) => {
     setSelectedLogForDetails(log);
   }, []);
 

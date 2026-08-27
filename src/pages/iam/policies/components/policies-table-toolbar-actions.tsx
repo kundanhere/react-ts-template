@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { exportTableToCSV } from "@/lib/export";
-import type { PoliciesTableToolbarActionsProps } from "@/types/iam/policies";
+import type { IPoliciesTableToolbarActionsProps } from "@/types/iam/policies";
 
 export function PoliciesTableToolbarActions({
   table,
-}: PoliciesTableToolbarActionsProps) {
+}: IPoliciesTableToolbarActionsProps) {
   return (
     <div className="flex items-center gap-2">
       <Button asChild>

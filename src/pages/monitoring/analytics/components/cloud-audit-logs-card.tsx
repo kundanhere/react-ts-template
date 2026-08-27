@@ -15,7 +15,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { CloudAuditLogsCardProps } from "@/types/monitoring/analytics";
+import type { ICloudAuditLogsCardProps } from "@/types/monitoring/analytics";
 
 import { getUserInitials, getUserName, timeAgo } from "../utils";
 
@@ -24,7 +24,7 @@ export function CloudAuditLogsCard({
   users,
   auditFilter,
   setAuditFilter,
-}: CloudAuditLogsCardProps) {
+}: ICloudAuditLogsCardProps) {
   const allowAuditCount = auditLogs.filter((l) => l.result === "ALLOW").length;
   const denyAuditCount = auditLogs.filter((l) => l.result === "DENY").length;
 

@@ -1,26 +1,26 @@
 // Global types for the app
 
 // API Result
-export type ApiResult<T = undefined> = {
+export interface IApiResult<T = undefined> {
   paginationInfo: any;
   status: number;
   message: string;
   messageCode: string;
   payload: T;
-};
+}
 
-export type PaginationInfo = {
+export interface IPaginationInfo {
   currentPage: number;
   nextPage: number | null;
   perPage: number;
   previousPage: number | null;
   total: number;
   totalPages: number;
-};
+}
 
-export type ApiResultWithPagination<T = undefined> = {
-  paginationInfo: PaginationInfo;
-} & ApiResult<T>;
+export interface IApiResultWithPagination<T = undefined> extends IApiResult<T> {
+  paginationInfo: IPaginationInfo;
+}
 
 export interface IPaginationResponse<T> {
   data: T[];
@@ -29,7 +29,6 @@ export interface IPaginationResponse<T> {
   limit: number;
   totalPages: number;
 }
-export type PaginationResponse<T> = IPaginationResponse<T>;
 
 export * from "./data-table";
 export * from "./iam";

@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
-import type { DeleteActivityDialogProps } from "@/types/monitoring/activity";
+import type { IDeleteActivityDialogProps } from "@/types/monitoring/activity";
 
 export function DeleteActivityDialog({
   items,
@@ -22,7 +22,7 @@ export function DeleteActivityDialog({
   showTrigger = true,
   onDeleteItems,
   ...props
-}: DeleteActivityDialogProps) {
+}: IDeleteActivityDialogProps) {
   const onDelete = () => {
     const ids = items.map((i) => i.id);
     onDeleteItems?.(ids);

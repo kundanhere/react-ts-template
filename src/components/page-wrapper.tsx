@@ -67,8 +67,6 @@ export interface IPageWrapperProps
   /** Custom CSS class for main content container */
   contentClassName?: string;
 }
-export type PageWrapperProps = IPageWrapperProps;
-
 export function PageWrapper({
   title,
   subtitle,
@@ -84,7 +82,7 @@ export function PageWrapper({
   headerClassName,
   contentClassName,
   ...props
-}: PageWrapperProps) {
+}: IPageWrapperProps) {
   const rightContent = rightElement ?? action;
   const hasHeader =
     Boolean(title) ||

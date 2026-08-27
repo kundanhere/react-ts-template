@@ -4,11 +4,11 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import { exportTableToCSV } from "@/lib/export";
-import type { UsersTableToolbarActionsProps } from "@/types/iam/users";
+import type { IUsersTableToolbarActionsProps } from "@/types/iam/users";
 
 export function UsersTableToolbarActions({
   table,
-}: UsersTableToolbarActionsProps) {
+}: IUsersTableToolbarActionsProps) {
   return (
     <div className="flex items-center gap-2">
       <Button onClick={() => toast.info("New user clicked")}>

@@ -7,7 +7,6 @@ export interface IRouteGuardProps {
   requireAuth?: boolean;
   redirectTo?: string;
 }
-export type RouteGuardProps = IRouteGuardProps;
 
 function hasAppToken(): boolean {
   if (typeof window === "undefined") return false;
@@ -18,7 +17,7 @@ export function RouteGuard({
   children,
   requireAuth = false,
   redirectTo = "/",
-}: RouteGuardProps) {
+}: IRouteGuardProps) {
   const location = useLocation();
 
   // Default authentication check: look for APP_TOKEN in localStorage

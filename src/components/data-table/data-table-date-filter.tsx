@@ -57,13 +57,11 @@ export interface IDataTableDateFilterProps<TData> {
   title?: string;
   multiple?: boolean;
 }
-export type DataTableDateFilterProps<TData> = IDataTableDateFilterProps<TData>;
-
 export function DataTableDateFilter<TData>({
   column,
   title,
   multiple,
-}: DataTableDateFilterProps<TData>) {
+}: IDataTableDateFilterProps<TData>) {
   const columnFilterValue = column.getFilterValue();
 
   const selectedDates = React.useMemo<DateSelection>(() => {

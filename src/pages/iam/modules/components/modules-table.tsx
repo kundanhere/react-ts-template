@@ -4,8 +4,8 @@ import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { toast } from "@/components/ui/toast";
 import { useDataTable } from "@/hooks/use-data-table";
-import type { DataTableRowAction } from "@/types/data-table";
-import type { Module, ModulesTableProps } from "@/types/iam/modules";
+import type { IDataTableRowAction } from "@/types/data-table";
+import type { IModule, IModulesTableProps } from "@/types/iam/modules";
 
 import { DeleteModulesDialog } from "./delete-modules-dialog";
 import { ModuleFormDialog } from "./module-form-dialog";
@@ -13,7 +13,7 @@ import { ModulesTableActionBar } from "./modules-table-action-bar";
 import { getModulesTableColumns } from "./modules-table-columns";
 import { ModulesTableToolbarActions } from "./modules-table-toolbar-actions";
 
-const INITIAL_MODULES: Module[] = [
+const INITIAL_MODULES: IModule[] = [
   {
     id: "mod-1",
     code: "MOD-1001",
@@ -169,21 +169,23 @@ const INITIAL_MODULES: Module[] = [
   },
 ];
 
-export function ModulesTable({ queryKeys }: ModulesTableProps) {
-  const [modules, setModules] = React.useState<Module[]>(INITIAL_MODULES);
+export function ModulesTable({ queryKeys }: IModulesTableProps) {
+  const [modules, setModules] = React.useState<IModule[]>(INITIAL_MODULES);
   const [rowAction, setRowAction] =
-    React.useState<DataTableRowAction<Module> | null>(null);
+    React.useState<IDataTableRowAction<IModule> | null>(null);
   const [isFormOpen, setIsFormOpen] = React.useState(false);
-  const [editingModule, setEditingModule] = React.useState<Module | null>(null);
+  const [editingModule, setEditingModule] = React.useState<IModule | null>(
+    null
+  );
 
   const statusCounts = React.useMemo(() => {
-    const acc: Record<Module["status"], number> = {
+    const acc: Record<IModule["status"], number> = {
       active: 0,
       inactive: 0,
       maintenance: 0,
       beta: 0,
     };
-    const countItem = (item: Module) => {
+    const countItem = (item: IModule) => {
       acc[item.status] = (acc[item.status] || 0) + 1;
       item.children?.forEach(countItem);
     };
@@ -192,14 +194,14 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
   }, [modules]);
 
   const categoryCounts = React.useMemo(() => {
-    const acc: Record<Module["category"], number> = {
+    const acc: Record<IModule["category"], number> = {
       core: 0,
       system: 0,
       feature: 0,
       integration: 0,
       governance: 0,
     };
-    const countItem = (item: Module) => {
+    const countItem = (item: IModule) => {
       acc[item.category] = (acc[item.category] || 0) + 1;
       item.children?.forEach(countItem);
     };
@@ -209,7 +211,7 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
 
   const priorityRange = React.useMemo(() => {
     const priorities: number[] = [];
-    const collectPriorities = (item: Module) => {
+    const collectPriorities = (item: IModule) => {
       priorities.push(item.priority);
       item.children?.forEach(collectPriorities);
     };
@@ -221,7 +223,7 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
     };
   }, [modules]);
 
-  const handleEditModule = React.useCallback((module: Module) => {
+  const handleEditModule = React.useCallback((module: IModule) => {
     setEditingModule(module);
     setIsFormOpen(true);
   }, []);
@@ -232,9 +234,9 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
   }, []);
 
   const handleSaveModule = React.useCallback(
-    (values: Omit<Module, "id" | "code" | "createdAt">) => {
+    (values: Omit<IModule, "id" | "code" | "createdAt">) => {
       if (editingModule) {
-        const updateRecursive = (list: Module[]): Module[] =>
+        const updateRecursive = (list: IModule[]): IModule[] =>
           list.map((m) => {
             if (m.id === editingModule.id) return { ...m, ...values };
             if (m.children?.length)
@@ -245,7 +247,7 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
         toast.success(`Updated module "${values.name}"`);
       } else {
         const nextIdNum = modules.length + 1;
-        const newModule: Module = {
+        const newModule: IModule = {
           id: `mod-${Date.now()}`,
           code: `MOD-10${nextIdNum < 10 ? `0${nextIdNum}` : nextIdNum}`,
           ...values,
@@ -259,8 +261,8 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
   );
 
   const handleUpdateStatus = React.useCallback(
-    (moduleId: string, status: Module["status"]) => {
-      const updateRecursive = (list: Module[]): Module[] =>
+    (moduleId: string, status: IModule["status"]) => {
+      const updateRecursive = (list: IModule[]): IModule[] =>
         list.map((m) => {
           if (m.id === moduleId) return { ...m, status };
           if (m.children?.length)
@@ -273,7 +275,7 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
   );
 
   const handleToggleSystem = React.useCallback((moduleId: string) => {
-    const updateRecursive = (list: Module[]): Module[] =>
+    const updateRecursive = (list: IModule[]): IModule[] =>
       list.map((m) => {
         if (m.id === moduleId) {
           const nextVal = !m.isSystem;
@@ -290,8 +292,8 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
   }, []);
 
   const handleBulkUpdateStatus = React.useCallback(
-    (moduleIds: string[], status: Module["status"]) => {
-      const updateRecursive = (list: Module[]): Module[] =>
+    (moduleIds: string[], status: IModule["status"]) => {
+      const updateRecursive = (list: IModule[]): IModule[] =>
         list.map((m) => {
           const updated = moduleIds.includes(m.id) ? { ...m, status } : m;
           if (updated.children?.length) {
@@ -308,8 +310,8 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
   );
 
   const handleBulkUpdateCategory = React.useCallback(
-    (moduleIds: string[], category: Module["category"]) => {
-      const updateRecursive = (list: Module[]): Module[] =>
+    (moduleIds: string[], category: IModule["category"]) => {
+      const updateRecursive = (list: IModule[]): IModule[] =>
         list.map((m) => {
           const updated = moduleIds.includes(m.id) ? { ...m, category } : m;
           if (updated.children?.length) {
@@ -326,7 +328,7 @@ export function ModulesTable({ queryKeys }: ModulesTableProps) {
   );
 
   const handleBulkDelete = React.useCallback((moduleIds: string[]) => {
-    const filterRecursive = (list: Module[]): Module[] =>
+    const filterRecursive = (list: IModule[]): IModule[] =>
       list
         .filter((m) => !moduleIds.includes(m.id))
         .map((m) =>

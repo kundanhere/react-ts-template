@@ -4,8 +4,8 @@ import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { toast } from "@/components/ui/toast";
 import { useDataTable } from "@/hooks/use-data-table";
-import type { DataTableRowAction } from "@/types/data-table";
-import type { Session, SessionsTableProps } from "@/types/iam/sessions";
+import type { IDataTableRowAction } from "@/types/data-table";
+import type { ISession, ISessionsTableProps } from "@/types/iam/sessions";
 
 import { RevokeSessionsDialog } from "./revoke-sessions-dialog";
 import { SessionDetailsDialog } from "./session-details-dialog";
@@ -13,7 +13,7 @@ import { SessionsTableActionBar } from "./sessions-table-action-bar";
 import { getSessionsTableColumns } from "./sessions-table-columns";
 import { SessionsTableToolbarActions } from "./sessions-table-toolbar-actions";
 
-const INITIAL_SESSIONS: Session[] = [
+const INITIAL_SESSIONS: ISession[] = [
   {
     id: "sess-1001",
     code: "SESS-1001",
@@ -226,12 +226,12 @@ const INITIAL_SESSIONS: Session[] = [
   },
 ];
 
-export function SessionsTable({ queryKeys }: SessionsTableProps) {
-  const [sessions, setSessions] = React.useState<Session[]>(INITIAL_SESSIONS);
+export function SessionsTable({ queryKeys }: ISessionsTableProps) {
+  const [sessions, setSessions] = React.useState<ISession[]>(INITIAL_SESSIONS);
   const [rowAction, setRowAction] =
-    React.useState<DataTableRowAction<Session> | null>(null);
+    React.useState<IDataTableRowAction<ISession> | null>(null);
   const [inspectedSession, setInspectedSession] =
-    React.useState<Session | null>(null);
+    React.useState<ISession | null>(null);
   const [isRevokeAllOtherOpen, setIsRevokeAllOtherOpen] = React.useState(false);
 
   const statusCounts = React.useMemo(
@@ -242,7 +242,7 @@ export function SessionsTable({ queryKeys }: SessionsTableProps) {
           return acc;
         },
         { active: 0, idle: 0, revoked: 0, expired: 0 } as Record<
-          Session["status"],
+          ISession["status"],
           number
         >
       ),
@@ -257,7 +257,7 @@ export function SessionsTable({ queryKeys }: SessionsTableProps) {
           return acc;
         },
         { desktop: 0, mobile: 0, tablet: 0, api: 0 } as Record<
-          Session["deviceType"],
+          ISession["deviceType"],
           number
         >
       ),
@@ -272,7 +272,7 @@ export function SessionsTable({ queryKeys }: SessionsTableProps) {
           return acc;
         },
         { mfa: 0, sso: 0, password: 0, api_key: 0 } as Record<
-          Session["authMethod"],
+          ISession["authMethod"],
           number
         >
       ),
@@ -286,13 +286,13 @@ export function SessionsTable({ queryKeys }: SessionsTableProps) {
           acc[s.riskScore] = (acc[s.riskScore] || 0) + 1;
           return acc;
         },
-        { low: 0, medium: 0, high: 0 } as Record<Session["riskScore"], number>
+        { low: 0, medium: 0, high: 0 } as Record<ISession["riskScore"], number>
       ),
     [sessions]
   );
 
   const handleUpdateStatus = React.useCallback(
-    (sessionId: string, status: Session["status"]) => {
+    (sessionId: string, status: ISession["status"]) => {
       setSessions((prev) =>
         prev.map((s) => (s.id === sessionId ? { ...s, status } : s))
       );
@@ -301,7 +301,7 @@ export function SessionsTable({ queryKeys }: SessionsTableProps) {
   );
 
   const handleBulkUpdateStatus = React.useCallback(
-    (sessionIds: string[], status: Session["status"]) => {
+    (sessionIds: string[], status: ISession["status"]) => {
       setSessions((prev) =>
         prev.map((s) => (sessionIds.includes(s.id) ? { ...s, status } : s))
       );
@@ -326,7 +326,7 @@ export function SessionsTable({ queryKeys }: SessionsTableProps) {
     );
   }, []);
 
-  const handleViewDetails = React.useCallback((session: Session) => {
+  const handleViewDetails = React.useCallback((session: ISession) => {
     setInspectedSession(session);
   }, []);
 

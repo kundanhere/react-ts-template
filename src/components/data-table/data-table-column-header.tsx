@@ -26,15 +26,12 @@ export interface IDataTableColumnHeaderProps<
   column: Column<TData, TValue>;
   label: string;
 }
-export type DataTableColumnHeaderProps<TData, TValue> =
-  IDataTableColumnHeaderProps<TData, TValue>;
-
 export function DataTableColumnHeader<TData, TValue>({
   column,
   label,
   className,
   ...props
-}: DataTableColumnHeaderProps<TData, TValue>) {
+}: IDataTableColumnHeaderProps<TData, TValue>) {
   if (!column.getCanSort() && !column.getCanHide()) {
     return <div className={cn(className)}>{label}</div>;
   }

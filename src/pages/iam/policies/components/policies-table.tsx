@@ -4,15 +4,15 @@ import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { toast } from "@/components/ui/toast";
 import { useDataTable } from "@/hooks/use-data-table";
-import type { DataTableRowAction } from "@/types/data-table";
-import type { PoliciesTableProps, Policy } from "@/types/iam/policies";
+import type { IDataTableRowAction } from "@/types/data-table";
+import type { IPoliciesTableProps, IPolicy } from "@/types/iam/policies";
 
 import { DeletePoliciesDialog } from "./delete-policies-dialog";
 import { PoliciesTableActionBar } from "./policies-table-action-bar";
 import { getPoliciesTableColumns } from "./policies-table-columns";
 import { PoliciesTableToolbarActions } from "./policies-table-toolbar-actions";
 
-const INITIAL_POLICIES: Policy[] = [
+const INITIAL_POLICIES: IPolicy[] = [
   {
     id: "pol-101",
     code: "POL-1001",
@@ -154,10 +154,10 @@ const INITIAL_POLICIES: Policy[] = [
   },
 ];
 
-export function PoliciesTable({ queryKeys }: PoliciesTableProps) {
-  const [policies, setPolicies] = React.useState<Policy[]>(INITIAL_POLICIES);
+export function PoliciesTable({ queryKeys }: IPoliciesTableProps) {
+  const [policies, setPolicies] = React.useState<IPolicy[]>(INITIAL_POLICIES);
   const [rowAction, setRowAction] =
-    React.useState<DataTableRowAction<Policy> | null>(null);
+    React.useState<IDataTableRowAction<IPolicy> | null>(null);
 
   const effectCounts = React.useMemo(
     () =>
@@ -166,7 +166,7 @@ export function PoliciesTable({ queryKeys }: PoliciesTableProps) {
           acc[policy.effect] = (acc[policy.effect] || 0) + 1;
           return acc;
         },
-        { ALLOW: 0, DENY: 0 } as Record<Policy["effect"], number>
+        { ALLOW: 0, DENY: 0 } as Record<IPolicy["effect"], number>
       ),
     [policies]
   );
@@ -178,7 +178,7 @@ export function PoliciesTable({ queryKeys }: PoliciesTableProps) {
           acc[policy.type] = (acc[policy.type] || 0) + 1;
           return acc;
         },
-        { system: 0, custom: 0, inline: 0 } as Record<Policy["type"], number>
+        { system: 0, custom: 0, inline: 0 } as Record<IPolicy["type"], number>
       ),
     [policies]
   );
@@ -191,7 +191,7 @@ export function PoliciesTable({ queryKeys }: PoliciesTableProps) {
           return acc;
         },
         { active: 0, inactive: 0, deprecated: 0 } as Record<
-          Policy["status"],
+          IPolicy["status"],
           number
         >
       ),
@@ -199,7 +199,7 @@ export function PoliciesTable({ queryKeys }: PoliciesTableProps) {
   );
 
   const handleUpdateEffect = React.useCallback(
-    (policyId: string, effect: Policy["effect"]) => {
+    (policyId: string, effect: IPolicy["effect"]) => {
       setPolicies((prev) =>
         prev.map((p) => (p.id === policyId ? { ...p, effect } : p))
       );
@@ -208,9 +208,9 @@ export function PoliciesTable({ queryKeys }: PoliciesTableProps) {
   );
 
   const handleDuplicatePolicy = React.useCallback(
-    (policy: Policy) => {
+    (policy: IPolicy) => {
       const nextNum = policies.length + 1;
-      const newPolicy: Policy = {
+      const newPolicy: IPolicy = {
         ...policy,
         id: `pol-${Date.now()}`,
         code: `POL-10${nextNum < 10 ? `0${nextNum}` : nextNum}`,
@@ -225,7 +225,7 @@ export function PoliciesTable({ queryKeys }: PoliciesTableProps) {
   );
 
   const handleBulkUpdateEffect = React.useCallback(
-    (policyIds: string[], effect: Policy["effect"]) => {
+    (policyIds: string[], effect: IPolicy["effect"]) => {
       setPolicies((prev) =>
         prev.map((p) => (policyIds.includes(p.id) ? { ...p, effect } : p))
       );
@@ -234,7 +234,7 @@ export function PoliciesTable({ queryKeys }: PoliciesTableProps) {
   );
 
   const handleBulkUpdateStatus = React.useCallback(
-    (policyIds: string[], status: Policy["status"]) => {
+    (policyIds: string[], status: IPolicy["status"]) => {
       setPolicies((prev) =>
         prev.map((p) => (policyIds.includes(p.id) ? { ...p, status } : p))
       );

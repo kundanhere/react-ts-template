@@ -3,8 +3,8 @@ import { z } from "zod";
 
 import { dataTableConfig } from "@/config/data-table";
 import type {
-  ExtendedColumnFilter,
-  ExtendedColumnSort,
+  IExtendedColumnFilter,
+  IExtendedColumnSort,
 } from "@/types/data-table";
 
 const sortingItemSchema = z.object({
@@ -20,7 +20,7 @@ export const getSortingStateParser = <TData>(
     validKeys = columnIds instanceof Set ? columnIds : new Set(columnIds);
   }
 
-  return createParser({
+  return createParser<IExtendedColumnSort<TData>[]>({
     parse: (value) => {
       try {
         const parsed = JSON.parse(value);
@@ -32,7 +32,7 @@ export const getSortingStateParser = <TData>(
           return null;
         }
 
-        return result.data as ExtendedColumnSort<TData>[];
+        return result.data as IExtendedColumnSort<TData>[];
       } catch {
         return null;
       }
@@ -77,7 +77,7 @@ export const getFiltersStateParser = <TData>(
           return null;
         }
 
-        return result.data as ExtendedColumnFilter<TData>[];
+        return result.data as IExtendedColumnFilter<TData>[];
       } catch {
         return null;
       }

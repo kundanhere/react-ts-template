@@ -1,5 +1,5 @@
 import { useAppDispatch, useAppSelector } from "./hooks";
-import { User, clearUser, fetchUserThunk, setUser } from "./slices/app-slice";
+import { IUser, clearUser, fetchUserThunk, setUser } from "./slices/app-slice";
 
 export function useAppStore() {
   const dispatch = useAppDispatch();
@@ -12,7 +12,7 @@ export function useAppStore() {
     status,
     error,
     isLoading: status === "loading",
-    setUser: (userData: User | null) => dispatch(setUser(userData)),
+    setUser: (userData: IUser | null) => dispatch(setUser(userData)),
     clearUser: () => dispatch(clearUser()),
     fetchUser: (userId: string) => dispatch(fetchUserThunk(userId)),
   };

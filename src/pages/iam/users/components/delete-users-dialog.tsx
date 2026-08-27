@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
-import type { DeleteUsersDialogProps } from "@/types/iam/users";
+import type { IDeleteUsersDialogProps } from "@/types/iam/users";
 
 export function DeleteUsersDialog({
   users,
@@ -22,7 +22,7 @@ export function DeleteUsersDialog({
   showTrigger = true,
   onDeleteUsers,
   ...props
-}: DeleteUsersDialogProps) {
+}: IDeleteUsersDialogProps) {
   const onDelete = () => {
     const ids = users.map((u) => u.id);
     onDeleteUsers?.(ids);

@@ -26,7 +26,7 @@ import {
 import { toast } from "@/components/ui/toast";
 import { getSelectedTableRows } from "@/lib/data-table";
 import { exportTableToCSV } from "@/lib/export";
-import type { Module, ModulesTableActionBarProps } from "@/types/iam/modules";
+import type { IModule, IModulesTableActionBarProps } from "@/types/iam/modules";
 
 import { MODULE_CATEGORIES, MODULE_STATUSES } from "./modules-table-columns";
 
@@ -35,7 +35,7 @@ export function ModulesTableActionBar({
   onBulkUpdateStatus,
   onBulkUpdateCategory,
   onBulkDelete,
-}: ModulesTableActionBarProps) {
+}: IModulesTableActionBarProps) {
   const { rowSelection } = table.getState();
   const rows = React.useMemo(() => {
     if (!rowSelection) return [];
@@ -52,7 +52,7 @@ export function ModulesTableActionBar({
   );
 
   const onStatusChange = React.useCallback(
-    (status: Module["status"]) => {
+    (status: IModule["status"]) => {
       const ids = rows.map((r) => r.original.id);
       onBulkUpdateStatus?.(ids, status);
       toast.success(`Updated ${ids.length} modules status to ${status}`);
@@ -61,7 +61,7 @@ export function ModulesTableActionBar({
   );
 
   const onCategoryChange = React.useCallback(
-    (category: Module["category"]) => {
+    (category: IModule["category"]) => {
       const ids = rows.map((r) => r.original.id);
       onBulkUpdateCategory?.(ids, category);
       toast.success(`Updated ${ids.length} modules category to ${category}`);

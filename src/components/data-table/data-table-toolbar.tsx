@@ -27,8 +27,6 @@ export interface IDataTableToolbarProps<
   onViewModeChange?: (mode: DataTableViewMode) => void;
   enableViewToggle?: boolean;
 }
-export type DataTableToolbarProps<TData> = IDataTableToolbarProps<TData>;
-
 export function DataTableToolbar<TData>({
   table,
   viewMode: propViewMode,
@@ -37,7 +35,7 @@ export function DataTableToolbar<TData>({
   children,
   className,
   ...props
-}: DataTableToolbarProps<TData>) {
+}: IDataTableToolbarProps<TData>) {
   const context = useDataTableContext();
 
   const viewMode = propViewMode ?? context?.viewMode ?? "list";
@@ -100,12 +98,9 @@ export function DataTableToolbar<TData>({
 export interface IDataTableToolbarFilterProps<TData> {
   column: Column<TData>;
 }
-export type DataTableToolbarFilterProps<TData> =
-  IDataTableToolbarFilterProps<TData>;
-
 function DataTableToolbarFilter<TData>({
   column,
-}: DataTableToolbarFilterProps<TData>) {
+}: IDataTableToolbarFilterProps<TData>) {
   const columnMeta = column.columnDef.meta;
 
   const onFilterRender = React.useCallback(() => {

@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { formatDate } from "@/lib/format";
-import type { ActivityDetailsDialogProps } from "@/types/monitoring/activity";
+import type { IActivityDetailsDialogProps } from "@/types/monitoring/activity";
 
 import { getSeverityIcon } from "./activity-table-columns";
 
@@ -21,7 +21,7 @@ export function ActivityDetailsDialog({
   open,
   onOpenChange,
   item,
-}: ActivityDetailsDialogProps) {
+}: IActivityDetailsDialogProps) {
   if (!item) return null;
 
   const SeverityIcon = getSeverityIcon(item.severity);

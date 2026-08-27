@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { User, UserFormProps } from "@/types/iam/users";
+import type { IUser, IUserFormProps } from "@/types/iam/users";
 
 import {
   USER_DEPARTMENTS,
@@ -23,16 +23,16 @@ export function UserForm({
   onSubmit,
   onCancel,
   submitText = "Save",
-}: UserFormProps) {
+}: IUserFormProps) {
   const [name, setName] = React.useState(initialValues?.name ?? "");
   const [email, setEmail] = React.useState(initialValues?.email ?? "");
-  const [role, setRole] = React.useState<User["role"]>(
+  const [role, setRole] = React.useState<IUser["role"]>(
     initialValues?.role ?? "member"
   );
-  const [status, setStatus] = React.useState<User["status"]>(
+  const [status, setStatus] = React.useState<IUser["status"]>(
     initialValues?.status ?? "active"
   );
-  const [department, setDepartment] = React.useState<User["department"]>(
+  const [department, setDepartment] = React.useState<IUser["department"]>(
     initialValues?.department ?? "engineering"
   );
 
@@ -74,7 +74,7 @@ export function UserForm({
 
       <div className="flex flex-col gap-2">
         <Label htmlFor="role">Role</Label>
-        <Select value={role} onValueChange={(v) => setRole(v as User["role"])}>
+        <Select value={role} onValueChange={(v) => setRole(v as IUser["role"])}>
           <SelectTrigger id="role" className="capitalize">
             <SelectValue placeholder="Select role" />
           </SelectTrigger>
@@ -92,7 +92,7 @@ export function UserForm({
         <Label htmlFor="status">Status</Label>
         <Select
           value={status}
-          onValueChange={(v) => setStatus(v as User["status"])}
+          onValueChange={(v) => setStatus(v as IUser["status"])}
         >
           <SelectTrigger id="status" className="capitalize">
             <SelectValue placeholder="Select status" />
@@ -111,7 +111,7 @@ export function UserForm({
         <Label htmlFor="department">Department</Label>
         <Select
           value={department}
-          onValueChange={(v) => setDepartment(v as User["department"])}
+          onValueChange={(v) => setDepartment(v as IUser["department"])}
         >
           <SelectTrigger id="department" className="capitalize">
             <SelectValue placeholder="Select department" />

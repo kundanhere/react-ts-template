@@ -26,7 +26,7 @@ import {
 import { toast } from "@/components/ui/toast";
 import { getSelectedTableRows } from "@/lib/data-table";
 import { exportTableToCSV } from "@/lib/export";
-import type { User, UsersTableActionBarProps } from "@/types/iam/users";
+import type { IUser, IUsersTableActionBarProps } from "@/types/iam/users";
 
 import { USER_ROLES, USER_STATUSES } from "./users-table-columns";
 
@@ -35,7 +35,7 @@ export function UsersTableActionBar({
   onBulkUpdateStatus,
   onBulkUpdateRole,
   onBulkDelete,
-}: UsersTableActionBarProps) {
+}: IUsersTableActionBarProps) {
   const { rowSelection } = table.getState();
   const rows = React.useMemo(() => {
     if (!rowSelection) return [];
@@ -52,7 +52,7 @@ export function UsersTableActionBar({
   );
 
   const onStatusChange = React.useCallback(
-    (status: User["status"]) => {
+    (status: IUser["status"]) => {
       const ids = rows.map((r) => r.original.id);
       onBulkUpdateStatus?.(ids, status);
       toast.success(`Updated ${ids.length} users status to ${status}`);
@@ -61,7 +61,7 @@ export function UsersTableActionBar({
   );
 
   const onRoleChange = React.useCallback(
-    (role: User["role"]) => {
+    (role: IUser["role"]) => {
       const ids = rows.map((r) => r.original.id);
       onBulkUpdateRole?.(ids, role);
       toast.success(`Updated ${ids.length} users role to ${role}`);
