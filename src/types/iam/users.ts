@@ -3,9 +3,9 @@ import type * as React from "react";
 import type { Table } from "@tanstack/react-table";
 
 import type { AlertDialog } from "@/components/ui/alert-dialog";
-import type { DataTableRowAction, QueryKeys } from "@/types/data-table";
+import type { IDataTableRowAction, IQueryKeys } from "@/types/data-table";
 
-export interface User {
+export interface IUser {
   id: string;
   code: string;
   name: string;
@@ -16,47 +16,54 @@ export interface User {
   loginCount: number;
   createdAt: Date;
 }
+export type User = IUser;
 
-export interface GetUsersTableColumnsProps {
-  statusCounts: Record<User["status"], number>;
-  roleCounts: Record<User["role"], number>;
-  departmentCounts: Record<User["department"], number>;
+export interface IGetUsersTableColumnsProps {
+  statusCounts: Record<IUser["status"], number>;
+  roleCounts: Record<IUser["role"], number>;
+  departmentCounts: Record<IUser["department"], number>;
   loginCountRange: { min: number; max: number };
   setRowAction: React.Dispatch<
-    React.SetStateAction<DataTableRowAction<User> | null>
+    React.SetStateAction<IDataTableRowAction<IUser> | null>
   >;
-  onUpdateUserRole?: (userId: string, role: User["role"]) => void;
+  onUpdateUserRole?: (userId: string, role: IUser["role"]) => void;
 }
+export type GetUsersTableColumnsProps = IGetUsersTableColumnsProps;
 
-export interface UsersTableProps {
-  queryKeys?: Partial<QueryKeys>;
+export interface IUsersTableProps {
+  queryKeys?: Partial<IQueryKeys>;
 }
+export type UsersTableProps = IUsersTableProps;
 
-export interface UsersTableActionBarProps {
-  table: Table<User>;
-  onBulkUpdateStatus?: (userIds: string[], status: User["status"]) => void;
-  onBulkUpdateRole?: (userIds: string[], role: User["role"]) => void;
+export interface IUsersTableActionBarProps {
+  table: Table<IUser>;
+  onBulkUpdateStatus?: (userIds: string[], status: IUser["status"]) => void;
+  onBulkUpdateRole?: (userIds: string[], role: IUser["role"]) => void;
   onBulkDelete?: (userIds: string[]) => void;
 }
+export type UsersTableActionBarProps = IUsersTableActionBarProps;
 
-export interface UsersTableToolbarActionsProps {
-  table: Table<User>;
+export interface IUsersTableToolbarActionsProps {
+  table: Table<IUser>;
 }
+export type UsersTableToolbarActionsProps = IUsersTableToolbarActionsProps;
 
-export interface UserFormProps {
-  initialValues?: Partial<User>;
+export interface IUserFormProps {
+  initialValues?: Partial<IUser>;
   onSubmit: (
-    values: Omit<User, "id" | "code" | "createdAt" | "loginCount">
+    values: Omit<IUser, "id" | "code" | "createdAt" | "loginCount">
   ) => void;
   onCancel?: () => void;
   submitText?: string;
 }
+export type UserFormProps = IUserFormProps;
 
-export interface DeleteUsersDialogProps extends React.ComponentPropsWithoutRef<
+export interface IDeleteUsersDialogProps extends React.ComponentPropsWithoutRef<
   typeof AlertDialog
 > {
-  users: User[];
+  users: IUser[];
   onSuccess?: () => void;
   showTrigger?: boolean;
   onDeleteUsers?: (userIds: string[]) => void;
 }
+export type DeleteUsersDialogProps = IDeleteUsersDialogProps;

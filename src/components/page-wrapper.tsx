@@ -43,7 +43,7 @@ const pageHeaderVariants = cva(
   }
 );
 
-export interface PageWrapperProps
+export interface IPageWrapperProps
   extends
     Omit<React.HTMLAttributes<HTMLDivElement>, "title">,
     VariantProps<typeof pageWrapperVariants>,
@@ -67,6 +67,7 @@ export interface PageWrapperProps
   /** Custom CSS class for main content container */
   contentClassName?: string;
 }
+export type PageWrapperProps = IPageWrapperProps;
 
 export function PageWrapper({
   title,

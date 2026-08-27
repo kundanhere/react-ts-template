@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
 
-interface DataTableSkeletonProps extends React.ComponentProps<"div"> {
+export interface IDataTableSkeletonProps extends React.ComponentProps<"div"> {
   columnCount: number;
   rowCount?: number;
   filterCount?: number;
@@ -20,6 +20,7 @@ interface DataTableSkeletonProps extends React.ComponentProps<"div"> {
   withPagination?: boolean;
   shrinkZero?: boolean;
 }
+export type DataTableSkeletonProps = IDataTableSkeletonProps;
 
 export function DataTableSkeleton({
   columnCount,

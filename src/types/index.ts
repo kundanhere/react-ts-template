@@ -22,13 +22,14 @@ export type ApiResultWithPagination<T = undefined> = {
   paginationInfo: PaginationInfo;
 } & ApiResult<T>;
 
-export interface PaginationResponse<T> {
+export interface IPaginationResponse<T> {
   data: T[];
   total: number;
   page: number;
   limit: number;
   totalPages: number;
 }
+export type PaginationResponse<T> = IPaginationResponse<T>;
 
 export * from "./data-table";
 export * from "./iam";

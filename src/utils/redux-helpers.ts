@@ -2,11 +2,12 @@ import { ActionReducerMapBuilder } from "@reduxjs/toolkit";
 
 export type AsyncStatus = "idle" | "loading" | "succeeded" | "failed";
 
-export interface AsyncState<T> {
+export interface IAsyncState<T> {
   data: T | null;
   status: AsyncStatus;
   error: string | null;
 }
+export type AsyncState<T> = IAsyncState<T>;
 
 /**
  * Creates a standardized initial state object for async slice operations
@@ -21,7 +22,7 @@ export function createAsyncState<T>(
   };
 }
 
-export interface AsyncThunkLike {
+export interface IAsyncThunkLike {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   pending: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -29,6 +30,7 @@ export interface AsyncThunkLike {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   rejected: any;
 }
+export type AsyncThunkLike = IAsyncThunkLike;
 
 /**
  * Standardized builder callback helper to handle pending/fulfilled/rejected cases for an AsyncThunk.

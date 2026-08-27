@@ -24,15 +24,16 @@ type FacetedValue<Multiple extends boolean> = Multiple extends true
   ? string[]
   : string;
 
-interface FacetedContextValue<Multiple extends boolean = boolean> {
+export interface IFacetedContextValue<Multiple extends boolean = boolean> {
   value?: FacetedValue<Multiple>;
   onItemSelect?: (value: string) => void;
   multiple?: Multiple;
 }
+export type FacetedContextValue<Multiple extends boolean = boolean> =
+  IFacetedContextValue<Multiple>;
 
-const FacetedContext = React.createContext<FacetedContextValue<boolean> | null>(
-  null
-);
+const FacetedContext =
+  React.createContext<IFacetedContextValue<boolean> | null>(null);
 
 function useFacetedContext(name: string) {
   const context = React.useContext(FacetedContext);
@@ -42,7 +43,7 @@ function useFacetedContext(name: string) {
   return context;
 }
 
-interface FacetedProps<
+export interface IFacetedProps<
   Multiple extends boolean = false,
 > extends React.ComponentProps<typeof Popover> {
   value?: FacetedValue<Multiple>;
@@ -50,6 +51,8 @@ interface FacetedProps<
   children?: React.ReactNode;
   multiple?: Multiple;
 }
+export type FacetedProps<Multiple extends boolean = false> =
+  IFacetedProps<Multiple>;
 
 function Faceted<Multiple extends boolean = false>(
   props: FacetedProps<Multiple>
@@ -128,12 +131,13 @@ function FacetedTrigger(props: React.ComponentProps<typeof PopoverTrigger>) {
   );
 }
 
-interface FacetedBadgeListProps extends React.ComponentProps<"div"> {
+export interface IFacetedBadgeListProps extends React.ComponentProps<"div"> {
   options?: { label: string; value: string }[];
   max?: number;
   badgeClassName?: string;
   placeholder?: string;
 }
+export type FacetedBadgeListProps = IFacetedBadgeListProps;
 
 function FacetedBadgeList(props: FacetedBadgeListProps) {
   const {
@@ -226,9 +230,12 @@ const FacetedEmpty = CommandEmpty;
 
 const FacetedGroup = CommandGroup;
 
-interface FacetedItemProps extends React.ComponentProps<typeof CommandItem> {
+export interface IFacetedItemProps extends React.ComponentProps<
+  typeof CommandItem
+> {
   value: string;
 }
+export type FacetedItemProps = IFacetedItemProps;
 
 function FacetedItem(props: FacetedItemProps) {
   const { value, onSelect, className, children, ...itemProps } = props;

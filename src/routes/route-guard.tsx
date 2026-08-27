@@ -2,11 +2,12 @@ import { ReactNode } from "react";
 
 import { Navigate, useLocation } from "react-router-dom";
 
-interface RouteGuardProps {
+export interface IRouteGuardProps {
   children: ReactNode;
   requireAuth?: boolean;
   redirectTo?: string;
 }
+export type RouteGuardProps = IRouteGuardProps;
 
 function hasAppToken(): boolean {
   if (typeof window === "undefined") return false;

@@ -5,14 +5,15 @@ import { Layout } from "@/layout";
 import { RouteGuard } from "@/routes/route-guard";
 
 // Define route types
-export interface RouteConfig {
+export interface IRouteConfig {
   path?: string;
   index?: boolean;
   element?: JSX.Element;
   title?: string;
   description?: string;
-  children?: RouteConfig[];
+  children?: IRouteConfig[];
 }
+export type RouteConfig = IRouteConfig;
 
 // Lazy load page components
 const HomePage = lazy(() => import("@/pages/home/page"));
@@ -20,15 +21,15 @@ const NotFoundPage = lazy(() => import("@/pages/not-found/page"));
 const DashboardPage = lazy(() => import("@/pages/dashboard/page"));
 const AnalyticsPage = lazy(() => import("@/pages/monitoring/analytics/page"));
 const UsersPage = lazy(() => import("@/pages/iam/users/page"));
-const UserDetailPage = lazy(() => import("@/pages/iam/users/UserDetail"));
+const UserDetailPage = lazy(() => import("@/pages/iam/users/user-detail"));
 const RolesPage = lazy(() => import("@/pages/iam/roles/page"));
-const RoleDetailPage = lazy(() => import("@/pages/iam/roles/RoleDetail"));
+const RoleDetailPage = lazy(() => import("@/pages/iam/roles/role-detail"));
 const PoliciesPage = lazy(() => import("@/pages/iam/policies/page"));
 const PolicyBuilderPage = lazy(
-  () => import("@/pages/iam/policies/PolicyBuilder")
+  () => import("@/pages/iam/policies/policy-builder")
 );
 const PolicyDetailPage = lazy(
-  () => import("@/pages/iam/policies/PolicyDetail")
+  () => import("@/pages/iam/policies/policy-detail")
 );
 const ModulesPage = lazy(() => import("@/pages/iam/modules/page"));
 const SettingsPage = lazy(() => import("@/pages/settings/page"));
@@ -40,7 +41,7 @@ const AuditLogsPage = lazy(() => import("@/pages/monitoring/audit-logs/page"));
 const MyActivityPage = lazy(() => import("@/pages/monitoring/activity/page"));
 const AccessMatrixPage = lazy(() => import("@/pages/iam/access-matrix/page"));
 const PolicySimulatorPage = lazy(
-  () => import("@/pages/iam/policies/PolicySimulator")
+  () => import("@/pages/iam/policies/policy-simulator")
 );
 const UpdatesPage = lazy(() => import("@/pages/updates/page"));
 const InboxPage = lazy(() => import("@/pages/inbox/page"));

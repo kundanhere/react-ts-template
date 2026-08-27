@@ -3,9 +3,9 @@ import type * as React from "react";
 import type { Table } from "@tanstack/react-table";
 
 import type { AlertDialog } from "@/components/ui/alert-dialog";
-import type { DataTableRowAction, QueryKeys } from "@/types/data-table";
+import type { IDataTableRowAction, IQueryKeys } from "@/types/data-table";
 
-export interface AuditLog {
+export interface IAuditLog {
   id: string;
   code: string;
   timestamp: Date;
@@ -16,41 +16,49 @@ export interface AuditLog {
   severity: "info" | "warning" | "error";
   ipAddress: string;
 }
+export type AuditLog = IAuditLog;
 
-export interface GetAuditLogsTableColumnsProps {
-  statusCounts: Record<AuditLog["status"], number>;
-  severityCounts: Record<AuditLog["severity"], number>;
+export interface IGetAuditLogsTableColumnsProps {
+  statusCounts: Record<IAuditLog["status"], number>;
+  severityCounts: Record<IAuditLog["severity"], number>;
   setRowAction: React.Dispatch<
-    React.SetStateAction<DataTableRowAction<AuditLog> | null>
+    React.SetStateAction<IDataTableRowAction<IAuditLog> | null>
   >;
-  onViewDetails?: (log: AuditLog) => void;
+  onViewDetails?: (log: IAuditLog) => void;
 }
+export type GetAuditLogsTableColumnsProps = IGetAuditLogsTableColumnsProps;
 
-export interface AuditLogsTableProps {
-  queryKeys?: Partial<QueryKeys>;
+export interface IAuditLogsTableProps {
+  queryKeys?: Partial<IQueryKeys>;
 }
+export type AuditLogsTableProps = IAuditLogsTableProps;
 
-export interface AuditLogsTableActionBarProps {
-  table: Table<AuditLog>;
+export interface IAuditLogsTableActionBarProps {
+  table: Table<IAuditLog>;
   onBulkDelete?: (logIds: string[]) => void;
 }
+export type AuditLogsTableActionBarProps = IAuditLogsTableActionBarProps;
 
-export interface AuditLogsTableToolbarActionsProps {
-  table: Table<AuditLog>;
+export interface IAuditLogsTableToolbarActionsProps {
+  table: Table<IAuditLog>;
   onRefresh?: () => void;
 }
+export type AuditLogsTableToolbarActionsProps =
+  IAuditLogsTableToolbarActionsProps;
 
-export interface AuditLogDetailsDialogProps {
+export interface IAuditLogDetailsDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  log: AuditLog | null;
+  log: IAuditLog | null;
 }
+export type AuditLogDetailsDialogProps = IAuditLogDetailsDialogProps;
 
-export interface DeleteAuditLogsDialogProps extends React.ComponentPropsWithoutRef<
+export interface IDeleteAuditLogsDialogProps extends React.ComponentPropsWithoutRef<
   typeof AlertDialog
 > {
-  logs: AuditLog[];
+  logs: IAuditLog[];
   onSuccess?: () => void;
   showTrigger?: boolean;
   onDeleteLogs?: (logIds: string[]) => void;
 }
+export type DeleteAuditLogsDialogProps = IDeleteAuditLogsDialogProps;

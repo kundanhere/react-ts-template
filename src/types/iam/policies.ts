@@ -3,9 +3,9 @@ import type * as React from "react";
 import type { Table } from "@tanstack/react-table";
 
 import type { AlertDialog } from "@/components/ui/alert-dialog";
-import type { DataTableRowAction, QueryKeys } from "@/types/data-table";
+import type { IDataTableRowAction, IQueryKeys } from "@/types/data-table";
 
-export interface Policy {
+export interface IPolicy {
   id: string;
   code: string;
   name: string;
@@ -18,38 +18,45 @@ export interface Policy {
   createdAt: Date;
   updatedAt: Date;
 }
+export type Policy = IPolicy;
 
-export interface GetPoliciesTableColumnsProps {
-  effectCounts: Record<Policy["effect"], number>;
-  typeCounts: Record<Policy["type"], number>;
-  statusCounts: Record<Policy["status"], number>;
+export interface IGetPoliciesTableColumnsProps {
+  effectCounts: Record<IPolicy["effect"], number>;
+  typeCounts: Record<IPolicy["type"], number>;
+  statusCounts: Record<IPolicy["status"], number>;
   setRowAction: React.Dispatch<
-    React.SetStateAction<DataTableRowAction<Policy> | null>
+    React.SetStateAction<IDataTableRowAction<IPolicy> | null>
   >;
-  onUpdatePolicyEffect?: (policyId: string, effect: Policy["effect"]) => void;
-  onDuplicatePolicy?: (policy: Policy) => void;
+  onUpdatePolicyEffect?: (policyId: string, effect: IPolicy["effect"]) => void;
+  onDuplicatePolicy?: (policy: IPolicy) => void;
 }
+export type GetPoliciesTableColumnsProps = IGetPoliciesTableColumnsProps;
 
-export interface PoliciesTableProps {
-  queryKeys?: Partial<QueryKeys>;
+export interface IPoliciesTableProps {
+  queryKeys?: Partial<IQueryKeys>;
 }
+export type PoliciesTableProps = IPoliciesTableProps;
 
-export interface PoliciesTableActionBarProps {
-  table: Table<Policy>;
-  onBulkUpdateEffect?: (policyIds: string[], effect: Policy["effect"]) => void;
-  onBulkUpdateStatus?: (policyIds: string[], status: Policy["status"]) => void;
+export interface IPoliciesTableActionBarProps {
+  table: Table<IPolicy>;
+  onBulkUpdateEffect?: (policyIds: string[], effect: IPolicy["effect"]) => void;
+  onBulkUpdateStatus?: (policyIds: string[], status: IPolicy["status"]) => void;
   onBulkDelete?: (policyIds: string[]) => void;
 }
+export type PoliciesTableActionBarProps = IPoliciesTableActionBarProps;
 
-export interface PoliciesTableToolbarActionsProps {
-  table: Table<Policy>;
+export interface IPoliciesTableToolbarActionsProps {
+  table: Table<IPolicy>;
 }
+export type PoliciesTableToolbarActionsProps =
+  IPoliciesTableToolbarActionsProps;
 
-export interface DeletePoliciesDialogProps extends React.ComponentPropsWithoutRef<
+export interface IDeletePoliciesDialogProps extends React.ComponentPropsWithoutRef<
   typeof AlertDialog
 > {
-  policies: Policy[];
+  policies: IPolicy[];
   onSuccess?: () => void;
   showTrigger?: boolean;
   onDeletePolicies?: (policyIds: string[]) => void;
 }
+export type DeletePoliciesDialogProps = IDeletePoliciesDialogProps;

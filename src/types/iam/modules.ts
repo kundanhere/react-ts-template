@@ -3,9 +3,9 @@ import type * as React from "react";
 import type { Table } from "@tanstack/react-table";
 
 import type { AlertDialog } from "@/components/ui/alert-dialog";
-import type { DataTableRowAction, QueryKeys } from "@/types/data-table";
+import type { IDataTableRowAction, IQueryKeys } from "@/types/data-table";
 
-export interface Module {
+export interface IModule {
   id: string;
   code: string;
   name: string;
@@ -16,52 +16,59 @@ export interface Module {
   isSystem: boolean;
   description: string;
   createdAt: Date;
-  children?: Module[];
+  children?: IModule[];
 }
+export type Module = IModule;
 
-export interface GetModulesTableColumnsProps {
-  statusCounts: Record<Module["status"], number>;
-  categoryCounts: Record<Module["category"], number>;
+export interface IGetModulesTableColumnsProps {
+  statusCounts: Record<IModule["status"], number>;
+  categoryCounts: Record<IModule["category"], number>;
   priorityRange: { min: number; max: number };
   setRowAction: React.Dispatch<
-    React.SetStateAction<DataTableRowAction<Module> | null>
+    React.SetStateAction<IDataTableRowAction<IModule> | null>
   >;
-  onEditModule?: (module: Module) => void;
-  onUpdateStatus?: (moduleId: string, status: Module["status"]) => void;
+  onEditModule?: (module: IModule) => void;
+  onUpdateStatus?: (moduleId: string, status: IModule["status"]) => void;
   onToggleSystem?: (moduleId: string) => void;
 }
+export type GetModulesTableColumnsProps = IGetModulesTableColumnsProps;
 
-export interface ModulesTableProps {
-  queryKeys?: Partial<QueryKeys>;
+export interface IModulesTableProps {
+  queryKeys?: Partial<IQueryKeys>;
 }
+export type ModulesTableProps = IModulesTableProps;
 
-export interface ModulesTableActionBarProps {
-  table: Table<Module>;
-  onBulkUpdateStatus?: (moduleIds: string[], status: Module["status"]) => void;
+export interface IModulesTableActionBarProps {
+  table: Table<IModule>;
+  onBulkUpdateStatus?: (moduleIds: string[], status: IModule["status"]) => void;
   onBulkUpdateCategory?: (
     moduleIds: string[],
-    category: Module["category"]
+    category: IModule["category"]
   ) => void;
   onBulkDelete?: (moduleIds: string[]) => void;
 }
+export type ModulesTableActionBarProps = IModulesTableActionBarProps;
 
-export interface ModulesTableToolbarActionsProps {
-  table: Table<Module>;
+export interface IModulesTableToolbarActionsProps {
+  table: Table<IModule>;
   onAddModule?: () => void;
 }
+export type ModulesTableToolbarActionsProps = IModulesTableToolbarActionsProps;
 
-export interface ModuleFormDialogProps {
+export interface IModuleFormDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  initialValues?: Partial<Module> | null;
-  onSubmit: (values: Omit<Module, "id" | "code" | "createdAt">) => void;
+  initialValues?: Partial<IModule> | null;
+  onSubmit: (values: Omit<IModule, "id" | "code" | "createdAt">) => void;
 }
+export type ModuleFormDialogProps = IModuleFormDialogProps;
 
-export interface DeleteModulesDialogProps extends React.ComponentPropsWithoutRef<
+export interface IDeleteModulesDialogProps extends React.ComponentPropsWithoutRef<
   typeof AlertDialog
 > {
-  modules: Module[];
+  modules: IModule[];
   onSuccess?: () => void;
   showTrigger?: boolean;
   onDeleteModules?: (moduleIds: string[]) => void;
 }
+export type DeleteModulesDialogProps = IDeleteModulesDialogProps;

@@ -3,9 +3,9 @@ import type * as React from "react";
 import type { Table } from "@tanstack/react-table";
 
 import type { AlertDialog } from "@/components/ui/alert-dialog";
-import type { DataTableRowAction, QueryKeys } from "@/types/data-table";
+import type { IDataTableRowAction, IQueryKeys } from "@/types/data-table";
 
-export interface ActivityItem {
+export interface IActivityItem {
   id: string;
   code: string;
   timestamp: Date;
@@ -16,41 +16,49 @@ export interface ActivityItem {
   severity: "info" | "warning" | "error";
   ipAddress: string;
 }
+export type ActivityItem = IActivityItem;
 
-export interface GetActivityTableColumnsProps {
-  statusCounts: Record<ActivityItem["status"], number>;
-  severityCounts: Record<ActivityItem["severity"], number>;
+export interface IGetActivityTableColumnsProps {
+  statusCounts: Record<IActivityItem["status"], number>;
+  severityCounts: Record<IActivityItem["severity"], number>;
   setRowAction: React.Dispatch<
-    React.SetStateAction<DataTableRowAction<ActivityItem> | null>
+    React.SetStateAction<IDataTableRowAction<IActivityItem> | null>
   >;
-  onViewDetails?: (item: ActivityItem) => void;
+  onViewDetails?: (item: IActivityItem) => void;
 }
+export type GetActivityTableColumnsProps = IGetActivityTableColumnsProps;
 
-export interface ActivityTableProps {
-  queryKeys?: Partial<QueryKeys>;
+export interface IActivityTableProps {
+  queryKeys?: Partial<IQueryKeys>;
 }
+export type ActivityTableProps = IActivityTableProps;
 
-export interface ActivityTableActionBarProps {
-  table: Table<ActivityItem>;
+export interface IActivityTableActionBarProps {
+  table: Table<IActivityItem>;
   onBulkDelete?: (itemIds: string[]) => void;
 }
+export type ActivityTableActionBarProps = IActivityTableActionBarProps;
 
-export interface ActivityTableToolbarActionsProps {
-  table: Table<ActivityItem>;
+export interface IActivityTableToolbarActionsProps {
+  table: Table<IActivityItem>;
   onRefresh?: () => void;
 }
+export type ActivityTableToolbarActionsProps =
+  IActivityTableToolbarActionsProps;
 
-export interface ActivityDetailsDialogProps {
+export interface IActivityDetailsDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  item: ActivityItem | null;
+  item: IActivityItem | null;
 }
+export type ActivityDetailsDialogProps = IActivityDetailsDialogProps;
 
-export interface DeleteActivityDialogProps extends React.ComponentPropsWithoutRef<
+export interface IDeleteActivityDialogProps extends React.ComponentPropsWithoutRef<
   typeof AlertDialog
 > {
-  items: ActivityItem[];
+  items: IActivityItem[];
   onSuccess?: () => void;
   showTrigger?: boolean;
   onDeleteItems?: (itemIds: string[]) => void;
 }
+export type DeleteActivityDialogProps = IDeleteActivityDialogProps;

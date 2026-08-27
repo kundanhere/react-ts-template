@@ -19,12 +19,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-interface DataTableToolbarProps<TData> extends React.ComponentProps<"div"> {
+export interface IDataTableToolbarProps<
+  TData,
+> extends React.ComponentProps<"div"> {
   table: Table<TData>;
   viewMode?: DataTableViewMode;
   onViewModeChange?: (mode: DataTableViewMode) => void;
   enableViewToggle?: boolean;
 }
+export type DataTableToolbarProps<TData> = IDataTableToolbarProps<TData>;
 
 export function DataTableToolbar<TData>({
   table,
@@ -94,9 +97,11 @@ export function DataTableToolbar<TData>({
   );
 }
 
-interface DataTableToolbarFilterProps<TData> {
+export interface IDataTableToolbarFilterProps<TData> {
   column: Column<TData>;
 }
+export type DataTableToolbarFilterProps<TData> =
+  IDataTableToolbarFilterProps<TData>;
 
 function DataTableToolbarFilter<TData>({
   column,

@@ -6,15 +6,17 @@ import {
   createAsyncState,
 } from "@/utils/redux-helpers";
 
-export interface User {
+export interface IUser {
   id?: string;
   name: string;
   email?: string;
 }
+export type User = IUser;
 
-export interface AppState extends AsyncState<User> {
+export interface IAppState extends AsyncState<IUser> {
   theme: "light" | "dark" | "system";
 }
+export type AppState = IAppState;
 
 const initialState: AppState = {
   ...createAsyncState<User>(null),

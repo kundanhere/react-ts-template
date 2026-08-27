@@ -66,7 +66,7 @@ const ITEM_NAME = "SortableItem";
 const ITEM_HANDLE_NAME = "SortableItemHandle";
 const OVERLAY_NAME = "SortableOverlay";
 
-interface SortableRootContextValue<T> {
+export interface ISortableRootContextValue<T> {
   id: string;
   items: UniqueIdentifier[];
   modifiers: DndContextProps["modifiers"];
@@ -76,9 +76,10 @@ interface SortableRootContextValue<T> {
   getItemValue: (item: T) => UniqueIdentifier;
   flatCursor: boolean;
 }
+export type SortableRootContextValue<T> = ISortableRootContextValue<T>;
 
 const SortableRootContext =
-  React.createContext<SortableRootContextValue<unknown> | null>(null);
+  React.createContext<ISortableRootContextValue<unknown> | null>(null);
 
 function useSortableContext(consumerName: string) {
   const context = React.useContext(SortableRootContext);
@@ -88,9 +89,10 @@ function useSortableContext(consumerName: string) {
   return context;
 }
 
-interface GetItemValue<T> {
+export interface IGetItemValue<T> {
   getItemValue: (item: T) => UniqueIdentifier;
 }
+export type GetItemValue<T> = IGetItemValue<T>;
 
 type SortableProps<T> = DndContextProps &
   (T extends object ? GetItemValue<T> : Partial<GetItemValue<T>>) & {
@@ -311,12 +313,13 @@ function Sortable<T>(props: SortableProps<T>) {
 
 const SortableContentContext = React.createContext<boolean>(false);
 
-interface SortableContentProps extends React.ComponentProps<"div"> {
+export interface ISortableContentProps extends React.ComponentProps<"div"> {
   strategy?: SortableContextProps["strategy"];
   children: React.ReactNode;
   asChild?: boolean;
   withoutSlot?: boolean;
 }
+export type SortableContentProps = ISortableContentProps;
 
 function SortableContent(props: SortableContentProps) {
   const {
@@ -354,7 +357,7 @@ function SortableContent(props: SortableContentProps) {
   );
 }
 
-interface SortableItemContextValue {
+export interface ISortableItemContextValue {
   id: string;
   attributes: DraggableAttributes;
   listeners: DraggableSyntheticListeners | undefined;
@@ -362,9 +365,10 @@ interface SortableItemContextValue {
   isDragging?: boolean;
   disabled?: boolean;
 }
+export type SortableItemContextValue = ISortableItemContextValue;
 
 const SortableItemContext =
-  React.createContext<SortableItemContextValue | null>(null);
+  React.createContext<ISortableItemContextValue | null>(null);
 
 function useSortableItemContext(consumerName: string) {
   const context = React.useContext(SortableItemContext);
@@ -374,12 +378,13 @@ function useSortableItemContext(consumerName: string) {
   return context;
 }
 
-interface SortableItemProps extends React.ComponentProps<"div"> {
+export interface ISortableItemProps extends React.ComponentProps<"div"> {
   value: UniqueIdentifier;
   asHandle?: boolean;
   asChild?: boolean;
   disabled?: boolean;
 }
+export type SortableItemProps = ISortableItemProps;
 
 function SortableItem(props: SortableItemProps) {
   const {
@@ -476,9 +481,10 @@ function SortableItem(props: SortableItemProps) {
   );
 }
 
-interface SortableItemHandleProps extends React.ComponentProps<"button"> {
+export interface ISortableItemHandleProps extends React.ComponentProps<"button"> {
   asChild?: boolean;
 }
+export type SortableItemHandleProps = ISortableItemHandleProps;
 
 function SortableItemHandle(props: SortableItemHandleProps) {
   const { asChild, disabled, className, ref, ...itemHandleProps } = props;
@@ -530,7 +536,7 @@ const dropAnimation: DropAnimation = {
   }),
 };
 
-interface SortableOverlayProps extends Omit<
+export interface ISortableOverlayProps extends Omit<
   React.ComponentProps<typeof DragOverlay>,
   "children"
 > {
@@ -539,6 +545,7 @@ interface SortableOverlayProps extends Omit<
     | ((params: { value: UniqueIdentifier }) => React.ReactNode)
     | React.ReactNode;
 }
+export type SortableOverlayProps = ISortableOverlayProps;
 
 function SortableOverlay(props: SortableOverlayProps) {
   const { container: containerProp, children, ...overlayProps } = props;

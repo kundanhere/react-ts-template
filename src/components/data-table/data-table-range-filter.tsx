@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import type { ExtendedColumnFilter } from "@/types/data-table";
 
-interface DataTableRangeFilterProps<TData> extends React.ComponentProps<"div"> {
+export interface IDataTableRangeFilterProps<
+  TData,
+> extends React.ComponentProps<"div"> {
   filter: ExtendedColumnFilter<TData>;
   column: Column<TData>;
   inputId: string;
@@ -15,6 +17,8 @@ interface DataTableRangeFilterProps<TData> extends React.ComponentProps<"div"> {
     updates: Partial<Omit<ExtendedColumnFilter<TData>, "filterId">>
   ) => void;
 }
+export type DataTableRangeFilterProps<TData> =
+  IDataTableRangeFilterProps<TData>;
 
 export function DataTableRangeFilter<TData>({
   filter,

@@ -5,11 +5,13 @@ import type { Table } from "@tanstack/react-table";
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options";
 import { cn } from "@/lib/utils";
 
-interface DataTableAdvancedToolbarProps<
+export interface IDataTableAdvancedToolbarProps<
   TData,
 > extends React.ComponentProps<"div"> {
   table: Table<TData>;
 }
+export type DataTableAdvancedToolbarProps<TData> =
+  IDataTableAdvancedToolbarProps<TData>;
 
 export function DataTableAdvancedToolbar<TData>({
   table,

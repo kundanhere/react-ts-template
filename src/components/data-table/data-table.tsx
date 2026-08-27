@@ -22,20 +22,21 @@ import {
 import { getColumnPinningStyle, getSelectedTableRows } from "@/lib/data-table";
 import { cn } from "@/lib/utils";
 
-export interface DataTableContextValue {
+export interface IDataTableContextValue {
   viewMode: DataTableViewMode;
   setViewMode: (mode: DataTableViewMode) => void;
   enableViewToggle: boolean;
 }
+export type DataTableContextValue = IDataTableContextValue;
 
 export const DataTableContext =
-  React.createContext<DataTableContextValue | null>(null);
+  React.createContext<IDataTableContextValue | null>(null);
 
 export function useDataTableContext() {
   return React.useContext(DataTableContext);
 }
 
-interface DataTableProps<TData> extends React.ComponentProps<"div"> {
+export interface IDataTableProps<TData> extends React.ComponentProps<"div"> {
   table: TanstackTable<TData>;
   actionBar?: React.ReactNode;
   enableNestedRows?: boolean;
@@ -45,6 +46,7 @@ interface DataTableProps<TData> extends React.ComponentProps<"div"> {
   enableViewToggle?: boolean;
   renderCard?: (row: Row<TData>) => React.ReactNode;
 }
+export type DataTableProps<TData> = IDataTableProps<TData>;
 
 function renderTreeExpander<TData>(row: Row<TData>, showSpacer: boolean) {
   if (row.getCanExpand()) {

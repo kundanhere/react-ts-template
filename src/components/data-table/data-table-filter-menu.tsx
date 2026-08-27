@@ -50,7 +50,7 @@ const THROTTLE_MS = 50;
 const FILTER_SHORTCUT_KEY = "f";
 const REMOVE_FILTER_SHORTCUTS = ["backspace", "delete"];
 
-interface DataTableFilterMenuProps<TData> extends React.ComponentProps<
+export interface IDataTableFilterMenuProps<TData> extends React.ComponentProps<
   typeof PopoverContent
 > {
   table: Table<TData>;
@@ -59,6 +59,7 @@ interface DataTableFilterMenuProps<TData> extends React.ComponentProps<
   shallow?: boolean;
   disabled?: boolean;
 }
+export type DataTableFilterMenuProps<TData> = IDataTableFilterMenuProps<TData>;
 
 export function DataTableFilterMenu<TData>({
   table,
@@ -334,7 +335,7 @@ export function DataTableFilterMenu<TData>({
   );
 }
 
-interface DataTableFilterItemProps<TData> {
+export interface IDataTableFilterItemProps<TData> {
   filter: ExtendedColumnFilter<TData>;
   filterItemId: string;
   columns: Column<TData>[];
@@ -344,6 +345,7 @@ interface DataTableFilterItemProps<TData> {
   ) => void;
   onFilterRemove: (filterId: string) => void;
 }
+export type DataTableFilterItemProps<TData> = IDataTableFilterItemProps<TData>;
 
 function DataTableFilterItem<TData>({
   filter,
@@ -510,11 +512,12 @@ function DataTableFilterItem<TData>({
   );
 }
 
-interface FilterValueSelectorProps<TData> {
+export interface IFilterValueSelectorProps<TData> {
   column: Column<TData>;
   value: string;
   onSelect: (value: string) => void;
 }
+export type FilterValueSelectorProps<TData> = IFilterValueSelectorProps<TData>;
 
 function FilterValueSelector<TData>({
   column,

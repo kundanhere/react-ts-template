@@ -19,10 +19,13 @@ import {
 import { getSelectedTableRows } from "@/lib/data-table";
 import { cn } from "@/lib/utils";
 
-interface DataTablePaginationProps<TData> extends React.ComponentProps<"div"> {
+export interface IDataTablePaginationProps<
+  TData,
+> extends React.ComponentProps<"div"> {
   table: Table<TData>;
   pageSizeOptions?: number[];
 }
+export type DataTablePaginationProps<TData> = IDataTablePaginationProps<TData>;
 
 export function DataTablePagination<TData>({
   table,

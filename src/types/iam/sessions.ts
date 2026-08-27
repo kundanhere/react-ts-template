@@ -3,9 +3,9 @@ import type * as React from "react";
 import type { Table } from "@tanstack/react-table";
 
 import type { AlertDialog } from "@/components/ui/alert-dialog";
-import type { DataTableRowAction, QueryKeys } from "@/types/data-table";
+import type { IDataTableRowAction, IQueryKeys } from "@/types/data-table";
 
-export interface Session {
+export interface ISession {
   id: string;
   code: string;
   user: {
@@ -26,51 +26,59 @@ export interface Session {
   lastActiveAt: Date;
   expiresAt: Date;
 }
+export type Session = ISession;
 
-export interface GetSessionsTableColumnsProps {
-  statusCounts: Record<Session["status"], number>;
-  deviceTypeCounts: Record<Session["deviceType"], number>;
-  authMethodCounts: Record<Session["authMethod"], number>;
-  riskScoreCounts: Record<Session["riskScore"], number>;
+export interface IGetSessionsTableColumnsProps {
+  statusCounts: Record<ISession["status"], number>;
+  deviceTypeCounts: Record<ISession["deviceType"], number>;
+  authMethodCounts: Record<ISession["authMethod"], number>;
+  riskScoreCounts: Record<ISession["riskScore"], number>;
   setRowAction: React.Dispatch<
-    React.SetStateAction<DataTableRowAction<Session> | null>
+    React.SetStateAction<IDataTableRowAction<ISession> | null>
   >;
-  onViewDetails?: (session: Session) => void;
-  onUpdateStatus?: (sessionId: string, status: Session["status"]) => void;
+  onViewDetails?: (session: ISession) => void;
+  onUpdateStatus?: (sessionId: string, status: ISession["status"]) => void;
 }
+export type GetSessionsTableColumnsProps = IGetSessionsTableColumnsProps;
 
-export interface SessionsTableProps {
-  queryKeys?: Partial<QueryKeys>;
+export interface ISessionsTableProps {
+  queryKeys?: Partial<IQueryKeys>;
 }
+export type SessionsTableProps = ISessionsTableProps;
 
-export interface SessionsTableActionBarProps {
-  table: Table<Session>;
+export interface ISessionsTableActionBarProps {
+  table: Table<ISession>;
   onBulkUpdateStatus?: (
     sessionIds: string[],
-    status: Session["status"]
+    status: ISession["status"]
   ) => void;
   onBulkRevoke?: (sessionIds: string[]) => void;
 }
+export type SessionsTableActionBarProps = ISessionsTableActionBarProps;
 
-export interface SessionsTableToolbarActionsProps {
-  table: Table<Session>;
+export interface ISessionsTableToolbarActionsProps {
+  table: Table<ISession>;
   onRevokeAllOther?: () => void;
 }
+export type SessionsTableToolbarActionsProps =
+  ISessionsTableToolbarActionsProps;
 
-export interface SessionDetailsDialogProps {
-  session: Session | null;
+export interface ISessionDetailsDialogProps {
+  session: ISession | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onRevoke?: (session: Session) => void;
+  onRevoke?: (session: ISession) => void;
 }
+export type SessionDetailsDialogProps = ISessionDetailsDialogProps;
 
-export interface RevokeSessionsDialogProps extends React.ComponentPropsWithoutRef<
+export interface IRevokeSessionsDialogProps extends React.ComponentPropsWithoutRef<
   typeof AlertDialog
 > {
-  sessions: Session[];
+  sessions: ISession[];
   isRevokeAllOther?: boolean;
   onSuccess?: () => void;
   showTrigger?: boolean;
   onRevokeSessions?: (sessionIds: string[]) => void;
   onRevokeAllOtherSessions?: () => void;
 }
+export type RevokeSessionsDialogProps = IRevokeSessionsDialogProps;

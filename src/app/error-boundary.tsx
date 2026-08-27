@@ -1,25 +1,27 @@
 import { Component, ReactNode } from "react";
 
-interface ErrorBoundaryProps {
+export interface IErrorBoundaryProps {
   children: ReactNode;
   fallback?: ReactNode | ((error: Error, reset: () => void) => ReactNode);
 }
+export type ErrorBoundaryProps = IErrorBoundaryProps;
 
-interface ErrorBoundaryState {
+export interface IErrorBoundaryState {
   hasError: boolean;
   error: Error | null;
 }
+export type ErrorBoundaryState = IErrorBoundaryState;
 
 export class ErrorBoundary extends Component<
-  ErrorBoundaryProps,
-  ErrorBoundaryState
+  IErrorBoundaryProps,
+  IErrorBoundaryState
 > {
-  constructor(props: ErrorBoundaryProps) {
+  constructor(props: IErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false, error: null };
   }
 
-  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+  static getDerivedStateFromError(error: Error): IErrorBoundaryState {
     return { hasError: true, error };
   }
 

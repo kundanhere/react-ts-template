@@ -30,12 +30,14 @@ import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import type { Option } from "@/types/data-table";
 
-interface DataTableFacetedFilterProps<TData, TValue> {
+export interface IDataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
   title?: string;
   options: Option[];
   multiple?: boolean;
 }
+export type DataTableFacetedFilterProps<TData, TValue> =
+  IDataTableFacetedFilterProps<TData, TValue>;
 
 export function DataTableFacetedFilter<TData, TValue>({
   column,

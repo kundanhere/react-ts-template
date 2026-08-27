@@ -1,9 +1,10 @@
 import { useLocation } from "react-router-dom";
 
-export interface BreadcrumbItem {
+export interface IBreadcrumbItem {
   title: string;
   href?: string;
 }
+export type BreadcrumbItem = IBreadcrumbItem;
 
 export function useBreadcrumbs(): BreadcrumbItem[] {
   const location = useLocation();

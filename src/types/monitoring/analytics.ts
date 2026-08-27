@@ -1,4 +1,4 @@
-export interface AnalyticsUser {
+export interface IAnalyticsUser {
   id: number;
   firstName: string;
   lastName: string;
@@ -9,16 +9,18 @@ export interface AnalyticsUser {
   lastLoginAt: string;
   createdAt: string;
 }
+export type AnalyticsUser = IAnalyticsUser;
 
-export interface AnalyticsRole {
+export interface IAnalyticsRole {
   id: number;
   name: string;
   slug: string;
   parentId: number | null;
   description: string;
 }
+export type AnalyticsRole = IAnalyticsRole;
 
-export interface AnalyticsPolicy {
+export interface IAnalyticsPolicy {
   id: number;
   name: string;
   slug: string;
@@ -27,8 +29,9 @@ export interface AnalyticsPolicy {
   resources: string[];
   conditions: Record<string, any>;
 }
+export type AnalyticsPolicy = IAnalyticsPolicy;
 
-export interface AnalyticsModule {
+export interface IAnalyticsModule {
   id: number;
   name: string;
   slug: string;
@@ -36,8 +39,9 @@ export interface AnalyticsModule {
   priority: number;
   active: boolean;
 }
+export type AnalyticsModule = IAnalyticsModule;
 
-export interface AnalyticsSession {
+export interface IAnalyticsSession {
   id: string;
   userId: number;
   device: string;
@@ -45,8 +49,9 @@ export interface AnalyticsSession {
   createdAt: string;
   lastActiveAt: string;
 }
+export type AnalyticsSession = IAnalyticsSession;
 
-export interface AnalyticsAuditLog {
+export interface IAnalyticsAuditLog {
   id: string;
   userId: number;
   action: string;
@@ -57,48 +62,57 @@ export interface AnalyticsAuditLog {
   ts: string;
   detail: string;
 }
+export type AnalyticsAuditLog = IAnalyticsAuditLog;
 
 export type TimeRange = "24h" | "7d" | "30d";
 
 export type AuditFilter = "ALL" | "ALLOW" | "DENY";
 
-export interface ActiveSessionsCardProps {
-  sessions: AnalyticsSession[];
-  users: AnalyticsUser[];
+export interface IActiveSessionsCardProps {
+  sessions: IAnalyticsSession[];
+  users: IAnalyticsUser[];
   onRevokeSession: (sessionId: string) => void;
 }
+export type ActiveSessionsCardProps = IActiveSessionsCardProps;
 
-export interface AnalyticsDomainBannerProps {
+export interface IAnalyticsDomainBannerProps {
   moduleCount: number;
 }
+export type AnalyticsDomainBannerProps = IAnalyticsDomainBannerProps;
 
-export interface AnalyticsKpiCardsProps {
-  users: AnalyticsUser[];
-  sessions: AnalyticsSession[];
-  roles: AnalyticsRole[];
-  policies: AnalyticsPolicy[];
+export interface IAnalyticsKpiCardsProps {
+  users: IAnalyticsUser[];
+  sessions: IAnalyticsSession[];
+  roles: IAnalyticsRole[];
+  policies: IAnalyticsPolicy[];
 }
+export type AnalyticsKpiCardsProps = IAnalyticsKpiCardsProps;
 
-export interface CloudAuditLogsCardProps {
-  auditLogs: AnalyticsAuditLog[];
-  users: AnalyticsUser[];
+export interface ICloudAuditLogsCardProps {
+  auditLogs: IAnalyticsAuditLog[];
+  users: IAnalyticsUser[];
   auditFilter: AuditFilter;
   setAuditFilter: (filter: AuditFilter) => void;
 }
+export type CloudAuditLogsCardProps = ICloudAuditLogsCardProps;
 
-export interface PolicyRatioCardProps {
-  policies: AnalyticsPolicy[];
+export interface IPolicyRatioCardProps {
+  policies: IAnalyticsPolicy[];
 }
+export type PolicyRatioCardProps = IPolicyRatioCardProps;
 
-export interface PolicyThroughputCardProps {
+export interface IPolicyThroughputCardProps {
   timeRange: TimeRange;
   setTimeRange: (range: TimeRange) => void;
 }
+export type PolicyThroughputCardProps = IPolicyThroughputCardProps;
 
-export interface SecurityFindingsCardProps {
-  users: AnalyticsUser[];
+export interface ISecurityFindingsCardProps {
+  users: IAnalyticsUser[];
 }
+export type SecurityFindingsCardProps = ISecurityFindingsCardProps;
 
-export interface TopAccessModulesCardProps {
-  modules: AnalyticsModule[];
+export interface ITopAccessModulesCardProps {
+  modules: IAnalyticsModule[];
 }
+export type TopAccessModulesCardProps = ITopAccessModulesCardProps;

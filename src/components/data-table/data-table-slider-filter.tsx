@@ -18,10 +18,11 @@ import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
 import { cn } from "@/lib/utils";
 
-interface Range {
+export interface IRange {
   min: number;
   max: number;
 }
+export type Range = IRange;
 
 type RangeValue = [number, number];
 
@@ -49,10 +50,12 @@ function parseValuesAsNumbers(value: unknown): RangeValue | undefined {
   return undefined;
 }
 
-interface DataTableSliderFilterProps<TData> {
+export interface IDataTableSliderFilterProps<TData> {
   column: Column<TData, unknown>;
   title?: string;
 }
+export type DataTableSliderFilterProps<TData> =
+  IDataTableSliderFilterProps<TData>;
 
 export function DataTableSliderFilter<TData>({
   column,

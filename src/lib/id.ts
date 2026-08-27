@@ -1,10 +1,11 @@
 const DEFAULT_ALPHABET =
   "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
-interface GenerateIdOptions {
+export interface IGenerateIdOptions {
   alphabet?: string;
   length?: number;
 }
+export type GenerateIdOptions = IGenerateIdOptions;
 
 export function generateId(
   prefixOrOptions?: string | GenerateIdOptions,

@@ -22,9 +22,10 @@ const EVENT_OPTIONS = { bubbles: false, cancelable: true };
 type Direction = "ltr" | "rtl";
 type Orientation = "horizontal" | "vertical";
 
-interface DivProps extends React.ComponentProps<"div"> {
+export interface IDivProps extends React.ComponentProps<"div"> {
   asChild?: boolean;
 }
+export type DivProps = IDivProps;
 
 type ItemElement = HTMLButtonElement;
 
@@ -56,20 +57,22 @@ function getDirectionAwareKey(key: string, dir?: Direction) {
   return key;
 }
 
-interface ItemData {
+export interface IItemData {
   id: string;
   ref: React.RefObject<ItemElement | null>;
   disabled: boolean;
 }
+export type ItemData = IItemData;
 
-interface ActionBarContextValue {
+export interface IActionBarContextValue {
   onOpenChange?: (open: boolean) => void;
   dir: Direction;
   orientation: Orientation;
   loop: boolean;
 }
+export type ActionBarContextValue = IActionBarContextValue;
 
-const ActionBarContext = React.createContext<ActionBarContextValue | null>(
+const ActionBarContext = React.createContext<IActionBarContextValue | null>(
   null
 );
 
@@ -81,18 +84,19 @@ function useActionBarContext(consumerName: string) {
   return context;
 }
 
-interface FocusContextValue {
+export interface IFocusContextValue {
   tabStopId: string | null;
   onItemFocus: (tabStopId: string) => void;
   onItemShiftTab: () => void;
   onFocusableItemAdd: () => void;
   onFocusableItemRemove: () => void;
-  onItemRegister: (item: ItemData) => void;
+  onItemRegister: (item: IItemData) => void;
   onItemUnregister: (id: string) => void;
-  getItems: () => ItemData[];
+  getItems: () => IItemData[];
 }
+export type FocusContextValue = IFocusContextValue;
 
-const FocusContext = React.createContext<FocusContextValue | null>(null);
+const FocusContext = React.createContext<IFocusContextValue | null>(null);
 
 function useFocusContext(consumerName: string) {
   const context = React.useContext(FocusContext);
@@ -104,7 +108,7 @@ function useFocusContext(consumerName: string) {
   return context;
 }
 
-interface ActionBarProps extends DivProps {
+export interface IActionBarProps extends IDivProps {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   onEscapeKeyDown?: (event: KeyboardEvent) => void;
@@ -117,6 +121,7 @@ interface ActionBarProps extends DivProps {
   orientation?: Orientation;
   loop?: boolean;
 }
+export type ActionBarProps = IActionBarProps;
 
 const ActionBar = React.forwardRef<HTMLDivElement, ActionBarProps>(
   (props, ref) => {
@@ -424,12 +429,13 @@ const ActionBarGroup = React.forwardRef<HTMLDivElement, DivProps>(
 );
 ActionBarGroup.displayName = "ActionBarGroup";
 
-interface ActionBarItemProps extends Omit<
+export interface IActionBarItemProps extends Omit<
   React.ComponentProps<typeof Button>,
   "onSelect"
 > {
   onSelect?: (event: Event) => void;
 }
+export type ActionBarItemProps = IActionBarItemProps;
 
 const ActionBarItem = React.forwardRef<HTMLButtonElement, ActionBarItemProps>(
   (props, ref) => {
@@ -595,9 +601,10 @@ const ActionBarItem = React.forwardRef<HTMLButtonElement, ActionBarItemProps>(
 );
 ActionBarItem.displayName = "ActionBarItem";
 
-interface ActionBarCloseProps extends React.ComponentProps<"button"> {
+export interface IActionBarCloseProps extends React.ComponentProps<"button"> {
   asChild?: boolean;
 }
+export type ActionBarCloseProps = IActionBarCloseProps;
 
 const ActionBarClose = React.forwardRef<HTMLButtonElement, ActionBarCloseProps>(
   (props, ref) => {
@@ -634,9 +641,10 @@ const ActionBarClose = React.forwardRef<HTMLButtonElement, ActionBarCloseProps>(
 );
 ActionBarClose.displayName = "ActionBarClose";
 
-interface ActionBarSeparatorProps extends DivProps {
+export interface IActionBarSeparatorProps extends IDivProps {
   orientation?: Orientation;
 }
+export type ActionBarSeparatorProps = IActionBarSeparatorProps;
 
 const ActionBarSeparator = React.forwardRef<
   HTMLDivElement,
@@ -677,7 +685,6 @@ export {
   ActionBarClose,
   ActionBarGroup,
   ActionBarItem,
-  type ActionBarProps,
   ActionBarSelection,
   ActionBarSeparator,
 };

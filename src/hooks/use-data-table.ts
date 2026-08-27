@@ -43,7 +43,7 @@ const ARRAY_SEPARATOR = ",";
 const DEBOUNCE_MS = 300;
 const THROTTLE_MS = 50;
 
-interface UseDataTableProps<TData>
+export interface IUseDataTableProps<TData>
   extends
     Omit<
       TableOptions<TData>,
@@ -70,6 +70,7 @@ interface UseDataTableProps<TData>
   shallow?: boolean;
   startTransition?: React.TransitionStartFunction;
 }
+export type UseDataTableProps<TData> = IUseDataTableProps<TData>;
 
 export function useDataTable<TData>(props: UseDataTableProps<TData>) {
   const {

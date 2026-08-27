@@ -8,11 +8,12 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 
 export type DataTableViewMode = "list" | "grid";
 
-interface DataTableViewToggleProps {
+export interface IDataTableViewToggleProps {
   viewMode: DataTableViewMode;
   onViewModeChange: (mode: DataTableViewMode) => void;
   className?: string;
 }
+export type DataTableViewToggleProps = IDataTableViewToggleProps;
 
 export function DataTableViewToggle({
   viewMode,
