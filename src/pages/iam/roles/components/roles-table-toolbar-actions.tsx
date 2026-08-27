@@ -1,17 +1,10 @@
 import { Add01Icon, Download01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Table } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import { exportTableToCSV } from "@/lib/export";
-
-import type { RoleItem } from "./roles-table-columns";
-
-interface RolesTableToolbarActionsProps {
-  table: Table<RoleItem>;
-  onNewRoleClick?: () => void;
-}
+import type { RolesTableToolbarActionsProps } from "@/types/iam/roles";
 
 export function RolesTableToolbarActions({
   table,

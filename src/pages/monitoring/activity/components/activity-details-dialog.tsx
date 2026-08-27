@@ -13,14 +13,9 @@ import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { formatDate } from "@/lib/format";
+import type { ActivityDetailsDialogProps } from "@/types/monitoring/activity";
 
-import { type ActivityItem, getSeverityIcon } from "./activity-table-columns";
-
-interface ActivityDetailsDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  item: ActivityItem | null;
-}
+import { getSeverityIcon } from "./activity-table-columns";
 
 export function ActivityDetailsDialog({
   open,

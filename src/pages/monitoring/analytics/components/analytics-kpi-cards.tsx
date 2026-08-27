@@ -1,14 +1,7 @@
 import { Area, AreaChart, ResponsiveContainer } from "recharts";
 
 import { Badge } from "@/components/ui/badge";
-import type { Policy, Role, Session, User } from "@/types/analytics";
-
-interface AnalyticsKpiCardsProps {
-  users: User[];
-  sessions: Session[];
-  roles: Role[];
-  policies: Policy[];
-}
+import type { AnalyticsKpiCardsProps } from "@/types/monitoring/analytics";
 
 export function AnalyticsKpiCards({
   users,

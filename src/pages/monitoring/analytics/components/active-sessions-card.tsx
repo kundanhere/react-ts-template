@@ -15,15 +15,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { Session, User } from "@/types/analytics";
+import type { ActiveSessionsCardProps } from "@/types/monitoring/analytics";
 
 import { getUserInitials, getUserName, timeAgo } from "../utils";
-
-interface ActiveSessionsCardProps {
-  sessions: Session[];
-  users: User[];
-  onRevokeSession: (sessionId: string) => void;
-}
 
 export function ActiveSessionsCard({
   sessions,

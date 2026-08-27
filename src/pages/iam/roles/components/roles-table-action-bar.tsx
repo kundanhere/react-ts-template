@@ -6,7 +6,6 @@ import {
   Download01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Table } from "@tanstack/react-table";
 
 import {
   ActionBar,
@@ -19,13 +18,7 @@ import {
 import { toast } from "@/components/ui/toast";
 import { getSelectedTableRows } from "@/lib/data-table";
 import { exportTableToCSV } from "@/lib/export";
-
-import type { RoleItem } from "./roles-table-columns";
-
-interface RolesTableActionBarProps {
-  table: Table<RoleItem>;
-  onBulkDelete?: (roleIds: string[]) => void;
-}
+import type { RolesTableActionBarProps } from "@/types/iam/roles";
 
 export function RolesTableActionBar({
   table,

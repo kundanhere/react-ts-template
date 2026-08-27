@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import {
   AlertCircleIcon,
   Calendar01Icon,
@@ -41,29 +39,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/toast";
 import { formatDate } from "@/lib/format";
-import type { DataTableRowAction } from "@/types/data-table";
-
-export interface Session {
-  id: string;
-  code: string;
-  user: {
-    name: string;
-    email: string;
-    avatar?: string;
-    role: string;
-  };
-  ipAddress: string;
-  location: string;
-  device: string;
-  deviceType: "desktop" | "mobile" | "tablet" | "api";
-  authMethod: "mfa" | "sso" | "password" | "api_key";
-  status: "active" | "idle" | "revoked" | "expired";
-  isCurrent: boolean;
-  riskScore: "low" | "medium" | "high";
-  startedAt: Date;
-  lastActiveAt: Date;
-  expiresAt: Date;
-}
+import type {
+  GetSessionsTableColumnsProps,
+  Session,
+} from "@/types/iam/sessions";
 
 export const SESSION_STATUSES = [
   "active",
@@ -164,18 +143,6 @@ const CheckmarkIconComp = (props: any) => (
 const CalendarIconComp = (props: any) => (
   <HugeiconsIcon icon={Calendar01Icon} strokeWidth={2} {...props} />
 );
-
-interface GetSessionsTableColumnsProps {
-  statusCounts: Record<Session["status"], number>;
-  deviceTypeCounts: Record<Session["deviceType"], number>;
-  authMethodCounts: Record<Session["authMethod"], number>;
-  riskScoreCounts: Record<Session["riskScore"], number>;
-  setRowAction: React.Dispatch<
-    React.SetStateAction<DataTableRowAction<Session> | null>
-  >;
-  onViewDetails?: (session: Session) => void;
-  onUpdateStatus?: (sessionId: string, status: Session["status"]) => void;
-}
 
 export function getSessionsTableColumns({
   statusCounts,

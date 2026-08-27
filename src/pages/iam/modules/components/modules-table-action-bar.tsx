@@ -8,7 +8,6 @@ import {
   Layers01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Table } from "@tanstack/react-table";
 
 import {
   ActionBar,
@@ -27,22 +26,9 @@ import {
 import { toast } from "@/components/ui/toast";
 import { getSelectedTableRows } from "@/lib/data-table";
 import { exportTableToCSV } from "@/lib/export";
+import type { Module, ModulesTableActionBarProps } from "@/types/iam/modules";
 
-import {
-  MODULE_CATEGORIES,
-  MODULE_STATUSES,
-  type Module,
-} from "./modules-table-columns";
-
-interface ModulesTableActionBarProps {
-  table: Table<Module>;
-  onBulkUpdateStatus?: (moduleIds: string[], status: Module["status"]) => void;
-  onBulkUpdateCategory?: (
-    moduleIds: string[],
-    category: Module["category"]
-  ) => void;
-  onBulkDelete?: (moduleIds: string[]) => void;
-}
+import { MODULE_CATEGORIES, MODULE_STATUSES } from "./modules-table-columns";
 
 export function ModulesTableActionBar({
   table,

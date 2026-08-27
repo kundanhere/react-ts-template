@@ -1,16 +1,9 @@
 import { CancelCircleIcon, Download01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Table } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
 import { exportTableToCSV } from "@/lib/export";
-
-import type { Session } from "./sessions-table-columns";
-
-interface SessionsTableToolbarActionsProps {
-  table: Table<Session>;
-  onRevokeAllOther?: () => void;
-}
+import type { SessionsTableToolbarActionsProps } from "@/types/iam/sessions";
 
 export function SessionsTableToolbarActions({
   table,

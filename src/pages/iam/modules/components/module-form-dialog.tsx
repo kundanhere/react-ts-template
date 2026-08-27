@@ -19,19 +19,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import type { Module, ModuleFormDialogProps } from "@/types/iam/modules";
 
-import {
-  MODULE_CATEGORIES,
-  MODULE_STATUSES,
-  type Module,
-} from "./modules-table-columns";
-
-interface ModuleFormDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  initialValues?: Partial<Module> | null;
-  onSubmit: (values: Omit<Module, "id" | "code" | "createdAt">) => void;
-}
+import { MODULE_CATEGORIES, MODULE_STATUSES } from "./modules-table-columns";
 
 export function ModuleFormDialog({
   open,

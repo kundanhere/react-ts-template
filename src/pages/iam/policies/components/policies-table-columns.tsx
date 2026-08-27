@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import {
   Asterisk02Icon,
   Calendar01Icon,
@@ -35,21 +33,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/toast";
 import { formatDate } from "@/lib/format";
-import type { DataTableRowAction } from "@/types/data-table";
-
-export interface Policy {
-  id: string;
-  code: string;
-  name: string;
-  description: string;
-  effect: "ALLOW" | "DENY";
-  type: "system" | "custom" | "inline";
-  status: "active" | "inactive" | "deprecated";
-  resource: string;
-  actions: string[];
-  createdAt: Date;
-  updatedAt: Date;
-}
+import type {
+  GetPoliciesTableColumnsProps,
+  Policy,
+} from "@/types/iam/policies";
 
 export const POLICY_EFFECTS = ["ALLOW", "DENY"] as const;
 export const POLICY_TYPES = ["system", "custom", "inline"] as const;
@@ -122,17 +109,6 @@ const CheckmarkIconComp = (props: any) => (
 const CalendarIconComp = (props: any) => (
   <HugeiconsIcon icon={Calendar01Icon} strokeWidth={2} {...props} />
 );
-
-interface GetPoliciesTableColumnsProps {
-  effectCounts: Record<Policy["effect"], number>;
-  typeCounts: Record<Policy["type"], number>;
-  statusCounts: Record<Policy["status"], number>;
-  setRowAction: React.Dispatch<
-    React.SetStateAction<DataTableRowAction<Policy> | null>
-  >;
-  onUpdatePolicyEffect?: (policyId: string, effect: Policy["effect"]) => void;
-  onDuplicatePolicy?: (policy: Policy) => void;
-}
 
 export function getPoliciesTableColumns({
   effectCounts,

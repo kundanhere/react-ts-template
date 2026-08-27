@@ -4,11 +4,12 @@ import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { toast } from "@/components/ui/toast";
 import { useDataTable } from "@/hooks/use-data-table";
-import type { DataTableRowAction, QueryKeys } from "@/types/data-table";
+import type { DataTableRowAction } from "@/types/data-table";
+import type { PoliciesTableProps, Policy } from "@/types/iam/policies";
 
 import { DeletePoliciesDialog } from "./delete-policies-dialog";
 import { PoliciesTableActionBar } from "./policies-table-action-bar";
-import { type Policy, getPoliciesTableColumns } from "./policies-table-columns";
+import { getPoliciesTableColumns } from "./policies-table-columns";
 import { PoliciesTableToolbarActions } from "./policies-table-toolbar-actions";
 
 const INITIAL_POLICIES: Policy[] = [
@@ -152,10 +153,6 @@ const INITIAL_POLICIES: Policy[] = [
     updatedAt: new Date("2026-08-01"),
   },
 ];
-
-interface PoliciesTableProps {
-  queryKeys?: Partial<QueryKeys>;
-}
 
 export function PoliciesTable({ queryKeys }: PoliciesTableProps) {
   const [policies, setPolicies] = React.useState<Policy[]>(INITIAL_POLICIES);

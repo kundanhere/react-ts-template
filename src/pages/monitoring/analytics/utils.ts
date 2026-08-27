@@ -1,15 +1,21 @@
-import type { User } from "@/types/analytics";
+import type { AnalyticsUser } from "@/types/monitoring/analytics";
 
-export function getUser(users: User[], userId: number): User | undefined {
+export function getUser(
+  users: AnalyticsUser[],
+  userId: number
+): AnalyticsUser | undefined {
   return users.find((u) => u.id === userId);
 }
 
-export function getUserName(users: User[], userId: number): string {
+export function getUserName(users: AnalyticsUser[], userId: number): string {
   const user = getUser(users, userId);
   return user ? `${user.firstName} ${user.lastName}` : "System Service Account";
 }
 
-export function getUserInitials(users: User[], userId: number): string {
+export function getUserInitials(
+  users: AnalyticsUser[],
+  userId: number
+): string {
   const user = getUser(users, userId);
   if (!user) return "SA";
   return `${user.firstName.charAt(0)}${user.lastName.charAt(0)}`.toUpperCase();

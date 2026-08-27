@@ -4,15 +4,13 @@ import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { toast } from "@/components/ui/toast";
 import { useDataTable } from "@/hooks/use-data-table";
-import type { DataTableRowAction, QueryKeys } from "@/types/data-table";
+import type { DataTableRowAction } from "@/types/data-table";
+import type { Session, SessionsTableProps } from "@/types/iam/sessions";
 
 import { RevokeSessionsDialog } from "./revoke-sessions-dialog";
 import { SessionDetailsDialog } from "./session-details-dialog";
 import { SessionsTableActionBar } from "./sessions-table-action-bar";
-import {
-  type Session,
-  getSessionsTableColumns,
-} from "./sessions-table-columns";
+import { getSessionsTableColumns } from "./sessions-table-columns";
 import { SessionsTableToolbarActions } from "./sessions-table-toolbar-actions";
 
 const INITIAL_SESSIONS: Session[] = [
@@ -227,10 +225,6 @@ const INITIAL_SESSIONS: Session[] = [
     expiresAt: new Date("2026-08-28T01:00:00"),
   },
 ];
-
-interface SessionsTableProps {
-  queryKeys?: Partial<QueryKeys>;
-}
 
 export function SessionsTable({ queryKeys }: SessionsTableProps) {
   const [sessions, setSessions] = React.useState<Session[]>(INITIAL_SESSIONS);

@@ -8,15 +8,15 @@ import { PageWrapper } from "@/components/page-wrapper";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import type {
+  AnalyticsAuditLog,
+  AnalyticsModule,
+  AnalyticsPolicy,
+  AnalyticsRole,
+  AnalyticsSession,
+  AnalyticsUser,
   AuditFilter,
-  AuditLog,
-  Module,
-  Policy,
-  Role,
-  Session,
   TimeRange,
-  User,
-} from "@/types/analytics";
+} from "@/types/monitoring/analytics";
 import { getItem, setItem } from "@/utils/local-storage";
 
 import {
@@ -33,19 +33,19 @@ import {
 const LS_PREFIX = "iam_console_";
 
 export default function AnalyticsPage() {
-  const [users, setUsers] = React.useState<User[]>([]);
-  const [roles, setRoles] = React.useState<Role[]>([]);
-  const [policies, setPolicies] = React.useState<Policy[]>([]);
-  const [modules, setModules] = React.useState<Module[]>([]);
-  const [sessions, setSessions] = React.useState<Session[]>([]);
-  const [auditLogs, setAuditLogs] = React.useState<AuditLog[]>([]);
+  const [users, setUsers] = React.useState<AnalyticsUser[]>([]);
+  const [roles, setRoles] = React.useState<AnalyticsRole[]>([]);
+  const [policies, setPolicies] = React.useState<AnalyticsPolicy[]>([]);
+  const [modules, setModules] = React.useState<AnalyticsModule[]>([]);
+  const [sessions, setSessions] = React.useState<AnalyticsSession[]>([]);
+  const [auditLogs, setAuditLogs] = React.useState<AnalyticsAuditLog[]>([]);
   const [timeRange, setTimeRange] = React.useState<TimeRange>("24h");
   const [auditFilter, setAuditFilter] = React.useState<AuditFilter>("ALL");
 
   const seedData = React.useCallback(() => {
     const t = Date.now();
 
-    const initialModules: Module[] = [
+    const initialModules: AnalyticsModule[] = [
       {
         id: 1,
         name: "Dashboard",
@@ -144,7 +144,7 @@ export default function AnalyticsPage() {
       },
     ];
 
-    const initialRoles: Role[] = [
+    const initialRoles: AnalyticsRole[] = [
       {
         id: 1,
         name: "Super Admin",
@@ -190,7 +190,7 @@ export default function AnalyticsPage() {
       },
     ];
 
-    const initialPolicies: Policy[] = [
+    const initialPolicies: AnalyticsPolicy[] = [
       {
         id: 1,
         name: "Full System Access",
@@ -265,7 +265,7 @@ export default function AnalyticsPage() {
       },
     ];
 
-    const initialUsers: User[] = [
+    const initialUsers: AnalyticsUser[] = [
       {
         id: 1,
         firstName: "Aiden",
@@ -345,7 +345,7 @@ export default function AnalyticsPage() {
       },
     ];
 
-    const initialSessions: Session[] = [
+    const initialSessions: AnalyticsSession[] = [
       {
         id: "sess_1",
         userId: 1,
@@ -388,7 +388,7 @@ export default function AnalyticsPage() {
       },
     ];
 
-    const initialAuditLogs: AuditLog[] = [
+    const initialAuditLogs: AnalyticsAuditLog[] = [
       {
         id: "aud_1",
         userId: 1,
@@ -484,12 +484,12 @@ export default function AnalyticsPage() {
   }, []);
 
   const loadData = React.useCallback(() => {
-    const localUsers = getItem<User[]>(`${LS_PREFIX}users`);
-    const localSessions = getItem<Session[]>(`${LS_PREFIX}sessions`);
-    const localRoles = getItem<Role[]>(`${LS_PREFIX}roles`);
-    const localPolicies = getItem<Policy[]>(`${LS_PREFIX}policies`);
-    const localModules = getItem<Module[]>(`${LS_PREFIX}modules`);
-    const localAudit = getItem<AuditLog[]>(`${LS_PREFIX}audit`);
+    const localUsers = getItem<AnalyticsUser[]>(`${LS_PREFIX}users`);
+    const localSessions = getItem<AnalyticsSession[]>(`${LS_PREFIX}sessions`);
+    const localRoles = getItem<AnalyticsRole[]>(`${LS_PREFIX}roles`);
+    const localPolicies = getItem<AnalyticsPolicy[]>(`${LS_PREFIX}policies`);
+    const localModules = getItem<AnalyticsModule[]>(`${LS_PREFIX}modules`);
+    const localAudit = getItem<AnalyticsAuditLog[]>(`${LS_PREFIX}audit`);
 
     if (!localUsers || !localSessions || localSessions.length === 0) {
       seedData();

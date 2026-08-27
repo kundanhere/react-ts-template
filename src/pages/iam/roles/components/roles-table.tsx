@@ -31,14 +31,10 @@ import {
 } from "@/components/ui/tooltip";
 import { useDataTable } from "@/hooks/use-data-table";
 import { cn } from "@/lib/utils";
-import type { QueryKeys } from "@/types/data-table";
+import type { RoleItem, RolesTableProps } from "@/types/iam/roles";
 
 import { RolesTableActionBar } from "./roles-table-action-bar";
-import {
-  type RoleItem,
-  getRoleIcon,
-  getRolesTableColumns,
-} from "./roles-table-columns";
+import { getRoleIcon, getRolesTableColumns } from "./roles-table-columns";
 import { RolesTableToolbarActions } from "./roles-table-toolbar-actions";
 
 const INITIAL_ROLES: RoleItem[] = [
@@ -78,11 +74,6 @@ const INITIAL_ROLES: RoleItem[] = [
     isSystem: false,
   },
 ];
-
-interface RolesTableProps {
-  queryKeys?: Partial<QueryKeys>;
-  onNewRoleClick?: () => void;
-}
 
 export function RolesTable({ queryKeys, onNewRoleClick }: RolesTableProps) {
   const [roles, setRoles] = React.useState<RoleItem[]>(INITIAL_ROLES);

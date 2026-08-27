@@ -13,14 +13,9 @@ import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Textarea } from "@/components/ui/textarea";
 import { formatDate } from "@/lib/format";
+import type { AuditLogDetailsDialogProps } from "@/types/monitoring/audit-logs";
 
-import { type AuditLog, getSeverityIcon } from "./audit-logs-table-columns";
-
-interface AuditLogDetailsDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  log: AuditLog | null;
-}
+import { getSeverityIcon } from "./audit-logs-table-columns";
 
 export function AuditLogDetailsDialog({
   open,

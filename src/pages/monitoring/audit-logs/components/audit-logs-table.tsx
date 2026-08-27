@@ -3,14 +3,15 @@ import * as React from "react";
 import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { useDataTable } from "@/hooks/use-data-table";
-import type { DataTableRowAction, QueryKeys } from "@/types/data-table";
+import type { DataTableRowAction } from "@/types/data-table";
+import type {
+  AuditLog,
+  AuditLogsTableProps,
+} from "@/types/monitoring/audit-logs";
 
 import { AuditLogDetailsDialog } from "./audit-log-details-dialog";
 import { AuditLogsTableActionBar } from "./audit-logs-table-action-bar";
-import {
-  type AuditLog,
-  getAuditLogsTableColumns,
-} from "./audit-logs-table-columns";
+import { getAuditLogsTableColumns } from "./audit-logs-table-columns";
 import { AuditLogsTableToolbarActions } from "./audit-logs-table-toolbar-actions";
 import { DeleteAuditLogsDialog } from "./delete-audit-logs-dialog";
 
@@ -148,10 +149,6 @@ const INITIAL_AUDIT_LOGS: AuditLog[] = [
     ipAddress: "172.16.0.88",
   },
 ];
-
-interface AuditLogsTableProps {
-  queryKeys?: Partial<QueryKeys>;
-}
 
 export function AuditLogsTable({ queryKeys }: AuditLogsTableProps) {
   const [logs, setLogs] = React.useState<AuditLog[]>(INITIAL_AUDIT_LOGS);

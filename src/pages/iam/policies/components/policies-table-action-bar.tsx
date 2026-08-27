@@ -8,7 +8,6 @@ import {
   Shield01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Table } from "@tanstack/react-table";
 
 import {
   ActionBar,
@@ -27,19 +26,9 @@ import {
 import { toast } from "@/components/ui/toast";
 import { getSelectedTableRows } from "@/lib/data-table";
 import { exportTableToCSV } from "@/lib/export";
+import type { PoliciesTableActionBarProps, Policy } from "@/types/iam/policies";
 
-import {
-  POLICY_EFFECTS,
-  POLICY_STATUSES,
-  type Policy,
-} from "./policies-table-columns";
-
-interface PoliciesTableActionBarProps {
-  table: Table<Policy>;
-  onBulkUpdateEffect?: (policyIds: string[], effect: Policy["effect"]) => void;
-  onBulkUpdateStatus?: (policyIds: string[], status: Policy["status"]) => void;
-  onBulkDelete?: (policyIds: string[]) => void;
-}
+import { POLICY_EFFECTS, POLICY_STATUSES } from "./policies-table-columns";
 
 export function PoliciesTableActionBar({
   table,

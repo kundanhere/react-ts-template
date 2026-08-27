@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { CancelCircleIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
@@ -16,19 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
-
-import type { Session } from "./sessions-table-columns";
-
-interface RevokeSessionsDialogProps extends React.ComponentPropsWithoutRef<
-  typeof AlertDialog
-> {
-  sessions: Session[];
-  isRevokeAllOther?: boolean;
-  onSuccess?: () => void;
-  showTrigger?: boolean;
-  onRevokeSessions?: (sessionIds: string[]) => void;
-  onRevokeAllOtherSessions?: () => void;
-}
+import type { RevokeSessionsDialogProps } from "@/types/iam/sessions";
 
 export function RevokeSessionsDialog({
   sessions,

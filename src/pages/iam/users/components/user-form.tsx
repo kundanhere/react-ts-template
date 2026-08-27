@@ -10,22 +10,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import type { User, UserFormProps } from "@/types/iam/users";
 
 import {
   USER_DEPARTMENTS,
   USER_ROLES,
   USER_STATUSES,
-  type User,
 } from "./users-table-columns";
-
-interface UserFormProps {
-  initialValues?: Partial<User>;
-  onSubmit: (
-    values: Omit<User, "id" | "code" | "createdAt" | "loginCount">
-  ) => void;
-  onCancel?: () => void;
-  submitText?: string;
-}
 
 export function UserForm({
   initialValues,

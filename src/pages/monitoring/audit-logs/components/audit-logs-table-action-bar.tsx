@@ -6,7 +6,6 @@ import {
   Download01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Table } from "@tanstack/react-table";
 
 import {
   ActionBar,
@@ -19,13 +18,7 @@ import {
 import { toast } from "@/components/ui/toast";
 import { getSelectedTableRows } from "@/lib/data-table";
 import { exportTableToCSV } from "@/lib/export";
-
-import type { AuditLog } from "./audit-logs-table-columns";
-
-interface AuditLogsTableActionBarProps {
-  table: Table<AuditLog>;
-  onBulkDelete?: (logIds: string[]) => void;
-}
+import type { AuditLogsTableActionBarProps } from "@/types/monitoring/audit-logs";
 
 export function AuditLogsTableActionBar({
   table,

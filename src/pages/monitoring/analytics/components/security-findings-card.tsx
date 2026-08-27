@@ -15,11 +15,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { User } from "@/types/analytics";
-
-interface SecurityFindingsCardProps {
-  users: User[];
-}
+import type { SecurityFindingsCardProps } from "@/types/monitoring/analytics";
 
 export function SecurityFindingsCard({ users }: SecurityFindingsCardProps) {
   const lockedOrInactiveUsers = users.filter(

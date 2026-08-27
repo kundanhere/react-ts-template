@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { Delete02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
@@ -16,17 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
-
-import type { ActivityItem } from "./activity-table-columns";
-
-interface DeleteActivityDialogProps extends React.ComponentPropsWithoutRef<
-  typeof AlertDialog
-> {
-  items: ActivityItem[];
-  onSuccess?: () => void;
-  showTrigger?: boolean;
-  onDeleteItems?: (itemIds: string[]) => void;
-}
+import type { DeleteActivityDialogProps } from "@/types/monitoring/activity";
 
 export function DeleteActivityDialog({
   items,

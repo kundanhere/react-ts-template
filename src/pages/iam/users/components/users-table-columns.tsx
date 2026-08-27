@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import {
   ApartmentIcon,
   Calendar01Icon,
@@ -36,19 +34,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/toast";
 import { formatDate } from "@/lib/format";
-import type { DataTableRowAction } from "@/types/data-table";
-
-export interface User {
-  id: string;
-  code: string;
-  name: string;
-  email: string;
-  role: "owner" | "admin" | "member" | "viewer";
-  status: "active" | "inactive" | "pending" | "suspended";
-  department: "engineering" | "design" | "marketing" | "sales" | "support";
-  loginCount: number;
-  createdAt: Date;
-}
+import type { GetUsersTableColumnsProps, User } from "@/types/iam/users";
 
 export const USER_ROLES = ["owner", "admin", "member", "viewer"] as const;
 export const USER_STATUSES = [
@@ -129,17 +115,6 @@ const ClockIconComp = (props: any) => (
 const CalendarIconComp = (props: any) => (
   <HugeiconsIcon icon={Calendar01Icon} strokeWidth={2} {...props} />
 );
-
-interface GetUsersTableColumnsProps {
-  statusCounts: Record<User["status"], number>;
-  roleCounts: Record<User["role"], number>;
-  departmentCounts: Record<User["department"], number>;
-  loginCountRange: { min: number; max: number };
-  setRowAction: React.Dispatch<
-    React.SetStateAction<DataTableRowAction<User> | null>
-  >;
-  onUpdateUserRole?: (userId: string, role: User["role"]) => void;
-}
 
 export function getUsersTableColumns({
   statusCounts,

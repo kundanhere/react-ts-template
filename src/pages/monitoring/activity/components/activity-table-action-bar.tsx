@@ -6,7 +6,6 @@ import {
   Download01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Table } from "@tanstack/react-table";
 
 import {
   ActionBar,
@@ -19,13 +18,7 @@ import {
 import { toast } from "@/components/ui/toast";
 import { getSelectedTableRows } from "@/lib/data-table";
 import { exportTableToCSV } from "@/lib/export";
-
-import type { ActivityItem } from "./activity-table-columns";
-
-interface ActivityTableActionBarProps {
-  table: Table<ActivityItem>;
-  onBulkDelete?: (itemIds: string[]) => void;
-}
+import type { ActivityTableActionBarProps } from "@/types/monitoring/activity";
 
 export function ActivityTableActionBar({
   table,

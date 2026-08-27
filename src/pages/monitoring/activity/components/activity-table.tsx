@@ -3,14 +3,15 @@ import * as React from "react";
 import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { useDataTable } from "@/hooks/use-data-table";
-import type { DataTableRowAction, QueryKeys } from "@/types/data-table";
+import type { DataTableRowAction } from "@/types/data-table";
+import type {
+  ActivityItem,
+  ActivityTableProps,
+} from "@/types/monitoring/activity";
 
 import { ActivityDetailsDialog } from "./activity-details-dialog";
 import { ActivityTableActionBar } from "./activity-table-action-bar";
-import {
-  type ActivityItem,
-  getActivityTableColumns,
-} from "./activity-table-columns";
+import { getActivityTableColumns } from "./activity-table-columns";
 import { ActivityTableToolbarActions } from "./activity-table-toolbar-actions";
 import { DeleteActivityDialog } from "./delete-activity-dialog";
 
@@ -115,10 +116,6 @@ const INITIAL_ACTIVITIES: ActivityItem[] = [
     ipAddress: "192.168.1.45",
   },
 ];
-
-interface ActivityTableProps {
-  queryKeys?: Partial<QueryKeys>;
-}
 
 export function ActivityTable({ queryKeys }: ActivityTableProps) {
   const [activities, setActivities] =

@@ -37,11 +37,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-
-interface SocialLink {
-  id: string;
-  url: string;
-}
+import type { SocialLink } from "@/types/settings";
 
 function getSocialIcon(url: string) {
   const lower = url.toLowerCase();

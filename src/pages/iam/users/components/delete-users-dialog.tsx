@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { Delete02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
@@ -16,17 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
-
-import type { User } from "./users-table-columns";
-
-interface DeleteUsersDialogProps extends React.ComponentPropsWithoutRef<
-  typeof AlertDialog
-> {
-  users: User[];
-  onSuccess?: () => void;
-  showTrigger?: boolean;
-  onDeleteUsers?: (userIds: string[]) => void;
-}
+import type { DeleteUsersDialogProps } from "@/types/iam/users";
 
 export function DeleteUsersDialog({
   users,

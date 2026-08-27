@@ -1,17 +1,10 @@
 import { Download01Icon, RefreshIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Table } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import { exportTableToCSV } from "@/lib/export";
-
-import type { AuditLog } from "./audit-logs-table-columns";
-
-interface AuditLogsTableToolbarActionsProps {
-  table: Table<AuditLog>;
-  onRefresh?: () => void;
-}
+import type { AuditLogsTableToolbarActionsProps } from "@/types/monitoring/audit-logs";
 
 export function AuditLogsTableToolbarActions({
   table,

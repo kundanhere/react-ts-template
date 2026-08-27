@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import {
   Alert01Icon,
   Calendar01Icon,
@@ -26,19 +24,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/toast";
 import { formatDate } from "@/lib/format";
-import type { DataTableRowAction } from "@/types/data-table";
-
-export interface AuditLog {
-  id: string;
-  code: string;
-  timestamp: Date;
-  actor: string;
-  action: string;
-  resource: string;
-  status: "SUCCESS" | "DENIED" | "WARNING";
-  severity: "info" | "warning" | "error";
-  ipAddress: string;
-}
+import type {
+  AuditLog,
+  GetAuditLogsTableColumnsProps,
+} from "@/types/monitoring/audit-logs";
 
 export const AUDIT_STATUSES = ["SUCCESS", "DENIED", "WARNING"] as const;
 export const AUDIT_SEVERITIES = ["info", "warning", "error"] as const;
@@ -97,15 +86,6 @@ const CheckmarkIconComp = (props: any) => (
 const CalendarIconComp = (props: any) => (
   <HugeiconsIcon icon={Calendar01Icon} strokeWidth={2} {...props} />
 );
-
-interface GetAuditLogsTableColumnsProps {
-  statusCounts: Record<AuditLog["status"], number>;
-  severityCounts: Record<AuditLog["severity"], number>;
-  setRowAction: React.Dispatch<
-    React.SetStateAction<DataTableRowAction<AuditLog> | null>
-  >;
-  onViewDetails?: (log: AuditLog) => void;
-}
 
 export function getAuditLogsTableColumns({
   statusCounts,

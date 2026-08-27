@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import {
   ApartmentIcon,
   Calendar01Icon,
@@ -38,21 +36,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/toast";
 import { formatDate } from "@/lib/format";
-import type { DataTableRowAction } from "@/types/data-table";
-
-export interface Module {
-  id: string;
-  code: string;
-  name: string;
-  route: string;
-  priority: number;
-  category: "core" | "system" | "feature" | "integration" | "governance";
-  status: "active" | "inactive" | "maintenance" | "beta";
-  isSystem: boolean;
-  description: string;
-  createdAt: Date;
-  children?: Module[];
-}
+import type { GetModulesTableColumnsProps, Module } from "@/types/iam/modules";
 
 export const MODULE_CATEGORIES = [
   "core",
@@ -141,18 +125,6 @@ const CalendarIconComp = (props: any) => (
 const ShieldIconComp = (props: any) => (
   <HugeiconsIcon icon={Shield01Icon} strokeWidth={2} {...props} />
 );
-
-interface GetModulesTableColumnsProps {
-  statusCounts: Record<Module["status"], number>;
-  categoryCounts: Record<Module["category"], number>;
-  priorityRange: { min: number; max: number };
-  setRowAction: React.Dispatch<
-    React.SetStateAction<DataTableRowAction<Module> | null>
-  >;
-  onEditModule?: (module: Module) => void;
-  onUpdateStatus?: (moduleId: string, status: Module["status"]) => void;
-  onToggleSystem?: (moduleId: string) => void;
-}
 
 export function getModulesTableColumns({
   statusCounts,

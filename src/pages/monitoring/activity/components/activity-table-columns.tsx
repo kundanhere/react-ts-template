@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import {
   Alert01Icon,
   Calendar01Icon,
@@ -26,19 +24,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/toast";
 import { formatDate } from "@/lib/format";
-import type { DataTableRowAction } from "@/types/data-table";
-
-export interface ActivityItem {
-  id: string;
-  code: string;
-  timestamp: Date;
-  actor: string;
-  action: string;
-  resource: string;
-  status: "SUCCESS" | "DENIED" | "WARNING";
-  severity: "info" | "warning" | "error";
-  ipAddress: string;
-}
+import type {
+  ActivityItem,
+  GetActivityTableColumnsProps,
+} from "@/types/monitoring/activity";
 
 export const ACTIVITY_STATUSES = ["SUCCESS", "DENIED", "WARNING"] as const;
 export const ACTIVITY_SEVERITIES = ["info", "warning", "error"] as const;
@@ -97,15 +86,6 @@ const CheckmarkIconComp = (props: any) => (
 const CalendarIconComp = (props: any) => (
   <HugeiconsIcon icon={Calendar01Icon} strokeWidth={2} {...props} />
 );
-
-interface GetActivityTableColumnsProps {
-  statusCounts: Record<ActivityItem["status"], number>;
-  severityCounts: Record<ActivityItem["severity"], number>;
-  setRowAction: React.Dispatch<
-    React.SetStateAction<DataTableRowAction<ActivityItem> | null>
-  >;
-  onViewDetails?: (item: ActivityItem) => void;
-}
 
 export function getActivityTableColumns({
   statusCounts,

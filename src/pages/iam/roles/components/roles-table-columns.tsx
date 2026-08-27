@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import {
   ApartmentIcon,
   BadgeInfoIcon,
@@ -24,15 +22,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-export interface RoleItem {
-  id: string;
-  name: string;
-  icon?: React.ReactNode;
-  description: string;
-  userCount: number;
-  isSystem: boolean;
-}
+import type { GetRolesTableColumnsProps, RoleItem } from "@/types/iam/roles";
 
 export function getRoleIcon(roleId: string) {
   switch (roleId) {
@@ -49,12 +39,6 @@ export function getRoleIcon(roleId: string) {
     default:
       return <HugeiconsIcon icon={CellsIcon} size={18} strokeWidth={2} />;
   }
-}
-
-interface GetRolesTableColumnsProps {
-  onEditRole?: (role: RoleItem) => void;
-  onDuplicateRole?: (role: RoleItem) => void;
-  onDeleteRole?: (role: RoleItem) => void;
 }
 
 export function getRolesTableColumns({

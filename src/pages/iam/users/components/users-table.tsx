@@ -3,11 +3,12 @@ import * as React from "react";
 import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { useDataTable } from "@/hooks/use-data-table";
-import type { DataTableRowAction, QueryKeys } from "@/types/data-table";
+import type { DataTableRowAction } from "@/types/data-table";
+import type { User, UsersTableProps } from "@/types/iam/users";
 
 import { DeleteUsersDialog } from "./delete-users-dialog";
 import { UsersTableActionBar } from "./users-table-action-bar";
-import { type User, getUsersTableColumns } from "./users-table-columns";
+import { getUsersTableColumns } from "./users-table-columns";
 import { UsersTableToolbarActions } from "./users-table-toolbar-actions";
 
 const INITIAL_USERS: User[] = [
@@ -122,10 +123,6 @@ const INITIAL_USERS: User[] = [
     createdAt: new Date("2023-08-30"),
   },
 ];
-
-interface UsersTableProps {
-  queryKeys?: Partial<QueryKeys>;
-}
 
 export function UsersTable({ queryKeys }: UsersTableProps) {
   const [users, setUsers] = React.useState<User[]>(INITIAL_USERS);

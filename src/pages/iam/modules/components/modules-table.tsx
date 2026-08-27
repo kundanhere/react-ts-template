@@ -4,12 +4,13 @@ import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
 import { toast } from "@/components/ui/toast";
 import { useDataTable } from "@/hooks/use-data-table";
-import type { DataTableRowAction, QueryKeys } from "@/types/data-table";
+import type { DataTableRowAction } from "@/types/data-table";
+import type { Module, ModulesTableProps } from "@/types/iam/modules";
 
 import { DeleteModulesDialog } from "./delete-modules-dialog";
 import { ModuleFormDialog } from "./module-form-dialog";
 import { ModulesTableActionBar } from "./modules-table-action-bar";
-import { type Module, getModulesTableColumns } from "./modules-table-columns";
+import { getModulesTableColumns } from "./modules-table-columns";
 import { ModulesTableToolbarActions } from "./modules-table-toolbar-actions";
 
 const INITIAL_MODULES: Module[] = [
@@ -167,10 +168,6 @@ const INITIAL_MODULES: Module[] = [
     createdAt: new Date("2023-05-05"),
   },
 ];
-
-interface ModulesTableProps {
-  queryKeys?: Partial<QueryKeys>;
-}
 
 export function ModulesTable({ queryKeys }: ModulesTableProps) {
   const [modules, setModules] = React.useState<Module[]>(INITIAL_MODULES);

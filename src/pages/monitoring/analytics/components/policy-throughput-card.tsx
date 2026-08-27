@@ -20,12 +20,10 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import type { TimeRange } from "@/types/analytics";
-
-interface PolicyThroughputCardProps {
-  timeRange: TimeRange;
-  setTimeRange: (range: TimeRange) => void;
-}
+import type {
+  PolicyThroughputCardProps,
+  TimeRange,
+} from "@/types/monitoring/analytics";
 
 export function PolicyThroughputCard({
   timeRange,

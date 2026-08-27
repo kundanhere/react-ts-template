@@ -15,16 +15,9 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { AuditFilter, AuditLog, User } from "@/types/analytics";
+import type { CloudAuditLogsCardProps } from "@/types/monitoring/analytics";
 
 import { getUserInitials, getUserName, timeAgo } from "../utils";
-
-interface CloudAuditLogsCardProps {
-  auditLogs: AuditLog[];
-  users: User[];
-  auditFilter: AuditFilter;
-  setAuditFilter: (filter: AuditFilter) => void;
-}
 
 export function CloudAuditLogsCard({
   auditLogs,

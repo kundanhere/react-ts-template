@@ -19,11 +19,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import type { Policy } from "@/types/analytics";
-
-interface PolicyRatioCardProps {
-  policies: Policy[];
-}
+import type { PolicyRatioCardProps } from "@/types/monitoring/analytics";
 
 export function PolicyRatioCard({ policies }: PolicyRatioCardProps) {
   const allowPoliciesCount = policies.filter(

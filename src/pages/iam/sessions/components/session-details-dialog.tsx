@@ -16,15 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { formatDate } from "@/lib/format";
-
-import type { Session } from "./sessions-table-columns";
-
-interface SessionDetailsDialogProps {
-  session: Session | null;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onRevoke?: (session: Session) => void;
-}
+import type { Session, SessionDetailsDialogProps } from "@/types/iam/sessions";
 
 function Row({
   label,

@@ -1,17 +1,10 @@
 import { Download01Icon, RefreshIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Table } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import { exportTableToCSV } from "@/lib/export";
-
-import type { ActivityItem } from "./activity-table-columns";
-
-interface ActivityTableToolbarActionsProps {
-  table: Table<ActivityItem>;
-  onRefresh?: () => void;
-}
+import type { ActivityTableToolbarActionsProps } from "@/types/monitoring/activity";
 
 export function ActivityTableToolbarActions({
   table,

@@ -16,11 +16,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import type { Module } from "@/types/analytics";
-
-interface TopAccessModulesCardProps {
-  modules: Module[];
-}
+import type { TopAccessModulesCardProps } from "@/types/monitoring/analytics";
 
 export function TopAccessModulesCard({ modules }: TopAccessModulesCardProps) {
   const moduleTrafficData = [

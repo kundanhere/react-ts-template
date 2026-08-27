@@ -1,16 +1,10 @@
 import { Add01Icon, Download01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Table } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import { exportTableToCSV } from "@/lib/export";
-
-import type { User } from "./users-table-columns";
-
-interface UsersTableToolbarActionsProps {
-  table: Table<User>;
-}
+import type { UsersTableToolbarActionsProps } from "@/types/iam/users";
 
 export function UsersTableToolbarActions({
   table,

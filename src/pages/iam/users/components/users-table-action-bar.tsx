@@ -8,7 +8,6 @@ import {
   Shield01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Table } from "@tanstack/react-table";
 
 import {
   ActionBar,
@@ -27,15 +26,9 @@ import {
 import { toast } from "@/components/ui/toast";
 import { getSelectedTableRows } from "@/lib/data-table";
 import { exportTableToCSV } from "@/lib/export";
+import type { User, UsersTableActionBarProps } from "@/types/iam/users";
 
-import { USER_ROLES, USER_STATUSES, type User } from "./users-table-columns";
-
-interface UsersTableActionBarProps {
-  table: Table<User>;
-  onBulkUpdateStatus?: (userIds: string[], status: User["status"]) => void;
-  onBulkUpdateRole?: (userIds: string[], role: User["role"]) => void;
-  onBulkDelete?: (userIds: string[]) => void;
-}
+import { USER_ROLES, USER_STATUSES } from "./users-table-columns";
 
 export function UsersTableActionBar({
   table,

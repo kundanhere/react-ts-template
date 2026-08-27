@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import { Delete02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
@@ -16,17 +14,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
-
-import type { Policy } from "./policies-table-columns";
-
-interface DeletePoliciesDialogProps extends React.ComponentPropsWithoutRef<
-  typeof AlertDialog
-> {
-  policies: Policy[];
-  onSuccess?: () => void;
-  showTrigger?: boolean;
-  onDeletePolicies?: (policyIds: string[]) => void;
-}
+import type { DeletePoliciesDialogProps } from "@/types/iam/policies";
 
 export function DeletePoliciesDialog({
   policies,

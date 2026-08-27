@@ -1,16 +1,9 @@
 import { Add01Icon, Download01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { Table } from "@tanstack/react-table";
 
 import { Button } from "@/components/ui/button";
 import { exportTableToCSV } from "@/lib/export";
-
-import type { Module } from "./modules-table-columns";
-
-interface ModulesTableToolbarActionsProps {
-  table: Table<Module>;
-  onAddModule?: () => void;
-}
+import type { ModulesTableToolbarActionsProps } from "@/types/iam/modules";
 
 export function ModulesTableToolbarActions({
   table,
