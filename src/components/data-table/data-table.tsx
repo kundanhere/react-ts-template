@@ -1,6 +1,10 @@
 import * as React from "react";
 
-import { ArrowDown01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons";
+import {
+  Add02Icon,
+  ArrowDown01Icon,
+  ArrowRight01Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import {
   type Row,
@@ -11,6 +15,13 @@ import {
 import { DataTablePagination } from "@/components/data-table/data-table-pagination";
 import { type DataTableViewMode } from "@/components/data-table/data-table-view-toggle";
 import { Button } from "@/components/ui/button";
+import {
+  Empty,
+  EmptyContent,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import {
   Table,
   TableBody,
@@ -44,6 +55,9 @@ export interface IDataTableProps<TData> extends React.ComponentProps<"div"> {
   onViewModeChange?: (mode: DataTableViewMode) => void;
   enableViewToggle?: boolean;
   renderCard?: (row: Row<TData>) => React.ReactNode;
+  emptyStateTitle?: string;
+  emptyStateDescription?: string;
+  emptyStateActions?: React.ReactNode;
 }
 
 function renderTreeExpander<TData>(row: Row<TData>, showSpacer: boolean) {
@@ -85,6 +99,9 @@ export function DataTable<TData>({
   onViewModeChange: controlledOnViewModeChange,
   enableViewToggle = false,
   renderCard,
+  emptyStateTitle = "Oops! There's nothing here...",
+  emptyStateDescription = "There is nothing here to view right now, please add new data to get started.",
+  emptyStateActions,
   children,
   className,
   ...props
@@ -232,8 +249,55 @@ export function DataTable<TData>({
                 );
               })
             ) : (
-              <div className="text-muted-foreground col-span-full rounded-md border p-8 text-center text-sm">
-                No results.
+              <div className="col-span-full flex min-h-88 items-center justify-center">
+                <Empty className="bg-muted/5 w-full border-dashed py-16">
+                  <EmptyHeader className="max-w-lg">
+                    {/* Concentric Squircles Icon Container */}
+                    <div className="relative mb-6 flex size-24 items-center justify-center">
+                      <svg
+                        viewBox="0 0 96 96"
+                        className="absolute inset-0 size-full"
+                        fill="none"
+                      >
+                        {/* Outermost Squircle */}
+                        <path
+                          d="M 48,0 C 86.4,0 96,9.6 96,48 C 96,86.4 86.4,96 48,96 C 9.6,96 0,86.4 0,48 C 0,9.6 9.6,0 48,0 Z"
+                          className="stroke-primary/10 fill-primary/1"
+                          strokeWidth="1.2"
+                        />
+                        {/* Middle Squircle */}
+                        <path
+                          d="M 48,8 C 80,8 88,16 88,48 C 88,80 80,88 48,88 C 16,88 8,80 8,48 C 8,16 16,8 48,8 Z"
+                          className="stroke-primary/20 fill-primary/2"
+                          strokeWidth="1.2"
+                        />
+                        {/* Innermost Squircle */}
+                        <path
+                          d="M 48,20 C 70.4,20 76,25.6 76,48 C 76,70.4 70.4,76 48,76 C 25.6,76 20,70.4 20,48 C 20,25.6 25.6,20 48,20 Z"
+                          className="stroke-primary/30 fill-background"
+                          strokeWidth="1.2"
+                        />
+                      </svg>
+                      <HugeiconsIcon
+                        icon={Add02Icon}
+                        size={24}
+                        strokeWidth={1.8}
+                        className="text-primary relative z-10"
+                      />
+                    </div>
+                    <EmptyTitle className="text-foreground text-base font-semibold">
+                      {emptyStateTitle}
+                    </EmptyTitle>
+                    <EmptyDescription className="text-muted-foreground mt-1.5 max-w-sm text-xs leading-normal">
+                      {emptyStateDescription}
+                    </EmptyDescription>
+                    {emptyStateActions && (
+                      <EmptyContent className="mt-4 flex w-full flex-row items-center justify-center gap-2">
+                        {emptyStateActions}
+                      </EmptyContent>
+                    )}
+                  </EmptyHeader>
+                </Empty>
               </div>
             )}
           </div>
@@ -324,12 +388,43 @@ export function DataTable<TData>({
                     </TableRow>
                   ))
                 ) : (
-                  <TableRow>
+                  <TableRow className="hover:bg-transparent">
                     <TableCell
                       colSpan={table.getAllColumns().length}
-                      className="h-24 text-center"
+                      className="h-88 p-0"
                     >
-                      No results.
+                      <Empty className="bg-muted/5 flex h-full flex-col items-center justify-center rounded-none border-none">
+                        <EmptyHeader className="max-w-lg">
+                          {/* Concentric Squircles Icon Container */}
+                          <div className="relative mb-4 flex items-center justify-center">
+                            {/* Outermost Squircle */}
+                            <div className="border-primary/10 bg-primary/1 flex size-24 items-center justify-center rounded-[28px] border">
+                              {/* Middle Squircle */}
+                              <div className="border-primary/20 bg-primary/2 flex size-20 items-center justify-center rounded-[22px] border">
+                                {/* Innermost Squircle */}
+                                <div className="border-primary/30 bg-background text-primary flex size-14 items-center justify-center rounded-2xl border shadow-xs">
+                                  <HugeiconsIcon
+                                    icon={Add02Icon}
+                                    size={22}
+                                    strokeWidth={1.8}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <EmptyTitle className="text-foreground text-base font-semibold">
+                            {emptyStateTitle}
+                          </EmptyTitle>
+                          <EmptyDescription className="text-muted-foreground mt-1.5 max-w-sm text-xs leading-normal">
+                            {emptyStateDescription}
+                          </EmptyDescription>
+                          {emptyStateActions && (
+                            <EmptyContent className="mt-4 flex w-full flex-row items-center justify-center gap-2">
+                              {emptyStateActions}
+                            </EmptyContent>
+                          )}
+                        </EmptyHeader>
+                      </Empty>
                     </TableCell>
                   </TableRow>
                 )}

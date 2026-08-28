@@ -1,7 +1,12 @@
 import * as React from "react";
 
+import { Add01Icon, Upload01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Link } from "react-router-dom";
+
 import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
+import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import { useDataTable } from "@/hooks/use-data-table";
 import type { IDataTableRowAction } from "@/types/data-table";
@@ -291,6 +296,33 @@ export function PoliciesTable({ queryKeys }: IPoliciesTableProps) {
             onBulkUpdateStatus={handleBulkUpdateStatus}
             onBulkDelete={handleBulkDelete}
           />
+        }
+        emptyStateTitle="No policies found"
+        emptyStateDescription="Get started by creating a security access policy or importing one from CSV."
+        emptyStateActions={
+          <>
+            <Button
+              variant="outline"
+              onClick={() => toast.info("Upload CSV clicked")}
+            >
+              <HugeiconsIcon
+                icon={Upload01Icon}
+                strokeWidth={2}
+                className="mr-1.5 size-4"
+              />
+              Upload CSV
+            </Button>
+            <Button asChild>
+              <Link to="/iam/policies/new">
+                <HugeiconsIcon
+                  icon={Add01Icon}
+                  strokeWidth={2}
+                  className="mr-1.5 size-4"
+                />
+                New Policy
+              </Link>
+            </Button>
+          </>
         }
       >
         <DataTableToolbar table={table}>

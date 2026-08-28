@@ -1,10 +1,12 @@
 import * as React from "react";
 
 import {
+  Add01Icon,
   Copy01Icon,
   Delete02Icon,
   PencilEdit01Icon,
   ShieldCheck,
+  Upload01Icon,
   UserGroupIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -132,6 +134,31 @@ export function RolesTable({ queryKeys, onNewRoleClick }: IRolesTableProps) {
       defaultViewMode="grid"
       actionBar={
         <RolesTableActionBar table={table} onBulkDelete={handleBulkDelete} />
+      }
+      emptyStateTitle="No roles found"
+      emptyStateDescription="Get started by creating a custom security role or importing one from CSV."
+      emptyStateActions={
+        <>
+          <Button
+            variant="outline"
+            onClick={() => toast.info("Upload CSV clicked")}
+          >
+            <HugeiconsIcon
+              icon={Upload01Icon}
+              strokeWidth={2}
+              className="mr-1.5 size-4"
+            />
+            Upload CSV
+          </Button>
+          <Button onClick={onNewRoleClick}>
+            <HugeiconsIcon
+              icon={Add01Icon}
+              strokeWidth={2}
+              className="mr-1.5 size-4"
+            />
+            New Role
+          </Button>
+        </>
       }
       renderCard={(row) => {
         const role = row.original;

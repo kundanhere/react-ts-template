@@ -2,6 +2,8 @@ import * as React from "react";
 
 import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/toast";
 import { useDataTable } from "@/hooks/use-data-table";
 import type { IDataTableRowAction } from "@/types/data-table";
 import type {
@@ -230,6 +232,18 @@ export function AuditLogsTable({ queryKeys }: IAuditLogsTableProps) {
             table={table}
             onBulkDelete={handleBulkDelete}
           />
+        }
+        emptyStateTitle="No audit logs found"
+        emptyStateDescription="There are no security audit logs matching the current search parameters."
+        emptyStateActions={
+          <Button
+            variant="outline"
+            onClick={() => {
+              toast.success("Audit logs refreshed");
+            }}
+          >
+            Refresh Logs
+          </Button>
         }
       >
         <DataTableToolbar table={table}>

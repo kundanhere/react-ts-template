@@ -1,7 +1,11 @@
 import * as React from "react";
 
+import { Add01Icon, Upload01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
 import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
+import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import { useDataTable } from "@/hooks/use-data-table";
 import type { IDataTableRowAction } from "@/types/data-table";
@@ -389,6 +393,31 @@ export function ModulesTable({ queryKeys }: IModulesTableProps) {
             onBulkUpdateCategory={handleBulkUpdateCategory}
             onBulkDelete={handleBulkDelete}
           />
+        }
+        emptyStateTitle="No modules registered"
+        emptyStateDescription="Get started by registering a new system or feature module to orchestrate permissions."
+        emptyStateActions={
+          <>
+            <Button
+              variant="outline"
+              onClick={() => toast.info("Upload CSV clicked")}
+            >
+              <HugeiconsIcon
+                icon={Upload01Icon}
+                strokeWidth={2}
+                className="mr-1.5 size-4"
+              />
+              Upload CSV
+            </Button>
+            <Button onClick={handleAddModuleClick}>
+              <HugeiconsIcon
+                icon={Add01Icon}
+                strokeWidth={2}
+                className="mr-1.5 size-4"
+              />
+              New Module
+            </Button>
+          </>
         }
       >
         <DataTableToolbar table={table}>

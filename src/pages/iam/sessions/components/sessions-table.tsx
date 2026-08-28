@@ -2,6 +2,7 @@ import * as React from "react";
 
 import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
+import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import { useDataTable } from "@/hooks/use-data-table";
 import type { IDataTableRowAction } from "@/types/data-table";
@@ -376,6 +377,18 @@ export function SessionsTable({ queryKeys }: ISessionsTableProps) {
             onBulkUpdateStatus={handleBulkUpdateStatus}
             onBulkRevoke={handleBulkRevoke}
           />
+        }
+        emptyStateTitle="No active sessions found"
+        emptyStateDescription="There are no active client sessions matching the filter criteria."
+        emptyStateActions={
+          <Button
+            variant="outline"
+            onClick={() => {
+              toast.success("Sessions refreshed");
+            }}
+          >
+            Refresh Sessions
+          </Button>
         }
       >
         <DataTableToolbar table={table}>
