@@ -33,6 +33,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+import AccountTab from "./components/account-tab";
 import AppearanceTab from "./components/appearance-tab";
 import NotificationsTab from "./components/notifications-tab";
 import ProfileTab from "./components/profile-tab";
@@ -109,6 +110,8 @@ const SettingsPage = () => {
     switch (activeTab) {
       case "profile":
         return <ProfileTab />;
+      case "account":
+        return <AccountTab />;
       case "notifications":
         return <NotificationsTab />;
       case "appearance":

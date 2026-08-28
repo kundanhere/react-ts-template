@@ -1,10 +1,19 @@
 import * as React from "react";
 
+import { Tick02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { type ThemeColor, useTheme } from "@/hooks/use-theme";
+import { cn } from "@/lib/utils";
 
 const fontSizes = [13, 14, 15, 16, 18, 20, 22];
 
@@ -158,25 +167,41 @@ export default function AppearanceTab() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="flex flex-wrap gap-3">
             {colors.map((c) => {
               const isActive = themeColor === c.id;
               return (
-                <button
-                  key={c.id}
-                  type="button"
-                  onClick={() => setThemeColor(c.id)}
-                  className={`hover:bg-muted/50 flex cursor-pointer items-center gap-2.5 rounded-lg border p-2.5 text-left transition-all ${
-                    isActive
-                      ? "border-primary ring-primary/20 bg-muted/20 ring-2"
-                      : "border-border bg-card"
-                  }`}
-                >
-                  <span
-                    className={`size-4 rounded-full ${c.bg} shrink-0 shadow-xs`}
-                  />
-                  <span className="text-xs font-medium">{c.name}</span>
-                </button>
+                <Tooltip key={c.id}>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      onClick={() => setThemeColor(c.id)}
+                      className={cn(
+                        "relative flex size-6 cursor-pointer items-center justify-center rounded-full border border-black/10 transition-all hover:scale-105 active:scale-95 dark:border-white/10",
+                        c.bg,
+                        isActive
+                          ? "ring-primary ring-offset-background scale-105 shadow-sm ring-2 ring-offset-2"
+                          : "opacity-85 hover:opacity-100"
+                      )}
+                      aria-label={c.name}
+                    >
+                      {isActive && (
+                        <HugeiconsIcon
+                          icon={Tick02Icon}
+                          strokeWidth={2.5}
+                          className={cn(
+                            "size-3 text-white",
+                            c.id === "yellow" && "text-yellow-950",
+                            c.id === "zinc" && "text-white dark:text-zinc-950"
+                          )}
+                        />
+                      )}
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom" sideOffset={7}>
+                    {c.name}
+                  </TooltipContent>
+                </Tooltip>
               );
             })}
           </div>
