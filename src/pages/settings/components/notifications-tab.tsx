@@ -149,7 +149,7 @@ export default function NotificationsTab() {
 
         <Button
           onClick={handleSave}
-          className="h-8 bg-emerald-600 text-xs text-white hover:bg-emerald-700"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 h-8 text-xs"
         >
           Save preferences
         </Button>

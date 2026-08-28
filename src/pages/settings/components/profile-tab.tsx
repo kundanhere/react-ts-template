@@ -64,7 +64,6 @@ export default function ProfileTab() {
   const [company, setCompany] = React.useState("Softdoc Inc");
   const [location, setLocation] = React.useState("San Francisco, CA");
   const [website, setWebsite] = React.useState("https://github.com/kundanhere");
-  const [availableForHire, setAvailableForHire] = React.useState(true);
   const [showStatus, setShowStatus] = React.useState(true);
 
   // State for social accounts
@@ -162,7 +161,7 @@ export default function ProfileTab() {
       <div className="border-border/60 border-t" />
 
       {/* Profile Form & Avatar Grid */}
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-[1fr_240px]">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_240px]">
         {/* Left: Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Name */}
@@ -438,27 +437,6 @@ export default function ProfileTab() {
                 </span>
               </div>
             </div>
-
-            <div className="flex items-start gap-2.5">
-              <Checkbox
-                id="availableForHire"
-                checked={availableForHire}
-                onCheckedChange={(checked) => setAvailableForHire(!!checked)}
-                className="mt-0.5"
-              />
-              <div className="grid gap-0.5">
-                <Label
-                  htmlFor="availableForHire"
-                  className="cursor-pointer text-xs font-semibold"
-                >
-                  Available for hire
-                </Label>
-                <span className="text-muted-foreground text-[11px] leading-normal">
-                  Add a green badge to your profile indicating that you are open
-                  to new opportunities.
-                </span>
-              </div>
-            </div>
           </div>
 
           <div className="border-border/60 border-t pt-4" />
@@ -466,15 +444,15 @@ export default function ProfileTab() {
           {/* Submit Button */}
           <Button
             type="submit"
-            className="h-8 shrink-0 bg-emerald-600 px-4 text-xs font-medium text-white hover:bg-emerald-700 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+            className="bg-primary text-primary-foreground hover:bg-primary/90 h-8 shrink-0 px-4 text-xs font-medium"
           >
             Update profile
           </Button>
         </form>
 
         {/* Right: Profile Picture */}
-        <div className="order-first flex flex-col items-center gap-3 md:order-last md:items-start">
-          <Label className="self-start text-xs font-semibold md:self-auto">
+        <div className="order-first flex flex-col items-center gap-3 lg:order-last lg:items-start">
+          <Label className="self-start text-xs font-semibold lg:self-auto">
             Profile picture
           </Label>
           <div className="group relative">
@@ -522,7 +500,7 @@ export default function ProfileTab() {
             )}
           </div>
 
-          <p className="text-muted-foreground mt-2 text-center text-xs leading-normal md:text-left">
+          <p className="text-muted-foreground mt-2 text-center text-xs leading-normal lg:text-left">
             Uploaded images are resized and cropped automatically. Supported
             formats: JPEG, PNG. Max size 1MB
           </p>

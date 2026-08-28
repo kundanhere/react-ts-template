@@ -35,7 +35,7 @@ export default function InboxPage() {
             className="bg-muted/20 hover:bg-muted/40 flex items-center justify-between rounded-lg border p-4 transition-colors"
           >
             <div className="flex items-center gap-3">
-              {!n.read && <div className="size-2 rounded-full bg-blue-600" />}
+              {!n.read && <div className="bg-primary size-2 rounded-full" />}
               <span className="text-sm font-medium">{n.title}</span>
             </div>
             <div className="flex items-center gap-3">

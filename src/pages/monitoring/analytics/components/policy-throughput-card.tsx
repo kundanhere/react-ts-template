@@ -96,9 +96,9 @@ export function PolicyThroughputCard({
             <span>Policy Evaluation Throughput</span>
             <Badge
               variant="outline"
-              className="gap-1.5 border-emerald-500/30 bg-emerald-50/50 px-2 py-0.5 text-[0.625rem] font-normal text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400"
+              className="border-primary/30 bg-primary/10 text-primary gap-1.5 px-2 py-0.5 text-[0.625rem] font-normal"
             >
-              <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
+              <span className="bg-primary size-1.5 animate-pulse rounded-full" />
               Active
             </Badge>
           </CardTitle>
@@ -139,8 +139,16 @@ export function PolicyThroughputCard({
           >
             <defs>
               <linearGradient id="themeAllowedGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#10b981" stopOpacity={0.35} />
-                <stop offset="95%" stopColor="#10b981" stopOpacity={0.0} />
+                <stop
+                  offset="5%"
+                  stopColor="var(--primary)"
+                  stopOpacity={0.35}
+                />
+                <stop
+                  offset="95%"
+                  stopColor="var(--primary)"
+                  stopOpacity={0.0}
+                />
               </linearGradient>
               <linearGradient id="themeDeniedGrad" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="5%" stopColor="#f43f5e" stopOpacity={0.35} />
@@ -164,7 +172,7 @@ export function PolicyThroughputCard({
             <Area
               type="monotone"
               dataKey="allowed"
-              stroke="#10b981"
+              stroke="var(--primary)"
               strokeWidth={2}
               fillOpacity={1}
               fill="url(#themeAllowedGrad)"

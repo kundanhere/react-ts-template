@@ -93,12 +93,12 @@ export function PolicyRatioCard({ policies }: IPolicyRatioCardProps) {
         <div className="divide-border/40 mt-1.5 w-full divide-y text-xs">
           <div className="flex items-center justify-between py-1.5">
             <span className="flex items-center gap-2 font-medium">
-              <span className="size-1.5 rounded-full bg-emerald-500" />
+              <span className="bg-primary size-1.5 rounded-full" />
               ALLOW Rules
             </span>
             <Badge
               variant="outline"
-              className="border-emerald-500/30 bg-emerald-50/50 px-1.5 py-0.5 text-[0.625rem] font-normal text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400"
+              className="border-primary/30 bg-primary/10 text-primary px-1.5 py-0.5 text-[0.625rem] font-normal"
             >
               {allowPoliciesCount} rules (
               {((allowPoliciesCount / totalPolicyCount) * 100).toFixed(0)}

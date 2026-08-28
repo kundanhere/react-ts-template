@@ -2,31 +2,72 @@ import * as React from "react";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { useTheme } from "@/hooks/use-theme";
+import { Slider } from "@/components/ui/slider";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { type ThemeColor, useTheme } from "@/hooks/use-theme";
+
+const fontSizes = [13, 14, 15, 16, 18, 20, 22];
 
 export default function AppearanceTab() {
-  const { setTheme, theme } = useTheme();
-  const [compactMode, setCompactMode] = React.useState(true);
+  const {
+    theme,
+    setTheme,
+    themeColor,
+    setThemeColor,
+    fontSize,
+    setFontSize,
+    radius,
+    setRadius,
+    compactMode,
+    setCompactMode,
+  } = useTheme();
+
+  // Local state to track temporary font size during scrubbing/dragging
+  const [tempFontSize, setTempFontSize] = React.useState(fontSize);
+
+  // Sync local temp state when global font size changes (e.g. from storage/sync)
+  React.useEffect(() => {
+    setTempFontSize(fontSize);
+  }, [fontSize]);
+
+  const colors = [
+    { name: "Default", id: "default" as ThemeColor, bg: "bg-teal-600" },
+    {
+      name: "Zinc",
+      id: "zinc" as ThemeColor,
+      bg: "bg-zinc-700 dark:bg-zinc-300",
+    },
+    { name: "Slate", id: "slate" as ThemeColor, bg: "bg-slate-500" },
+    { name: "Blue", id: "blue" as ThemeColor, bg: "bg-blue-600" },
+    { name: "Violet", id: "violet" as ThemeColor, bg: "bg-violet-600" },
+    { name: "Green", id: "green" as ThemeColor, bg: "bg-green-600" },
+    { name: "Orange", id: "orange" as ThemeColor, bg: "bg-orange-500" },
+    { name: "Red", id: "red" as ThemeColor, bg: "bg-red-600" },
+    { name: "Rose", id: "rose" as ThemeColor, bg: "bg-rose-500" },
+    { name: "Yellow", id: "yellow" as ThemeColor, bg: "bg-yellow-500" },
+  ];
 
   return (
     <div className="max-w-4xl space-y-6">
       <div>
         <h2 className="text-xl font-semibold tracking-tight">Appearance</h2>
         <p className="text-muted-foreground text-xs">
-          Manage your theme, color mode, and dashboard layout preferences.
+          Manage your theme, color mode, font size, and overall styling
+          preferences.
         </p>
       </div>
 
       <div className="border-border/60 border-t" />
 
       <div className="space-y-6">
+        {/* Theme Mode Section */}
         <div>
           <h3 className="mb-2 text-sm font-semibold">Theme Mode</h3>
           <p className="text-muted-foreground mb-4 text-xs">
             Select how the dashboard appearance looks to you.
           </p>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
             {/* Light Theme Card */}
             <button
               type="button"
@@ -107,9 +148,147 @@ export default function AppearanceTab() {
 
         <div className="border-border/60 border-t pt-6" />
 
-        {/* Extra setting mockups */}
+        {/* Color Theme Section */}
         <div className="space-y-4">
-          <h3 className="text-sm font-semibold">Accessibility & Font Size</h3>
+          <div>
+            <h3 className="text-sm font-semibold">Color Theme</h3>
+            <p className="text-muted-foreground text-xs">
+              Select the primary accent color for buttons, active states, and
+              highlights.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
+            {colors.map((c) => {
+              const isActive = themeColor === c.id;
+              return (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => setThemeColor(c.id)}
+                  className={`hover:bg-muted/50 flex cursor-pointer items-center gap-2.5 rounded-lg border p-2.5 text-left transition-all ${
+                    isActive
+                      ? "border-primary ring-primary/20 bg-muted/20 ring-2"
+                      : "border-border bg-card"
+                  }`}
+                >
+                  <span
+                    className={`size-4 rounded-full ${c.bg} shrink-0 shadow-xs`}
+                  />
+                  <span className="text-xs font-medium">{c.name}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="border-border/60 border-t pt-6" />
+
+        {/* Font Size Section */}
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-sm font-semibold">Font Size</h3>
+            <p className="text-muted-foreground text-xs">
+              Adjust the overall font scaling of the interface.
+            </p>
+          </div>
+
+          <div className="bg-muted/20 flex max-w-md items-center gap-4 rounded-lg border p-4">
+            <span className="text-muted-foreground text-xs font-medium select-none">
+              A
+            </span>
+            <div className="relative flex flex-1 items-center">
+              <Slider
+                min={0}
+                max={fontSizes.length - 1}
+                step={1}
+                value={[
+                  fontSizes.indexOf(tempFontSize) !== -1
+                    ? fontSizes.indexOf(tempFontSize)
+                    : 3,
+                ]}
+                onValueChange={(val) => {
+                  const idx = Array.isArray(val) ? val[0] : val;
+                  setTempFontSize(fontSizes[idx]);
+                }}
+                onValueCommitted={(val) => {
+                  const idx = Array.isArray(val) ? val[0] : val;
+                  setFontSize(fontSizes[idx]);
+                }}
+                className="relative z-10 w-full"
+              />
+              {/* Stopper Dots */}
+              <div className="pointer-events-none absolute inset-y-0 right-1.5 left-1.5 z-20 flex items-center">
+                {fontSizes.map((val, idx) => {
+                  const pct = (idx / (fontSizes.length - 1)) * 100;
+                  const isPast = val <= tempFontSize;
+                  return (
+                    <span
+                      key={val}
+                      className={`absolute size-1.5 -translate-x-1/2 rounded-full transition-all ${
+                        isPast
+                          ? "bg-background opacity-100"
+                          : "bg-primary opacity-35"
+                      }`}
+                      style={{ left: `${pct}%` }}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+            <span className="text-lg font-semibold select-none">A</span>
+            <span className="text-muted-foreground min-w-12 text-right text-xs font-semibold">
+              {tempFontSize}px
+            </span>
+          </div>
+        </div>
+
+        <div className="border-border/60 border-t pt-6" />
+
+        {/* Border Radius Section */}
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-sm font-semibold">Border Radius</h3>
+            <p className="text-muted-foreground text-xs">
+              Configure the corner roundness of buttons, cards, and input
+              fields.
+            </p>
+          </div>
+
+          <div className="bg-muted/20 rounded-lg border p-4">
+            <ToggleGroup
+              type="single"
+              variant="outline"
+              value={String(radius)}
+              onValueChange={(value) => {
+                if (value) setRadius(Number(value));
+              }}
+              className="flex flex-wrap gap-2"
+            >
+              <ToggleGroupItem value="0" className="cursor-pointer text-xs">
+                Sharp (0)
+              </ToggleGroupItem>
+              <ToggleGroupItem value="0.3" className="cursor-pointer text-xs">
+                Compact (0.3)
+              </ToggleGroupItem>
+              <ToggleGroupItem value="0.5" className="cursor-pointer text-xs">
+                Medium (0.5)
+              </ToggleGroupItem>
+              <ToggleGroupItem value="0.75" className="cursor-pointer text-xs">
+                Comfortable (0.75)
+              </ToggleGroupItem>
+              <ToggleGroupItem value="1" className="cursor-pointer text-xs">
+                Rounded (1.0)
+              </ToggleGroupItem>
+            </ToggleGroup>
+          </div>
+        </div>
+
+        <div className="border-border/60 border-t pt-6" />
+
+        {/* Accessibility Density mode */}
+        <div className="space-y-4">
+          <h3 className="text-sm font-semibold">Accessibility & Density</h3>
           <div className="bg-muted/20 flex items-center justify-between rounded-lg border p-4">
             <div className="space-y-0.5">
               <Label

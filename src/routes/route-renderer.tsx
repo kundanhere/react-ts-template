@@ -7,8 +7,8 @@ import { routes } from "./routes.config";
 // Loading component for Suspense fallback
 function LoadingSpinner() {
   return (
-    <div className="flex min-h-[50vh] items-center justify-center">
-      <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
+    <div className="flex min-h-[90vh] items-center justify-center">
+      <div className="border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent" />
     </div>
   );
 }

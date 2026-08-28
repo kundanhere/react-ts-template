@@ -56,11 +56,11 @@ export default function NotFoundPage() {
   return (
     <Empty className="py-20">
       <EmptyHeader className="max-w-lg">
-        <div className="mb-3 flex size-12 items-center justify-center rounded-lg bg-amber-500/10">
+        <div className="bg-primary/10 mb-3 flex size-12 items-center justify-center rounded-lg">
           <HugeiconsIcon
             icon={FileEmpty02Icon}
             size={24}
-            className="text-amber-600 dark:text-amber-400"
+            className="text-primary"
           />
         </div>
 

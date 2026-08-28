@@ -151,9 +151,9 @@ export function AnalyticsKpiCards({
         ) : (
           <Badge
             variant="outline"
-            className="gap-1 border-emerald-500/30 bg-emerald-50/50 px-1.5 py-0.5 text-[0.625rem] font-semibold text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400"
+            className="border-primary/30 bg-primary/10 text-primary gap-1 px-1.5 py-0.5 text-[0.625rem] font-semibold"
           >
-            <span className="size-1 rounded-full bg-emerald-500" />
+            <span className="bg-primary size-1 rounded-full" />
             Protected
           </Badge>
         ),
@@ -218,16 +218,12 @@ export function AnalyticsKpiCards({
                     >
                       <stop
                         offset="0%"
-                        stopColor={
-                          kpi.color.startsWith("var") ? "#10b981" : kpi.color
-                        }
+                        stopColor={kpi.color}
                         stopOpacity={0.4}
                       />
                       <stop
                         offset="100%"
-                        stopColor={
-                          kpi.color.startsWith("var") ? "#10b981" : kpi.color
-                        }
+                        stopColor={kpi.color}
                         stopOpacity={0.0}
                       />
                     </linearGradient>
@@ -235,7 +231,7 @@ export function AnalyticsKpiCards({
                   <Area
                     type="monotone"
                     dataKey="v"
-                    stroke={kpi.color.startsWith("var") ? "#10b981" : kpi.color}
+                    stroke={kpi.color}
                     strokeWidth={1.8}
                     fill={`url(#kpi-grad-${kpi.id})`}
                     isAnimationActive

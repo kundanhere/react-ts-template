@@ -25,9 +25,9 @@ export function AnalyticsDomainBanner({
             </span>
             <Badge
               variant="outline"
-              className="gap-1.5 border-emerald-500/30 bg-emerald-50/50 px-2 py-0.5 text-[0.625rem] font-normal text-emerald-600 dark:bg-emerald-950/20 dark:text-emerald-400"
+              className="border-primary/30 bg-primary/10 text-primary gap-1.5 px-2 py-0.5 text-[0.625rem] font-normal"
             >
-              <span className="size-1.5 rounded-full bg-emerald-500" />
+              <span className="bg-primary size-1.5 rounded-full" />
               Enforced
             </Badge>
           </div>

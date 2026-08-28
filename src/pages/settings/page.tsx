@@ -27,6 +27,11 @@ import {
   SidebarMenuItem,
   SidebarProvider,
 } from "@/components/ui/sidebar";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 import AppearanceTab from "./components/appearance-tab";
 import NotificationsTab from "./components/notifications-tab";
@@ -135,36 +140,53 @@ const SettingsPage = () => {
       <SidebarProvider className="items-start">
         <Sidebar
           collapsible="none"
-          className="border-border/40 hidden w-60 shrink-0 border-r bg-transparent pr-4 md:flex"
+          className="settings-sidebar border-border/40 flex shrink-0 border-r bg-transparent pr-0 lg:pr-4"
         >
           <SidebarContent className="gap-4 pt-2">
             {data.groups.map((group) => (
-              <SidebarGroup key={group.label} className="px-1">
+              <SidebarGroup key={group.label} className="px-0 lg:px-1">
                 {group.label && (
-                  <SidebarGroupLabel className="capitalize">
+                  <SidebarGroupLabel className="hidden capitalize lg:flex">
                     {group.label}
                   </SidebarGroupLabel>
                 )}
                 <SidebarGroupContent>
                   <SidebarMenu>
-                    {group.items.map((item) => (
-                      <SidebarMenuItem key={item.id}>
-                        <SidebarMenuButton
-                          onClick={() => setActiveTab(item.id)}
-                          isActive={activeTab === item.id}
-                        >
-                          {item.icon}
-                          <span>{item.name}</span>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ))}
+                    {group.items.map((item) => {
+                      const isActive = activeTab === item.id;
+                      return (
+                        <SidebarMenuItem key={item.id}>
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <SidebarMenuButton
+                                onClick={() => setActiveTab(item.id)}
+                                isActive={isActive}
+                                className="mx-auto size-8 justify-center lg:mx-0 lg:h-8 lg:w-full lg:justify-start"
+                              >
+                                {item.icon}
+                                <span className="hidden lg:inline">
+                                  {item.name}
+                                </span>
+                              </SidebarMenuButton>
+                            </TooltipTrigger>
+                            <TooltipContent
+                              side="right"
+                              align="center"
+                              className="z-100 lg:hidden"
+                            >
+                              {item.name}
+                            </TooltipContent>
+                          </Tooltip>
+                        </SidebarMenuItem>
+                      );
+                    })}
                   </SidebarMenu>
                 </SidebarGroupContent>
               </SidebarGroup>
             ))}
           </SidebarContent>
         </Sidebar>
-        <main className="flex-1 overflow-y-auto px-1 py-2 md:px-6">
+        <main className="flex-1 overflow-y-auto px-2 py-2 md:px-6">
           {renderTabContent()}
         </main>
       </SidebarProvider>

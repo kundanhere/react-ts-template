@@ -104,7 +104,13 @@ export function SecurityFindingsCard({ users }: ISecurityFindingsCardProps) {
 
       <CardFooter className="text-muted-foreground mt-auto flex w-full items-center justify-between border-t px-4 py-2.5 text-xs">
         <span>Anomaly Scanner</span>
-        <span className="font-mono text-[11px] font-medium text-emerald-600 dark:text-emerald-400">
+        <span
+          className={`font-mono text-[11px] font-medium ${
+            lockedCount === 0
+              ? "text-emerald-600 dark:text-emerald-400"
+              : "text-destructive"
+          }`}
+        >
           {lockedCount === 0 ? "All Clear" : `${lockedCount} Action Needed`}
         </span>
       </CardFooter>

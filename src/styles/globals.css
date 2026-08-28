@@ -40,7 +40,7 @@
   --ring: oklch(0.596 0.127 163.2 / 0.9);
 
   /* Chart colors */
-  --chart-1: oklch(0.25 0.127 163.2);
+  --chart-1: var(--primary);
   --chart-2: oklch(0.35 0.127 163.2);
   --chart-3: oklch(0.55 0.127 163.2);
   --chart-4: oklch(0.75 0.127 163.2);
@@ -49,12 +49,12 @@
   /* Sidebar */
   --sidebar: oklch(0.984 0.003 163.2);
   --sidebar-foreground: oklch(0.25 0.038 163.2);
-  --sidebar-primary: oklch(0.596 0.127 163.2);
-  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
   --sidebar-accent: oklch(0.965 0.004 163.2);
   --sidebar-accent-foreground: oklch(0.25 0.038 163.2);
   --sidebar-border: oklch(0.925 0.006 163.2);
-  --sidebar-ring: oklch(0.925 0.006 163.2);
+  --sidebar-ring: var(--ring);
 
   /* Typography, shape, and elevation tokens */
   --font-sans: "Geist", sans-serif;
@@ -111,7 +111,7 @@
   --ring: oklch(0.676 0.127 163.2);
 
   /* Dark-theme chart palette */
-  --chart-1: oklch(0.35 0.127 163.2);
+  --chart-1: var(--primary);
   --chart-2: oklch(0.55 0.127 163.2);
   --chart-3: oklch(0.75 0.127 163.2);
   --chart-4: oklch(0.9 0.127 163.2);
@@ -121,11 +121,11 @@
   --sidebar: oklch(0.11 0.009 163.2);
   --sidebar-foreground: oklch(0.98 0 0);
   --sidebar-primary: oklch(1 0 0);
-  --sidebar-primary-foreground: oklch(0.2 0.009 163.2);
+  --sidebar-primary-foreground: var(--primary);
   --sidebar-accent: oklch(0.24 0.009 163.2);
   --sidebar-accent-foreground: oklch(0.98 0 0);
   --sidebar-border: oklch(0.28 0.009 163.2);
-  --sidebar-ring: oklch(0.676 0.127 163.2);
+  --sidebar-ring: var(--ring);
 
   /*
    * Dark-mode shadows use black with lower opacity to create
@@ -227,6 +227,7 @@
 html {
   box-sizing: border-box;
   overflow-x: hidden;
+  font-size: 16px;
 }
 *,
 *::before,
@@ -259,4 +260,163 @@ body {
 }
 .border-primary {
   border-color: var(--primary) !important;
+}
+
+/* ========== Theme Color Overrides ========== */
+
+/* Zinc Theme */
+.theme-zinc {
+  --primary: oklch(0.25 0.01 240);
+  --primary-foreground: oklch(1 0 0);
+  --ring: oklch(0.25 0.01 240 / 0.9);
+}
+.dark.theme-zinc,
+.dark .theme-zinc {
+  --primary: oklch(0.95 0.01 240);
+  --primary-foreground: oklch(0.1 0.01 240);
+  --ring: oklch(0.95 0.01 240 / 0.9);
+}
+
+/* Slate Theme */
+.theme-slate {
+  --primary: oklch(0.3 0.03 240);
+  --primary-foreground: oklch(1 0 0);
+  --ring: oklch(0.3 0.03 240 / 0.9);
+}
+.dark.theme-slate,
+.dark .theme-slate {
+  --primary: oklch(0.9 0.03 240);
+  --primary-foreground: oklch(0.1 0.01 240);
+  --ring: oklch(0.9 0.03 240 / 0.9);
+}
+
+/* Blue Theme */
+.theme-blue {
+  --primary: oklch(0.54 0.22 250);
+  --primary-foreground: oklch(1 0 0);
+  --ring: oklch(0.54 0.22 250 / 0.9);
+}
+.dark.theme-blue,
+.dark .theme-blue {
+  --primary: oklch(0.68 0.18 250);
+  --primary-foreground: oklch(1 0 0);
+  --ring: oklch(0.68 0.18 250 / 0.9);
+}
+
+/* Violet Theme */
+.theme-violet {
+  --primary: oklch(0.52 0.22 285);
+  --primary-foreground: oklch(1 0 0);
+  --ring: oklch(0.52 0.22 285 / 0.9);
+}
+.dark.theme-violet,
+.dark .theme-violet {
+  --primary: oklch(0.66 0.18 285);
+  --primary-foreground: oklch(1 0 0);
+  --ring: oklch(0.66 0.18 285 / 0.9);
+}
+
+/* Green Theme */
+.theme-green {
+  --primary: oklch(0.56 0.19 140);
+  --primary-foreground: oklch(1 0 0);
+  --ring: oklch(0.56 0.19 140 / 0.9);
+}
+.dark.theme-green,
+.dark .theme-green {
+  --primary: oklch(0.66 0.18 140);
+  --primary-foreground: oklch(1 0 0);
+  --ring: oklch(0.66 0.18 140 / 0.9);
+}
+
+/* Orange Theme */
+.theme-orange {
+  --primary: oklch(0.61 0.19 50);
+  --primary-foreground: oklch(1 0 0);
+  --ring: oklch(0.61 0.19 50 / 0.9);
+}
+.dark.theme-orange,
+.dark .theme-orange {
+  --primary: oklch(0.69 0.17 50);
+  --primary-foreground: oklch(1 0 0);
+  --ring: oklch(0.69 0.17 50 / 0.9);
+}
+
+/* Red Theme */
+.theme-red {
+  --primary: oklch(0.52 0.22 25);
+  --primary-foreground: oklch(1 0 0);
+  --ring: oklch(0.52 0.22 25 / 0.9);
+}
+.dark.theme-red,
+.dark .theme-red {
+  --primary: oklch(0.62 0.19 25);
+  --primary-foreground: oklch(1 0 0);
+  --ring: oklch(0.62 0.19 25 / 0.9);
+}
+
+/* Rose Theme */
+.theme-rose {
+  --primary: oklch(0.55 0.22 5);
+  --primary-foreground: oklch(1 0 0);
+  --ring: oklch(0.55 0.22 5 / 0.9);
+}
+.dark.theme-rose,
+.dark .theme-rose {
+  --primary: oklch(0.65 0.19 5);
+  --primary-foreground: oklch(1 0 0);
+  --ring: oklch(0.65 0.19 5 / 0.9);
+}
+
+/* Yellow Theme */
+.theme-yellow {
+  --primary: oklch(0.72 0.16 85);
+  --primary-foreground: oklch(0.2 0.02 85);
+  --ring: oklch(0.72 0.16 85 / 0.9);
+}
+.dark.theme-yellow,
+.dark .theme-yellow {
+  --primary: oklch(0.79 0.15 85);
+  --primary-foreground: oklch(0.1 0.01 85);
+  --ring: oklch(0.79 0.15 85 / 0.9);
+}
+
+/* ========== Density Compact Overrides ========== */
+
+/* Target table head heights and cell padding */
+.density-compact td[data-slot="table-cell"] {
+  padding: 0.35rem 0.5rem !important;
+}
+.density-compact th[data-slot="table-head"] {
+  height: 2.25rem !important;
+  padding-top: 0.25rem !important;
+  padding-bottom: 0.25rem !important;
+}
+.density-compact tr[data-slot="table-row"] {
+  min-height: 2.25rem;
+}
+
+/* Reduce standard gaps, padding and margins across the layout */
+.density-compact .py-4 {
+  padding-top: 0.75rem !important;
+  padding-bottom: 0.75rem !important;
+}
+.density-compact .gap-4 {
+  gap: 0.75rem !important;
+}
+.density-compact .p-6 {
+  padding: 1rem !important;
+}
+.density-compact .gap-6 {
+  gap: 1rem !important;
+}
+
+/* ========== Settings Page Collapsible Sidebar Width ========== */
+.settings-sidebar {
+  width: 3rem !important;
+}
+@media (min-width: 1024px) {
+  .settings-sidebar {
+    width: 15rem !important;
+  }
 }

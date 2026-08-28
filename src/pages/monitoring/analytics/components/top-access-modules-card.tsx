@@ -20,12 +20,12 @@ import type { ITopAccessModulesCardProps } from "@/types/monitoring/analytics";
 
 export function TopAccessModulesCard({ modules }: ITopAccessModulesCardProps) {
   const moduleTrafficData = [
-    { module: "Users", requests: 1420, fill: "var(--chart-1, #10b981)" },
-    { module: "Payments", requests: 980, fill: "var(--chart-2, #0ea5e9)" },
-    { module: "Invoices", requests: 750, fill: "var(--chart-3, #14b8a6)" },
-    { module: "Roles", requests: 620, fill: "var(--chart-4, #8b5cf6)" },
-    { module: "Tasks", requests: 430, fill: "var(--chart-5, #f59e0b)" },
-    { module: "Content", requests: 310, fill: "var(--chart-1, #059669)" },
+    { module: "Users", requests: 1420 },
+    { module: "Payments", requests: 980 },
+    { module: "Invoices", requests: 750 },
+    { module: "Roles", requests: 620 },
+    { module: "Tasks", requests: 430 },
+    { module: "Content", requests: 310 },
   ];
 
   const moduleTrafficConfig = {
@@ -72,9 +72,16 @@ export function TopAccessModulesCard({ modules }: ITopAccessModulesCardProps) {
             />
             <ChartTooltip content={<ChartTooltipContent />} />
             <Bar dataKey="requests" radius={[0, 4, 4, 0]}>
-              {moduleTrafficData.map((entry) => (
-                <Cell key={entry.module} fill={entry.fill} />
-              ))}
+              {moduleTrafficData.map((entry, index) => {
+                const opacity = 1 - index * 0.12;
+                return (
+                  <Cell
+                    key={entry.module}
+                    fill="var(--primary)"
+                    fillOpacity={opacity}
+                  />
+                );
+              })}
             </Bar>
           </BarChart>
         </ChartContainer>
