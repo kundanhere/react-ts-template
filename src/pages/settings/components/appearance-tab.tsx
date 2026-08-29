@@ -80,7 +80,7 @@ export default function AppearanceTab() {
             {/* Light Theme Card */}
             <button
               type="button"
-              onClick={() => setTheme("light")}
+              onClick={(e) => setTheme("light", e)}
               className={`hover:bg-muted/40 flex flex-col items-start rounded-lg border p-4 text-left transition-all ${
                 theme === "light"
                   ? "border-primary ring-primary/20 bg-muted/20 ring-2"
@@ -104,7 +104,7 @@ export default function AppearanceTab() {
             {/* Dark Theme Card */}
             <button
               type="button"
-              onClick={() => setTheme("dark")}
+              onClick={(e) => setTheme("dark", e)}
               className={`hover:bg-muted/40 flex flex-col items-start rounded-lg border p-4 text-left transition-all ${
                 theme === "dark"
                   ? "border-primary ring-primary/20 bg-muted/20 ring-2"
@@ -129,7 +129,7 @@ export default function AppearanceTab() {
             {/* System Theme Card */}
             <button
               type="button"
-              onClick={() => setTheme("system")}
+              onClick={(e) => setTheme("system", e)}
               className={`hover:bg-muted/40 flex flex-col items-start rounded-lg border p-4 text-left transition-all ${
                 theme === "system"
                   ? "border-primary ring-primary/20 bg-muted/20 ring-2"
@@ -176,7 +176,7 @@ export default function AppearanceTab() {
                   <TooltipTrigger asChild>
                     <button
                       type="button"
-                      onClick={() => setThemeColor(c.id)}
+                      onClick={(e) => setThemeColor(c.id, e)}
                       className={cn(
                         "relative flex size-6 cursor-pointer items-center justify-center rounded-full border border-black/10 transition-all hover:scale-105 active:scale-95 dark:border-white/10",
                         c.bg,

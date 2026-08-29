@@ -420,3 +420,42 @@ body {
     width: 15rem !important;
   }
 }
+
+/* ========== Theme Transition Support (Fallback for older browsers) ========== */
+.theme-transition,
+.theme-transition * {
+  transition:
+    background-color 0.25s ease-in-out,
+    border-color 0.25s ease-in-out,
+    color 0.25s ease-in-out,
+    fill 0.25s ease-in-out,
+    stroke 0.25s ease-in-out,
+    box-shadow 0.25s ease-in-out !important;
+  transition-delay: 0s !important;
+}
+
+/* ========== Circular Clip Path View Transition ========== */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+  opacity: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+  animation: clip-path-reveal 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+@keyframes clip-path-reveal {
+  from {
+    clip-path: circle(0px at var(--x, 50%) var(--y, 50%));
+  }
+  to {
+    clip-path: circle(150vmax at var(--x, 50%) var(--y, 50%));
+  }
+}

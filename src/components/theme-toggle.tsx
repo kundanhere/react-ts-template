@@ -26,7 +26,7 @@ export function ThemeToggle() {
       variant="ghost"
       size="icon-lg"
       aria-label="Toggle theme"
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={(e) => setTheme(isDark ? "light" : "dark", e)}
     >
       {isDark ? (
         <HugeiconsIcon icon={Moon02Icon} size={20} className="h-8 w-8" />

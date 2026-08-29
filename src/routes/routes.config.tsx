@@ -32,9 +32,6 @@ const PolicyDetailPage = lazy(
 );
 const ModulesPage = lazy(() => import("@/pages/iam/modules/page"));
 const SettingsPage = lazy(() => import("@/pages/settings/page"));
-const SecuritySettingsPage = lazy(
-  () => import("@/pages/settings/components/security-tab")
-);
 const SessionsPage = lazy(() => import("@/pages/iam/sessions/page"));
 const AuditLogsPage = lazy(() => import("@/pages/monitoring/audit-logs/page"));
 const MyActivityPage = lazy(() => import("@/pages/monitoring/activity/page"));
@@ -130,7 +127,7 @@ export const routes: IRouteConfig[] = [
       },
       {
         path: "iam/security/settings",
-        element: <SecuritySettingsPage />,
+        element: <HomePage />,
         title: "Security Settings",
         description: "Security and MFA settings",
       },
