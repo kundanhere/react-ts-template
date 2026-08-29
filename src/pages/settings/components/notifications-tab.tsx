@@ -1,11 +1,15 @@
 import * as React from "react";
 
-import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
+import {
+  Cancel01Icon,
+  CheckmarkCircle02Icon,
+} from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
+import { toast } from "@/components/ui/toast";
 
 export default function NotificationsTab() {
   const [success, setSuccess] = React.useState(false);
@@ -17,26 +21,38 @@ export default function NotificationsTab() {
 
   const handleSave = () => {
     setSuccess(true);
-    setTimeout(() => setSuccess(false), 3000);
+    toast.success("Notification preferences updated");
+    setTimeout(() => setSuccess(false), 5000);
   };
 
   return (
     <div className="max-w-4xl space-y-6">
       {/* Success banner */}
       {success && (
-        <div className="flex items-center gap-2 rounded-md border border-emerald-200 bg-emerald-50/70 p-3 text-xs text-emerald-800 dark:border-emerald-500/20 dark:bg-emerald-950/20 dark:text-emerald-400">
-          <HugeiconsIcon
-            icon={CheckmarkCircle02Icon}
-            className="size-4 text-emerald-600 dark:text-emerald-400"
-          />
-          <span>Notification preferences updated.</span>
+        <div className="flex items-center justify-between rounded-md border border-emerald-200 bg-emerald-50/70 p-3 text-xs text-emerald-800 dark:border-emerald-500/20 dark:bg-emerald-950/20 dark:text-emerald-400">
+          <div className="flex items-center gap-2">
+            <HugeiconsIcon
+              icon={CheckmarkCircle02Icon}
+              className="size-4 shrink-0 text-emerald-600 dark:text-emerald-400"
+            />
+            <span>Notification preferences updated successfully.</span>
+          </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setSuccess(false)}
+            className="size-6 p-0 hover:bg-emerald-100/50 dark:hover:bg-emerald-900/30"
+          >
+            <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
+          </Button>
         </div>
       )}
 
       <div>
         <h2 className="text-xl font-semibold tracking-tight">Notifications</h2>
         <p className="text-muted-foreground text-xs">
-          Configure how and when you receive system alerts and updates.
+          Configure your notification channels and choose which system alerts
+          you receive.
         </p>
       </div>
 
@@ -62,8 +78,8 @@ export default function NotificationsTab() {
                   Email notifications
                 </Label>
                 <p className="text-muted-foreground text-[11px] leading-normal">
-                  Receive alerts, weekly summaries, and system status updates at
-                  your public email address.
+                  Receive alerts, weekly digests, and system updates at your
+                  primary email address.
                 </p>
               </div>
             </div>
@@ -85,7 +101,8 @@ export default function NotificationsTab() {
                   Push notifications
                 </Label>
                 <p className="text-muted-foreground text-[11px] leading-normal">
-                  Receive real-time in-app dashboard alerts while logged in.
+                  Receive real-time in-app alerts directly in your browser while
+                  signed in.
                 </p>
               </div>
             </div>
@@ -93,7 +110,7 @@ export default function NotificationsTab() {
         </div>
 
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold">Alert Events</h3>
+          <h3 className="text-sm font-semibold">Security & Activity Alerts</h3>
           <p className="text-muted-foreground text-xs">
             Choose which security events trigger immediate notifications.
           </p>
@@ -111,11 +128,11 @@ export default function NotificationsTab() {
                   htmlFor="login-alert"
                   className="cursor-pointer text-xs font-semibold"
                 >
-                  New device log-in
+                  New device sign-in
                 </Label>
                 <p className="text-muted-foreground text-[11px] leading-normal">
-                  Alert me immediately when my account is accessed from a new IP
-                  or device.
+                  Receive an immediate alert when your account is accessed from
+                  a new device or IP address.
                 </p>
               </div>
             </div>
@@ -134,11 +151,11 @@ export default function NotificationsTab() {
                   htmlFor="role-change"
                   className="cursor-pointer text-xs font-semibold"
                 >
-                  Role changes & policy updates
+                  Role & policy changes
                 </Label>
                 <p className="text-muted-foreground text-[11px] leading-normal">
-                  Send notifications whenever my permissions, roles, or access
-                  policies are modified.
+                  Receive an alert whenever your account roles, permissions, or
+                  access policies are updated.
                 </p>
               </div>
             </div>
@@ -149,7 +166,7 @@ export default function NotificationsTab() {
 
         <Button
           onClick={handleSave}
-          className="bg-primary text-primary-foreground hover:bg-primary/90 h-8 text-xs"
+          className="bg-primary text-primary-foreground hover:bg-primary/90 h-8 shrink-0 px-4 text-xs font-medium"
         >
           Save preferences
         </Button>

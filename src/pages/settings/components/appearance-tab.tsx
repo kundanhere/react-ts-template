@@ -61,8 +61,8 @@ export default function AppearanceTab() {
       <div>
         <h2 className="text-xl font-semibold tracking-tight">Appearance</h2>
         <p className="text-muted-foreground text-xs">
-          Manage your theme, color mode, font size, and overall styling
-          preferences.
+          Customize the theme, accent color, text scaling, and interface
+          spacing.
         </p>
       </div>
 
@@ -73,7 +73,7 @@ export default function AppearanceTab() {
         <div>
           <h3 className="mb-2 text-sm font-semibold">Theme Mode</h3>
           <p className="text-muted-foreground mb-4 text-xs">
-            Select how the dashboard appearance looks to you.
+            Choose how the user interface is displayed on your device.
           </p>
 
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
@@ -95,9 +95,9 @@ export default function AppearanceTab() {
                   <div className="h-2 flex-1 rounded bg-slate-200" />
                 </div>
               </div>
-              <span className="text-xs font-semibold">Light mode</span>
+              <span className="text-xs font-semibold">Light Mode</span>
               <span className="text-muted-foreground mt-0.5 text-[10px]">
-                Always clean, bright, and easy to read.
+                A bright, clean appearance optimized for daylight.
               </span>
             </button>
 
@@ -119,9 +119,10 @@ export default function AppearanceTab() {
                   <div className="h-2 flex-1 rounded bg-zinc-800" />
                 </div>
               </div>
-              <span className="text-xs font-semibold">Dark mode</span>
+              <span className="text-xs font-semibold">Dark Mode</span>
               <span className="text-muted-foreground mt-0.5 text-[10px]">
-                Easy on the eyes, optimized for low light.
+                A dark interface designed to reduce eye strain in low-light
+                environments.
               </span>
             </button>
 
@@ -147,9 +148,9 @@ export default function AppearanceTab() {
                   </div>
                 </div>
               </div>
-              <span className="text-xs font-semibold">Sync with system</span>
+              <span className="text-xs font-semibold">Sync with System</span>
               <span className="text-muted-foreground mt-0.5 text-[10px]">
-                Matches your OS theme mode automatically.
+                Automatically match your system's light or dark mode settings.
               </span>
             </button>
           </div>
@@ -162,8 +163,8 @@ export default function AppearanceTab() {
           <div>
             <h3 className="text-sm font-semibold">Color Theme</h3>
             <p className="text-muted-foreground text-xs">
-              Select the primary accent color for buttons, active states, and
-              highlights.
+              Choose the primary accent color for buttons, active states, and
+              focus indicators.
             </p>
           </div>
 
@@ -214,7 +215,7 @@ export default function AppearanceTab() {
           <div>
             <h3 className="text-sm font-semibold">Font Size</h3>
             <p className="text-muted-foreground text-xs">
-              Adjust the overall font scaling of the interface.
+              Scale the size of the interface text to your preference.
             </p>
           </div>
 
@@ -275,8 +276,7 @@ export default function AppearanceTab() {
           <div>
             <h3 className="text-sm font-semibold">Border Radius</h3>
             <p className="text-muted-foreground text-xs">
-              Configure the corner roundness of buttons, cards, and input
-              fields.
+              Adjust the roundness of corners for buttons, cards, and inputs.
             </p>
           </div>
 
@@ -323,7 +323,8 @@ export default function AppearanceTab() {
                 Compact density mode
               </Label>
               <p className="text-muted-foreground text-[11px]">
-                Shrink row heights and spacing to show more content.
+                Reduce row heights and margins to fit more information on
+                screen.
               </p>
             </div>
             <Checkbox

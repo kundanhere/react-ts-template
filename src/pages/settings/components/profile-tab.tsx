@@ -37,6 +37,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
+import { toast } from "@/components/ui/toast";
 import type { ISocialLink } from "@/types/settings";
 
 function getSocialIcon(url: string) {
@@ -120,7 +121,8 @@ export default function ProfileTab() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSuccessMessage("Your profile saved successfully.");
+    setSuccessMessage("Profile settings updated successfully.");
+    toast.success("Profile settings updated");
     window.scrollTo({ top: 0, behavior: "smooth" });
     setTimeout(() => {
       setSuccessMessage(null);
@@ -143,6 +145,7 @@ export default function ProfileTab() {
             variant="ghost"
             size="icon"
             onClick={() => setSuccessMessage(null)}
+            className="size-6 p-0 hover:bg-emerald-100/50 dark:hover:bg-emerald-900/30"
           >
             <HugeiconsIcon icon={Cancel01Icon} className="size-3.5" />
           </Button>
@@ -151,10 +154,9 @@ export default function ProfileTab() {
 
       {/* Header */}
       <div>
-        <h2 className="text-xl font-semibold tracking-tight">Your profile</h2>
+        <h2 className="text-xl font-semibold tracking-tight">Your Profile</h2>
         <p className="text-muted-foreground text-xs">
-          Manage how other users view your profile details and social
-          integrations.
+          Manage your public profile details, location, and social links.
         </p>
       </div>
 
@@ -176,8 +178,8 @@ export default function ProfileTab() {
               placeholder="Your name"
             />
             <p className="text-muted-foreground text-[11px] leading-normal">
-              Your name may appear around the application where you contribute
-              or are active.
+              Your name is displayed across the platform where you perform
+              actions or create content.
             </p>
           </div>
 
@@ -201,7 +203,7 @@ export default function ProfileTab() {
             </Select>
             <p className="text-muted-foreground text-[11px] leading-normal">
               This email will be displayed to other signed-in users on your
-              profile.
+              public profile.
             </p>
           </div>
 
@@ -433,7 +435,8 @@ export default function ProfileTab() {
                   Show status on profile
                 </Label>
                 <span className="text-muted-foreground text-[11px] leading-normal">
-                  Show status updates and what you are working on.
+                  Show status updates and current activities on your public
+                  profile.
                 </span>
               </div>
             </div>
@@ -501,8 +504,8 @@ export default function ProfileTab() {
           </div>
 
           <p className="text-muted-foreground mt-2 text-center text-xs leading-normal lg:text-left">
-            Uploaded images are resized and cropped automatically. Supported
-            formats: JPEG, PNG. Max size 1MB
+            Supported formats: JPEG, PNG. Maximum file size: 1MB. Images are
+            automatically resized and cropped.
           </p>
         </div>
       </div>

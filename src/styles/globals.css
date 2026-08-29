@@ -57,7 +57,7 @@
   --sidebar-ring: var(--ring);
 
   /* Typography, shape, and elevation tokens */
-  --font-sans: "Geist", sans-serif;
+  --font-sans: "Inter Variable", "Inter", sans-serif;
   --font-heading: "Prata", sans-serif;
   --radius: 0.75rem;
 
@@ -216,7 +216,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
   }
   html {
     @apply font-sans;

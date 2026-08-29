@@ -1,19 +1,18 @@
 "use client";
 
-import * as React from "react";
-
 import {
   Audit02Icon,
   BellIcon,
   BiometricAccessIcon,
   LaptopPhoneSyncIcon,
   LockKeyIcon,
-  MailValidation01Icon,
+  Mail02Icon,
   PaintBoardIcon,
   Settings01Icon,
   UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useSearchParams } from "react-router-dom";
 
 import { PageWrapper } from "@/components/page-wrapper";
 import {
@@ -35,16 +34,30 @@ import {
 
 import AccountTab from "./components/account-tab";
 import AppearanceTab from "./components/appearance-tab";
+import EmailsTab from "./components/emails-tab";
 import NotificationsTab from "./components/notifications-tab";
 import ProfileTab from "./components/profile-tab";
 import SecurityTab from "./components/security-tab";
+import SessionsTab from "./components/sessions-tab";
 
-const data = {
+interface ISettingsItem {
+  name: string;
+  id: string;
+  icon: React.ReactNode;
+  disabled?: boolean;
+}
+
+interface ISettingsGroup {
+  label?: string;
+  items: ISettingsItem[];
+}
+
+const data: { groups: ISettingsGroup[] } = {
   groups: [
     {
       items: [
         {
-          name: "Your profile",
+          name: "Your Profile",
           id: "profile",
           icon: <HugeiconsIcon icon={UserIcon} />,
         },
@@ -65,13 +78,13 @@ const data = {
       items: [
         {
           name: "Password & Security",
-          id: "advanced",
+          id: "security",
           icon: <HugeiconsIcon icon={BiometricAccessIcon} />,
         },
         {
-          name: "Verified Emails",
+          name: "Emails",
           id: "emails",
-          icon: <HugeiconsIcon icon={MailValidation01Icon} />,
+          icon: <HugeiconsIcon icon={Mail02Icon} />,
         },
         {
           name: "Active Sessions",
@@ -82,6 +95,7 @@ const data = {
           name: "Access Tokens",
           id: "tokens",
           icon: <HugeiconsIcon icon={LockKeyIcon} />,
+          disabled: true,
         },
       ],
     },
@@ -104,7 +118,9 @@ const data = {
 };
 
 const SettingsPage = () => {
-  const [activeTab, setActiveTab] = React.useState("profile");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get("tab") || "profile";
+  const setActiveTab = (tab: string) => setSearchParams({ tab });
 
   const renderTabContent = () => {
     switch (activeTab) {
@@ -116,8 +132,12 @@ const SettingsPage = () => {
         return <NotificationsTab />;
       case "appearance":
         return <AppearanceTab />;
-      case "advanced":
+      case "security":
         return <SecurityTab />;
+      case "emails":
+        return <EmailsTab />;
+      case "sessions":
+        return <SessionsTab />;
       default:
         return (
           <div className="flex h-87.5 flex-col items-center justify-center rounded-lg border border-dashed p-12 text-center">
@@ -164,6 +184,7 @@ const SettingsPage = () => {
                               <SidebarMenuButton
                                 onClick={() => setActiveTab(item.id)}
                                 isActive={isActive}
+                                disabled={item?.disabled}
                                 className="mx-auto size-8 justify-center lg:mx-0 lg:h-8 lg:w-full lg:justify-start"
                               >
                                 {item.icon}

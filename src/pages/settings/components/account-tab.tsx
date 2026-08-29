@@ -8,6 +8,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
@@ -29,7 +30,7 @@ export default function AccountTab() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSuccessMessage("Your account preferences have been saved successfully.");
+    setSuccessMessage("Account preferences updated successfully.");
     toast.success("Account settings updated");
     window.scrollTo({ top: 0, behavior: "smooth" });
     setTimeout(() => {
@@ -63,11 +64,11 @@ export default function AccountTab() {
       {/* Header */}
       <div>
         <h2 className="text-xl font-semibold tracking-tight">
-          Account settings
+          Account Settings
         </h2>
         <p className="text-muted-foreground text-xs">
-          Manage your account localization preferences, timezone, and regional
-          formats.
+          Manage your account language, region, timezone, and localized format
+          preferences.
         </p>
       </div>
 
@@ -87,7 +88,7 @@ export default function AccountTab() {
               value={language}
               onValueChange={(val) => val && setLanguage(val)}
             >
-              <SelectTrigger id="language" className="w-full max-w-xl">
+              <SelectTrigger id="language" className="bg-card w-full max-w-xl">
                 <SelectValue placeholder="Select language" />
               </SelectTrigger>
               <SelectContent>
@@ -101,20 +102,20 @@ export default function AccountTab() {
               </SelectContent>
             </Select>
             <p className="text-muted-foreground text-[11px] leading-normal">
-              Set your primary interface language.
+              Select your preferred language for the user interface.
             </p>
           </div>
 
           {/* Region Selector */}
           <div className="space-y-1.5">
             <Label htmlFor="region" className="text-xs font-semibold">
-              Region / Locale
+              Region
             </Label>
             <Select
               value={region}
               onValueChange={(val) => val && setRegion(val)}
             >
-              <SelectTrigger id="region" className="w-full max-w-xl">
+              <SelectTrigger id="region" className="bg-card w-full max-w-xl">
                 <SelectValue placeholder="Select region" />
               </SelectTrigger>
               <SelectContent>
@@ -128,7 +129,7 @@ export default function AccountTab() {
               </SelectContent>
             </Select>
             <p className="text-muted-foreground text-[11px] leading-normal">
-              Determines regional settings like currency and number formats.
+              Select your country or region to format currencies and numbers.
             </p>
           </div>
         </div>
@@ -148,7 +149,7 @@ export default function AccountTab() {
               value={timezone}
               onValueChange={(val) => val && setTimezone(val)}
             >
-              <SelectTrigger id="timezone" className="w-full max-w-xl">
+              <SelectTrigger id="timezone" className="bg-card w-full max-w-xl">
                 <SelectValue placeholder="Select timezone" />
               </SelectTrigger>
               <SelectContent>
@@ -172,7 +173,8 @@ export default function AccountTab() {
               </SelectContent>
             </Select>
             <p className="text-muted-foreground text-[11px] leading-normal">
-              All timestamps in log feeds and analytics will align to this zone.
+              All timestamps in system logs, activity feeds, and reports will
+              align to this timezone.
             </p>
           </div>
 
@@ -185,7 +187,10 @@ export default function AccountTab() {
               value={dateFormat}
               onValueChange={(val) => val && setDateFormat(val)}
             >
-              <SelectTrigger id="date-format" className="w-full max-w-xl">
+              <SelectTrigger
+                id="date-format"
+                className="bg-card w-full max-w-xl"
+              >
                 <SelectValue placeholder="Select date format" />
               </SelectTrigger>
               <SelectContent>
@@ -204,37 +209,37 @@ export default function AccountTab() {
               </SelectContent>
             </Select>
             <p className="text-muted-foreground text-[11px] leading-normal">
-              Choose how calendar dates are formatted.
+              Select your preferred date display format.
             </p>
           </div>
 
           {/* Time Format Selector */}
           <div className="space-y-2 pt-1">
             <Label className="text-xs font-semibold">Time Format</Label>
-            <div className="flex gap-4">
-              <label className="flex cursor-pointer items-center gap-2 text-xs">
-                <input
-                  type="radio"
-                  name="timeFormat"
+
+            <RadioGroup
+              value={timeFormat}
+              onValueChange={setTimeFormat}
+              className="flex w-fit gap-4"
+            >
+              <div className="flex items-center gap-3">
+                <RadioGroupItem
+                  id="r1"
                   value="12h"
-                  checked={timeFormat === "12h"}
-                  onChange={(e) => setTimeFormat(e.target.value)}
-                  className="accent-primary cursor-pointer"
+                  className="cursor-pointer"
                 />
-                12-hour clock (e.g. 1:30 PM)
-              </label>
-              <label className="flex cursor-pointer items-center gap-2 text-xs">
-                <input
-                  type="radio"
-                  name="timeFormat"
+                <Label htmlFor="r1">12-hour clock (e.g. 1:30 PM)</Label>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <RadioGroupItem
+                  id="r2"
                   value="24h"
-                  checked={timeFormat === "24h"}
-                  onChange={(e) => setTimeFormat(e.target.value)}
-                  className="accent-primary cursor-pointer"
+                  className="cursor-pointer"
                 />
-                24-hour clock (e.g. 13:30)
-              </label>
-            </div>
+                <Label htmlFor="r2">24-hour clock (e.g. 13:30)</Label>
+              </div>
+            </RadioGroup>
           </div>
         </div>
 
