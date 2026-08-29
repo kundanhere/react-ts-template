@@ -1,27 +1,45 @@
 import * as React from "react";
 
 import {
+  AlertCircleIcon,
+  ArchiveArrowDownIcon,
   Cancel01Icon,
   CheckmarkCircle02Icon,
+  ComputerIcon,
+  LockIcon,
+  Mail02Icon,
+  Settings01Icon,
+  ShieldCheck,
+  SmartPhone01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/toast";
 
 export default function NotificationsTab() {
   const [success, setSuccess] = React.useState(false);
 
+  // Channel States
+  const [inboxNotif, setInboxNotif] = React.useState(true);
   const [emailNotif, setEmailNotif] = React.useState(true);
-  const [pushNotif, setPushNotif] = React.useState(true);
-  const [loginAlert, setLoginAlert] = React.useState(true);
-  const [roleChange, setRoleChange] = React.useState(true);
+  const [immediateAlert, setImmediateAlert] = React.useState(false);
+  const [integrationsNotif, setIntegrationsNotif] = React.useState(true);
+  const [mobileNotif, setMobileNotif] = React.useState(false);
+  const [desktopNotif, setDesktopNotif] = React.useState(false);
+
+  // Security Alert States
+  const [failedLoginAlert, setFailedLoginAlert] = React.useState(true);
+  const [mfaAlert, setMfaAlert] = React.useState(true);
+  const [unrecognizedLoginAlert, setUnrecognizedLoginAlert] =
+    React.useState(true);
+  const [tokenAlert, setTokenAlert] = React.useState(false);
 
   const handleSave = () => {
     setSuccess(true);
     toast.success("Notification preferences updated");
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setTimeout(() => setSuccess(false), 5000);
   };
 
@@ -48,116 +66,324 @@ export default function NotificationsTab() {
         </div>
       )}
 
+      {/* Header */}
       <div>
         <h2 className="text-xl font-semibold tracking-tight">Notifications</h2>
         <p className="text-muted-foreground text-xs">
-          Configure your notification channels and choose which system alerts
-          you receive.
+          Configure how and where you receive task updates, security
+          notifications, and app integrations.
         </p>
       </div>
 
       <div className="border-border/60 border-t" />
 
       <div className="space-y-6">
-        <div className="space-y-3">
-          <h3 className="text-sm font-semibold">Notification channels</h3>
+        {/* Notification Channels Section */}
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-sm font-semibold">Notification channels</h3>
+            <p className="text-muted-foreground text-xs">
+              Choose which channels to activate for system, task, and project
+              updates.
+            </p>
+          </div>
 
-          <div className="bg-muted/10 space-y-3 rounded-lg border p-4">
-            <div className="flex items-start gap-3">
-              <Checkbox
-                id="email-notif"
-                checked={emailNotif}
-                onCheckedChange={(checked) => setEmailNotif(!!checked)}
+          <div className="border-border/80 bg-muted/20 space-y-4 rounded-lg border p-4">
+            {/* Inbox */}
+            <div className="border-border/60 flex flex-wrap items-start justify-between gap-4 border-b pb-4 sm:flex-nowrap">
+              <div className="flex items-start gap-3">
+                <div className="bg-muted text-muted-foreground mt-0.5 shrink-0 rounded-md p-2">
+                  <HugeiconsIcon
+                    icon={ArchiveArrowDownIcon}
+                    className="size-4.5"
+                  />
+                </div>
+                <div className="space-y-0.5">
+                  <span className="text-foreground text-xs font-semibold">
+                    Inbox
+                  </span>
+                  <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                    You'll consistently get notifications for your subscriptions
+                    within your TeamTask inbox.
+                  </p>
+                </div>
+              </div>
+              <Switch
+                checked={inboxNotif}
+                onCheckedChange={setInboxNotif}
                 className="mt-0.5"
               />
-              <div className="space-y-0.5">
-                <Label
-                  htmlFor="email-notif"
-                  className="cursor-pointer text-xs font-semibold"
-                >
-                  Email notifications
-                </Label>
-                <p className="text-muted-foreground text-[11px] leading-normal">
-                  Receive alerts, weekly digests, and system updates at your
-                  primary email address.
-                </p>
-              </div>
             </div>
 
-            <div className="border-border/40 my-2 border-t" />
+            {/* Email */}
+            <div className="border-border/60 space-y-3 border-b pb-4">
+              <div className="flex flex-wrap items-start justify-between gap-4 sm:flex-nowrap">
+                <div className="flex items-start gap-3">
+                  <div className="bg-muted text-muted-foreground mt-0.5 shrink-0 rounded-md p-2">
+                    <HugeiconsIcon icon={Mail02Icon} className="size-4.5" />
+                  </div>
+                  <div className="space-y-0.5">
+                    <span className="text-foreground text-xs font-semibold">
+                      Email
+                    </span>
+                    <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                      Get an email summary for unread notifications, with
+                      notifications grouped and sent according to their urgency.
+                    </p>
+                  </div>
+                </div>
+                <Switch
+                  checked={emailNotif}
+                  onCheckedChange={setEmailNotif}
+                  className="mt-0.5"
+                />
+              </div>
 
-            <div className="flex items-start gap-3">
-              <Checkbox
-                id="push-notif"
-                checked={pushNotif}
-                onCheckedChange={(checked) => setPushNotif(!!checked)}
+              {emailNotif && (
+                <div className="border-border/40 flex flex-wrap items-start justify-between gap-4 border-t pt-3 pl-11 sm:flex-nowrap">
+                  <div className="space-y-0.5">
+                    <span className="text-foreground text-[11.5px] font-semibold">
+                      Immediate email alert for urgent tasks
+                    </span>
+                    <p className="text-muted-foreground max-w-lg text-[10.5px] leading-normal">
+                      Receive an immediate email alert whenever a task assigned
+                      to you is marked urgent or associated with a high-priority
+                      project with a tight deadline.
+                    </p>
+                  </div>
+                  <Switch
+                    checked={immediateAlert}
+                    onCheckedChange={setImmediateAlert}
+                    className="mt-0.5"
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Integrations */}
+            <div className="border-border/60 space-y-3 border-b pb-4">
+              <div className="flex flex-wrap items-start justify-between gap-4 sm:flex-nowrap">
+                <div className="flex items-start gap-3">
+                  <div className="bg-muted text-muted-foreground mt-0.5 shrink-0 rounded-md p-2">
+                    <HugeiconsIcon icon={Settings01Icon} className="size-4.5" />
+                  </div>
+                  <div className="space-y-0.5">
+                    <span className="text-foreground text-xs font-semibold">
+                      Integrations
+                    </span>
+                    <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                      Get personal notifications integrated into messaging apps
+                      like Slack or Discord:
+                    </p>
+                  </div>
+                </div>
+                <Switch
+                  checked={integrationsNotif}
+                  onCheckedChange={setIntegrationsNotif}
+                  className="mt-0.5"
+                />
+              </div>
+              {integrationsNotif && (
+                <div className="border-border/40 flex flex-wrap items-center gap-3.5 border-t pt-3 pl-11">
+                  <img
+                    src="/svg/telegram.svg"
+                    alt="Telegram"
+                    className="size-4.5 shrink-0 object-contain"
+                  />
+                  <img
+                    src="/svg/slack.svg"
+                    alt="Slack"
+                    className="size-4.5 shrink-0 object-contain"
+                  />
+                  <img
+                    src="/svg/line.svg"
+                    alt="LINE"
+                    className="size-4.5 shrink-0 object-contain"
+                  />
+                  <img
+                    src="/svg/whatsapp.svg"
+                    alt="WhatsApp"
+                    className="size-4.5 shrink-0 object-contain"
+                  />
+                  <img
+                    src="/svg/discord.svg"
+                    alt="Discord"
+                    className="size-4.5 shrink-0 object-contain"
+                  />
+                  <img
+                    src="/svg/chat.svg"
+                    alt="Google Chat"
+                    className="size-4.5 shrink-0 object-contain"
+                  />
+                  <button
+                    type="button"
+                    className="text-primary ml-1 cursor-pointer border-none bg-transparent p-0 text-[10.5px] font-medium hover:underline"
+                    onClick={() =>
+                      toast.info(
+                        "Integrations management dialog triggered (simulated)"
+                      )
+                    }
+                  >
+                    Manage
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Mobile */}
+            <div className="border-border/60 flex flex-wrap items-start justify-between gap-4 border-b pb-4 sm:flex-nowrap">
+              <div className="flex items-start gap-3">
+                <div className="bg-muted text-muted-foreground mt-0.5 shrink-0 rounded-md p-2">
+                  <HugeiconsIcon icon={SmartPhone01Icon} className="size-4.5" />
+                </div>
+                <div className="space-y-0.5">
+                  <span className="text-foreground text-xs font-semibold">
+                    Mobile
+                  </span>
+                  <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                    You'll get notifications for your subscriptions directly to
+                    your mobile app inbox.
+                  </p>
+                </div>
+              </div>
+              <Switch
+                checked={mobileNotif}
+                onCheckedChange={setMobileNotif}
                 className="mt-0.5"
               />
-              <div className="space-y-0.5">
-                <Label
-                  htmlFor="push-notif"
-                  className="cursor-pointer text-xs font-semibold"
-                >
-                  Push notifications
-                </Label>
-                <p className="text-muted-foreground text-[11px] leading-normal">
-                  Receive real-time in-app alerts directly in your browser while
-                  signed in.
-                </p>
+            </div>
+
+            {/* Desktop */}
+            <div className="flex flex-wrap items-start justify-between gap-4 sm:flex-nowrap">
+              <div className="flex items-start gap-3">
+                <div className="bg-muted text-muted-foreground mt-0.5 shrink-0 rounded-md p-2">
+                  <HugeiconsIcon icon={ComputerIcon} className="size-4.5" />
+                </div>
+                <div className="space-y-0.5">
+                  <span className="text-foreground text-xs font-semibold">
+                    Desktop
+                  </span>
+                  <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                    You'll receive notifications for your subscriptions directly
+                    to your inbox on either the desktop app or website app.
+                  </p>
+                </div>
               </div>
+              <Switch
+                checked={desktopNotif}
+                onCheckedChange={setDesktopNotif}
+                className="mt-0.5"
+              />
             </div>
           </div>
         </div>
 
-        <div className="space-y-3">
-          <h3 className="text-sm font-semibold">Security & Activity Alerts</h3>
-          <p className="text-muted-foreground text-xs">
-            Choose which security events trigger immediate notifications.
-          </p>
+        <div className="border-border/60 border-t pt-6" />
 
-          <div className="bg-muted/10 space-y-3 rounded-lg border p-4">
-            <div className="flex items-start gap-3">
-              <Checkbox
-                id="login-alert"
-                checked={loginAlert}
-                onCheckedChange={(checked) => setLoginAlert(!!checked)}
+        {/* Security Alerts Section */}
+        <div className="space-y-4">
+          <div>
+            <h3 className="text-sm font-semibold">Security Alerts</h3>
+            <p className="text-muted-foreground text-xs">
+              Choose which security events and authentication triggers
+              immediately send notifications.
+            </p>
+          </div>
+
+          <div className="border-border/80 bg-muted/20 space-y-4 rounded-lg border p-4">
+            {/* Failed Logins */}
+            <div className="border-border/60 flex flex-wrap items-start justify-between gap-4 border-b pb-4 sm:flex-nowrap">
+              <div className="flex items-start gap-3">
+                <div className="bg-muted text-muted-foreground mt-0.5 shrink-0 rounded-md p-2">
+                  <HugeiconsIcon icon={AlertCircleIcon} className="size-4.5" />
+                </div>
+                <div className="space-y-0.5">
+                  <span className="text-foreground text-xs font-semibold">
+                    Failed sign-in threshold alert
+                  </span>
+                  <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                    Receive an immediate email and dashboard notification if
+                    there are 5 or more consecutive failed login attempts on
+                    your account.
+                  </p>
+                </div>
+              </div>
+              <Switch
+                checked={failedLoginAlert}
+                onCheckedChange={setFailedLoginAlert}
                 className="mt-0.5"
               />
-              <div className="space-y-0.5">
-                <Label
-                  htmlFor="login-alert"
-                  className="cursor-pointer text-xs font-semibold"
-                >
-                  New device sign-in
-                </Label>
-                <p className="text-muted-foreground text-[11px] leading-normal">
-                  Receive an immediate alert when your account is accessed from
-                  a new device or IP address.
-                </p>
-              </div>
             </div>
 
-            <div className="border-border/40 my-2 border-t" />
-
-            <div className="flex items-start gap-3">
-              <Checkbox
-                id="role-change"
-                checked={roleChange}
-                onCheckedChange={(checked) => setRoleChange(!!checked)}
+            {/* Credential & MFA Update */}
+            <div className="border-border/60 flex flex-wrap items-start justify-between gap-4 border-b pb-4 sm:flex-nowrap">
+              <div className="flex items-start gap-3">
+                <div className="bg-muted text-muted-foreground mt-0.5 shrink-0 rounded-md p-2">
+                  <HugeiconsIcon icon={LockIcon} className="size-4.5" />
+                </div>
+                <div className="space-y-0.5">
+                  <span className="text-foreground text-xs font-semibold">
+                    MFA & Credential updates
+                  </span>
+                  <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                    Receive an alert whenever your password is modified or
+                    multi-factor authentication (TOTP/SMS/Passkeys) settings are
+                    added, disabled, or changed.
+                  </p>
+                </div>
+              </div>
+              <Switch
+                checked={mfaAlert}
+                onCheckedChange={setMfaAlert}
                 className="mt-0.5"
               />
-              <div className="space-y-0.5">
-                <Label
-                  htmlFor="role-change"
-                  className="cursor-pointer text-xs font-semibold"
-                >
-                  Role & policy changes
-                </Label>
-                <p className="text-muted-foreground text-[11px] leading-normal">
-                  Receive an alert whenever your account roles, permissions, or
-                  access policies are updated.
-                </p>
+            </div>
+
+            {/* New Device Logins */}
+            <div className="border-border/60 flex flex-wrap items-start justify-between gap-4 border-b pb-4 sm:flex-nowrap">
+              <div className="flex items-start gap-3">
+                <div className="bg-muted text-muted-foreground mt-0.5 shrink-0 rounded-md p-2">
+                  <HugeiconsIcon icon={ShieldCheck} className="size-4.5" />
+                </div>
+                <div className="space-y-0.5">
+                  <span className="text-foreground text-xs font-semibold">
+                    Unrecognized device sign-ins
+                  </span>
+                  <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                    Get notified immediately when a successful sign-in is
+                    recorded from a new browser session, device hardware
+                    profile, or geographic location.
+                  </p>
+                </div>
               </div>
+              <Switch
+                checked={unrecognizedLoginAlert}
+                onCheckedChange={setUnrecognizedLoginAlert}
+                className="mt-0.5"
+              />
+            </div>
+
+            {/* Access Token Creation */}
+            <div className="flex flex-wrap items-start justify-between gap-4 sm:flex-nowrap">
+              <div className="flex items-start gap-3">
+                <div className="bg-muted text-muted-foreground mt-0.5 shrink-0 rounded-md p-2">
+                  <HugeiconsIcon icon={Settings01Icon} className="size-4.5" />
+                </div>
+                <div className="space-y-0.5">
+                  <span className="text-foreground text-xs font-semibold">
+                    Access token creation & updates
+                  </span>
+                  <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                    Receive notification logs when a new developer access token,
+                    API integration, or OAuth authentication is created.
+                  </p>
+                </div>
+              </div>
+              <Switch
+                checked={tokenAlert}
+                onCheckedChange={setTokenAlert}
+                className="mt-0.5"
+              />
             </div>
           </div>
         </div>
