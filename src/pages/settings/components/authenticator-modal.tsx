@@ -152,15 +152,16 @@ export function AuthenticatorModal({
 
               <InputOTP maxLength={6} value={otp} onChange={setOtp}>
                 <InputOTPGroup className="gap-2">
-                  {Array.from({ length: 6 }).map((_, i) => (
-                    <InputOTPSlot
-                      // eslint-disable-next-line react/no-array-index-key
-                      key={i}
-                      index={i}
-                      placeholder="0"
-                      className="border-input bg-card data-[active=true]:border-ring data-[active=true]:ring-ring/30 size-9 rounded-lg border border-l text-center font-mono text-sm font-semibold first:rounded-lg last:rounded-lg data-[active=true]:ring-2"
-                    />
-                  ))}
+                  {Array.from({ length: 6 }, () => crypto.randomUUID()).map(
+                    (id, i) => (
+                      <InputOTPSlot
+                        key={id}
+                        index={i}
+                        placeholder="0"
+                        className="border-input bg-card data-[active=true]:border-ring data-[active=true]:ring-ring/30 size-9 rounded-lg border border-l text-center font-mono text-sm font-semibold first:rounded-lg last:rounded-lg data-[active=true]:ring-2"
+                      />
+                    )
+                  )}
                 </InputOTPGroup>
               </InputOTP>
             </div>
