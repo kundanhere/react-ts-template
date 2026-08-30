@@ -1,3 +1,4 @@
+import { ErrorBoundary } from "@/app/error-boundary";
 import { RouteRenderer } from "@/routes/route-renderer";
 
 import { Providers } from "./providers";
@@ -5,7 +6,9 @@ import { Providers } from "./providers";
 function App() {
   return (
     <Providers>
-      <RouteRenderer />
+      <ErrorBoundary variant="root">
+        <RouteRenderer />
+      </ErrorBoundary>
     </Providers>
   );
 }

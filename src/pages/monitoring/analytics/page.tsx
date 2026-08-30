@@ -4,6 +4,7 @@ import { RefreshIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "react-router-dom";
 
+import { ErrorBoundary } from "@/app/error-boundary";
 import { PageWrapper } from "@/components/page-wrapper";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
@@ -559,7 +560,9 @@ export default function AnalyticsPage() {
             timeRange={timeRange}
             setTimeRange={setTimeRange}
           />
-          <PolicyRatioCard policies={policies} />
+          <ErrorBoundary variant="component">
+            <PolicyRatioCard policies={policies} />
+          </ErrorBoundary>
         </div>
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
@@ -573,11 +576,13 @@ export default function AnalyticsPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-          <ActiveSessionsCard
-            sessions={sessions}
-            users={users}
-            onRevokeSession={handleRevokeSession}
-          />
+          <ErrorBoundary variant="component">
+            <ActiveSessionsCard
+              sessions={sessions}
+              users={users}
+              onRevokeSession={handleRevokeSession}
+            />
+          </ErrorBoundary>
           <SecurityFindingsCard users={users} />
         </div>
       </div>

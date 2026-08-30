@@ -1,6 +1,5 @@
 import { lazy } from "react";
 
-import { ErrorBoundary } from "@/app/error-boundary";
 import { Layout } from "@/layout";
 import { RouteGuard } from "@/routes/route-guard";
 
@@ -46,11 +45,9 @@ const FeedbackPage = lazy(() => import("@/pages/feedback/page"));
 
 // DashboardProtected wrapper
 const DashboardProtected = () => (
-  <ErrorBoundary>
-    <RouteGuard requireAuth redirectTo="/">
-      <DashboardPage />
-    </RouteGuard>
-  </ErrorBoundary>
+  <RouteGuard requireAuth redirectTo="/">
+    <DashboardPage />
+  </RouteGuard>
 );
 
 // Route configuration object
