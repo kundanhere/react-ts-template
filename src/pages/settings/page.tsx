@@ -3,12 +3,12 @@
 import {
   Audit02Icon,
   BellIcon,
-  BiometricAccessIcon,
   LaptopPhoneSyncIcon,
   LockKeyIcon,
   Mail02Icon,
   PaintBoardIcon,
   Settings01Icon,
+  Shield01Icon,
   UserIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -79,7 +79,7 @@ const data: { groups: ISettingsGroup[] } = {
         {
           name: "Password & Security",
           id: "security",
-          icon: <HugeiconsIcon icon={BiometricAccessIcon} />,
+          icon: <HugeiconsIcon icon={Shield01Icon} />,
         },
         {
           name: "Emails",
