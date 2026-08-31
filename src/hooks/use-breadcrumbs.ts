@@ -25,7 +25,9 @@ export function useBreadcrumbs(): IBreadcrumbItem[] {
 
     // IAM Main Section
     "/iam/dashboard": {
-      title: "Identity & Access",
+      title: "Analytics & Metrics",
+      parent: "Identity & Access",
+      parentHref: "/iam/dashboard",
     },
     "/iam/users": {
       title: "Users",
@@ -57,7 +59,7 @@ export function useBreadcrumbs(): IBreadcrumbItem[] {
     "/iam/sessions": {
       title: "Active Sessions",
       parent: "Security & System",
-      parentHref: "/iam/security/settings",
+      parentHref: "/iam/sessions",
     },
     "/iam/audit": {
       title: "Audit Trail",
@@ -65,7 +67,7 @@ export function useBreadcrumbs(): IBreadcrumbItem[] {
       parentHref: "/iam/sessions",
     },
     "/iam/audit/me": {
-      title: "My Activity Log",
+      title: "Activity Log",
       parent: "Audit Trail",
       parentHref: "/iam/audit/logs",
     },
@@ -79,7 +81,7 @@ export function useBreadcrumbs(): IBreadcrumbItem[] {
     "/iam/access-matrix": {
       title: "Access Matrix",
       parent: "Governance & Tools",
-      parentHref: "/iam/dashboard",
+      parentHref: "/iam/access-matrix",
     },
     "/iam/access/simulate": {
       title: "Policy Simulator",
@@ -87,7 +89,8 @@ export function useBreadcrumbs(): IBreadcrumbItem[] {
       parentHref: "/iam/access-matrix",
     },
 
-    // Secondary
+    // Secondary / Utilities
+    "/settings": { title: "Settings" },
     "/support": { title: "Support" },
     "/feedback": { title: "Feedback" },
   };

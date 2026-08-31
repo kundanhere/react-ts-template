@@ -31,7 +31,7 @@ export function ActivityTableToolbarActions({
         variant="outline"
         onClick={() =>
           exportTableToCSV(table, {
-            filename: "my-activity-log",
+            filename: "activity-log",
             excludeColumns: ["select", "actions"],
           })
         }

@@ -33,7 +33,6 @@ import {
 import { NavMain } from "@/layout/nav-main";
 import { NavPrimary } from "@/layout/nav-primary";
 import { NavSecondary } from "@/layout/nav-secondary";
-import { NavSystem } from "@/layout/nav-system";
 import { NavUser } from "@/layout/nav-user";
 
 const data = {
@@ -74,6 +73,10 @@ const data = {
       isActive: true,
       items: [
         {
+          title: "Analytics & Metrics",
+          url: "/iam/dashboard",
+        },
+        {
           title: "Users",
           url: "/iam/users",
         },
@@ -88,21 +91,6 @@ const data = {
         {
           title: "Modules",
           url: "/iam/modules",
-        },
-      ],
-    },
-    {
-      title: "Audit Trail",
-      url: "/iam/audit/logs",
-      icon: <HugeiconsIcon icon={Audit02Icon} strokeWidth={2} />,
-      items: [
-        {
-          title: "My Activity Log",
-          url: "/iam/audit/me",
-        },
-        {
-          title: "System Audit Logs",
-          url: "/iam/audit/logs",
         },
       ],
     },
@@ -129,6 +117,21 @@ const data = {
       title: "Security Settings",
       url: "/iam/security/settings",
       icon: <HugeiconsIcon icon={ShieldKeyIcon} strokeWidth={2} />,
+    },
+    {
+      title: "Audit Trail",
+      url: "/iam/audit/logs",
+      icon: <HugeiconsIcon icon={Audit02Icon} strokeWidth={2} />,
+      items: [
+        {
+          title: "System Audit Logs",
+          url: "/iam/audit/logs",
+        },
+        {
+          title: "Activity Log",
+          url: "/iam/audit/me",
+        },
+      ],
     },
   ],
   navSecondary: [
@@ -182,7 +185,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           groupLabel="Governance & Tools"
           items={data.navGovernance}
         />
-        <NavSystem groupLabel="Security & System" items={data.navSystem} />
+        <NavPrimary groupLabel="Security & System" items={data.navSystem} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>

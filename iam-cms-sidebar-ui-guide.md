@@ -46,7 +46,7 @@ Admin CMS Layout
 │   │   └── System Session Revocation
 │   │
 │   └── 📜 Audit Trail (`/iam/audit`)
-│       ├── My Activity Log (`/iam/audit/me`)
+│       ├── Activity Log (`/iam/audit/me`)
 │       └── System Audit Logs (`/iam/audit/logs`)
 │
 └── 🧪 Governance & Tools

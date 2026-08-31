@@ -161,7 +161,7 @@ export const routes: IRouteConfig[] = [
       {
         path: "iam/audit/me",
         element: <MyActivityPage />,
-        title: "My Activity Log",
+        title: "Activity Log",
         description: "Personal account audit log",
       },
       {
