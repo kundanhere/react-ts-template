@@ -246,7 +246,7 @@
 
 @utility bg-dots {
   background-color: var(--background);
-  background-image: radial-gradient(var(--muted) 1px, transparent 1px);
+  background-image: radial-gradient(var(--muted) 1.5px, transparent 1.5px);
   background-size: 16px 16px;
 }
 
