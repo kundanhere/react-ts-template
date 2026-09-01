@@ -36,11 +36,17 @@ export default function NotificationsTab() {
     React.useState(true);
   const [tokenAlert, setTokenAlert] = React.useState(false);
 
+  const [isSaving, setIsSaving] = React.useState(false);
+
   const handleSave = () => {
-    setSuccess(true);
-    toast.success("Notification preferences updated");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    setTimeout(() => setSuccess(false), 5000);
+    setIsSaving(true);
+    setTimeout(() => {
+      setIsSaving(false);
+      setSuccess(true);
+      toast.success("Notification preferences updated");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(() => setSuccess(false), 5000);
+    }, 450);
   };
 
   return (
@@ -392,9 +398,10 @@ export default function NotificationsTab() {
 
         <Button
           onClick={handleSave}
+          disabled={isSaving}
           className="bg-primary text-primary-foreground hover:bg-primary/90 h-8 shrink-0 px-4 text-xs font-medium"
         >
-          Save preferences
+          {isSaving ? "Saving..." : "Save preferences"}
         </Button>
       </div>
     </div>

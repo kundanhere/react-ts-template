@@ -28,14 +28,20 @@ export default function AccountTab() {
     null
   );
 
+  const [isSaving, setIsSaving] = React.useState(false);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSuccessMessage("Account preferences updated successfully.");
-    toast.success("Account settings updated");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    setIsSaving(true);
     setTimeout(() => {
-      setSuccessMessage(null);
-    }, 5000);
+      setIsSaving(false);
+      setSuccessMessage("Account preferences updated successfully.");
+      toast.success("Account settings updated");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setTimeout(() => {
+        setSuccessMessage(null);
+      }, 5000);
+    }, 450);
   };
 
   return (
@@ -248,9 +254,10 @@ export default function AccountTab() {
         {/* Save Button */}
         <Button
           type="submit"
+          disabled={isSaving}
           className="bg-primary text-primary-foreground hover:bg-primary/90 h-8 shrink-0 px-4 text-xs font-medium"
         >
-          Save preferences
+          {isSaving ? "Saving..." : "Save preferences"}
         </Button>
       </form>
     </div>

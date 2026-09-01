@@ -107,6 +107,8 @@ export default function SecurityTab() {
     { id: "sess-2", isCurrent: false },
   ]);
 
+  const [isUpdatingPassword, setIsUpdatingPassword] = React.useState(false);
+
   const handleUpdatePassword = (e: React.FormEvent) => {
     e.preventDefault();
     if (!currentPassword || !newPassword || !confirmPassword) {
@@ -121,13 +123,17 @@ export default function SecurityTab() {
       toast.error("Password must be at least 8 characters long.");
       return;
     }
-    setSuccessMessage("Password updated successfully.");
-    toast.success("Password updated successfully.");
-    setCurrentPassword("");
-    setNewPassword("");
-    setConfirmPassword("");
-    setIsChangePasswordOpen(false);
-    setTimeout(() => setSuccessMessage(null), 5000);
+    setIsUpdatingPassword(true);
+    setTimeout(() => {
+      setIsUpdatingPassword(false);
+      setSuccessMessage("Password updated successfully.");
+      toast.success("Password updated successfully.");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+      setIsChangePasswordOpen(false);
+      setTimeout(() => setSuccessMessage(null), 5000);
+    }, 450);
   };
 
   const handleToggleOauth = (provider: "google" | "apple") => {
@@ -345,9 +351,10 @@ export default function SecurityTab() {
                   <div className="flex items-center justify-between">
                     <Button
                       type="submit"
+                      disabled={isUpdatingPassword}
                       className="bg-primary text-primary-foreground hover:bg-primary/90 h-8 shrink-0 px-4 text-xs font-medium"
                     >
-                      Update password
+                      {isUpdatingPassword ? "Updating..." : "Update password"}
                     </Button>
                     <button
                       type="button"

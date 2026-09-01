@@ -38,6 +38,9 @@ export default function EmailsTab() {
     null
   );
 
+  const [isAddingEmail, setIsAddingEmail] = React.useState(false);
+  const [isSavingPreferences, setIsSavingPreferences] = React.useState(false);
+
   const handleAddEmail = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newEmail.trim() || !newEmail.includes("@")) {
@@ -52,12 +55,16 @@ export default function EmailsTab() {
       toast.error("Email address is already added.");
       return;
     }
-    setEmails([
-      ...emails,
-      { address: newEmail.trim(), isPrimary: false, isVerified: false },
-    ]);
-    setNewEmail("");
-    toast.success(`Verification email sent to "${newEmail.trim()}".`);
+    setIsAddingEmail(true);
+    setTimeout(() => {
+      setIsAddingEmail(false);
+      setEmails([
+        ...emails,
+        { address: newEmail.trim(), isPrimary: false, isVerified: false },
+      ]);
+      setNewEmail("");
+      toast.success(`Verification email sent to "${newEmail.trim()}".`);
+    }, 450);
   };
 
   const handleRemoveEmail = (address: string) => {
@@ -81,9 +88,13 @@ export default function EmailsTab() {
 
   const handleSavePreferences = (e: React.FormEvent) => {
     e.preventDefault();
-    setSuccessMessage("Email preferences updated successfully.");
-    toast.success("Email preferences updated");
-    setTimeout(() => setSuccessMessage(null), 5000);
+    setIsSavingPreferences(true);
+    setTimeout(() => {
+      setIsSavingPreferences(false);
+      setSuccessMessage("Email preferences updated successfully.");
+      toast.success("Email preferences updated");
+      setTimeout(() => setSuccessMessage(null), 5000);
+    }, 450);
   };
 
   const primaryEmail = emails.find((em) => em.isPrimary)?.address || "";
@@ -232,11 +243,12 @@ export default function EmailsTab() {
               />
               <Button
                 type="submit"
+                disabled={isAddingEmail}
                 variant="outline"
                 className="h-7 shrink-0 px-3 py-0 text-xs font-medium"
               >
                 <HugeiconsIcon icon={AddCircleIcon} className="size-3.5" />
-                Add
+                {isAddingEmail ? "Adding..." : "Add"}
               </Button>
             </div>
           </form>
@@ -322,9 +334,10 @@ export default function EmailsTab() {
 
             <Button
               type="submit"
+              disabled={isSavingPreferences}
               className="bg-primary text-primary-foreground hover:bg-primary/90 h-8 shrink-0 px-4 text-xs font-medium"
             >
-              Save email preferences
+              {isSavingPreferences ? "Saving..." : "Save email preferences"}
             </Button>
           </form>
         </div>
