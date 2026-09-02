@@ -126,11 +126,7 @@ export function useBreadcrumbs(): IBreadcrumbItem[] {
     items.push({ title: "Identity & Access", href: "/iam/dashboard" });
     items.push({ title: "Policies", href: "/iam/policies" });
     const sub = pathname.replace("/iam/policies/", "");
-    if (sub === "new") {
-      items.push({ title: "Policy Builder" });
-    } else {
-      items.push({ title: `Policy Details (${sub})` });
-    }
+    items.push({ title: `Policy Details (${sub})` });
   } else {
     // Dynamic fallback split by "/"
     const segments = pathname.split("/").filter(Boolean);

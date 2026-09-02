@@ -2,7 +2,6 @@ import * as React from "react";
 
 import { Add01Icon, Upload01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Link } from "react-router-dom";
 
 import { DataTable } from "@/components/data-table/data-table";
 import { DataTableToolbar } from "@/components/data-table/data-table-toolbar";
@@ -312,15 +311,13 @@ export function PoliciesTable({ queryKeys }: IPoliciesTableProps) {
               />
               Upload CSV
             </Button>
-            <Button asChild>
-              <Link to="/iam/policies/new">
-                <HugeiconsIcon
-                  icon={Add01Icon}
-                  strokeWidth={2}
-                  className="mr-1.5 size-4"
-                />
-                New Policy
-              </Link>
+            <Button onClick={() => toast.info("New Policy creation triggered")}>
+              <HugeiconsIcon
+                icon={Add01Icon}
+                strokeWidth={2}
+                className="mr-1.5 size-4"
+              />
+              New Policy
             </Button>
           </>
         }

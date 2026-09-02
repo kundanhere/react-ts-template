@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,7 +37,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { DateTimePicker } from "@/components/ui/date-time-picker";
 
 export function User({
   user,
@@ -114,7 +114,9 @@ export function User({
                   </DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
-                      <DropdownMenuLabel>Schedule date</DropdownMenuLabel>
+                      <DropdownMenuLabel>
+                        Schedule date and time
+                      </DropdownMenuLabel>
                       <DateTimePicker confirmText="Mute" />
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>

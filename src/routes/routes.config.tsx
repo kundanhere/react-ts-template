@@ -24,9 +24,6 @@ const UserDetailPage = lazy(() => import("@/pages/iam/users/user-detail"));
 const RolesPage = lazy(() => import("@/pages/iam/roles/page"));
 const RoleDetailPage = lazy(() => import("@/pages/iam/roles/role-detail"));
 const PoliciesPage = lazy(() => import("@/pages/iam/policies/page"));
-const PolicyBuilderPage = lazy(
-  () => import("@/pages/iam/policies/policy-builder")
-);
 const PolicyDetailPage = lazy(
   () => import("@/pages/iam/policies/policy-detail")
 );
@@ -109,12 +106,6 @@ export const routes: IRouteConfig[] = [
         element: <PoliciesPage />,
         title: "Policies",
         description: "Policies Registry - IAM",
-      },
-      {
-        path: "iam/policies/new",
-        element: <PolicyBuilderPage />,
-        title: "Policy Builder",
-        description: "Create custom JSON access policy",
       },
       {
         path: "iam/policies/:id",
