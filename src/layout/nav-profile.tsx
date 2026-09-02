@@ -13,6 +13,7 @@ import {
   UserSwitchIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { useNavigate } from "react-router-dom";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -35,6 +36,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
 
 export function User({
   user,
@@ -45,6 +47,8 @@ export function User({
     avatar: string;
   };
 }) {
+  const navigate = useNavigate();
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -104,7 +108,17 @@ export function User({
                 <DropdownMenuItem>Until tomorrow</DropdownMenuItem>
                 <DropdownMenuItem>Until next week</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Custom date and time</DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>
+                    Custom date and time
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuLabel>Schedule date</DropdownMenuLabel>
+                      <DateTimePicker confirmText="Mute" />
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
@@ -114,17 +128,19 @@ export function User({
 
         {/* My Account */}
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate("/settings?tab=profile")}>
             <HugeiconsIcon icon={UserIcon} strokeWidth={2} />
             Your Profile
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => navigate("/settings?tab=appearance")}
+          >
             <HugeiconsIcon icon={PaintBoardIcon} strokeWidth={2} />
             Appearance
             <DropdownMenuShortcut>⌘A</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate("/settings")}>
             <HugeiconsIcon icon={Settings01Icon} strokeWidth={2} />
             Settings
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
@@ -176,7 +192,10 @@ export function User({
             Switch account
             <DropdownMenuShortcut>⇧⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem variant="destructive">
+          <DropdownMenuItem
+            variant="destructive"
+            onClick={() => navigate("/login")}
+          >
             <HugeiconsIcon icon={Logout01Icon} strokeWidth={2} />
             Log out
             <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
