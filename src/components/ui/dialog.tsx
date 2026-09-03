@@ -5,6 +5,7 @@ import { Cancel01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 
 function Dialog({ ...props }: DialogPrimitive.Root.Props) {
@@ -78,10 +79,12 @@ function DialogContent({
   children,
   size = "default",
   showCloseButton = true,
+  scrollable = false,
   ...props
 }: DialogPrimitive.Popup.Props & {
   size?: "default" | "sm" | "lg";
   showCloseButton?: boolean;
+  scrollable?: boolean;
 }) {
   return (
     <DialogPortal>
@@ -95,14 +98,20 @@ function DialogContent({
         )}
         {...props}
       >
-        {children}
+        {scrollable ? (
+          <ScrollArea className="max-h-[80vh] overflow-hidden">
+            {children}
+          </ScrollArea>
+        ) : (
+          children
+        )}
         {showCloseButton && (
           <DialogPrimitive.Close
             data-slot="dialog-close"
             render={
               <Button
                 variant="ghost"
-                className="text-muted-foreground hover:text-foreground absolute top-3 right-3 z-10"
+                className="text-muted-foreground hover:text-foreground absolute top-3.5 right-3.5 z-10 size-7 sm:top-4 sm:right-4"
                 size="icon-sm"
               />
             }
@@ -116,11 +125,30 @@ function DialogContent({
   );
 }
 
+function DialogBody({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof ScrollArea>) {
+  return (
+    <ScrollArea
+      data-slot="dialog-body"
+      className={cn("max-h-[60vh] sm:max-h-[65vh]", className)}
+      {...props}
+    >
+      {children}
+    </ScrollArea>
+  );
+}
+
 function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-header"
-      className={cn("flex flex-col gap-1.5 p-4 text-left sm:p-5", className)}
+      className={cn(
+        "flex flex-col gap-0.5 p-4 pr-10 pb-2.5 text-left sm:p-5 sm:pr-12 sm:pb-3",
+        className
+      )}
       {...props}
     />
   );
@@ -158,7 +186,7 @@ function DialogTitle({ className, ...props }: DialogPrimitive.Title.Props) {
     <DialogPrimitive.Title
       data-slot="dialog-title"
       className={cn(
-        "text-foreground font-heading text-base font-medium tracking-tight",
+        "text-foreground text-sm font-semibold tracking-tight sm:text-[15px]",
         className
       )}
       {...props}
@@ -174,7 +202,7 @@ function DialogDescription({
     <DialogPrimitive.Description
       data-slot="dialog-description"
       className={cn(
-        "text-muted-foreground *:[a]:hover:text-foreground mt-1.5 text-xs/relaxed leading-normal sm:text-sm *:[a]:underline *:[a]:underline-offset-3",
+        "text-muted-foreground *:[a]:hover:text-foreground mt-0.5 text-xs leading-normal sm:text-xs/relaxed *:[a]:underline *:[a]:underline-offset-3",
         className
       )}
       {...props}
@@ -184,6 +212,7 @@ function DialogDescription({
 
 export {
   Dialog,
+  DialogBody,
   DialogClose,
   DialogContent,
   DialogDescription,

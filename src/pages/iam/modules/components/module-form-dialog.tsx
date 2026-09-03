@@ -126,14 +126,17 @@ export function ModuleFormDialog({
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div className="flex flex-col gap-2">
+            <div className="grid w-full grid-cols-2 gap-3">
+              <div className="flex w-full min-w-0 flex-col gap-2">
                 <Label htmlFor="module-category">Category</Label>
                 <Select
                   value={category}
                   onValueChange={(v) => setCategory(v as IModule["category"])}
                 >
-                  <SelectTrigger id="module-category" className="capitalize">
+                  <SelectTrigger
+                    id="module-category"
+                    className="w-full capitalize"
+                  >
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent>
@@ -146,13 +149,16 @@ export function ModuleFormDialog({
                 </Select>
               </div>
 
-              <div className="flex flex-col gap-2">
+              <div className="flex w-full min-w-0 flex-col gap-2">
                 <Label htmlFor="module-status">Status</Label>
                 <Select
                   value={status}
                   onValueChange={(v) => setStatus(v as IModule["status"])}
                 >
-                  <SelectTrigger id="module-status" className="capitalize">
+                  <SelectTrigger
+                    id="module-status"
+                    className="w-full capitalize"
+                  >
                     <SelectValue placeholder="Select status" />
                   </SelectTrigger>
                   <SelectContent>
