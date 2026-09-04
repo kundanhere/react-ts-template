@@ -22,6 +22,8 @@ const INITIAL_USERS: IUser[] = [
     code: "USR-1001",
     name: "Alex Morgan",
     email: "alex.morgan@company.com",
+    avatar:
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80",
     role: "owner",
     status: "active",
     department: "engineering",
@@ -33,6 +35,8 @@ const INITIAL_USERS: IUser[] = [
     code: "USR-1002",
     name: "Sarah Chen",
     email: "sarah.chen@company.com",
+    avatar:
+      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80",
     role: "admin",
     status: "active",
     department: "design",
@@ -44,6 +48,8 @@ const INITIAL_USERS: IUser[] = [
     code: "USR-1003",
     name: "Michael Scott",
     email: "michael.scott@company.com",
+    avatar:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80",
     role: "member",
     status: "active",
     department: "sales",
@@ -55,6 +61,8 @@ const INITIAL_USERS: IUser[] = [
     code: "USR-1004",
     name: "Dwight Schrute",
     email: "dwight.schrute@company.com",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80",
     role: "admin",
     status: "active",
     department: "sales",

@@ -10,6 +10,7 @@ export interface IUser {
   code: string;
   name: string;
   email: string;
+  avatar?: string;
   role: "owner" | "admin" | "member" | "viewer";
   status: "active" | "inactive" | "pending" | "suspended";
   department: "engineering" | "design" | "marketing" | "sales" | "support";

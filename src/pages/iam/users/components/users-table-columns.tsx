@@ -17,6 +17,7 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import type { ColumnDef } from "@tanstack/react-table";
 
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -189,16 +190,36 @@ export function getUsersTableColumns({
       header: ({ column }) => (
         <DataTableColumnHeader column={column} label="User Name" />
       ),
-      cell: ({ row }) => (
-        <div className="flex flex-col">
-          <span className="max-w-125 truncate font-medium">
-            {row.getValue("name")}
-          </span>
-          <span className="text-muted-foreground text-xs">
-            {row.original.email}
-          </span>
-        </div>
-      ),
+      cell: ({ row }) => {
+        const user = row.original;
+        const initials = user.name
+          .split(" ")
+          .map((n) => n[0])
+          .join("")
+          .slice(0, 2)
+          .toUpperCase();
+
+        return (
+          <div className="flex items-center gap-2">
+            <Avatar size="sm" className="size-6">
+              {user.avatar ? (
+                <AvatarImage src={user.avatar} alt={user.name} />
+              ) : null}
+              <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-bold">
+                {initials}
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col">
+              <span className="max-w-125 truncate text-xs leading-none font-medium">
+                {user.name}
+              </span>
+              <span className="text-muted-foreground truncate text-[10px] leading-tight">
+                {user.email}
+              </span>
+            </div>
+          </div>
+        );
+      },
       meta: {
         label: "Name",
         placeholder: "Search by name or email",
