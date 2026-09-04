@@ -58,6 +58,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/toast";
 
@@ -503,38 +504,43 @@ export default function PolicySimulatorPage() {
                   <Label className="text-muted-foreground text-xs font-medium">
                     Select Entity Type
                   </Label>
-                  <div className="bg-muted/50 border-border/60 grid grid-cols-2 gap-1 rounded-lg border p-1">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setEntityType("user");
-                        setSelectedEntityId("usr_42");
-                      }}
-                      className={`flex items-center justify-center gap-1.5 rounded-md py-1.5 text-xs font-medium transition-all ${
-                        entityType === "user"
-                          ? "bg-card text-foreground border-border/80 border shadow-xs"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      <HugeiconsIcon icon={UserIcon} size={14} />
-                      User
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setEntityType("role");
-                        setSelectedEntityId("developer");
-                      }}
-                      className={`flex items-center justify-center gap-1.5 rounded-md py-1.5 text-xs font-medium transition-all ${
-                        entityType === "role"
-                          ? "bg-card text-foreground border-border/80 border shadow-xs"
-                          : "text-muted-foreground hover:text-foreground"
-                      }`}
-                    >
-                      <HugeiconsIcon icon={UserGroupIcon} size={14} />
-                      Role
-                    </button>
-                  </div>
+                  <Tabs
+                    value={entityType}
+                    onValueChange={(val) => {
+                      if (val === "user" || val === "role") {
+                        setEntityType(val);
+                        setSelectedEntityId(
+                          val === "user" ? "usr_42" : "developer"
+                        );
+                      }
+                    }}
+                    className="w-full gap-0"
+                  >
+                    <TabsList className="bg-muted/50 border-border/60 grid h-10 w-full grid-cols-2 rounded-lg border p-1">
+                      <TabsTrigger
+                        value="user"
+                        className="h-full gap-1.5 text-xs"
+                      >
+                        <HugeiconsIcon
+                          icon={UserIcon}
+                          size={14}
+                          className="shrink-0"
+                        />
+                        <span>User</span>
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="role"
+                        className="h-full gap-1.5 text-xs"
+                      >
+                        <HugeiconsIcon
+                          icon={UserGroupIcon}
+                          size={14}
+                          className="shrink-0"
+                        />
+                        <span>Role</span>
+                      </TabsTrigger>
+                    </TabsList>
+                  </Tabs>
                 </div>
 
                 {/* Select Role / User */}
@@ -740,10 +746,10 @@ export default function PolicySimulatorPage() {
           </Card>
 
           {/* Right Section: Step 2 Select Action & Resource + Simulation Summary */}
-          <div className="flex flex-col gap-6 lg:col-span-8">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-12">
+          <div className="flex h-full flex-col gap-6 lg:col-span-8">
+            <div className="grid h-full grid-cols-1 gap-6 md:grid-cols-12">
               {/* Step 2: Select Action & Resource Card */}
-              <Card className="flex flex-col justify-between md:col-span-7">
+              <Card className="flex h-full flex-col justify-between md:col-span-7">
                 <CardHeader className="border-b/60 pb-3">
                   <div className="flex items-center gap-2.5">
                     <span className="bg-primary/10 text-primary flex size-6 items-center justify-center rounded-full text-xs font-bold">
@@ -827,7 +833,7 @@ export default function PolicySimulatorPage() {
               </Card>
 
               {/* Simulation Summary Card */}
-              <Card className="flex flex-col justify-between md:col-span-5">
+              <Card className="flex h-full flex-col justify-between md:col-span-5">
                 <div>
                   <CardHeader className="border-border/60 border-b pb-3">
                     <div className="flex items-center justify-between">
@@ -1037,8 +1043,8 @@ export default function PolicySimulatorPage() {
                   <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
                     Decision Metadata
                   </span>
-                  <div className="flex items-center justify-between gap-4 sm:justify-start">
-                    <span className="text-muted-foreground text-[11px]">
+                  <div className="flex items-center justify-between gap-3 sm:justify-start">
+                    <span className="text-muted-foreground text-[11px] sm:w-24 sm:shrink-0">
                       Evaluated:
                     </span>
                     <span className="text-foreground font-mono text-[11px] font-medium">
@@ -1046,8 +1052,8 @@ export default function PolicySimulatorPage() {
                     </span>
                   </div>
 
-                  <div className="flex items-center justify-between gap-4 sm:justify-start">
-                    <span className="text-muted-foreground text-[11px]">
+                  <div className="flex items-center justify-between gap-3 sm:justify-start">
+                    <span className="text-muted-foreground text-[11px] sm:w-24 sm:shrink-0">
                       Simulation ID:
                     </span>
                     <button
@@ -1065,8 +1071,8 @@ export default function PolicySimulatorPage() {
                     </button>
                   </div>
 
-                  <div className="flex items-center justify-between gap-4 sm:justify-start">
-                    <span className="text-muted-foreground text-[11px]">
+                  <div className="flex items-center justify-between gap-3 sm:justify-start">
+                    <span className="text-muted-foreground text-[11px] sm:w-24 sm:shrink-0">
                       Verdict:
                     </span>
                     <span
@@ -1080,7 +1086,7 @@ export default function PolicySimulatorPage() {
 
               {/* Navigation Tabs Header */}
               <div className="border-border/60 border-b pb-0">
-                <div className="no-scrollbar flex gap-1 overflow-x-auto sm:gap-2">
+                <div className="no-scrollbar -mb-px flex gap-1 overflow-x-auto sm:gap-2">
                   <button
                     type="button"
                     onClick={() => setActiveTab("matrix")}

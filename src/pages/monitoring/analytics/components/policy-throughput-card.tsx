@@ -20,6 +20,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type {
   IPolicyThroughputCardProps,
   TimeRange,
@@ -109,22 +110,23 @@ export function PolicyThroughputCard({
         </div>
 
         <CardAction>
-          <div className="border-border bg-muted/40 flex items-center rounded-lg border p-0.5 text-xs">
-            {(["24h", "7d", "30d"] as const).map((range) => (
-              <button
-                key={range}
-                type="button"
-                onClick={() => setTimeRange(range)}
-                className={`rounded-md px-2.5 py-1 text-xs font-medium transition-all ${
-                  timeRange === range
-                    ? "bg-background text-foreground font-semibold shadow-xs"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {getRangeLabel(range)}
-              </button>
-            ))}
-          </div>
+          <Tabs
+            value={timeRange}
+            onValueChange={(val) => val && setTimeRange(val as TimeRange)}
+            className="gap-0"
+          >
+            <TabsList className="bg-muted/40 border-border/60 h-7 border p-0.5">
+              {(["24h", "7d", "30d"] as const).map((range) => (
+                <TabsTrigger
+                  key={range}
+                  value={range}
+                  className="h-full px-2.5 py-0 text-xs font-medium"
+                >
+                  {getRangeLabel(range)}
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </Tabs>
         </CardAction>
       </CardHeader>
 

@@ -1,9 +1,5 @@
 import {
-  Copy01Icon,
-  Delete02Icon,
-  EyeIcon,
   MoreHorizontalIcon,
-  Notification01Icon,
   Sorting01Icon,
   TextFontIcon,
 } from "@hugeicons/core-free-icons";
@@ -385,22 +381,12 @@ export function getUpdatesTableColumns({
               <HugeiconsIcon icon={MoreHorizontalIcon} strokeWidth={2} />
               <span className="sr-only">Open menu</span>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40 text-xs">
+            <DropdownMenuContent align="end" className="w-36 text-xs">
               <DropdownMenuItem onClick={() => onViewDetails(update)}>
-                <HugeiconsIcon
-                  icon={EyeIcon}
-                  strokeWidth={2}
-                  className="mr-2 size-3.5"
-                />
                 View Details
               </DropdownMenuItem>
               {onToggleRead && (
                 <DropdownMenuItem onClick={() => onToggleRead(update.id)}>
-                  <HugeiconsIcon
-                    icon={Notification01Icon}
-                    strokeWidth={2}
-                    className="mr-2 size-3.5"
-                  />
                   {update.isUnread ? "Mark as Read" : "Mark as Unread"}
                 </DropdownMenuItem>
               )}
@@ -411,11 +397,6 @@ export function getUpdatesTableColumns({
                   toast.success(`Copied notes for ${update.version}`);
                 }}
               >
-                <HugeiconsIcon
-                  icon={Copy01Icon}
-                  strokeWidth={2}
-                  className="mr-2 size-3.5"
-                />
                 Copy Changelog
               </DropdownMenuItem>
               {onDeleteUpdate && (
@@ -425,11 +406,6 @@ export function getUpdatesTableColumns({
                     variant="destructive"
                     onClick={() => onDeleteUpdate(update.id)}
                   >
-                    <HugeiconsIcon
-                      icon={Delete02Icon}
-                      strokeWidth={2}
-                      className="mr-2 size-3.5"
-                    />
                     Delete Update
                   </DropdownMenuItem>
                 </>

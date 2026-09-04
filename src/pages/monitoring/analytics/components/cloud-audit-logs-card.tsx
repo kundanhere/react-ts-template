@@ -15,7 +15,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { ICloudAuditLogsCardProps } from "@/types/monitoring/analytics";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type {
+  AuditFilter,
+  ICloudAuditLogsCardProps,
+} from "@/types/monitoring/analytics";
 
 import { getUserInitials, getUserName, timeAgo } from "../utils";
 
@@ -54,43 +58,31 @@ export function CloudAuditLogsCard({
 
         <CardAction>
           <div className="flex items-center gap-2">
-            <div className="border-border bg-muted/40 flex items-center rounded-lg border p-0.5 text-xs font-medium">
-              <button
-                type="button"
-                onClick={() => setAuditFilter("ALL")}
-                className={`rounded-md px-2.5 py-0.5 text-xs transition-all ${
-                  auditFilter === "ALL"
-                    ? "bg-background text-foreground font-semibold shadow-xs"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                All ({auditLogs.length})
-              </button>
-              <button
-                type="button"
-                onClick={() => setAuditFilter("ALLOW")}
-                className={`flex items-center gap-1.5 rounded-md px-2.5 py-0.5 text-xs transition-all ${
-                  auditFilter === "ALLOW"
-                    ? "bg-background font-semibold text-emerald-600 shadow-xs dark:text-emerald-400"
-                    : "text-muted-foreground hover:text-emerald-500"
-                }`}
-              >
-                <span className="size-1.5 rounded-full bg-emerald-500" />
-                Allow ({allowAuditCount})
-              </button>
-              <button
-                type="button"
-                onClick={() => setAuditFilter("DENY")}
-                className={`flex items-center gap-1.5 rounded-md px-2.5 py-0.5 text-xs transition-all ${
-                  auditFilter === "DENY"
-                    ? "bg-background text-destructive font-semibold shadow-xs"
-                    : "text-muted-foreground hover:text-destructive"
-                }`}
-              >
-                <span className="bg-destructive size-1.5 rounded-full" />
-                Deny ({denyAuditCount})
-              </button>
-            </div>
+            <Tabs
+              value={auditFilter}
+              onValueChange={(val) => val && setAuditFilter(val as AuditFilter)}
+              className="gap-0"
+            >
+              <TabsList className="bg-muted/40 border-border/60 h-7 border p-0.5 text-xs font-medium">
+                <TabsTrigger value="ALL" className="h-full px-2.5 py-0 text-xs">
+                  All ({auditLogs.length})
+                </TabsTrigger>
+                <TabsTrigger
+                  value="ALLOW"
+                  className="h-full gap-1.5 px-2.5 py-0 text-xs data-active:text-emerald-600 dark:data-active:text-emerald-400"
+                >
+                  <span className="size-1.5 rounded-full bg-emerald-500" />
+                  Allow ({allowAuditCount})
+                </TabsTrigger>
+                <TabsTrigger
+                  value="DENY"
+                  className="data-active:text-destructive h-full gap-1.5 px-2.5 py-0 text-xs"
+                >
+                  <span className="bg-destructive size-1.5 rounded-full" />
+                  Deny ({denyAuditCount})
+                </TabsTrigger>
+              </TabsList>
+            </Tabs>
 
             <Button
               variant="ghost"
