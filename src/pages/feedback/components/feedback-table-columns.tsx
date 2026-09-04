@@ -32,6 +32,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { InlineCopy } from "@/components/ui/inline-copy";
 import { toast } from "@/components/ui/toast";
 import { formatDate } from "@/lib/format";
 import type {
@@ -189,9 +190,11 @@ export function getFeedbackTableColumns({
         <DataTableColumnHeader column={column} label="ID" />
       ),
       cell: ({ row }) => (
-        <div className="text-muted-foreground w-18 font-mono text-xs font-semibold">
-          {row.getValue("code")}
-        </div>
+        <InlineCopy
+          text={row.getValue("code")}
+          label="feedback ID"
+          className="text-muted-foreground hover:text-primary w-20 font-mono text-xs font-semibold"
+        />
       ),
       enableSorting: true,
       enableHiding: false,

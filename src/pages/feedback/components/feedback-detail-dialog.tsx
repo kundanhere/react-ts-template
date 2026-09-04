@@ -13,6 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { InlineCopy } from "@/components/ui/inline-copy";
 import {
   Select,
   SelectContent,
@@ -68,9 +69,11 @@ export function FeedbackDetailDialog({
         <DialogHeader className="p-4 pb-2 sm:p-5 sm:pb-2.5">
           {/* Metadata badges row */}
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-muted-foreground font-mono text-[11px] font-semibold">
-              {feedback.code}
-            </span>
+            <InlineCopy
+              text={feedback.code}
+              label="feedback ID"
+              className="text-foreground hover:text-primary font-mono text-[11px] font-semibold"
+            />
             <Badge
               variant="outline"
               className={`h-5 gap-1 px-1.5 py-0 text-[10px] font-medium capitalize ${statusVariantMap[feedback.status]}`}
