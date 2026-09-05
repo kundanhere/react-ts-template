@@ -215,7 +215,7 @@ export function getFeedbackTableColumns({
           >
             {row.getValue("title")}
           </button>
-          <span className="text-muted-foreground truncate text-[11px] leading-tight">
+          <span className="text-muted-foreground truncate text-[0.6875rem] leading-tight">
             {row.original.description}
           </span>
         </div>
@@ -298,7 +298,7 @@ export function getFeedbackTableColumns({
         return (
           <Badge
             variant="secondary"
-            className="border-border/60 text-muted-foreground border px-1.5 py-0.5 text-[11px] font-medium"
+            className="border-border/60 text-muted-foreground border px-1.5 py-0.5 text-[0.6875rem] font-medium"
           >
             {categoryLabels[category] || category}
           </Badge>
@@ -452,14 +452,14 @@ export function getFeedbackTableColumns({
 
         return (
           <div className="flex items-center gap-2">
-            <div className="bg-primary/10 text-primary flex size-6 items-center justify-center rounded-full text-[10px] font-bold">
+            <div className="bg-primary/10 text-primary flex size-6 items-center justify-center rounded-full text-[0.625rem] font-bold">
               {initials}
             </div>
             <div className="flex flex-col">
               <span className="text-xs leading-none font-medium">
                 {author.name}
               </span>
-              <span className="text-muted-foreground text-[10px] leading-tight">
+              <span className="text-muted-foreground text-[0.625rem] leading-tight">
                 {author.email}
               </span>
             </div>

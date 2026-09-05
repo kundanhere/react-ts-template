@@ -100,7 +100,7 @@ export function CloudAuditLogsCard({
 
       <CardContent className="p-0">
         <div className="min-w-155">
-          <div className="bg-muted/30 border-border/40 text-muted-foreground grid grid-cols-12 gap-3 border-b px-4 py-2 text-[10px] font-bold tracking-wider uppercase">
+          <div className="bg-muted/30 border-border/40 text-muted-foreground grid grid-cols-12 gap-3 border-b px-4 py-2 text-[0.625rem] font-bold tracking-wider uppercase">
             <div className="col-span-2">SEVERITY / STATUS</div>
             <div className="col-span-3">PRINCIPAL</div>
             <div className="col-span-3">METHOD / ACTION</div>
@@ -134,7 +134,7 @@ export function CloudAuditLogsCard({
 
                       <div className="col-span-3 flex min-w-0 items-center gap-2">
                         <Avatar className="ring-border/80 h-5 w-5 shrink-0 ring-1">
-                          <AvatarFallback className="bg-muted text-[9px] font-bold">
+                          <AvatarFallback className="bg-muted text-[0.5625rem] font-bold">
                             {getUserInitials(users, log.userId)}
                           </AvatarFallback>
                         </Avatar>
@@ -159,7 +159,7 @@ export function CloudAuditLogsCard({
                         {log.detail}
                       </div>
 
-                      <div className="text-muted-foreground col-span-1 text-right font-mono text-[11px] whitespace-nowrap">
+                      <div className="text-muted-foreground col-span-1 text-right font-mono text-[0.6875rem] whitespace-nowrap">
                         {timeAgo(log.ts)}
                       </div>
                     </div>
@@ -177,7 +177,7 @@ export function CloudAuditLogsCard({
 
       <CardFooter className="text-muted-foreground mt-auto flex w-full items-center justify-between border-t px-4 py-2.5 text-xs">
         <span>Real-time Stream</span>
-        <span className="font-mono text-[11px]">Audit Engine v2.4</span>
+        <span className="font-mono text-[0.6875rem]">Audit Engine v2.4</span>
       </CardFooter>
     </Card>
   );

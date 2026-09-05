@@ -398,9 +398,9 @@ export function DataTable<TData>({
                           {/* Concentric Squircles Icon Container */}
                           <div className="relative mb-4 flex items-center justify-center">
                             {/* Outermost Squircle */}
-                            <div className="border-primary/10 bg-primary/1 flex size-24 items-center justify-center rounded-[28px] border">
+                            <div className="border-primary/10 bg-primary/1 flex size-24 items-center justify-center rounded-[1.75rem] border">
                               {/* Middle Squircle */}
-                              <div className="border-primary/20 bg-primary/2 flex size-20 items-center justify-center rounded-[22px] border">
+                              <div className="border-primary/20 bg-primary/2 flex size-20 items-center justify-center rounded-[1.375rem] border">
                                 {/* Innermost Squircle */}
                                 <div className="border-primary/30 bg-background text-primary flex size-14 items-center justify-center rounded-2xl border shadow-xs">
                                   <HugeiconsIcon

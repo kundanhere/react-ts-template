@@ -165,7 +165,7 @@ export default function EmailsTab() {
                       {em.isPrimary && (
                         <Badge
                           variant="secondary"
-                          className="border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[9px] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
+                          className="border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[0.5625rem] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
                         >
                           Primary
                         </Badge>
@@ -173,21 +173,21 @@ export default function EmailsTab() {
                       {em.isVerified ? (
                         <Badge
                           variant="outline"
-                          className="border-border px-1.5 py-0 text-[9px] font-medium"
+                          className="border-border px-1.5 py-0 text-[0.5625rem] font-medium"
                         >
                           Verified
                         </Badge>
                       ) : (
                         <Badge
                           variant="outline"
-                          className="border-amber-200 bg-amber-50/50 px-1.5 py-0 text-[9px] font-medium text-amber-700 dark:border-amber-500/20 dark:bg-amber-950/30 dark:text-amber-400"
+                          className="border-amber-200 bg-amber-50/50 px-1.5 py-0 text-[0.5625rem] font-medium text-amber-700 dark:border-amber-500/20 dark:bg-amber-950/30 dark:text-amber-400"
                         >
                           Unverified
                         </Badge>
                       )}
                     </div>
                     {!em.isVerified && (
-                      <p className="text-muted-foreground mt-1 text-[10px]">
+                      <p className="text-muted-foreground mt-1 text-[0.625rem]">
                         Unverified emails cannot be used for login or recovery.{" "}
                         <button
                           type="button"
@@ -322,7 +322,7 @@ export default function EmailsTab() {
                   >
                     Keep my email address private
                   </Label>
-                  <span className="text-muted-foreground text-[11px] leading-normal">
+                  <span className="text-muted-foreground text-[0.6875rem] leading-normal">
                     Hide your email address from public views, profiles, and API
                     responses to protect your privacy.
                   </span>

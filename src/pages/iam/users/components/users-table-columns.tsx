@@ -205,7 +205,7 @@ export function getUsersTableColumns({
               {user.avatar ? (
                 <AvatarImage src={user.avatar} alt={user.name} />
               ) : null}
-              <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-bold">
+              <AvatarFallback className="bg-primary/10 text-primary text-[0.625rem] font-bold">
                 {initials}
               </AvatarFallback>
             </Avatar>
@@ -213,7 +213,7 @@ export function getUsersTableColumns({
               <span className="max-w-125 truncate text-xs leading-none font-medium">
                 {user.name}
               </span>
-              <span className="text-muted-foreground truncate text-[10px] leading-tight">
+              <span className="text-muted-foreground truncate text-[0.625rem] leading-tight">
                 {user.email}
               </span>
             </div>

@@ -186,7 +186,7 @@ function DialogTitle({ className, ...props }: DialogPrimitive.Title.Props) {
     <DialogPrimitive.Title
       data-slot="dialog-title"
       className={cn(
-        "text-foreground text-sm font-semibold tracking-tight sm:text-[15px]",
+        "text-foreground text-sm font-semibold tracking-tight sm:text-[0.9375rem]",
         className
       )}
       {...props}

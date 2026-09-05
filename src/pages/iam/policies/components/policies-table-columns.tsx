@@ -385,13 +385,13 @@ export function getPoliciesTableColumns({
               <Badge
                 key={act}
                 variant="outline"
-                className="bg-muted/40 font-mono text-[10px] lowercase"
+                className="bg-muted/40 font-mono text-[0.625rem] lowercase"
               >
                 {act}
               </Badge>
             ))}
             {remaining > 0 && (
-              <Badge variant="secondary" className="font-mono text-[10px]">
+              <Badge variant="secondary" className="font-mono text-[0.625rem]">
                 +{remaining}
               </Badge>
             )}

@@ -68,7 +68,7 @@ export function ActiveSessionsCard({
                 >
                   <div className="flex min-w-0 items-center gap-2.5">
                     <Avatar className="ring-border h-6 w-6 shrink-0 ring-1">
-                      <AvatarFallback className="bg-muted text-[10px] font-bold">
+                      <AvatarFallback className="bg-muted text-[0.625rem] font-bold">
                         {getUserInitials(users, session.userId)}
                       </AvatarFallback>
                     </Avatar>
@@ -76,7 +76,7 @@ export function ActiveSessionsCard({
                       <div className="text-foreground truncate text-xs font-semibold">
                         {getUserName(users, session.userId)}
                       </div>
-                      <div className="text-muted-foreground truncate text-[10px]">
+                      <div className="text-muted-foreground truncate text-[0.625rem]">
                         {session.device}
                       </div>
                     </div>
@@ -86,14 +86,14 @@ export function ActiveSessionsCard({
                     <span className="text-muted-foreground bg-muted/50 border-border/50 rounded border px-1.5 py-0.5 font-mono text-[0.6875rem]">
                       {session.ip}
                     </span>
-                    <span className="text-muted-foreground hidden font-mono text-[10px] whitespace-nowrap sm:inline-block">
+                    <span className="text-muted-foreground hidden font-mono text-[0.625rem] whitespace-nowrap sm:inline-block">
                       {timeAgo(session.lastActiveAt)}
                     </span>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => onRevokeSession(session.id)}
-                      className="text-destructive hover:bg-destructive/10 hover:text-destructive h-6 px-2 text-[10px] font-medium"
+                      className="text-destructive hover:bg-destructive/10 hover:text-destructive h-6 px-2 text-[0.625rem] font-medium"
                     >
                       Disconnect
                     </Button>
@@ -114,7 +114,7 @@ export function ActiveSessionsCard({
           <HugeiconsIcon icon={UserGroupIcon} size={14} />
           <span>{uniqueUsersInSessions} Authenticated Principals</span>
         </div>
-        <span className="font-mono text-[11px]">TLS 1.3 Encrypted</span>
+        <span className="font-mono text-[0.6875rem]">TLS 1.3 Encrypted</span>
       </CardFooter>
     </Card>
   );

@@ -35,7 +35,7 @@ export function RecoveryCard({ step, children }: IRecoveryCardProps) {
 
         <Card className="bg-card/80 dark:bg-card/50 relative flex max-h-121.25 min-h-121.25 flex-col justify-between overflow-hidden border border-white/20 shadow-md shadow-black/5 backdrop-blur-xl dark:border-white/10 dark:shadow-black/25">
           {/* Top Radiant Shimmer Edge */}
-          <div className="via-primary/40 absolute inset-x-0 top-0 h-[1.5px] bg-linear-to-r from-transparent to-transparent" />
+          <div className="via-primary/40 absolute inset-x-0 top-0 h-[0.09375rem] bg-linear-to-r from-transparent to-transparent" />
 
           {/* Card Header */}
           <CardHeader className="px-6 pt-6 pb-3">

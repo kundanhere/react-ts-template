@@ -79,28 +79,28 @@ export function UpdateDetailDialog({
             <InlineCopy
               text={update.version}
               label="version"
-              className="border-border/60 bg-muted/60 text-foreground hover:text-primary rounded border px-2 py-0.5 font-mono text-[11px] font-bold"
+              className="border-border/60 bg-muted/60 text-foreground hover:text-primary rounded border px-2 py-0.5 font-mono text-[0.6875rem] font-bold"
             />
             <Badge
               variant="outline"
-              className={`h-5 gap-1 px-1.5 py-0 text-[10px] font-medium capitalize ${typeVariantMap[update.type]}`}
+              className={`h-5 gap-1 px-1.5 py-0 text-[0.625rem] font-medium capitalize ${typeVariantMap[update.type]}`}
             >
               {update.type}
             </Badge>
             <Badge
               variant="outline"
-              className="text-foreground h-5 px-1.5 py-0 text-[10px] font-medium uppercase"
+              className="text-foreground h-5 px-1.5 py-0 text-[0.625rem] font-medium uppercase"
             >
               {update.channel}
             </Badge>
             <Badge
               variant="secondary"
-              className="h-5 px-1.5 py-0 text-[10px] font-medium capitalize"
+              className="h-5 px-1.5 py-0 text-[0.625rem] font-medium capitalize"
             >
               {update.status.replace("_", " ")}
             </Badge>
             {update.isUnread && (
-              <span className="py-0.2 flex items-center gap-1 rounded-full bg-blue-500/10 px-1.5 text-[10px] font-semibold text-blue-600 dark:text-blue-400">
+              <span className="py-0.2 flex items-center gap-1 rounded-full bg-blue-500/10 px-1.5 text-[0.625rem] font-semibold text-blue-600 dark:text-blue-400">
                 <span className="size-1.5 rounded-full bg-blue-500" />
                 Unread
               </span>
@@ -110,7 +110,7 @@ export function UpdateDetailDialog({
           <DialogTitle className="text-foreground mt-0.5 text-sm leading-snug font-semibold tracking-tight sm:text-base">
             {update.title}
           </DialogTitle>
-          <DialogDescription className="text-muted-foreground mt-0 text-[11px] leading-normal">
+          <DialogDescription className="text-muted-foreground mt-0 text-[0.6875rem] leading-normal">
             Released {formatDate(update.publishedAt)} by{" "}
             <span className="text-foreground font-medium">
               {update.author.name}
@@ -123,7 +123,7 @@ export function UpdateDetailDialog({
           <div className="flex flex-col gap-3.5 px-4 pt-1 pb-4 text-xs sm:px-5 sm:pt-1 sm:pb-5">
             {/* Overview Box */}
             <div className="bg-muted/40 border-border/60 flex flex-col gap-1.5 rounded-lg border p-3">
-              <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+              <span className="text-muted-foreground text-[0.625rem] font-semibold tracking-wider uppercase">
                 Release Overview
               </span>
               <p className="text-foreground text-xs leading-relaxed">
@@ -134,7 +134,7 @@ export function UpdateDetailDialog({
             {/* Security Advisory Warning (if applicable) */}
             {update.securityNotice && (
               <div className="flex flex-col gap-1.5 rounded-lg border border-rose-500/30 bg-rose-50/50 p-3 dark:bg-rose-950/20">
-                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-rose-700 dark:text-rose-400">
+                <div className="flex items-center gap-1.5 text-[0.6875rem] font-semibold text-rose-700 dark:text-rose-400">
                   <HugeiconsIcon
                     icon={ShieldCheck}
                     strokeWidth={2}
@@ -151,7 +151,7 @@ export function UpdateDetailDialog({
             {/* Highlights List */}
             {update.highlights && update.highlights.length > 0 && (
               <div className="flex flex-col gap-1.5">
-                <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+                <span className="text-muted-foreground text-[0.625rem] font-semibold tracking-wider uppercase">
                   Key Enhancements & Changes
                 </span>
                 <div className="border-border/60 bg-muted/20 space-y-2 rounded-lg border p-3">
@@ -174,7 +174,7 @@ export function UpdateDetailDialog({
             {/* Breaking Changes Callout (if any) */}
             {update.breakingChanges && update.breakingChanges.length > 0 && (
               <div className="flex flex-col gap-1.5 rounded-lg border border-amber-500/30 bg-amber-50/50 p-3 dark:bg-amber-950/20">
-                <div className="flex items-center gap-1.5 text-[11px] font-semibold text-amber-700 dark:text-amber-400">
+                <div className="flex items-center gap-1.5 text-[0.6875rem] font-semibold text-amber-700 dark:text-amber-400">
                   <HugeiconsIcon
                     icon={Alert02Icon}
                     strokeWidth={2}
@@ -201,18 +201,18 @@ export function UpdateDetailDialog({
                       alt={update.author.name}
                     />
                   ) : null}
-                  <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-bold">
+                  <AvatarFallback className="bg-primary/10 text-primary text-[0.625rem] font-bold">
                     {initials}
                   </AvatarFallback>
                 </Avatar>
                 <div className="space-y-0.5">
-                  <span className="text-muted-foreground text-[10px] font-semibold uppercase">
+                  <span className="text-muted-foreground text-[0.625rem] font-semibold uppercase">
                     Released By
                   </span>
                   <p className="text-foreground text-xs font-semibold">
                     {update.author.name}
                   </p>
-                  <p className="text-muted-foreground text-[11px]">
+                  <p className="text-muted-foreground text-[0.6875rem]">
                     {update.author.role}
                   </p>
                 </div>
@@ -228,7 +228,7 @@ export function UpdateDetailDialog({
                   />
                 </div>
                 <div className="space-y-0.5">
-                  <span className="text-muted-foreground text-[10px] font-semibold uppercase">
+                  <span className="text-muted-foreground text-[0.625rem] font-semibold uppercase">
                     Git Reference
                   </span>
                   <div>
@@ -240,7 +240,7 @@ export function UpdateDetailDialog({
                       iconSize={12}
                     />
                   </div>
-                  <p className="text-muted-foreground text-[11px]">
+                  <p className="text-muted-foreground text-[0.6875rem]">
                     Channel: {update.channel.toUpperCase()} ·{" "}
                     {update.impact.toUpperCase()} Impact
                   </p>
@@ -250,7 +250,7 @@ export function UpdateDetailDialog({
 
             {/* Affected Modules */}
             <div className="flex flex-col gap-1.5">
-              <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+              <span className="text-muted-foreground text-[0.625rem] font-semibold tracking-wider uppercase">
                 Impacted Platform Modules
               </span>
               <div className="flex flex-wrap items-center gap-1.5">

@@ -462,7 +462,7 @@ export default function PolicySimulatorPage() {
             </div>
             <div className="flex flex-wrap items-center">
               <span className="font-semibold">Simulator Mode</span>
-              <span className="text-muted-foreground hidden text-[11px] sm:ml-1 sm:inline">
+              <span className="text-muted-foreground hidden text-[0.6875rem] sm:ml-1 sm:inline">
                 — Results are simulated. No real changes are made.
               </span>
             </div>
@@ -685,7 +685,7 @@ export default function PolicySimulatorPage() {
                   {advancedOpen && (
                     <div className="mt-3 flex flex-col gap-3">
                       <div className="flex flex-col gap-1">
-                        <Label className="text-muted-foreground text-[11px]">
+                        <Label className="text-muted-foreground text-[0.6875rem]">
                           Resource ID (Optional)
                         </Label>
                         <Input
@@ -696,7 +696,7 @@ export default function PolicySimulatorPage() {
                         />
                       </div>
                       <div className="flex flex-col gap-1">
-                        <Label className="text-muted-foreground text-[11px]">
+                        <Label className="text-muted-foreground text-[0.6875rem]">
                           IP Address (Optional)
                         </Label>
                         <Input
@@ -707,7 +707,7 @@ export default function PolicySimulatorPage() {
                         />
                       </div>
                       <div className="flex flex-col gap-1">
-                        <Label className="text-muted-foreground text-[11px]">
+                        <Label className="text-muted-foreground text-[0.6875rem]">
                           Time (Optional)
                         </Label>
                         <Input
@@ -780,7 +780,7 @@ export default function PolicySimulatorPage() {
                         ))}
                       </SelectContent>
                     </Select>
-                    <p className="text-muted-foreground text-[11px]">
+                    <p className="text-muted-foreground text-[0.6875rem]">
                       The operations you want to test
                     </p>
                   </div>
@@ -825,7 +825,7 @@ export default function PolicySimulatorPage() {
                         ))}
                       </SelectContent>
                     </Select>
-                    <p className="text-muted-foreground text-[11px]">
+                    <p className="text-muted-foreground text-[0.6875rem]">
                       The specific resource to test
                     </p>
                   </div>
@@ -842,7 +842,7 @@ export default function PolicySimulatorPage() {
                       </CardTitle>
                       <Badge
                         variant="outline"
-                        className="font-mono text-[10px]"
+                        className="font-mono text-[0.625rem]"
                       >
                         Context Ready
                       </Badge>
@@ -852,7 +852,7 @@ export default function PolicySimulatorPage() {
                     <div className="border-border/80 bg-muted/20 divide-border/60 divide-y overflow-hidden rounded-lg border">
                       {/* Entity */}
                       <div className="flex items-center justify-between p-2.5">
-                        <span className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-medium">
+                        <span className="text-muted-foreground flex items-center gap-1.5 text-[0.6875rem] font-medium">
                           <HugeiconsIcon
                             icon={
                               entityType === "role" ? UserGroupIcon : UserIcon
@@ -864,7 +864,7 @@ export default function PolicySimulatorPage() {
                         </span>
                         <Badge
                           variant="secondary"
-                          className="gap-1 text-[11px] font-semibold"
+                          className="gap-1 text-[0.6875rem] font-semibold"
                         >
                           {entityType === "role"
                             ? ROLES.find((r) => r.id === selectedEntityId)?.name
@@ -875,7 +875,7 @@ export default function PolicySimulatorPage() {
 
                       {/* Action */}
                       <div className="flex items-center justify-between p-2.5">
-                        <span className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-medium">
+                        <span className="text-muted-foreground flex items-center gap-1.5 text-[0.6875rem] font-medium">
                           <HugeiconsIcon
                             icon={FlashIcon}
                             size={14}
@@ -883,14 +883,14 @@ export default function PolicySimulatorPage() {
                           />
                           Action:
                         </span>
-                        <span className="text-foreground font-mono text-[11px] font-semibold">
+                        <span className="text-foreground font-mono text-[0.6875rem] font-semibold">
                           {selectedAction}
                         </span>
                       </div>
 
                       {/* Service & Resource */}
                       <div className="flex items-center justify-between p-2.5">
-                        <span className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-medium">
+                        <span className="text-muted-foreground flex items-center gap-1.5 text-[0.6875rem] font-medium">
                           <HugeiconsIcon
                             icon={Folder01Icon}
                             size={14}
@@ -899,10 +899,10 @@ export default function PolicySimulatorPage() {
                           Target:
                         </span>
                         <div className="text-right">
-                          <span className="text-foreground block text-[11px] font-semibold">
+                          <span className="text-foreground block text-[0.6875rem] font-semibold">
                             {selectedService}
                           </span>
-                          <span className="text-muted-foreground block font-mono text-[10px]">
+                          <span className="text-muted-foreground block font-mono text-[0.625rem]">
                             {selectedResource}
                           </span>
                         </div>
@@ -910,7 +910,7 @@ export default function PolicySimulatorPage() {
 
                       {/* Environment */}
                       <div className="flex items-center justify-between p-2.5">
-                        <span className="text-muted-foreground flex items-center gap-1.5 text-[11px] font-medium">
+                        <span className="text-muted-foreground flex items-center gap-1.5 text-[0.6875rem] font-medium">
                           <HugeiconsIcon
                             icon={GlobeIcon}
                             size={14}
@@ -920,7 +920,7 @@ export default function PolicySimulatorPage() {
                         </span>
                         <Badge
                           variant="outline"
-                          className="text-[10px] font-medium"
+                          className="text-[0.625rem] font-medium"
                         >
                           {selectedEnv}
                         </Badge>
@@ -964,7 +964,7 @@ export default function PolicySimulatorPage() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2.5">
-                  <div className="bg-muted/40 border-border/60 text-muted-foreground flex items-center gap-2.5 rounded-md border px-2.5 py-1 text-[11px] font-medium">
+                  <div className="bg-muted/40 border-border/60 text-muted-foreground flex items-center gap-2.5 rounded-md border px-2.5 py-1 text-[0.6875rem] font-medium">
                     <span className="flex items-center gap-1">
                       <HugeiconsIcon
                         icon={Clock01Icon}
@@ -1014,7 +1014,7 @@ export default function PolicySimulatorPage() {
                       Access is {currentResult}
                     </p>
                     <p
-                      className={`text-[11px] leading-relaxed ${RESULT_SUBTEXT_STYLES[currentResult]}`}
+                      className={`text-[0.6875rem] leading-relaxed ${RESULT_SUBTEXT_STYLES[currentResult]}`}
                     >
                       {getResultDescription(
                         currentResult,
@@ -1023,7 +1023,7 @@ export default function PolicySimulatorPage() {
                       )}
                     </p>
                     <div
-                      className={`flex flex-wrap items-center gap-3 pt-1 text-[11px] font-medium opacity-80 ${RESULT_SUBTEXT_STYLES[currentResult]}`}
+                      className={`flex flex-wrap items-center gap-3 pt-1 text-[0.6875rem] font-medium opacity-80 ${RESULT_SUBTEXT_STYLES[currentResult]}`}
                     >
                       <span className="flex items-center gap-1">
                         <HugeiconsIcon icon={Layers01Icon} size={13} />
@@ -1040,26 +1040,26 @@ export default function PolicySimulatorPage() {
 
                 {/* Decision Metadata — integrated divider section */}
                 <div className="border-border/60 flex w-full shrink-0 flex-col gap-1.5 border-t pt-3 text-xs sm:w-auto sm:border-t-0 sm:border-l sm:pt-0 sm:pl-5">
-                  <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+                  <span className="text-muted-foreground text-[0.625rem] font-semibold tracking-wider uppercase">
                     Decision Metadata
                   </span>
                   <div className="flex items-center justify-between gap-3 sm:justify-start">
-                    <span className="text-muted-foreground text-[11px] sm:w-24 sm:shrink-0">
+                    <span className="text-muted-foreground text-[0.6875rem] sm:w-24 sm:shrink-0">
                       Evaluated:
                     </span>
-                    <span className="text-foreground font-mono text-[11px] font-medium">
+                    <span className="text-foreground font-mono text-[0.6875rem] font-medium">
                       {evaluatedAt}
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between gap-3 sm:justify-start">
-                    <span className="text-muted-foreground text-[11px] sm:w-24 sm:shrink-0">
+                    <span className="text-muted-foreground text-[0.6875rem] sm:w-24 sm:shrink-0">
                       Simulation ID:
                     </span>
                     <button
                       type="button"
                       onClick={handleCopyJson}
-                      className="text-foreground hover:text-primary flex items-center gap-1 font-mono text-[11px] font-medium transition-colors"
+                      className="text-foreground hover:text-primary flex items-center gap-1 font-mono text-[0.6875rem] font-medium transition-colors"
                       title="Click to copy payload"
                     >
                       <span>{simulationId}</span>
@@ -1072,11 +1072,11 @@ export default function PolicySimulatorPage() {
                   </div>
 
                   <div className="flex items-center justify-between gap-3 sm:justify-start">
-                    <span className="text-muted-foreground text-[11px] sm:w-24 sm:shrink-0">
+                    <span className="text-muted-foreground text-[0.6875rem] sm:w-24 sm:shrink-0">
                       Verdict:
                     </span>
                     <span
-                      className={`text-[11px] font-bold uppercase ${RESULT_VERDICT_COLORS[currentResult]}`}
+                      className={`text-[0.6875rem] font-bold uppercase ${RESULT_VERDICT_COLORS[currentResult]}`}
                     >
                       {currentResult}
                     </span>
@@ -1158,7 +1158,7 @@ export default function PolicySimulatorPage() {
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
                         <h4 className="text-sm font-semibold">Access Matrix</h4>
-                        <Badge variant="outline" className="text-[10px]">
+                        <Badge variant="outline" className="text-[0.625rem]">
                           7 Modules × 6 Actions
                         </Badge>
                       </div>
@@ -1187,7 +1187,7 @@ export default function PolicySimulatorPage() {
                     <div className="border-border/80 bg-card overflow-hidden rounded-lg border">
                       <div className="no-scrollbar overflow-x-auto">
                         <table className="w-full border-collapse text-left text-xs">
-                          <thead className="bg-muted/50 text-muted-foreground border-border/80 border-b text-[11px] font-semibold tracking-wider uppercase">
+                          <thead className="bg-muted/50 text-muted-foreground border-border/80 border-b text-[0.6875rem] font-semibold tracking-wider uppercase">
                             <tr>
                               <th className="border-border/60 border-r px-4 py-3 font-semibold whitespace-nowrap">
                                 Module / Resource
@@ -1227,7 +1227,7 @@ export default function PolicySimulatorPage() {
                                       }`}
                                     >
                                       {status === "Allowed" && (
-                                        <span className="inline-flex items-center gap-1 rounded-md border border-emerald-200/80 bg-emerald-50/70 px-2 py-0.5 text-[11px] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400">
+                                        <span className="inline-flex items-center gap-1 rounded-md border border-emerald-200/80 bg-emerald-50/70 px-2 py-0.5 text-[0.6875rem] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400">
                                           <HugeiconsIcon
                                             icon={CheckmarkCircle02Icon}
                                             size={12}
@@ -1236,7 +1236,7 @@ export default function PolicySimulatorPage() {
                                         </span>
                                       )}
                                       {status === "Denied" && (
-                                        <span className="inline-flex items-center gap-1 rounded-md border border-rose-200/80 bg-rose-50/70 px-2 py-0.5 text-[11px] font-medium text-rose-700 dark:border-rose-500/20 dark:bg-rose-950/40 dark:text-rose-400">
+                                        <span className="inline-flex items-center gap-1 rounded-md border border-rose-200/80 bg-rose-50/70 px-2 py-0.5 text-[0.6875rem] font-medium text-rose-700 dark:border-rose-500/20 dark:bg-rose-950/40 dark:text-rose-400">
                                           <HugeiconsIcon
                                             icon={AlertCircleIcon}
                                             size={12}
@@ -1245,7 +1245,7 @@ export default function PolicySimulatorPage() {
                                         </span>
                                       )}
                                       {status === "Limited" && (
-                                        <span className="inline-flex items-center gap-1 rounded-md border border-amber-200/80 bg-amber-50/70 px-2 py-0.5 text-[11px] font-medium text-amber-700 dark:border-amber-500/20 dark:bg-amber-950/40 dark:text-amber-400">
+                                        <span className="inline-flex items-center gap-1 rounded-md border border-amber-200/80 bg-amber-50/70 px-2 py-0.5 text-[0.6875rem] font-medium text-amber-700 dark:border-amber-500/20 dark:bg-amber-950/40 dark:text-amber-400">
                                           Limited
                                         </span>
                                       )}
@@ -1291,13 +1291,13 @@ export default function PolicySimulatorPage() {
                             />
                             Why is this allowed?
                           </span>
-                          <p className="text-muted-foreground text-[11px]">
+                          <p className="text-muted-foreground text-[0.6875rem]">
                             Policy evaluation chain summary
                           </p>
                         </div>
                         <Badge
                           variant="outline"
-                          className="font-mono text-[10px]"
+                          className="font-mono text-[0.625rem]"
                         >
                           3 Checks
                         </Badge>
@@ -1313,10 +1313,10 @@ export default function PolicySimulatorPage() {
                             <span className="text-foreground font-semibold">
                               Allowed by Policy
                             </span>
-                            <p className="text-muted-foreground text-[11px] leading-relaxed">
+                            <p className="text-muted-foreground text-[0.6875rem] leading-relaxed">
                               Development Base Policy
                               <br />
-                              <span className="text-primary font-mono text-[10px]">
+                              <span className="text-primary font-mono text-[0.625rem]">
                                 Statement: AllowViewDatabase
                               </span>
                             </p>
@@ -1333,7 +1333,7 @@ export default function PolicySimulatorPage() {
                             <span className="text-foreground font-semibold">
                               No Deny Override
                             </span>
-                            <p className="text-muted-foreground text-[11px] leading-relaxed">
+                            <p className="text-muted-foreground text-[0.6875rem] leading-relaxed">
                               No explicit deny found in any policy or permission
                               boundary.
                             </p>
@@ -1350,7 +1350,7 @@ export default function PolicySimulatorPage() {
                             <span className="text-foreground font-semibold">
                               Role Permission
                             </span>
-                            <p className="text-muted-foreground text-[11px] leading-relaxed">
+                            <p className="text-muted-foreground text-[0.6875rem] leading-relaxed">
                               Developer role has View permission on Database
                               module.
                             </p>
@@ -1365,7 +1365,7 @@ export default function PolicySimulatorPage() {
                         <span className="text-foreground text-xs font-semibold">
                           What if?
                         </span>
-                        <p className="text-muted-foreground text-[11px]">
+                        <p className="text-muted-foreground text-[0.6875rem]">
                           Test different scenarios quickly
                         </p>
                       </div>
@@ -1383,7 +1383,7 @@ export default function PolicySimulatorPage() {
                           <HugeiconsIcon
                             icon={FlashIcon}
                             size={14}
-                            className="text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.7)]"
+                            className="text-yellow-400 drop-shadow-[0_0_0.5rem_rgba(250,204,21,0.7)]"
                           />
                           Test as Different Role
                         </Button>
@@ -1399,7 +1399,7 @@ export default function PolicySimulatorPage() {
                           <HugeiconsIcon
                             icon={FlashIcon}
                             size={14}
-                            className="text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.7)]"
+                            className="text-yellow-400 drop-shadow-[0_0_0.5rem_rgba(250,204,21,0.7)]"
                           />
                           Test Different Action
                         </Button>
@@ -1415,7 +1415,7 @@ export default function PolicySimulatorPage() {
                           <HugeiconsIcon
                             icon={FlashIcon}
                             size={14}
-                            className="text-yellow-400 drop-shadow-[0_0_8px_rgba(250,204,21,0.7)]"
+                            className="text-yellow-400 drop-shadow-[0_0_0.5rem_rgba(250,204,21,0.7)]"
                           />
                           Test Different Resource
                         </Button>
@@ -1428,7 +1428,7 @@ export default function PolicySimulatorPage() {
                         <span className="text-foreground text-xs font-semibold">
                           Save Scenario
                         </span>
-                        <p className="text-muted-foreground text-[11px]">
+                        <p className="text-muted-foreground text-[0.6875rem]">
                           Save this simulation for later use
                         </p>
                       </div>
@@ -1468,14 +1468,14 @@ export default function PolicySimulatorPage() {
                           <span className="text-foreground text-xs font-semibold">
                             Direct User Overrides Evaluation
                           </span>
-                          <p className="text-muted-foreground text-[11px]">
+                          <p className="text-muted-foreground text-[0.6875rem]">
                             Checked user-level DENY statements
                           </p>
                         </div>
                       </div>
                       <Badge
                         variant="secondary"
-                        className="shrink-0 border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[9px] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
+                        className="shrink-0 border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[0.5625rem] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
                       >
                         PASSED
                       </Badge>
@@ -1490,7 +1490,7 @@ export default function PolicySimulatorPage() {
                           <span className="text-foreground text-xs font-semibold">
                             Service Control Policy (SCP) Boundaries
                           </span>
-                          <p className="text-muted-foreground text-[11px]">
+                          <p className="text-muted-foreground text-[0.6875rem]">
                             Evaluated Organization boundary rules on{" "}
                             {selectedEnv}
                           </p>
@@ -1498,7 +1498,7 @@ export default function PolicySimulatorPage() {
                       </div>
                       <Badge
                         variant="secondary"
-                        className="shrink-0 border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[9px] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
+                        className="shrink-0 border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[0.5625rem] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
                       >
                         PASSED
                       </Badge>
@@ -1513,7 +1513,7 @@ export default function PolicySimulatorPage() {
                           <span className="text-foreground text-xs font-semibold">
                             Role Policy Evaluation ({selectedEntityId})
                           </span>
-                          <p className="text-muted-foreground text-[11px]">
+                          <p className="text-muted-foreground text-[0.6875rem]">
                             Matched Statement: "AllowViewDatabase" in
                             Development Base Policy
                           </p>
@@ -1521,7 +1521,7 @@ export default function PolicySimulatorPage() {
                       </div>
                       <Badge
                         variant="secondary"
-                        className="shrink-0 border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[9px] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
+                        className="shrink-0 border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[0.5625rem] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
                       >
                         MATCHED
                       </Badge>
@@ -1536,14 +1536,14 @@ export default function PolicySimulatorPage() {
                           <span className="text-foreground text-xs font-semibold">
                             Environment &amp; Context Checks
                           </span>
-                          <p className="text-muted-foreground text-[11px]">
+                          <p className="text-muted-foreground text-[0.6875rem]">
                             Verified IP {ipAddress} and evaluation timestamp
                           </p>
                         </div>
                       </div>
                       <Badge
                         variant="secondary"
-                        className="shrink-0 border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[9px] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
+                        className="shrink-0 border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[0.5625rem] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
                       >
                         PASSED
                       </Badge>
@@ -1556,7 +1556,7 @@ export default function PolicySimulatorPage() {
                           <span className="text-foreground text-xs font-bold">
                             Access Decision Output
                           </span>
-                          <p className="text-muted-foreground text-[11px]">
+                          <p className="text-muted-foreground text-[0.6875rem]">
                             Action {selectedAction} on {selectedService} (
                             {selectedResource}) is {currentResult.toUpperCase()}
                           </p>
@@ -1593,13 +1593,13 @@ export default function PolicySimulatorPage() {
                         <div className="border-border/60 flex items-center justify-between border-b p-4 pb-3">
                           <Badge
                             variant="outline"
-                            className="font-mono text-[10px]"
+                            className="font-mono text-[0.625rem]"
                           >
                             {policy.code}
                           </Badge>
                           <Badge
                             variant="secondary"
-                            className="border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[9px] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
+                            className="border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[0.5625rem] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
                           >
                             ACTIVE
                           </Badge>
@@ -1608,11 +1608,11 @@ export default function PolicySimulatorPage() {
                           <p className="text-foreground mb-3 text-xs font-semibold">
                             {policy.name}
                           </p>
-                          <p className="text-muted-foreground mb-2 font-mono text-[11px]">
+                          <p className="text-muted-foreground mb-2 font-mono text-[0.6875rem]">
                             Effect:{" "}
                             <strong className="text-emerald-600">ALLOW</strong>
                           </p>
-                          <pre className="bg-muted/60 border-border/60 overflow-x-auto rounded-md border p-2.5 font-mono text-[10px]">
+                          <pre className="bg-muted/60 border-border/60 overflow-x-auto rounded-md border p-2.5 font-mono text-[0.625rem]">
                             {JSON.stringify(
                               {
                                 Sid: `Stmt_${policy.code}`,
@@ -1676,7 +1676,10 @@ export default function PolicySimulatorPage() {
                               arn:iam:module:{selectedService.toLowerCase()}/"*"
                             </td>
                             <td className="border-r px-4 py-3 whitespace-nowrap">
-                              <Badge variant="outline" className="text-[10px]">
+                              <Badge
+                                variant="outline"
+                                className="text-[0.625rem]"
+                              >
                                 Env: {selectedEnv}
                               </Badge>
                             </td>
@@ -1712,7 +1715,7 @@ export default function PolicySimulatorPage() {
                     <p className="text-muted-foreground text-xs font-medium">
                       No active deny overrides found
                     </p>
-                    <p className="text-muted-foreground mt-0.5 max-w-md text-[10px]">
+                    <p className="text-muted-foreground mt-0.5 max-w-md text-[0.625rem]">
                       No explicit DENY statements are currently overriding
                       access for role{" "}
                       <strong>
@@ -1742,7 +1745,7 @@ export default function PolicySimulatorPage() {
           <div className="px-4 pb-4 sm:px-5 sm:pb-5">
             <div className="border-border/80 bg-muted/30 relative overflow-hidden rounded-lg border">
               <div className="border-border/60 bg-muted/50 flex items-center justify-between border-b px-3.5 py-2 text-xs">
-                <div className="text-muted-foreground flex items-center gap-2 font-mono text-[11px]">
+                <div className="text-muted-foreground flex items-center gap-2 font-mono text-[0.6875rem]">
                   <span className="size-2 rounded-full bg-emerald-500" />
                   payload.json
                 </div>
@@ -1750,7 +1753,7 @@ export default function PolicySimulatorPage() {
                   size="sm"
                   variant="outline"
                   onClick={handleCopyJson}
-                  className="h-7 gap-1.5 px-2.5 text-[11px] font-medium"
+                  className="h-7 gap-1.5 px-2.5 text-[0.6875rem] font-medium"
                 >
                   <HugeiconsIcon
                     icon={copiedJson ? Tick02Icon : Copy01Icon}
@@ -1793,7 +1796,7 @@ export default function PolicySimulatorPage() {
                   <h5 className="text-foreground text-xs font-semibold">
                     Default Deny Principle
                   </h5>
-                  <p className="text-muted-foreground text-[11px] leading-relaxed">
+                  <p className="text-muted-foreground text-[0.6875rem] leading-relaxed">
                     By default, all access requests start with an implicit DENY
                     verdict until an explicit ALLOW rule is evaluated.
                   </p>
@@ -1808,7 +1811,7 @@ export default function PolicySimulatorPage() {
                   <h5 className="text-foreground text-xs font-semibold">
                     Explicit Deny Overrides
                   </h5>
-                  <p className="text-muted-foreground text-[11px] leading-relaxed">
+                  <p className="text-muted-foreground text-[0.6875rem] leading-relaxed">
                     If any matched policy contains an explicit DENY statement,
                     it immediately overrides all ALLOW statements.
                   </p>
@@ -1823,7 +1826,7 @@ export default function PolicySimulatorPage() {
                   <h5 className="text-foreground text-xs font-semibold">
                     Context &amp; Boundary Constraints
                   </h5>
-                  <p className="text-muted-foreground text-[11px] leading-relaxed">
+                  <p className="text-muted-foreground text-[0.6875rem] leading-relaxed">
                     Time window, IP CIDR restrictions, and MFA state are
                     evaluated against request parameters before final decision
                     output.
@@ -1857,7 +1860,7 @@ export default function PolicySimulatorPage() {
               {/* Context preview box */}
               <div className="bg-muted/40 border-border/60 flex items-center justify-between rounded-lg border p-3">
                 <div className="space-y-0.5">
-                  <span className="text-muted-foreground text-[10px] font-semibold uppercase">
+                  <span className="text-muted-foreground text-[0.625rem] font-semibold uppercase">
                     Current Context
                   </span>
                   <p className="text-foreground text-xs font-semibold">
@@ -1867,10 +1870,13 @@ export default function PolicySimulatorPage() {
                   </p>
                 </div>
                 <div className="text-right">
-                  <Badge variant="outline" className="font-mono text-[10px]">
+                  <Badge
+                    variant="outline"
+                    className="font-mono text-[0.625rem]"
+                  >
                     {selectedAction}
                   </Badge>
-                  <span className="text-muted-foreground mt-0.5 block text-[10px]">
+                  <span className="text-muted-foreground mt-0.5 block text-[0.625rem]">
                     {selectedService}
                   </span>
                 </div>

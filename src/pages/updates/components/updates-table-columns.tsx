@@ -151,7 +151,7 @@ export function getUpdatesTableColumns({
             >
               {update.title}
             </button>
-            <span className="text-muted-foreground truncate text-[11px] leading-tight">
+            <span className="text-muted-foreground truncate text-[0.6875rem] leading-tight">
               {update.summary}
             </span>
           </div>
@@ -222,7 +222,7 @@ export function getUpdatesTableColumns({
         return (
           <Badge
             variant="outline"
-            className="text-foreground px-1.5 text-[10px] uppercase"
+            className="text-foreground px-1.5 text-[0.625rem] uppercase"
           >
             {ch}
           </Badge>
@@ -336,7 +336,7 @@ export function getUpdatesTableColumns({
               {author.avatar ? (
                 <AvatarImage src={author.avatar} alt={author.name} />
               ) : null}
-              <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-bold">
+              <AvatarFallback className="bg-primary/10 text-primary text-[0.625rem] font-bold">
                 {initials}
               </AvatarFallback>
             </Avatar>
@@ -344,7 +344,7 @@ export function getUpdatesTableColumns({
               <span className="max-w-28 truncate text-xs leading-none font-medium">
                 {author.name}
               </span>
-              <span className="text-muted-foreground max-w-28 truncate text-[10px] leading-tight">
+              <span className="text-muted-foreground max-w-28 truncate text-[0.625rem] leading-tight">
                 {author.role}
               </span>
             </div>

@@ -107,7 +107,7 @@ export default function AccountTab() {
                 <SelectItem value="zh">中文 (Chinese)</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-muted-foreground text-[11px] leading-normal">
+            <p className="text-muted-foreground text-[0.6875rem] leading-normal">
               Select your preferred language for the user interface.
             </p>
           </div>
@@ -134,7 +134,7 @@ export default function AccountTab() {
                 <SelectItem value="IN">India</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-muted-foreground text-[11px] leading-normal">
+            <p className="text-muted-foreground text-[0.6875rem] leading-normal">
               Select your country or region to format currencies and numbers.
             </p>
           </div>
@@ -178,7 +178,7 @@ export default function AccountTab() {
                 <SelectItem value="Asia/Tokyo">Asia/Tokyo (JST)</SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-muted-foreground text-[11px] leading-normal">
+            <p className="text-muted-foreground text-[0.6875rem] leading-normal">
               All timestamps in system logs, activity feeds, and reports will
               align to this timezone.
             </p>
@@ -214,7 +214,7 @@ export default function AccountTab() {
                 </SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-muted-foreground text-[11px] leading-normal">
+            <p className="text-muted-foreground text-[0.6875rem] leading-normal">
               Select your preferred date display format.
             </p>
           </div>

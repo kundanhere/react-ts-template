@@ -79,7 +79,7 @@ export function AuthenticatorModal({
           {/* Step 1 */}
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <span className="border-primary/20 bg-primary/5 text-primary inline-flex items-center justify-center rounded-full border px-2.5 py-0.5 text-[10px] font-medium">
+              <span className="border-primary/20 bg-primary/5 text-primary inline-flex items-center justify-center rounded-full border px-2.5 py-0.5 text-[0.625rem] font-medium">
                 Step 1
               </span>
               <h4 className="text-foreground text-xs font-semibold">
@@ -98,16 +98,16 @@ export function AuthenticatorModal({
               </div>
               <div className="flex flex-col justify-between py-0.5">
                 <div className="space-y-1">
-                  <h5 className="text-foreground text-[11px] font-semibold">
+                  <h5 className="text-foreground text-[0.6875rem] font-semibold">
                     Can't scan QR code?
                   </h5>
-                  <p className="text-muted-foreground text-[10px]">
+                  <p className="text-muted-foreground text-[0.625rem]">
                     Enter this secret instead:
                   </p>
                 </div>
 
                 <div className="mt-2 space-y-2">
-                  <div className="border-border/60 bg-muted/65 text-foreground w-fit rounded-md border px-2 py-1 font-mono text-[11px] font-semibold tracking-wider uppercase select-all">
+                  <div className="border-border/60 bg-muted/65 text-foreground w-fit rounded-md border px-2 py-1 font-mono text-[0.6875rem] font-semibold tracking-wider uppercase select-all">
                     {secretKey}
                   </div>
 
@@ -134,7 +134,7 @@ export function AuthenticatorModal({
           {/* Step 2 */}
           <div className="space-y-3">
             <div className="flex items-center gap-2">
-              <span className="border-primary/20 bg-primary/5 text-primary inline-flex items-center justify-center rounded-full border px-2.5 py-0.5 text-[10px] font-medium">
+              <span className="border-primary/20 bg-primary/5 text-primary inline-flex items-center justify-center rounded-full border px-2.5 py-0.5 text-[0.625rem] font-medium">
                 Step 2
               </span>
               <h4 className="text-foreground text-xs font-semibold">
@@ -146,7 +146,7 @@ export function AuthenticatorModal({
             </p>
 
             <div className="space-y-2 pt-1.5">
-              <Label className="text-foreground text-[11px] font-semibold">
+              <Label className="text-foreground text-[0.6875rem] font-semibold">
                 Enter verification code
               </Label>
 

@@ -72,17 +72,17 @@ export function FeedbackDetailDialog({
             <InlineCopy
               text={feedback.code}
               label="feedback ID"
-              className="text-foreground hover:text-primary font-mono text-[11px] font-semibold"
+              className="text-foreground hover:text-primary font-mono text-[0.6875rem] font-semibold"
             />
             <Badge
               variant="outline"
-              className={`h-5 gap-1 px-1.5 py-0 text-[10px] font-medium capitalize ${statusVariantMap[feedback.status]}`}
+              className={`h-5 gap-1 px-1.5 py-0 text-[0.625rem] font-medium capitalize ${statusVariantMap[feedback.status]}`}
             >
               {feedback.status.replace("_", " ")}
             </Badge>
             <Badge
               variant="outline"
-              className="text-foreground h-5 gap-1 px-1.5 py-0 text-[10px] font-medium capitalize"
+              className="text-foreground h-5 gap-1 px-1.5 py-0 text-[0.625rem] font-medium capitalize"
             >
               <span
                 className={`size-1.5 rounded-full ${priorityDotMap[feedback.priority] || "bg-muted-foreground"}`}
@@ -91,7 +91,7 @@ export function FeedbackDetailDialog({
             </Badge>
             <Badge
               variant="secondary"
-              className="h-5 px-1.5 py-0 text-[10px] font-medium uppercase"
+              className="h-5 px-1.5 py-0 text-[0.625rem] font-medium uppercase"
             >
               {feedback.type}
             </Badge>
@@ -100,7 +100,7 @@ export function FeedbackDetailDialog({
           <DialogTitle className="text-foreground mt-0.5 text-sm leading-snug font-semibold tracking-tight sm:text-base">
             {feedback.title}
           </DialogTitle>
-          <DialogDescription className="text-muted-foreground mt-0 text-[11px] leading-normal">
+          <DialogDescription className="text-muted-foreground mt-0 text-[0.6875rem] leading-normal">
             Submitted {formatDate(feedback.createdAt)} by{" "}
             <span className="text-foreground font-medium">
               {feedback.author.name}
@@ -112,7 +112,7 @@ export function FeedbackDetailDialog({
           <div className="flex flex-col gap-3.5 px-4 pt-1 pb-4 text-xs sm:px-5 sm:pt-1 sm:pb-5">
             {/* Main Description */}
             <div className="bg-muted/40 border-border/60 flex flex-col gap-1.5 rounded-lg border p-3">
-              <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+              <span className="text-muted-foreground text-[0.625rem] font-semibold tracking-wider uppercase">
                 {feedback.type === "bug"
                   ? "Observed Issue & Behavior"
                   : "Feedback Summary"}
@@ -125,7 +125,7 @@ export function FeedbackDetailDialog({
             {/* Steps to Reproduce */}
             {feedback.stepsToReproduce && (
               <div className="flex flex-col gap-1.5">
-                <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+                <span className="text-muted-foreground text-[0.625rem] font-semibold tracking-wider uppercase">
                   Steps to Reproduce
                 </span>
                 <pre className="border-border/70 bg-muted/30 text-foreground rounded-lg border p-3 font-mono text-xs leading-relaxed whitespace-pre-wrap">
@@ -143,13 +143,13 @@ export function FeedbackDetailDialog({
                   className="text-muted-foreground size-4"
                 />
                 <div className="space-y-0.5">
-                  <span className="text-muted-foreground text-[10px] font-semibold uppercase">
+                  <span className="text-muted-foreground text-[0.625rem] font-semibold uppercase">
                     Reporter
                   </span>
                   <p className="text-foreground text-xs font-semibold">
                     {feedback.author.name}
                   </p>
-                  <p className="text-muted-foreground text-[11px]">
+                  <p className="text-muted-foreground text-[0.6875rem]">
                     {feedback.author.email}
                   </p>
                 </div>
@@ -162,13 +162,13 @@ export function FeedbackDetailDialog({
                   className="text-muted-foreground size-4"
                 />
                 <div className="space-y-0.5">
-                  <span className="text-muted-foreground text-[10px] font-semibold uppercase">
+                  <span className="text-muted-foreground text-[0.625rem] font-semibold uppercase">
                     Target Route
                   </span>
                   <p className="text-foreground font-mono text-xs font-semibold">
                     {feedback.url || "/"}
                   </p>
-                  <p className="text-muted-foreground text-[11px]">
+                  <p className="text-muted-foreground text-[0.6875rem]">
                     {feedback.deviceInfo || "Desktop Browser"}
                   </p>
                 </div>
@@ -178,7 +178,7 @@ export function FeedbackDetailDialog({
             {/* Rating and Workflow Status */}
             <div className="bg-muted/40 border-border/60 flex flex-col gap-3 rounded-lg border p-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="space-y-0.5">
-                <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+                <span className="text-muted-foreground text-[0.625rem] font-semibold tracking-wider uppercase">
                   User Satisfaction
                 </span>
                 <div className="flex items-center gap-1.5 pt-0.5">

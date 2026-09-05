@@ -11,7 +11,7 @@ export function RecoveryBlobs() {
             <h3 className="text-foreground -mt-3 text-lg font-bold tracking-tight sm:-mt-5 sm:text-xl md:text-2xl">
               We&apos;ve Got You Covered
             </h3>
-            <p className="text-muted-foreground mt-1 max-w-xs text-[11px] sm:text-xs">
+            <p className="text-muted-foreground mt-1 max-w-xs text-[0.6875rem] sm:text-xs">
               We&apos;ll help you get back into your account in no time
             </p>
           </div>

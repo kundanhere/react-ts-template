@@ -4,7 +4,7 @@ export function LoginBrandPanel() {
   return (
     <div className="dark relative hidden shrink-0 overflow-hidden bg-zinc-950 lg:flex lg:w-lg xl:w-120">
       {/* Subtle dark gradient scrim for crisp contrast */}
-      <div className="absolute inset-0 z-1 bg-linear-to-b from-black/50 via-black/25 to-black/60 backdrop-blur-[0.5px]" />
+      <div className="absolute inset-0 z-1 bg-linear-to-b from-black/50 via-black/25 to-black/60 backdrop-blur-[0.03125rem]" />
 
       {/* Background Loop Video */}
       <video

@@ -238,7 +238,7 @@ export function SearchForm({
                   <p className="text-foreground text-xs font-medium">
                     No matching commands or pages found.
                   </p>
-                  <p className="text-muted-foreground text-[11px]">
+                  <p className="text-muted-foreground text-[0.6875rem]">
                     Try searching for &quot;users&quot;, &quot;policies&quot;,
                     &quot;audit&quot;, or &quot;theme&quot;.
                   </p>
@@ -268,7 +268,7 @@ export function SearchForm({
                     <div className="qc-title text-foreground truncate text-xs leading-tight font-semibold transition-colors duration-75">
                       New User
                     </div>
-                    <div className="text-muted-foreground truncate text-[10px] leading-tight">
+                    <div className="text-muted-foreground truncate text-[0.625rem] leading-tight">
                       Account & access
                     </div>
                   </div>
@@ -298,7 +298,7 @@ export function SearchForm({
                     <div className="qc-title text-foreground truncate text-xs leading-tight font-semibold transition-colors duration-75">
                       New Role
                     </div>
-                    <div className="text-muted-foreground truncate text-[10px] leading-tight">
+                    <div className="text-muted-foreground truncate text-[0.625rem] leading-tight">
                       RBAC permissions
                     </div>
                   </div>
@@ -328,7 +328,7 @@ export function SearchForm({
                     <div className="qc-title text-foreground truncate text-xs leading-tight font-semibold transition-colors duration-75">
                       New Policy
                     </div>
-                    <div className="text-muted-foreground truncate text-[10px] leading-tight">
+                    <div className="text-muted-foreground truncate text-[0.625rem] leading-tight">
                       JSON access rules
                     </div>
                   </div>
@@ -358,7 +358,7 @@ export function SearchForm({
                     <div className="qc-title text-foreground truncate text-xs leading-tight font-semibold transition-colors duration-75">
                       New Module
                     </div>
-                    <div className="text-muted-foreground truncate text-[10px] leading-tight">
+                    <div className="text-muted-foreground truncate text-[0.625rem] leading-tight">
                       Service capability
                     </div>
                   </div>
@@ -393,7 +393,7 @@ export function SearchForm({
                         ? "Switch to Light Mode"
                         : "Switch to Dark Mode"}
                     </span>
-                    <span className="text-muted-foreground/70 xs:inline-block ml-2 hidden shrink-0 text-[11px] sm:inline-block">
+                    <span className="text-muted-foreground/70 xs:inline-block ml-2 hidden shrink-0 text-[0.6875rem] sm:inline-block">
                       Appearance
                     </span>
                   </div>
@@ -421,7 +421,7 @@ export function SearchForm({
                     <span className="truncate font-medium">
                       {copied ? "Copied URL to Clipboard!" : "Copy Page URL"}
                     </span>
-                    <span className="text-muted-foreground/70 xs:inline-block ml-2 hidden shrink-0 text-[11px] sm:inline-block">
+                    <span className="text-muted-foreground/70 xs:inline-block ml-2 hidden shrink-0 text-[0.6875rem] sm:inline-block">
                       Share
                     </span>
                   </div>
@@ -454,12 +454,12 @@ export function SearchForm({
                         Test Policy Simulator
                       </span>
                       {isCurrentRoute("/iam/access/simulate") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /iam/access/simulate
                     </span>
                   </div>
@@ -489,12 +489,12 @@ export function SearchForm({
                         View System Audit Logs
                       </span>
                       {isCurrentRoute("/iam/audit/logs") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /iam/audit/logs
                     </span>
                   </div>
@@ -527,15 +527,15 @@ export function SearchForm({
                     <div className="flex items-center gap-2 truncate">
                       <span className="font-medium">Users</span>
                       {isCurrentRoute("/iam/users") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
-                      <span className="text-muted-foreground truncate text-[11px]">
+                      <span className="text-muted-foreground truncate text-[0.6875rem]">
                         Directory & credentials
                       </span>
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /iam/users
                     </span>
                   </div>
@@ -557,15 +557,15 @@ export function SearchForm({
                     <div className="flex items-center gap-2 truncate">
                       <span className="font-medium">Roles & Permissions</span>
                       {isCurrentRoute("/iam/roles") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
-                      <span className="text-muted-foreground truncate text-[11px]">
+                      <span className="text-muted-foreground truncate text-[0.6875rem]">
                         RBAC configurations
                       </span>
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /iam/roles
                     </span>
                   </div>
@@ -587,15 +587,15 @@ export function SearchForm({
                     <div className="flex items-center gap-2 truncate">
                       <span className="font-medium">Policies Registry</span>
                       {isCurrentRoute("/iam/policies") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
-                      <span className="text-muted-foreground truncate text-[11px]">
+                      <span className="text-muted-foreground truncate text-[0.6875rem]">
                         JSON access rules
                       </span>
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /iam/policies
                     </span>
                   </div>
@@ -619,15 +619,15 @@ export function SearchForm({
                     <div className="flex items-center gap-2 truncate">
                       <span className="font-medium">Access Matrix</span>
                       {isCurrentRoute("/iam/access-matrix") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
-                      <span className="text-muted-foreground truncate text-[11px]">
+                      <span className="text-muted-foreground truncate text-[0.6875rem]">
                         Role × Module grid
                       </span>
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /iam/access-matrix
                     </span>
                   </div>
@@ -649,15 +649,15 @@ export function SearchForm({
                     <div className="flex items-center gap-2 truncate">
                       <span className="font-medium">Modules</span>
                       {isCurrentRoute("/iam/modules") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
-                      <span className="text-muted-foreground truncate text-[11px]">
+                      <span className="text-muted-foreground truncate text-[0.6875rem]">
                         Service capabilities
                       </span>
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /iam/modules
                     </span>
                   </div>
@@ -679,15 +679,15 @@ export function SearchForm({
                     <div className="flex items-center gap-2 truncate">
                       <span className="font-medium">IAM Analytics</span>
                       {isCurrentRoute("/iam/dashboard") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
-                      <span className="text-muted-foreground truncate text-[11px]">
+                      <span className="text-muted-foreground truncate text-[0.6875rem]">
                         Access graphs & metrics
                       </span>
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /iam/dashboard
                     </span>
                   </div>
@@ -714,15 +714,15 @@ export function SearchForm({
                     <div className="flex items-center gap-2 truncate">
                       <span className="font-medium">Active Sessions</span>
                       {isCurrentRoute("/iam/sessions") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
-                      <span className="text-muted-foreground truncate text-[11px]">
+                      <span className="text-muted-foreground truncate text-[0.6875rem]">
                         Devices & tokens
                       </span>
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /iam/sessions
                     </span>
                   </div>
@@ -746,15 +746,15 @@ export function SearchForm({
                     <div className="flex items-center gap-2 truncate">
                       <span className="font-medium">Security & MFA</span>
                       {isCurrentRoute("/iam/security/settings") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
-                      <span className="text-muted-foreground truncate text-[11px]">
+                      <span className="text-muted-foreground truncate text-[0.6875rem]">
                         Auth & credentials
                       </span>
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /iam/security/settings
                     </span>
                   </div>
@@ -776,15 +776,15 @@ export function SearchForm({
                     <div className="flex items-center gap-2 truncate">
                       <span className="font-medium">My Activity</span>
                       {isCurrentRoute("/iam/audit/me") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
-                      <span className="text-muted-foreground truncate text-[11px]">
+                      <span className="text-muted-foreground truncate text-[0.6875rem]">
                         Personal action history
                       </span>
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /iam/audit/me
                     </span>
                   </div>
@@ -811,15 +811,15 @@ export function SearchForm({
                     <div className="flex items-center gap-2 truncate">
                       <span className="font-medium">Home</span>
                       {isCurrentRoute("/") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
-                      <span className="text-muted-foreground truncate text-[11px]">
+                      <span className="text-muted-foreground truncate text-[0.6875rem]">
                         Welcome portal
                       </span>
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /
                     </span>
                   </div>
@@ -841,15 +841,15 @@ export function SearchForm({
                     <div className="flex items-center gap-2 truncate">
                       <span className="font-medium">Overview Dashboard</span>
                       {isCurrentRoute("/dashboard") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
-                      <span className="text-muted-foreground truncate text-[11px]">
+                      <span className="text-muted-foreground truncate text-[0.6875rem]">
                         High-level KPI metrics
                       </span>
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /dashboard
                     </span>
                   </div>
@@ -871,15 +871,15 @@ export function SearchForm({
                     <div className="flex items-center gap-2 truncate">
                       <span className="font-medium">Inbox & Alerts</span>
                       {isCurrentRoute("/inbox") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
-                      <span className="text-muted-foreground truncate text-[11px]">
+                      <span className="text-muted-foreground truncate text-[0.6875rem]">
                         Notifications & alerts
                       </span>
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /inbox
                     </span>
                   </div>
@@ -901,15 +901,15 @@ export function SearchForm({
                     <div className="flex items-center gap-2 truncate">
                       <span className="font-medium">Updates & Releases</span>
                       {isCurrentRoute("/updates") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
-                      <span className="text-muted-foreground truncate text-[11px]">
+                      <span className="text-muted-foreground truncate text-[0.6875rem]">
                         Product changelog
                       </span>
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /updates
                     </span>
                   </div>
@@ -938,12 +938,12 @@ export function SearchForm({
                         System Settings
                       </span>
                       {isCurrentRoute("/settings") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /settings
                     </span>
                   </div>
@@ -973,12 +973,12 @@ export function SearchForm({
                         Support Center
                       </span>
                       {isCurrentRoute("/support") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /support
                     </span>
                   </div>
@@ -1002,12 +1002,12 @@ export function SearchForm({
                         Send Feedback
                       </span>
                       {isCurrentRoute("/feedback") && (
-                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[10px] font-medium">
+                        <span className="bg-primary/10 text-primary rounded px-1.5 py-0.5 text-[0.625rem] font-medium">
                           Current
                         </span>
                       )}
                     </div>
-                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[10px] sm:inline-block">
+                    <span className="text-muted-foreground/70 ml-2 hidden shrink-0 font-mono text-[0.625rem] sm:inline-block">
                       /feedback
                     </span>
                   </div>
@@ -1027,7 +1027,7 @@ export function SearchForm({
                   </div>
                   <div className="flex min-w-0 flex-1 items-center justify-between">
                     <span className="truncate font-medium">Log Out</span>
-                    <span className="text-muted-foreground/70 xs:inline-block ml-2 hidden shrink-0 text-[11px] sm:inline-block">
+                    <span className="text-muted-foreground/70 xs:inline-block ml-2 hidden shrink-0 text-[0.6875rem] sm:inline-block">
                       End session
                     </span>
                   </div>
@@ -1042,26 +1042,26 @@ export function SearchForm({
             </CommandList>
 
             {/* MODERN FOOTER */}
-            <div className="border-border/50 bg-muted/40 text-muted-foreground flex items-center justify-between border-t px-3 py-2 text-[11px]">
+            <div className="border-border/50 bg-muted/40 text-muted-foreground flex items-center justify-between border-t px-3 py-2 text-[0.6875rem]">
               <div className="hidden items-center gap-3 sm:flex">
                 <span className="flex items-center gap-1">
-                  <Kbd className="text-[10px]">↑</Kbd>
-                  <Kbd className="text-[10px]">↓</Kbd>
+                  <Kbd className="text-[0.625rem]">↑</Kbd>
+                  <Kbd className="text-[0.625rem]">↓</Kbd>
                   <span className="text-muted-foreground/80">navigate</span>
                 </span>
                 <span className="flex items-center gap-1">
-                  <Kbd className="text-[10px]">↵</Kbd>
+                  <Kbd className="text-[0.625rem]">↵</Kbd>
                   <span className="text-muted-foreground/80">select</span>
                 </span>
                 <span className="flex items-center gap-1">
-                  <Kbd className="text-[10px]">esc</Kbd>
+                  <Kbd className="text-[0.625rem]">esc</Kbd>
                   <span className="text-muted-foreground/80">close</span>
                 </span>
               </div>
-              <div className="text-muted-foreground flex items-center gap-1.5 text-[11px] sm:hidden">
+              <div className="text-muted-foreground flex items-center gap-1.5 text-[0.6875rem] sm:hidden">
                 <span>Tap any item to select</span>
               </div>
-              <div className="text-muted-foreground/70 flex items-center gap-2 text-[10px] font-medium">
+              <div className="text-muted-foreground/70 flex items-center gap-2 text-[0.625rem] font-medium">
                 <button
                   type="button"
                   onClick={() => setOpen(false)}

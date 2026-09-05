@@ -193,7 +193,7 @@ export default function SecuritySettingsPage() {
                   value={otpExpiry}
                   onChange={(e) => setOtpExpiry(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   The valid timeframe of OTP verification codes.
                 </p>
               </div>
@@ -208,7 +208,7 @@ export default function SecuritySettingsPage() {
                   value={otpCooldown}
                   onChange={(e) => setOtpCooldown(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Required delay before a user is allowed to request a new code
                   request.
                 </p>
@@ -224,7 +224,7 @@ export default function SecuritySettingsPage() {
                   value={otpMaxRetries}
                   onChange={(e) => setOtpMaxRetries(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Failed code verification attempts allowed before invalidating
                   the code.
                 </p>
@@ -261,7 +261,7 @@ export default function SecuritySettingsPage() {
                   value={accessTokenExpiry}
                   onChange={(e) => setAccessTokenExpiry(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Validity duration of short-lived JWT credentials.
                 </p>
               </div>
@@ -276,7 +276,7 @@ export default function SecuritySettingsPage() {
                   value={refreshTokenExpiry}
                   onChange={(e) => setRefreshTokenExpiry(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Validity duration of persistent session refresh tokens.
                 </p>
               </div>
@@ -291,7 +291,7 @@ export default function SecuritySettingsPage() {
                   value={cookieExpiry}
                   onChange={(e) => setCookieExpiry(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Absolute validity lifespan of secure session cookies.
                 </p>
               </div>
@@ -311,7 +311,7 @@ export default function SecuritySettingsPage() {
                   >
                     Refresh token rotation
                   </Label>
-                  <p className="text-muted-foreground text-[11px] leading-normal">
+                  <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                     Issue a new refresh token and invalidate the old one on each
                     token refresh.
                   </p>
@@ -331,7 +331,7 @@ export default function SecuritySettingsPage() {
                   >
                     Revoke tokens on logout & password change
                   </Label>
-                  <p className="text-muted-foreground text-[11px] leading-normal">
+                  <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                     Force complete token invalidation across all servers on
                     logout or credentials changes.
                   </p>
@@ -376,7 +376,7 @@ export default function SecuritySettingsPage() {
                   value={sessionInactivity}
                   onChange={(e) => setSessionInactivity(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Time of continuous user inactivity before the session expires.
                 </p>
               </div>
@@ -394,7 +394,7 @@ export default function SecuritySettingsPage() {
                   value={sessionMaxLifetime}
                   onChange={(e) => setSessionMaxLifetime(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Absolute validity duration of active user session logins.
                 </p>
               </div>
@@ -419,7 +419,7 @@ export default function SecuritySettingsPage() {
                   value={maxConcurrentSessions}
                   onChange={(e) => setMaxConcurrentSessions(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Maximum active sessions allowed for a single account
                   simultaneously.
                 </p>
@@ -459,14 +459,14 @@ export default function SecuritySettingsPage() {
                   value={minPasswordLength}
                   onChange={(e) => setMinPasswordLength(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Recommend at least 12 characters to defend against automated
                   guessing.
                 </p>
               </div>
 
               <div className="space-y-3 pt-2">
-                <Label className="text-muted-foreground text-xs text-[10px] font-semibold tracking-wider uppercase">
+                <Label className="text-muted-foreground text-xs text-[0.625rem] font-semibold tracking-wider uppercase">
                   Password strength requirements
                 </Label>
                 <div className="flex flex-col gap-2.5">
@@ -550,7 +550,7 @@ export default function SecuritySettingsPage() {
                   value={passwordExpiry}
                   onChange={(e) => setPasswordExpiry(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Force password change interval in days. Set to 0 to disable
                   expiration.
                 </p>
@@ -566,7 +566,7 @@ export default function SecuritySettingsPage() {
                   value={passwordHistory}
                   onChange={(e) => setPasswordHistory(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Restrict reuse of recent passwords.
                 </p>
               </div>
@@ -604,7 +604,7 @@ export default function SecuritySettingsPage() {
                   value={maxFailedLogins}
                   onChange={(e) => setMaxFailedLogins(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Attempts allowed before locking user out of authentication.
                 </p>
               </div>
@@ -619,7 +619,7 @@ export default function SecuritySettingsPage() {
                   value={lockoutDuration}
                   onChange={(e) => setLockoutDuration(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Time account remains locked after reaching limit thresholds.
                 </p>
               </div>
@@ -641,7 +641,7 @@ export default function SecuritySettingsPage() {
                   value={reauthInterval}
                   onChange={(e) => setReauthInterval(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Force credential confirmation interval for protected actions.
                 </p>
               </div>
@@ -675,7 +675,7 @@ export default function SecuritySettingsPage() {
                   >
                     Enable MFA
                   </Label>
-                  <p className="text-muted-foreground text-[11px] leading-normal">
+                  <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                     Allow users to configure authenticator apps or security
                     keys.
                   </p>
@@ -695,7 +695,7 @@ export default function SecuritySettingsPage() {
                   >
                     Require MFA for administrators
                   </Label>
-                  <p className="text-muted-foreground text-[11px] leading-normal">
+                  <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                     Force mandatory MFA setup for all administrative
                     credentials.
                   </p>
@@ -742,7 +742,7 @@ export default function SecuritySettingsPage() {
                   value={resetTokenExpiry}
                   onChange={(e) => setResetTokenExpiry(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Lifetime of generated email password reset links.
                 </p>
               </div>
@@ -760,7 +760,7 @@ export default function SecuritySettingsPage() {
                   value={maxResetAttempts}
                   onChange={(e) => setMaxResetAttempts(e.target.value)}
                 />
-                <p className="text-muted-foreground text-[11px] leading-normal">
+                <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Failed code verification attempts allowed before invalidating
                   reset link.
                 </p>
@@ -781,7 +781,7 @@ export default function SecuritySettingsPage() {
                   >
                     Revoke existing sessions after password reset
                   </Label>
-                  <p className="text-muted-foreground text-[11px] leading-normal">
+                  <p className="text-muted-foreground text-[0.6875rem] leading-normal">
                     Instantly invalidate active tokens across other devices once
                     password is reset.
                   </p>

@@ -169,7 +169,7 @@ export default function ProfileTab() {
       <div className="border-border/60 border-t" />
 
       {/* Profile Form & Avatar Grid */}
-      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_240px]">
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1fr_15rem]">
         {/* Left: Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Name */}
@@ -183,7 +183,7 @@ export default function ProfileTab() {
               onChange={(e) => setName(e.target.value)}
               placeholder="Your name"
             />
-            <p className="text-muted-foreground text-[11px] leading-normal">
+            <p className="text-muted-foreground text-[0.6875rem] leading-normal">
               Your name is displayed across the platform where you perform
               actions or create content.
             </p>
@@ -207,7 +207,7 @@ export default function ProfileTab() {
                 </SelectItem>
               </SelectContent>
             </Select>
-            <p className="text-muted-foreground text-[11px] leading-normal">
+            <p className="text-muted-foreground text-[0.6875rem] leading-normal">
               This email will be displayed to other signed-in users on your
               public profile.
             </p>
@@ -226,7 +226,7 @@ export default function ProfileTab() {
               rows={3}
               maxLength={160}
             />
-            <div className="text-muted-foreground flex justify-between text-[11px]">
+            <div className="text-muted-foreground flex justify-between text-[0.6875rem]">
               <span>You can @mention other users and organizations.</span>
               <span>{160 - bio.length} remaining</span>
             </div>
@@ -343,7 +343,6 @@ export default function ProfileTab() {
           <div className="space-y-3">
             <Label className="text-xs font-semibold">Social accounts</Label>
 
-            {/* Added social accounts list */}
             {socials.length > 0 && (
               <div className="space-y-2">
                 {socials.map((social) => {
@@ -440,7 +439,7 @@ export default function ProfileTab() {
                 >
                   Show status on profile
                 </Label>
-                <span className="text-muted-foreground text-[11px] leading-normal">
+                <span className="text-muted-foreground text-[0.6875rem] leading-normal">
                   Show status updates and current activities on your public
                   profile.
                 </span>

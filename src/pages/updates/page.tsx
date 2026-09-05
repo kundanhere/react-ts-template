@@ -122,7 +122,7 @@ export default function UpdatesPage() {
                 />
                 Notifications & Feed
                 {unreadCount > 0 && (
-                  <span className="flex size-4 items-center justify-center rounded-full bg-blue-600 text-[10px] leading-none font-bold text-white">
+                  <span className="flex size-4 items-center justify-center rounded-full bg-blue-600 text-[0.625rem] leading-none font-bold text-white">
                     {unreadCount}
                   </span>
                 )}

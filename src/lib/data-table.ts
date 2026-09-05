@@ -23,9 +23,9 @@ export function getColumnPinningStyle<TData>({
   let boxShadow: string | undefined;
   if (withBorder) {
     if (isLastLeftPinnedColumn) {
-      boxShadow = "-4px 0 4px -4px var(--border) inset";
+      boxShadow = "-0.25rem 0 0.25rem -0.25rem var(--border) inset";
     } else if (isFirstRightPinnedColumn) {
-      boxShadow = "4px 0 4px -4px var(--border) inset";
+      boxShadow = "0.25rem 0 0.25rem -0.25rem var(--border) inset";
     }
   }
 

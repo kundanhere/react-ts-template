@@ -197,7 +197,7 @@ export function UpdatesFeed({
                   <span>{t.label}</span>
                   <span
                     className={cn(
-                      "py-0.2 ml-0.5 rounded-full px-1.5 font-mono text-[10px] leading-none transition-colors",
+                      "py-0.2 ml-0.5 rounded-full px-1.5 font-mono text-[0.625rem] leading-none transition-colors",
                       isSelected
                         ? "bg-muted text-foreground font-bold"
                         : "bg-muted/70 text-muted-foreground"
@@ -326,7 +326,7 @@ export function UpdatesFeed({
                     {/* Type Badge */}
                     <Badge
                       variant="outline"
-                      className={`h-5 gap-1 px-1.5 text-[10px] font-medium capitalize ${typeInfo.className}`}
+                      className={`h-5 gap-1 px-1.5 text-[0.625rem] font-medium capitalize ${typeInfo.className}`}
                     >
                       <HugeiconsIcon
                         icon={TypeIcon}
@@ -339,7 +339,7 @@ export function UpdatesFeed({
                     {/* Channel Badge */}
                     <Badge
                       variant="outline"
-                      className={`h-5 px-1.5 text-[10px] font-medium uppercase ${
+                      className={`h-5 px-1.5 text-[0.625rem] font-medium uppercase ${
                         channelBadgeConfig[update.channel] ||
                         "border-muted text-muted-foreground"
                       }`}
@@ -351,7 +351,7 @@ export function UpdatesFeed({
                     {update.status === "rolling_out" && (
                       <Badge
                         variant="outline"
-                        className="h-5 gap-1 border-amber-500/30 bg-amber-50/40 text-[10px] font-medium text-amber-600 dark:text-amber-400"
+                        className="h-5 gap-1 border-amber-500/30 bg-amber-50/40 text-[0.625rem] font-medium text-amber-600 dark:text-amber-400"
                       >
                         <span className="size-1.5 rounded-full bg-amber-500 ring-2 ring-amber-500/25" />
                         Rolling out 25%
@@ -385,7 +385,7 @@ export function UpdatesFeed({
                           e.stopPropagation();
                           onToggleRead(update.id);
                         }}
-                        className="text-muted-foreground hover:text-foreground h-6 px-1.5 text-[11px]"
+                        className="text-muted-foreground hover:text-foreground h-6 px-1.5 text-[0.6875rem]"
                       >
                         Mark read
                       </Button>
@@ -415,7 +415,7 @@ export function UpdatesFeed({
                       <span className="font-semibold">
                         Security Advisory Notice
                       </span>
-                      <p className="text-[11px] leading-relaxed opacity-90">
+                      <p className="text-[0.6875rem] leading-relaxed opacity-90">
                         {update.securityNotice}
                       </p>
                     </div>
@@ -435,7 +435,7 @@ export function UpdatesFeed({
                           strokeWidth={2}
                           className="size-3.5 shrink-0 text-emerald-500"
                         />
-                        <span className="truncate text-[11px]">{h}</span>
+                        <span className="truncate text-[0.6875rem]">{h}</span>
                       </div>
                     ))}
                   </div>
@@ -452,14 +452,14 @@ export function UpdatesFeed({
                           alt={update.author.name}
                         />
                       ) : null}
-                      <AvatarFallback className="bg-primary/10 text-primary text-[9px] font-bold">
+                      <AvatarFallback className="bg-primary/10 text-primary text-[0.5625rem] font-bold">
                         {initials}
                       </AvatarFallback>
                     </Avatar>
-                    <span className="text-foreground text-[11px] font-medium">
+                    <span className="text-foreground text-[0.6875rem] font-medium">
                       {update.author.name}
                     </span>
-                    <span className="text-muted-foreground text-[10px]">
+                    <span className="text-muted-foreground text-[0.625rem]">
                       · {update.author.role}
                     </span>
                   </div>
@@ -469,7 +469,7 @@ export function UpdatesFeed({
                     {update.affectedModules.slice(0, 3).map((m) => (
                       <span
                         key={m}
-                        className="bg-muted/60 text-muted-foreground rounded px-1.5 py-0.5 text-[10px] font-medium"
+                        className="bg-muted/60 text-muted-foreground rounded px-1.5 py-0.5 text-[0.625rem] font-medium"
                       >
                         {m}
                       </span>
@@ -479,7 +479,7 @@ export function UpdatesFeed({
                         text={update.commitHash}
                         displayValue={`#${update.commitHash}`}
                         label="commit hash"
-                        className="text-muted-foreground/80 hover:text-primary ml-1 font-mono text-[10px]"
+                        className="text-muted-foreground/80 hover:text-primary ml-1 font-mono text-[0.625rem]"
                         iconSize={11}
                       />
                     )}
@@ -487,7 +487,7 @@ export function UpdatesFeed({
                     <Button
                       variant="outline"
                       size="sm"
-                      className="ml-1 h-6 gap-1 px-2 text-[11px]"
+                      className="ml-1 h-6 gap-1 px-2 text-[0.6875rem]"
                       onClick={(e) => {
                         e.stopPropagation();
                         onViewDetails(update);

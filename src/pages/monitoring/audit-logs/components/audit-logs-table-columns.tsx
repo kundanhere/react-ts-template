@@ -152,7 +152,7 @@ export function getAuditLogsTableColumns({
           <span className="text-foreground text-xs font-medium">
             {row.getValue("actor")}
           </span>
-          <span className="text-muted-foreground font-mono text-[11px]">
+          <span className="text-muted-foreground font-mono text-[0.6875rem]">
             {row.original.ipAddress}
           </span>
         </div>

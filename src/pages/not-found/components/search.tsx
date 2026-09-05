@@ -312,15 +312,15 @@ export function NotFoundSearch({
               <span className="page-title text-foreground truncate text-xs font-medium transition-colors duration-150">
                 {page.label}
               </span>
-              <span className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 text-[10px] font-medium uppercase">
+              <span className="bg-muted text-muted-foreground rounded px-1.5 py-0.5 text-[0.625rem] font-medium uppercase">
                 {page.category}
               </span>
             </div>
-            <p className="text-muted-foreground truncate text-[11px]">
+            <p className="text-muted-foreground truncate text-[0.6875rem]">
               {page.description}
             </p>
           </div>
-          <span className="text-muted-foreground/50 font-mono text-[10px]">
+          <span className="text-muted-foreground/50 font-mono text-[0.625rem]">
             {page.path}
           </span>
         </div>

@@ -108,7 +108,7 @@ export default function NotificationsTab() {
                   <span className="text-foreground text-xs font-semibold">
                     Inbox
                   </span>
-                  <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                  <p className="text-muted-foreground max-w-xl text-[0.6875rem] leading-normal">
                     You'll consistently get notifications for your subscriptions
                     within your TeamTask inbox.
                   </p>
@@ -132,7 +132,7 @@ export default function NotificationsTab() {
                     <span className="text-foreground text-xs font-semibold">
                       Email
                     </span>
-                    <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                    <p className="text-muted-foreground max-w-xl text-[0.6875rem] leading-normal">
                       Get an email summary for unread notifications, with
                       notifications grouped and sent according to their urgency.
                     </p>
@@ -148,10 +148,10 @@ export default function NotificationsTab() {
               {emailNotif && (
                 <div className="border-border/40 flex flex-wrap items-start justify-between gap-4 border-t pt-3 pl-11 sm:flex-nowrap">
                   <div className="space-y-0.5">
-                    <span className="text-foreground text-[11.5px] font-semibold">
+                    <span className="text-foreground text-[0.71875rem] font-semibold">
                       Immediate email alert for urgent tasks
                     </span>
-                    <p className="text-muted-foreground max-w-lg text-[10.5px] leading-normal">
+                    <p className="text-muted-foreground max-w-lg text-[0.65625rem] leading-normal">
                       Receive an immediate email alert whenever a task assigned
                       to you is marked urgent or associated with a high-priority
                       project with a tight deadline.
@@ -177,7 +177,7 @@ export default function NotificationsTab() {
                     <span className="text-foreground text-xs font-semibold">
                       Integrations
                     </span>
-                    <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                    <p className="text-muted-foreground max-w-xl text-[0.6875rem] leading-normal">
                       Get personal notifications integrated into messaging apps
                       like Slack or Discord:
                     </p>
@@ -223,7 +223,7 @@ export default function NotificationsTab() {
                   />
                   <button
                     type="button"
-                    className="text-primary ml-1 cursor-pointer border-none bg-transparent p-0 text-[10.5px] font-medium hover:underline"
+                    className="text-primary ml-1 cursor-pointer border-none bg-transparent p-0 text-[0.65625rem] font-medium hover:underline"
                     onClick={() =>
                       toast.info(
                         "Integrations management dialog triggered (simulated)"
@@ -246,7 +246,7 @@ export default function NotificationsTab() {
                   <span className="text-foreground text-xs font-semibold">
                     Mobile
                   </span>
-                  <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                  <p className="text-muted-foreground max-w-xl text-[0.6875rem] leading-normal">
                     You'll get notifications for your subscriptions directly to
                     your mobile app inbox.
                   </p>
@@ -269,7 +269,7 @@ export default function NotificationsTab() {
                   <span className="text-foreground text-xs font-semibold">
                     Desktop
                   </span>
-                  <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                  <p className="text-muted-foreground max-w-xl text-[0.6875rem] leading-normal">
                     You'll receive notifications for your subscriptions directly
                     to your inbox on either the desktop app or website app.
                   </p>
@@ -307,7 +307,7 @@ export default function NotificationsTab() {
                   <span className="text-foreground text-xs font-semibold">
                     Failed sign-in threshold alert
                   </span>
-                  <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                  <p className="text-muted-foreground max-w-xl text-[0.6875rem] leading-normal">
                     Receive an immediate email and dashboard notification if
                     there are 5 or more consecutive failed login attempts on
                     your account.
@@ -331,7 +331,7 @@ export default function NotificationsTab() {
                   <span className="text-foreground text-xs font-semibold">
                     MFA & Credential updates
                   </span>
-                  <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                  <p className="text-muted-foreground max-w-xl text-[0.6875rem] leading-normal">
                     Receive an alert whenever your password is modified or
                     multi-factor authentication (TOTP/SMS/Passkeys) settings are
                     added, disabled, or changed.
@@ -355,7 +355,7 @@ export default function NotificationsTab() {
                   <span className="text-foreground text-xs font-semibold">
                     Unrecognized device sign-ins
                   </span>
-                  <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                  <p className="text-muted-foreground max-w-xl text-[0.6875rem] leading-normal">
                     Get notified immediately when a successful sign-in is
                     recorded from a new browser session, device hardware
                     profile, or geographic location.
@@ -379,7 +379,7 @@ export default function NotificationsTab() {
                   <span className="text-foreground text-xs font-semibold">
                     Access token creation & updates
                   </span>
-                  <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                  <p className="text-muted-foreground max-w-xl text-[0.6875rem] leading-normal">
                     Receive notification logs when a new developer access token,
                     API integration, or OAuth authentication is created.
                   </p>

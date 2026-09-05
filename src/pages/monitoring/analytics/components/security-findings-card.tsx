@@ -62,7 +62,7 @@ export function SecurityFindingsCard({ users }: ISecurityFindingsCardProps) {
                   <div className="flex items-center justify-between">
                     <div className="flex min-w-0 items-center gap-2">
                       <Avatar className="ring-border h-6 w-6 shrink-0 ring-1">
-                        <AvatarFallback className="bg-muted text-[9px] font-bold">
+                        <AvatarFallback className="bg-muted text-[0.5625rem] font-bold">
                           {user.firstName.charAt(0)}
                           {user.lastName.charAt(0)}
                         </AvatarFallback>
@@ -86,7 +86,7 @@ export function SecurityFindingsCard({ users }: ISecurityFindingsCardProps) {
                     </Badge>
                   </div>
 
-                  <div className="text-muted-foreground bg-muted/30 border-border/30 rounded-md border p-1.5 text-[11px]">
+                  <div className="text-muted-foreground bg-muted/30 border-border/30 rounded-md border p-1.5 text-[0.6875rem]">
                     {user.locked
                       ? "Restricted due to anomalous failed MFA credentials."
                       : "Account suspended by identity workspace policy."}
@@ -105,7 +105,7 @@ export function SecurityFindingsCard({ users }: ISecurityFindingsCardProps) {
       <CardFooter className="text-muted-foreground mt-auto flex w-full items-center justify-between border-t px-4 py-2.5 text-xs">
         <span>Anomaly Scanner</span>
         <span
-          className={`font-mono text-[11px] font-medium ${
+          className={`font-mono text-[0.6875rem] font-medium ${
             lockedCount === 0
               ? "text-emerald-600 dark:text-emerald-400"
               : "text-destructive"

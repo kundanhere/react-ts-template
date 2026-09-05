@@ -38,7 +38,7 @@ export function InlineCopy({
       type="button"
       onClick={handleCopy}
       className={cn(
-        "text-foreground hover:text-primary inline-flex cursor-pointer items-center gap-1 font-mono text-[11px] font-medium transition-colors",
+        "text-foreground hover:text-primary inline-flex cursor-pointer items-center gap-1 font-mono text-[0.6875rem] font-medium transition-colors",
         className
       )}
       title={`Click to copy ${label}`}

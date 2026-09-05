@@ -196,7 +196,7 @@ export function PolicyThroughputCard({
           <HugeiconsIcon icon={Globe02Icon} size={14} />
           <span>Global Realtime Pipeline</span>
         </div>
-        <span className="text-foreground font-mono text-[11px] font-medium">
+        <span className="text-foreground font-mono text-[0.6875rem] font-medium">
           99.98% SLA Availability
         </span>
       </CardFooter>

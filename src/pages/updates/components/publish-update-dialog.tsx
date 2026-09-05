@@ -285,7 +285,7 @@ export function PublishUpdateDialog({
                   >
                     Bullet Highlights
                   </Label>
-                  <span className="text-muted-foreground text-[10px]">
+                  <span className="text-muted-foreground text-[0.625rem]">
                     One item per line
                   </span>
                 </div>

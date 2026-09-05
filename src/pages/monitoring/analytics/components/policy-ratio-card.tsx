@@ -119,13 +119,13 @@ export function PolicyRatioCard({ policies }: IPolicyRatioCardProps) {
               %)
             </Badge>
           </div>
-          <div className="text-muted-foreground flex items-center justify-between py-1 text-[11px]">
+          <div className="text-muted-foreground flex items-center justify-between py-1 text-[0.6875rem]">
             <span>Wildcard (*) Target Scope</span>
             <span className="text-foreground font-mono font-semibold">
               {wildcardPoliciesCount}
             </span>
           </div>
-          <div className="text-muted-foreground flex items-center justify-between py-1 text-[11px]">
+          <div className="text-muted-foreground flex items-center justify-between py-1 text-[0.6875rem]">
             <span>MFA / Conditional Rules</span>
             <span className="text-foreground font-mono font-semibold">
               {conditionalPoliciesCount}
@@ -143,7 +143,7 @@ export function PolicyRatioCard({ policies }: IPolicyRatioCardProps) {
           variant="ghost"
           size="sm"
           asChild
-          className="text-primary h-6 px-2 text-[11px]"
+          className="text-primary h-6 px-2 text-[0.6875rem]"
         >
           <Link to="/iam/policies">Policies →</Link>
         </Button>

@@ -119,11 +119,11 @@ export function PageErrorBoundaryFallback({
 
         <Collapsible open={showDetails} className="w-full text-left">
           <CollapsibleContent className="mt-4 space-y-2">
-            <span className="text-muted-foreground/80 block text-[10px] font-bold tracking-wider uppercase">
+            <span className="text-muted-foreground/80 block text-[0.625rem] font-bold tracking-wider uppercase">
               Error Details
             </span>
 
-            <div className="border-border bg-muted/30 relative overflow-hidden rounded-lg border p-4 font-mono text-[11px] select-text">
+            <div className="border-border bg-muted/30 relative overflow-hidden rounded-lg border p-4 font-mono text-[0.6875rem] select-text">
               <button
                 type="button"
                 onClick={handleCopy}
@@ -243,11 +243,11 @@ export function RootErrorBoundaryFallback({
           {/* Expandable Debugger Panel */}
           <Collapsible open={showDiagnostics} className="w-full text-left">
             <CollapsibleContent className="mt-2 space-y-2">
-              <span className="text-muted-foreground/80 block text-[10px] font-bold tracking-wider uppercase">
+              <span className="text-muted-foreground/80 block text-[0.625rem] font-bold tracking-wider uppercase">
                 Diagnostics Trace
               </span>
 
-              <div className="border-border bg-muted/40 relative overflow-hidden rounded-lg border p-4 font-mono text-[11px] shadow-xs select-text">
+              <div className="border-border bg-muted/40 relative overflow-hidden rounded-lg border p-4 font-mono text-[0.6875rem] shadow-xs select-text">
                 <button
                   type="button"
                   onClick={handleCopy}
@@ -315,7 +315,7 @@ export function ComponentErrorBoundaryFallback({
       </span>
 
       {/* Truncated Error Message */}
-      <p className="text-muted-foreground mt-1 line-clamp-3 max-w-65 px-2 text-[10px] leading-normal">
+      <p className="text-muted-foreground mt-1 line-clamp-3 max-w-65 px-2 text-[0.625rem] leading-normal">
         {error.message ||
           "An unhandled exception occurred in this dynamic module."}
       </p>
@@ -326,7 +326,7 @@ export function ComponentErrorBoundaryFallback({
           variant="outline"
           onClick={resetError}
           size="xs"
-          className="h-6 px-2.5 text-[10px] font-medium"
+          className="h-6 px-2.5 text-[0.625rem] font-medium"
         >
           <HugeiconsIcon icon={CircleArrowReload01Icon} size={11} />
           Retry

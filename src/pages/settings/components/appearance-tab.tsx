@@ -96,7 +96,7 @@ export default function AppearanceTab() {
                 </div>
               </div>
               <span className="text-xs font-semibold">Light Mode</span>
-              <span className="text-muted-foreground mt-0.5 text-[10px]">
+              <span className="text-muted-foreground mt-0.5 text-[0.625rem]">
                 A bright, clean appearance optimized for daylight.
               </span>
             </button>
@@ -120,7 +120,7 @@ export default function AppearanceTab() {
                 </div>
               </div>
               <span className="text-xs font-semibold">Dark Mode</span>
-              <span className="text-muted-foreground mt-0.5 text-[10px]">
+              <span className="text-muted-foreground mt-0.5 text-[0.625rem]">
                 A dark interface designed to reduce eye strain in low-light
                 environments.
               </span>
@@ -149,7 +149,7 @@ export default function AppearanceTab() {
                 </div>
               </div>
               <span className="text-xs font-semibold">Sync with System</span>
-              <span className="text-muted-foreground mt-0.5 text-[10px]">
+              <span className="text-muted-foreground mt-0.5 text-[0.625rem]">
                 Automatically match your system's light or dark mode settings.
               </span>
             </button>
@@ -322,7 +322,7 @@ export default function AppearanceTab() {
               >
                 Compact density mode
               </Label>
-              <p className="text-muted-foreground text-[11px]">
+              <p className="text-muted-foreground text-[0.6875rem]">
                 Reduce row heights and margins to fit more information on
                 screen.
               </p>

@@ -261,7 +261,7 @@ export default function SecurityTab() {
                     />
                     Password
                   </span>
-                  <p className="text-muted-foreground text-[11px]">
+                  <p className="text-muted-foreground text-[0.6875rem]">
                     Change your password regularly and use a strong, random
                     password to keep your account secure.
                   </p>
@@ -332,7 +332,7 @@ export default function SecurityTab() {
                     </div>
                   </div>
 
-                  <div className="bg-card/60 text-muted-foreground space-y-1.5 rounded-md border p-3.5 text-[11px] leading-relaxed">
+                  <div className="bg-card/60 text-muted-foreground space-y-1.5 rounded-md border p-3.5 text-[0.6875rem] leading-relaxed">
                     <p className="text-foreground mb-1 text-xs font-semibold">
                       Password requirements:
                     </p>
@@ -382,7 +382,7 @@ export default function SecurityTab() {
                     />
                     Passkeys
                   </span>
-                  <p className="text-muted-foreground text-[11px]">
+                  <p className="text-muted-foreground text-[0.6875rem]">
                     Use your device's biometric sensors, PIN, or a security key
                     as passwordless credentials.
                   </p>
@@ -408,7 +408,7 @@ export default function SecurityTab() {
                   <p className="text-muted-foreground text-xs font-medium">
                     No passkeys registered
                   </p>
-                  <p className="text-muted-foreground mt-0.5 max-w-sm text-[10px]">
+                  <p className="text-muted-foreground mt-0.5 max-w-sm text-[0.625rem]">
                     Register a passkey to sign in securely without entering your
                     password.
                   </p>
@@ -431,7 +431,7 @@ export default function SecurityTab() {
                           <p className="text-foreground text-xs font-semibold">
                             {pk.name}
                           </p>
-                          <p className="text-muted-foreground text-[10px]">
+                          <p className="text-muted-foreground text-[0.625rem]">
                             Added on {pk.createdAt} • Last used: {pk.lastUsed}
                           </p>
                         </div>
@@ -461,7 +461,7 @@ export default function SecurityTab() {
                     />
                     Emails
                   </span>
-                  <p className="text-muted-foreground text-[11px]">
+                  <p className="text-muted-foreground text-[0.6875rem]">
                     Manage the verified email addresses associated with your
                     account for sign-in, notifications, and account recovery.
                   </p>
@@ -487,7 +487,7 @@ export default function SecurityTab() {
                   />
                   OAuth 2.0 Social Sign-in
                 </span>
-                <p className="text-muted-foreground text-[11px]">
+                <p className="text-muted-foreground text-[0.6875rem]">
                   Link your Google or Apple account to sign in instantly with
                   one click.
                 </p>
@@ -508,13 +508,13 @@ export default function SecurityTab() {
                         {oauthProviders.google.connected && (
                           <Badge
                             variant="secondary"
-                            className="border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[9px] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
+                            className="border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[0.5625rem] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
                           >
                             Connected
                           </Badge>
                         )}
                       </div>
-                      <p className="text-muted-foreground text-[10.5px]">
+                      <p className="text-muted-foreground text-[0.65625rem]">
                         {oauthProviders.google.connected
                           ? `Linked to ${oauthProviders.google.email}`
                           : "Not connected to a Google account"}
@@ -551,13 +551,13 @@ export default function SecurityTab() {
                         {oauthProviders.apple.connected && (
                           <Badge
                             variant="secondary"
-                            className="border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[9px] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
+                            className="border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[0.5625rem] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
                           >
                             Connected
                           </Badge>
                         )}
                       </div>
-                      <p className="text-muted-foreground text-[10.5px]">
+                      <p className="text-muted-foreground text-[0.65625rem]">
                         {oauthProviders.apple.connected
                           ? `Linked to ${oauthProviders.apple.email}`
                           : "Not connected to an Apple ID"}
@@ -607,7 +607,7 @@ export default function SecurityTab() {
                   <p className="text-xs font-semibold text-emerald-800 dark:text-emerald-400">
                     Two-factor authentication is enabled
                   </p>
-                  <p className="text-[11px] leading-relaxed text-emerald-700/90 dark:text-emerald-400/80">
+                  <p className="text-[0.6875rem] leading-relaxed text-emerald-700/90 dark:text-emerald-400/80">
                     Your account is secured with 2FA. When signing in, you will
                     be prompted to verify your identity using one of your
                     registered methods.
@@ -634,7 +634,7 @@ export default function SecurityTab() {
                   <p className="text-xs font-semibold text-amber-800 dark:text-amber-400">
                     Two-factor authentication is disabled
                   </p>
-                  <p className="text-[11px] leading-relaxed text-amber-700/90 dark:text-amber-400/80">
+                  <p className="text-[0.6875rem] leading-relaxed text-amber-700/90 dark:text-amber-400/80">
                     2FA is not set up for your account. We strongly suggest
                     configuring it to protect your credentials from unauthorized
                     access.
@@ -675,13 +675,13 @@ export default function SecurityTab() {
                       {twoFactorEnabled && (
                         <Badge
                           variant="secondary"
-                          className="border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[9px] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
+                          className="border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[0.5625rem] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
                         >
                           Active
                         </Badge>
                       )}
                     </div>
-                    <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                    <p className="text-muted-foreground max-w-xl text-[0.6875rem] leading-normal">
                       Use a mobile authenticator app (such as Google
                       Authenticator, Microsoft Authenticator, or Authy) to
                       generate one-time verification codes.
@@ -706,7 +706,7 @@ export default function SecurityTab() {
                   </div>
                   <div className="space-y-1">
                     <span className="text-xs font-semibold">Security keys</span>
-                    <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                    <p className="text-muted-foreground max-w-xl text-[0.6875rem] leading-normal">
                       Use hardware security keys (such as YubiKeys) or
                       device-level authenticators to verify your identity.
                     </p>
@@ -732,7 +732,7 @@ export default function SecurityTab() {
                     <span className="text-xs font-semibold">
                       SMS / Text messages
                     </span>
-                    <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                    <p className="text-muted-foreground max-w-xl text-[0.6875rem] leading-normal">
                       Receive one-time verification codes via SMS text messages
                       to your registered mobile phone number.
                     </p>
@@ -766,7 +766,7 @@ export default function SecurityTab() {
                       <span className="text-xs font-semibold">
                         Recovery codes
                       </span>
-                      <p className="text-muted-foreground max-w-xl text-[11px] leading-normal">
+                      <p className="text-muted-foreground max-w-xl text-[0.6875rem] leading-normal">
                         Use recovery codes to sign in if you lose access to your
                         mobile device or authentication app.
                       </p>
@@ -838,7 +838,7 @@ export default function SecurityTab() {
                 <span className="text-foreground text-xs font-semibold">
                   Revoke other active sessions
                 </span>
-                <p className="text-muted-foreground max-w-xl text-[11px]">
+                <p className="text-muted-foreground max-w-xl text-[0.6875rem]">
                   Terminate all active sign-in sessions on other devices. This
                   will invalidate all active sessions except your current
                   browser session.
@@ -896,7 +896,7 @@ export default function SecurityTab() {
                 <span className="text-foreground text-xs font-semibold">
                   Revoke all sessions (Sign out everywhere)
                 </span>
-                <p className="text-muted-foreground max-w-xl text-[11px]">
+                <p className="text-muted-foreground max-w-xl text-[0.6875rem]">
                   Terminate all active sessions immediately. This will sign you
                   out of this browser session and all other devices.
                 </p>
@@ -943,7 +943,7 @@ export default function SecurityTab() {
                 <span className="text-foreground text-xs font-semibold">
                   Delete account
                 </span>
-                <p className="text-muted-foreground max-w-xl text-[11px]">
+                <p className="text-muted-foreground max-w-xl text-[0.6875rem]">
                   Permanently delete your account, data, and configurations.
                   This action is irreversible.
                 </p>

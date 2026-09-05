@@ -215,7 +215,7 @@ export function UpdateStatsCards({ updates }: IUpdateStatsCardsProps) {
             </div>
 
             {/* Bottom Subtitle / Detail */}
-            <p className="text-muted-foreground mt-1 truncate text-[11px] leading-normal">
+            <p className="text-muted-foreground mt-1 truncate text-[0.6875rem] leading-normal">
               {s.statLine}
             </p>
           </div>

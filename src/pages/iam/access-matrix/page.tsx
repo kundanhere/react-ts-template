@@ -419,13 +419,13 @@ export default function AccessMatrixPage() {
                     {CURRENT_USER.name}
                     <Badge
                       variant="secondary"
-                      className="border-border border px-1.5 py-0.5 text-[10px] font-normal capitalize"
+                      className="border-border border px-1.5 py-0.5 text-[0.625rem] font-normal capitalize"
                     >
                       {CURRENT_USER.roleName}
                     </Badge>
                     <Badge
                       variant="outline"
-                      className="border-border bg-input/10 text-muted-foreground px-1.5 py-0.5 text-[10px] font-normal"
+                      className="border-border bg-input/10 text-muted-foreground px-1.5 py-0.5 text-[0.625rem] font-normal"
                     >
                       {CURRENT_USER.department}
                     </Badge>
@@ -438,7 +438,7 @@ export default function AccessMatrixPage() {
 
               {/* Role selection dropdown */}
               <div className="flex w-full min-w-50 flex-col gap-1 sm:w-auto">
-                <span className="text-muted-foreground text-[10px] font-bold tracking-wider uppercase">
+                <span className="text-muted-foreground text-[0.625rem] font-bold tracking-wider uppercase">
                   Inspect Role Matrix
                 </span>
                 <Select
@@ -465,12 +465,12 @@ export default function AccessMatrixPage() {
                 <span className="text-foreground font-semibold">
                   Active Session:
                 </span>
-                <span className="bg-background text-foreground shadow-3xs rounded border px-1.5 py-0.5 font-mono text-[10px]">
+                <span className="bg-background text-foreground shadow-3xs rounded border px-1.5 py-0.5 font-mono text-[0.625rem]">
                   {CURRENT_USER.session.id}
                 </span>
                 <Badge
                   variant="outline"
-                  className="gap-1 border-emerald-500/30 bg-emerald-50/50 px-1.5 py-0.5 text-[10px] font-semibold tracking-wider text-emerald-600 uppercase dark:bg-emerald-950/20 dark:text-emerald-400"
+                  className="gap-1 border-emerald-500/30 bg-emerald-50/50 px-1.5 py-0.5 text-[0.625rem] font-semibold tracking-wider text-emerald-600 uppercase dark:bg-emerald-950/20 dark:text-emerald-400"
                 >
                   <span className="size-1 animate-ping rounded-full bg-emerald-500" />
                   This Device
@@ -515,7 +515,7 @@ export default function AccessMatrixPage() {
               </div>
 
               {/* Legend / Status Indicators */}
-              <div className="flex flex-wrap items-center gap-4 text-[11px]">
+              <div className="flex flex-wrap items-center gap-4 text-[0.6875rem]">
                 <div className="flex items-center gap-1.5">
                   <span className="size-1.5 rounded-full bg-emerald-500" />
                   <span className="text-muted-foreground font-medium">
@@ -536,7 +536,7 @@ export default function AccessMatrixPage() {
               <div className="grid w-full grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
                 {/* Total Modules */}
                 <div className="border-border/75 bg-card relative flex flex-col justify-between overflow-hidden rounded-xl border p-3.5 shadow-2xs">
-                  <div className="absolute top-0 right-0 left-0 h-[2.5px] bg-slate-500" />
+                  <div className="absolute top-0 right-0 left-0 h-[0.15625rem] bg-slate-500" />
                   <div className="flex items-center justify-between gap-1 pt-0.5">
                     <span className="text-muted-foreground truncate text-xs font-semibold tracking-tight">
                       Total Modules
@@ -554,7 +554,7 @@ export default function AccessMatrixPage() {
                       <div className="text-foreground text-xl leading-none font-bold tracking-tight">
                         {stats.total}
                       </div>
-                      <div className="text-muted-foreground mt-1 truncate text-[10px] font-medium">
+                      <div className="text-muted-foreground mt-1 truncate text-[0.625rem] font-medium">
                         Assigned in console
                       </div>
                     </div>
@@ -563,7 +563,7 @@ export default function AccessMatrixPage() {
 
                 {/* Full Access */}
                 <div className="border-border/75 bg-card relative flex flex-col justify-between overflow-hidden rounded-xl border p-3.5 shadow-2xs">
-                  <div className="bg-primary absolute top-0 right-0 left-0 h-[2.5px]" />
+                  <div className="bg-primary absolute top-0 right-0 left-0 h-[0.15625rem]" />
                   <div className="flex items-center justify-between gap-1 pt-0.5">
                     <span className="text-muted-foreground truncate text-xs font-semibold tracking-tight">
                       Full Access
@@ -581,7 +581,7 @@ export default function AccessMatrixPage() {
                       <div className="text-foreground text-xl leading-none font-bold tracking-tight">
                         {stats.full}
                       </div>
-                      <div className="text-muted-foreground mt-1 truncate text-[10px] font-medium">
+                      <div className="text-muted-foreground mt-1 truncate text-[0.625rem] font-medium">
                         Unrestricted capabilities
                       </div>
                     </div>
@@ -590,7 +590,7 @@ export default function AccessMatrixPage() {
 
                 {/* Restricted Access */}
                 <div className="border-border/75 bg-card relative flex flex-col justify-between overflow-hidden rounded-xl border p-3.5 shadow-2xs">
-                  <div className="absolute top-0 right-0 left-0 h-[2.5px] bg-amber-500" />
+                  <div className="absolute top-0 right-0 left-0 h-[0.15625rem] bg-amber-500" />
                   <div className="flex items-center justify-between gap-1 pt-0.5">
                     <span className="text-muted-foreground truncate text-xs font-semibold tracking-tight">
                       Restricted Access
@@ -608,7 +608,7 @@ export default function AccessMatrixPage() {
                       <div className="text-foreground text-xl leading-none font-bold tracking-tight">
                         {stats.limited + stats.view}
                       </div>
-                      <div className="text-muted-foreground mt-1 truncate text-[10px] font-medium">
+                      <div className="text-muted-foreground mt-1 truncate text-[0.625rem] font-medium">
                         Read or partial edit
                       </div>
                     </div>
@@ -617,7 +617,7 @@ export default function AccessMatrixPage() {
 
                 {/* No Access */}
                 <div className="border-border/75 bg-card relative flex flex-col justify-between overflow-hidden rounded-xl border p-3.5 shadow-2xs">
-                  <div className="absolute top-0 right-0 left-0 h-[2.5px] bg-rose-500" />
+                  <div className="absolute top-0 right-0 left-0 h-[0.15625rem] bg-rose-500" />
                   <div className="flex items-center justify-between gap-1 pt-0.5">
                     <span className="text-muted-foreground truncate text-xs font-semibold tracking-tight">
                       No Access
@@ -635,7 +635,7 @@ export default function AccessMatrixPage() {
                       <div className="text-foreground text-xl leading-none font-bold tracking-tight">
                         {stats.none}
                       </div>
-                      <div className="text-muted-foreground mt-1 truncate text-[10px] font-medium">
+                      <div className="text-muted-foreground mt-1 truncate text-[0.625rem] font-medium">
                         Explicitly blocked
                       </div>
                     </div>
@@ -714,7 +714,7 @@ export default function AccessMatrixPage() {
                                   )}
                                 </span>
                               </TooltipTrigger>
-                              <TooltipContent className="text-[10px]">
+                              <TooltipContent className="text-[0.625rem]">
                                 {perm.create
                                   ? "Create permission: Granted"
                                   : "Create permission: Denied"}
@@ -739,7 +739,7 @@ export default function AccessMatrixPage() {
                                   )}
                                 </span>
                               </TooltipTrigger>
-                              <TooltipContent className="text-[10px]">
+                              <TooltipContent className="text-[0.625rem]">
                                 {perm.read
                                   ? "Read permission: Granted"
                                   : "Read permission: Denied"}
@@ -764,7 +764,7 @@ export default function AccessMatrixPage() {
                                   )}
                                 </span>
                               </TooltipTrigger>
-                              <TooltipContent className="text-[10px]">
+                              <TooltipContent className="text-[0.625rem]">
                                 {perm.update
                                   ? "Update permission: Granted"
                                   : "Update permission: Denied"}
@@ -789,7 +789,7 @@ export default function AccessMatrixPage() {
                                   )}
                                 </span>
                               </TooltipTrigger>
-                              <TooltipContent className="text-[10px]">
+                              <TooltipContent className="text-[0.625rem]">
                                 {perm.delete
                                   ? "Delete permission: Granted"
                                   : "Delete permission: Denied"}

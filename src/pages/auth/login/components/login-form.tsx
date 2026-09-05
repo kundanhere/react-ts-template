@@ -107,7 +107,7 @@ export function LoginForm({
         <div className="absolute inset-0 flex items-center">
           <Separator className="w-full" />
         </div>
-        <div className="bg-background text-muted-foreground relative px-3 text-[11px] font-medium tracking-wider uppercase">
+        <div className="bg-background text-muted-foreground relative px-3 text-[0.6875rem] font-medium tracking-wider uppercase">
           or continue with
         </div>
       </div>
@@ -228,7 +228,7 @@ export function LoginForm({
         </p>
 
         {/* Legal Disclaimer */}
-        <p className="text-muted-foreground/70 pt-2 text-center text-[11px] leading-relaxed">
+        <p className="text-muted-foreground/70 pt-2 text-center text-[0.6875rem] leading-relaxed">
           By continuing, you agree to our{" "}
           <a
             href="/support"

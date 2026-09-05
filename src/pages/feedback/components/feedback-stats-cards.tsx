@@ -178,7 +178,7 @@ export function FeedbackStatsCards({ feedbacks }: IFeedbackStatsCardsProps) {
           className="border-border/75 bg-card relative flex flex-col justify-between overflow-hidden rounded-xl border p-3.5 shadow-xs transition-shadow hover:shadow-sm"
         >
           <div
-            className={`absolute top-0 right-0 left-0 h-[2.5px] ${kpi.accentClass}`}
+            className={`absolute top-0 right-0 left-0 h-[0.15625rem] ${kpi.accentClass}`}
             style={{
               backgroundColor: kpi.color.startsWith("var")
                 ? undefined
@@ -198,7 +198,7 @@ export function FeedbackStatsCards({ feedbacks }: IFeedbackStatsCardsProps) {
               <div className="text-foreground text-2xl leading-none font-bold tracking-tight">
                 {kpi.value}
               </div>
-              <div className="text-muted-foreground mt-1 truncate text-[11px] font-medium">
+              <div className="text-muted-foreground mt-1 truncate text-[0.6875rem] font-medium">
                 {kpi.statLine}
               </div>
             </div>

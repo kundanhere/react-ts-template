@@ -227,7 +227,7 @@ export function getSessionsTableColumns({
                 {isCurrent && (
                   <Badge
                     variant="secondary"
-                    className="px-1.5 py-0 text-[10px]"
+                    className="px-1.5 py-0 text-[0.625rem]"
                   >
                     This Device
                   </Badge>
@@ -297,7 +297,7 @@ export function getSessionsTableColumns({
             <code className="text-foreground font-mono text-xs font-medium">
               {ipAddress}
             </code>
-            <span className="text-muted-foreground flex items-center gap-1 text-[11px]">
+            <span className="text-muted-foreground flex items-center gap-1 text-[0.6875rem]">
               <HugeiconsIcon
                 icon={Location01Icon}
                 strokeWidth={2}

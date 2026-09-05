@@ -196,10 +196,10 @@
   --font-mono: var(--font-mono);
 
   /* Border-radius scale derived from the base radius */
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 0.25rem);
+  --radius-md: calc(var(--radius) - 0.125rem);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --radius-xl: calc(var(--radius) + 0.25rem);
 
   /* Shadow scale */
   --shadow-2xs: var(--shadow-2xs);
@@ -237,17 +237,20 @@
   background-image: repeating-linear-gradient(
     -45deg,
     var(--background),
-    var(--background) 13px,
-    var(--muted) 13px,
-    var(--muted) 14px
+    var(--background) 0.8125rem,
+    var(--muted) 0.8125rem,
+    var(--muted) 0.875rem
   );
-  background-size: 40px 40px;
+  background-size: 2.5rem 2.5rem;
 }
 
 @utility bg-dots {
   background-color: var(--background);
-  background-image: radial-gradient(var(--muted) 1.5px, transparent 1.5px);
-  background-size: 16px 16px;
+  background-image: radial-gradient(
+    var(--muted) 0.09375rem,
+    transparent 0.09375rem
+  );
+  background-size: 1rem 1rem;
 }
 
 @utility bg-blocks {
@@ -257,28 +260,28 @@
     linear-gradient(-45deg, var(--muted) 25%, transparent 25%),
     linear-gradient(45deg, transparent 75%, var(--muted) 75%),
     linear-gradient(-45deg, transparent 75%, var(--muted) 75%);
-  background-size: 20px 20px;
+  background-size: 1.25rem 1.25rem;
   background-position:
     0 0,
-    0 10px,
-    10px -10px,
-    -10px 0;
+    0 0.625rem,
+    0.625rem -0.625rem,
+    -0.625rem 0;
 }
 
 @utility bg-grid {
   background-color: var(--background);
   background-image:
-    linear-gradient(to right, var(--muted) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--muted) 1px, transparent 1px);
-  background-size: 24px 24px;
+    linear-gradient(to right, var(--muted) 0.0625rem, transparent 0.0625rem),
+    linear-gradient(to bottom, var(--muted) 0.0625rem, transparent 0.0625rem);
+  background-size: 1.5rem 1.5rem;
 }
 
 @utility bg-grid-small {
   background-color: var(--background);
   background-image:
-    linear-gradient(to right, var(--muted) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--muted) 1px, transparent 1px);
-  background-size: 12px 12px;
+    linear-gradient(to right, var(--muted) 0.0625rem, transparent 0.0625rem),
+    linear-gradient(to bottom, var(--muted) 0.0625rem, transparent 0.0625rem);
+  background-size: 0.75rem 0.75rem;
 }
 
 @utility bg-diagonal {
@@ -286,11 +289,11 @@
   background-image: repeating-linear-gradient(
     45deg,
     var(--background),
-    var(--background) 8px,
-    var(--muted) 8px,
-    var(--muted) 9px
+    var(--background) 0.5rem,
+    var(--muted) 0.5rem,
+    var(--muted) 0.5625rem
   );
-  background-size: 20px 20px;
+  background-size: 1.25rem 1.25rem;
 }
 
 @utility bg-cross-diagonal {
@@ -310,14 +313,14 @@
       var(--muted) 51%,
       transparent 52%
     );
-  background-size: 20px 20px;
+  background-size: 1.25rem 1.25rem;
 }
 
 /* ========== Global HTML/Body Styling ========== */
 html {
   box-sizing: border-box;
   overflow-x: hidden;
-  font-size: 16px;
+  font-size: 1rem;
 }
 *,
 *::before,

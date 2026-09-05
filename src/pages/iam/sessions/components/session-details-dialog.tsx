@@ -85,7 +85,7 @@ export function SessionDetailsDialog({
           <div className="flex items-center gap-2.5">
             <Avatar>
               <AvatarImage src={session.user.avatar} alt={session.user.name} />
-              <AvatarFallback className="text-[10px]">
+              <AvatarFallback className="text-[0.625rem]">
                 {initials}
               </AvatarFallback>
               <AvatarBadge className={statusColor[session.status]} />
@@ -94,18 +94,18 @@ export function SessionDetailsDialog({
               <p className="truncate text-xs font-semibold">
                 {session.user.name}
               </p>
-              <p className="text-muted-foreground truncate text-[11px]">
+              <p className="text-muted-foreground truncate text-[0.6875rem]">
                 {session.user.email}
               </p>
             </div>
             <div className="flex shrink-0 items-center gap-1.5">
               <Badge
                 variant="outline"
-                className="text-[10px] font-normal capitalize"
+                className="text-[0.625rem] font-normal capitalize"
               >
                 {session.user.role}
               </Badge>
-              <code className="text-muted-foreground font-mono text-[10px]">
+              <code className="text-muted-foreground font-mono text-[0.625rem]">
                 {session.code}
               </code>
             </div>
@@ -124,7 +124,7 @@ export function SessionDetailsDialog({
                 {session.isCurrent && (
                   <Badge
                     variant="secondary"
-                    className="ml-0.5 h-4 px-1 text-[9px]"
+                    className="ml-0.5 h-4 px-1 text-[0.5625rem]"
                   >
                     You
                   </Badge>
@@ -150,7 +150,7 @@ export function SessionDetailsDialog({
           {/* Connection */}
           <div className="flex flex-col gap-2">
             <Row label="IP Address">
-              <code className="bg-muted rounded px-1.5 py-px font-mono text-[11px]">
+              <code className="bg-muted rounded px-1.5 py-px font-mono text-[0.6875rem]">
                 {session.ipAddress}
               </code>
             </Row>

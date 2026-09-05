@@ -123,16 +123,16 @@ export default function SessionsTab() {
                         {sess.isCurrent && (
                           <Badge
                             variant="secondary"
-                            className="border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[9px] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
+                            className="border-emerald-200 bg-emerald-50 px-1.5 py-0 text-[0.5625rem] font-medium text-emerald-700 dark:border-emerald-500/20 dark:bg-emerald-950/40 dark:text-emerald-400"
                           >
                             Current session
                           </Badge>
                         )}
-                        <span className="text-muted-foreground text-[10px]">
+                        <span className="text-muted-foreground text-[0.625rem]">
                           • {sess.lastActive}
                         </span>
                       </div>
-                      <p className="text-muted-foreground flex items-center gap-1 text-[11px] leading-normal">
+                      <p className="text-muted-foreground flex items-center gap-1 text-[0.6875rem] leading-normal">
                         <HugeiconsIcon
                           icon={Location01Icon}
                           className="size-3"

@@ -221,13 +221,13 @@ export function FeedbackSubmissionDialog({
               {/* Context Box matching Save Simulation Scenario pattern */}
               <div className="bg-muted/40 border-border/60 flex flex-col gap-3 rounded-lg border p-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="space-y-0.5">
-                  <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+                  <span className="text-muted-foreground text-[0.625rem] font-semibold tracking-wider uppercase">
                     Submission Channel
                   </span>
                   <p className="text-foreground text-xs font-semibold">
                     {typeConfig[type].label}
                   </p>
-                  <p className="text-muted-foreground text-[11px] leading-tight">
+                  <p className="text-muted-foreground text-[0.6875rem] leading-tight">
                     {typeConfig[type].desc}
                   </p>
                 </div>
@@ -254,7 +254,7 @@ export function FeedbackSubmissionDialog({
                       variant={type === t.id ? "default" : "outline"}
                       size="sm"
                       onClick={() => setType(t.id)}
-                      className={`h-7 gap-1 px-2.5 text-[11px] font-medium transition-all ${
+                      className={`h-7 gap-1 px-2.5 text-[0.6875rem] font-medium transition-all ${
                         type === t.id
                           ? "shadow-xs"
                           : "border-border/70 hover:bg-muted/60"
@@ -386,7 +386,7 @@ export function FeedbackSubmissionDialog({
                     <Label htmlFor="fb-steps" className="text-xs font-semibold">
                       Steps to Reproduce
                     </Label>
-                    <span className="text-muted-foreground text-[10px]">
+                    <span className="text-muted-foreground text-[0.625rem]">
                       Numbered steps
                     </span>
                   </div>
@@ -405,7 +405,7 @@ export function FeedbackSubmissionDialog({
               {/* Rating & Environment Box */}
               <div className="bg-muted/40 border-border/60 flex flex-col items-start justify-between gap-3 rounded-lg border p-3 sm:flex-row sm:items-center">
                 <div className="space-y-1">
-                  <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+                  <span className="text-muted-foreground text-[0.625rem] font-semibold tracking-wider uppercase">
                     Experience Rating
                   </span>
                   <div className="flex items-center gap-1">
@@ -440,10 +440,13 @@ export function FeedbackSubmissionDialog({
                 </div>
 
                 <div className="flex flex-wrap items-center gap-2 text-right sm:justify-end">
-                  <Badge variant="outline" className="font-mono text-[10px]">
+                  <Badge
+                    variant="outline"
+                    className="font-mono text-[0.625rem]"
+                  >
                     {pageUrl}
                   </Badge>
-                  <span className="text-muted-foreground text-[10px]">
+                  <span className="text-muted-foreground text-[0.625rem]">
                     {deviceInfo}
                   </span>
                 </div>

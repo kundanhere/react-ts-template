@@ -92,7 +92,7 @@ export function TopAccessModulesCard({ modules }: ITopAccessModulesCardProps) {
           variant="ghost"
           size="sm"
           asChild
-          className="text-primary h-6 px-2 text-[11px]"
+          className="text-primary h-6 px-2 text-[0.6875rem]"
         >
           <Link to="/iam/modules">Manage Modules →</Link>
         </Button>
