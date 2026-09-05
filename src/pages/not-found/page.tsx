@@ -1,8 +1,4 @@
-"use client";
-
-import { useEffect } from "react";
-
-import { FileEmpty02Icon, Search01Icon } from "@hugeicons/core-free-icons";
+import { FileEmpty02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import { Typography } from "@/components/typography";
@@ -12,47 +8,11 @@ import {
   EmptyDescription,
   EmptyHeader,
 } from "@/components/ui/empty";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/components/ui/input-group";
-import { Kbd } from "@/components/ui/kbd";
+
+import { Link } from "react-router-dom";
+import { NotFoundSearch } from "./components/search";
 
 export default function NotFoundPage() {
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      // "/" key
-      if (event.code !== "Slash") return;
-
-      // Don't steal "/" when already typing in a field
-      const target = event.target as HTMLElement | null;
-
-      if (
-        target?.tagName === "INPUT" ||
-        target?.tagName === "TEXTAREA" ||
-        target?.tagName === "SELECT" ||
-        target?.isContentEditable
-      ) {
-        return;
-      }
-
-      event.preventDefault();
-
-      const input = document.getElementById("404-search");
-
-      if (input instanceof HTMLInputElement) {
-        input.focus();
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
   return (
     <Empty className="py-20">
       <EmptyHeader className="max-w-lg">
@@ -78,32 +38,17 @@ export default function NotFoundPage() {
         </EmptyDescription>
       </EmptyHeader>
 
-      <EmptyContent className="w-full max-w-md">
-        <InputGroup className="sm:w-3/4">
-          <InputGroupInput
-            id="404-search"
-            placeholder="Try searching for pages..."
-          />
-          <InputGroupAddon>
-            <HugeiconsIcon
-              icon={Search01Icon}
-              size={18}
-              className="text-muted-foreground"
-            />
-          </InputGroupAddon>
-          <InputGroupAddon align="inline-end">
-            <Kbd>/</Kbd>
-          </InputGroupAddon>
-        </InputGroup>
+      <EmptyContent className="w-full max-w-xs">
+        <NotFoundSearch />
 
         <p className="text-muted-foreground mt-3 text-sm">
           Need help?{" "}
-          <a
-            href="/"
+          <Link
+            to="/support"
             className="text-foreground font-medium underline underline-offset-4"
           >
             Contact support
-          </a>
+          </Link>
         </p>
       </EmptyContent>
     </Empty>

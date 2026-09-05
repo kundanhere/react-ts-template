@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { SearchIcon, Tick02Icon } from "@hugeicons/core-free-icons";
+import { Search01Icon, Tick02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Command as CommandPrimitive } from "cmdk";
 
@@ -12,6 +12,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { InputGroup, InputGroupAddon } from "@/components/ui/input-group";
+import { Kbd } from "@/components/ui/kbd";
 import { cn } from "@/lib/utils";
 
 function Command({
@@ -63,32 +64,72 @@ function CommandDialog({
   );
 }
 
-function CommandInput({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Input>) {
+const CommandInput = React.forwardRef<
+  HTMLInputElement,
+  React.ComponentProps<typeof CommandPrimitive.Input> & {
+    kbd?: React.ReactNode;
+    onEscape?: () => void;
+    wrapperClassName?: string;
+  }
+>(({ className, wrapperClassName, placeholder = "Search...", kbd = <Kbd>
+      Esc
+    </Kbd>, autoFocus = true, onEscape, onKeyDown, ...props }, ref) => {
+  const handleEscape = () => {
+    onEscape?.();
+    const event = new KeyboardEvent("keydown", {
+      key: "Escape",
+      code: "Escape",
+      keyCode: 27,
+      which: 27,
+      bubbles: true,
+      cancelable: true,
+    });
+    document.dispatchEvent(event);
+  };
+
   return (
-    <div data-slot="command-input-wrapper" className="p-1 pb-0">
-      <InputGroup className="bg-input/20 dark:bg-input/30 h-8!">
+    <div
+      data-slot="command-input-wrapper"
+      className={cn("relative", wrapperClassName)}
+    >
+      <InputGroup className={cn("w-full", className)}>
         <CommandPrimitive.Input
-          data-slot="command-input"
+          ref={ref}
+          autoFocus={autoFocus}
+          data-slot="input-group-control"
+          placeholder={placeholder}
           className={cn(
-            "w-full text-xs/relaxed outline-hidden disabled:cursor-not-allowed disabled:opacity-50",
+            "placeholder:text-muted-foreground h-full w-full min-w-0 flex-1 rounded-none border-0 bg-transparent px-2 py-0.5 text-sm shadow-none ring-0 transition-colors outline-none focus-visible:ring-0 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:ring-0 md:text-xs/relaxed dark:bg-transparent",
             className
           )}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              onEscape?.();
+            }
+            onKeyDown?.(e);
+          }}
           {...props}
         />
         <InputGroupAddon>
           <HugeiconsIcon
-            icon={SearchIcon}
-            strokeWidth={2}
-            className="size-3.5 shrink-0 opacity-50"
+            icon={Search01Icon}
+            className="text-muted-foreground"
           />
         </InputGroupAddon>
+        {kbd ? (
+          <InputGroupAddon
+            align="inline-end"
+            onClick={handleEscape}
+            className={onEscape ? "cursor-pointer" : undefined}
+          >
+            {typeof kbd === "string" ? <Kbd>{kbd}</Kbd> : kbd}
+          </InputGroupAddon>
+        ) : null}
       </InputGroup>
     </div>
   );
-}
+});
+CommandInput.displayName = "CommandInput";
 
 function CommandList({
   className,

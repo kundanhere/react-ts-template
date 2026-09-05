@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Search01Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "react-router-dom";
@@ -21,6 +23,7 @@ import { User } from "./nav-profile";
 import { SearchForm } from "./search-form";
 
 export function Header() {
+  const [open, setOpen] = useState(false);
   const breadcrumbs = useBreadcrumbs();
 
   return (
@@ -110,10 +113,15 @@ export function Header() {
       </div>
       <div className="flex items-center gap-2 px-3">
         {/* Full input on desktop */}
-        <SearchForm className="hidden lg:block" />
+        <SearchForm className="hidden lg:block" open={open} setOpen={setOpen} />
 
         {/* Icon button on mobile/tablet */}
-        <Button variant="ghost" size="icon" className="h-8 w-8 lg:hidden">
+        <Button
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 lg:hidden"
+          onClick={() => setOpen(true)}
+        >
           <HugeiconsIcon
             icon={Search01Icon}
             size={16}
