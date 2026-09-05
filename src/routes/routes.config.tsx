@@ -15,7 +15,10 @@ export interface IRouteConfig {
 
 // Lazy load page components
 const HomePage = lazy(() => import("@/pages/home/page"));
-const LoginPage = lazy(() => import("@/pages/login/page"));
+const LoginPage = lazy(() => import("@/pages/auth/login/page"));
+const ForgotPasswordPage = lazy(
+  () => import("@/pages/auth/forgot-password/page")
+);
 const NotFoundPage = lazy(() => import("@/pages/not-found/page"));
 const DashboardPage = lazy(() => import("@/pages/dashboard/page"));
 const AnalyticsPage = lazy(() => import("@/pages/monitoring/analytics/page"));
@@ -54,6 +57,10 @@ export const routes: IRouteConfig[] = [
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgotPasswordPage />,
   },
   {
     path: "/",

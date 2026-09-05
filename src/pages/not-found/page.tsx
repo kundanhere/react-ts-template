@@ -1,5 +1,6 @@
 import { FileEmpty02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { Link } from "react-router-dom";
 
 import { Typography } from "@/components/typography";
 import {
@@ -9,7 +10,6 @@ import {
   EmptyHeader,
 } from "@/components/ui/empty";
 
-import { Link } from "react-router-dom";
 import { NotFoundSearch } from "./components/search";
 
 export default function NotFoundPage() {
