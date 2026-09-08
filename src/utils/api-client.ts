@@ -139,7 +139,9 @@ const featuredFetch = async <ResponseType>(
         input.includes("/auth/refresh") ||
         input.includes("/auth/register") ||
         input.includes("/auth/logout") ||
-        input.includes("/auth/me"));
+        input.includes("/auth/me") ||
+        input.includes("/auth/password") ||
+        input.includes("/auth/otp"));
 
     let responseData: any = {};
     try {

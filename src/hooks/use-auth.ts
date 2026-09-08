@@ -3,7 +3,14 @@ import { useCallback, useEffect } from "react";
 import { useIsRestoring, useMutation, useQuery } from "@tanstack/react-query";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { getAuthMeApi, loginApi, logoutApi } from "@/api/iam/auth";
+import {
+  getAuthMeApi,
+  loginApi,
+  logoutApi,
+  passwordResetConfirmApi,
+  passwordResetRequestApi,
+  verifyOtpApi,
+} from "@/api/iam/auth";
 import { toast } from "@/components/ui/toast";
 import { queryKeys } from "@/constants";
 import {
@@ -12,6 +19,13 @@ import {
   ILoginRequest,
   ILoginResponse,
   IModuleAccess,
+  IOtpVerifyReq,
+  IOtpVerifyResponse,
+  IPasswordResetConfirmReq,
+  IPasswordResetConfirmResponse,
+  IPasswordResetRequestPayload,
+  IPasswordResetRequestReq,
+  IPasswordResetRequestResponse,
   IUserAccess,
 } from "@/types";
 import { CustomError } from "@/utils/api-client";
@@ -249,6 +263,41 @@ export function useLoginMutation() {
         );
       }
     },
+  });
+}
+
+/**
+ * Mutation hook to request password reset OTP.
+ */
+export function usePasswordResetRequestMutation() {
+  return useMutation<
+    IPasswordResetRequestResponse,
+    CustomError<IPasswordResetRequestPayload>,
+    IPasswordResetRequestReq
+  >({
+    mutationFn: (data) => passwordResetRequestApi(data),
+  });
+}
+
+/**
+ * Mutation hook to verify password reset OTP.
+ */
+export function useVerifyOtpMutation() {
+  return useMutation<IOtpVerifyResponse, CustomError, IOtpVerifyReq>({
+    mutationFn: (data) => verifyOtpApi(data),
+  });
+}
+
+/**
+ * Mutation hook to confirm new password using HttpOnly reset token.
+ */
+export function usePasswordResetConfirmMutation() {
+  return useMutation<
+    IPasswordResetConfirmResponse,
+    CustomError,
+    IPasswordResetConfirmReq
+  >({
+    mutationFn: (data) => passwordResetConfirmApi(data),
   });
 }
 

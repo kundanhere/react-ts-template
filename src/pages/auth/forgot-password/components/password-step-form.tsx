@@ -103,13 +103,24 @@ export function PasswordStepForm({
               />
             </button>
           </div>
+          {confirmPassword && newPassword !== confirmPassword && (
+            <p className="text-destructive text-[11px] font-medium">
+              Passwords do not match
+            </p>
+          )}
         </div>
       </div>
 
       <Button
         type="submit"
-        disabled={isLoading}
-        className="bg-primary text-primary-foreground mt-4 h-10 w-full cursor-pointer gap-2 rounded-xl font-medium shadow-xs transition-all hover:shadow-sm"
+        disabled={
+          isLoading ||
+          !newPassword ||
+          newPassword.length < 8 ||
+          !confirmPassword ||
+          newPassword !== confirmPassword
+        }
+        className="bg-primary text-primary-foreground mt-4 h-10 w-full cursor-pointer gap-2 rounded-xl font-medium shadow-xs transition-all hover:shadow-sm disabled:pointer-events-none disabled:opacity-50"
       >
         {isLoading ? "Updating Password..." : "Update Password"}
         <HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />

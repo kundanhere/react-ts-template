@@ -4,8 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 import { ThemeToggle } from "@/components/theme-toggle";
 import { toast } from "@/components/ui/toast";
+import {
+  usePasswordResetConfirmMutation,
+  usePasswordResetRequestMutation,
+  useVerifyOtpMutation,
+} from "@/hooks/use-auth";
+import type { RecoveryStep } from "@/types";
 
-import type { RecoveryStep } from "../../../types/auth";
 import { EmailStepForm } from "./components/email-step-form";
 import { OtpStepForm } from "./components/otp-step-form";
 import { PasswordStepForm } from "./components/password-step-form";
@@ -20,66 +25,160 @@ export default function ForgotPasswordPage() {
   const [otpValue, setOtpValue] = React.useState("");
   const [newPassword, setNewPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [cooldown, setCooldown] = React.useState(0);
+
+  const resetRequestMutation = usePasswordResetRequestMutation();
+  const verifyOtpMutation = useVerifyOtpMutation();
+  const resetConfirmMutation = usePasswordResetConfirmMutation();
+
+  const isLoading =
+    resetRequestMutation.isPending ||
+    verifyOtpMutation.isPending ||
+    resetConfirmMutation.isPending;
+
+  // Countdown timer for rate-limit resend cooldown
+  React.useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = setInterval(() => {
+      setCooldown((prev) => (prev > 1 ? prev - 1 : 0));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [cooldown]);
 
   // Step 1: Send OTP
-  const handleSendOtp = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) {
-      toast.error("Please enter your account email");
+  const handleSendOtp = (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const cleanEmail = email.trim();
+    if (!cleanEmail) {
+      toast.error("Validation Error", "Please enter your account email");
       return;
     }
 
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      setStep("otp");
-      toast.success(`Verification code sent to ${email}`);
-    }, 1000);
+    resetRequestMutation.mutate(
+      { email: cleanEmail },
+      {
+        onSuccess: (res) => {
+          setStep("otp");
+          setOtpValue("");
+          // If server provided remainingSeconds or rate limit cooldown
+          const remaining =
+            (res.payload as { remainingSeconds?: number })?.remainingSeconds ||
+            60;
+          setCooldown(remaining);
+        },
+        onError: (err) => {
+          const remaining = (err.payload as { remainingSeconds?: number })
+            ?.remainingSeconds;
+          if (remaining) {
+            setCooldown(remaining);
+          }
+          const description =
+            err.messages?.length > 1
+              ? err.messages.join(" • ")
+              : err.firstMessage;
+          toast.error(
+            err.messageCode === "TOO_MANY_REQUESTS"
+              ? "Rate Limited"
+              : "Request Failed",
+            description || "Unable to send verification code."
+          );
+        },
+      }
+    );
   };
 
   // Step 2: Verify OTP
   const verifyOtpCode = React.useCallback(
     (code: string) => {
-      if (code.length < 6 || isLoading) return;
+      if (code.length < 6 || verifyOtpMutation.isPending) return;
 
-      setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-        setStep("password");
-        toast.success("Code verified. Please set your new password.");
-      }, 700);
+      verifyOtpMutation.mutate(
+        {
+          identifier: email.trim(),
+          code: code.trim(),
+          purpose: "PASSWORD_RESET",
+        },
+        {
+          onSuccess: () => {
+            setStep("password");
+          },
+          onError: (err) => {
+            const description =
+              err.messages?.length > 1
+                ? err.messages.join(" • ")
+                : err.firstMessage;
+            if (err.messageCode === "OTP_ATTEMPTS_EXCEEDED") {
+              toast.error(
+                "Attempts Exceeded",
+                description ||
+                  "Too many failed attempts. Please request a new OTP."
+              );
+            } else if (err.messageCode === "INVALID_OTP") {
+              toast.error(
+                "Invalid Code",
+                description || "Invalid or expired OTP code."
+              );
+            } else {
+              toast.error(
+                "Verification Failed",
+                description || "Failed to verify OTP."
+              );
+            }
+          },
+        }
+      );
     },
-    [isLoading]
+    [email, verifyOtpMutation]
   );
 
   const handleVerifyOtp = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
-    if (otpValue.length < 6) {
-      toast.error("Please enter the complete 6-digit verification code");
-      return;
-    }
+    if (otpValue.length < 6) return;
     verifyOtpCode(otpValue);
   };
 
   // Step 3: Set New Password
   const handleResetPassword = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newPassword || newPassword.length < 8) {
-      toast.error("Password must be at least 8 characters long");
+    if (
+      !newPassword ||
+      newPassword.length < 8 ||
+      newPassword !== confirmPassword
+    )
       return;
-    }
-    if (newPassword !== confirmPassword) {
-      toast.error("Passwords do not match");
-      return;
-    }
 
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success("Password updated successfully! Redirecting to login...");
-      setTimeout(() => navigate("/login"), 1200);
-    }, 1000);
+    resetConfirmMutation.mutate(
+      { newPassword },
+      {
+        onSuccess: (res) => {
+          toast.success(
+            "Password Updated",
+            typeof res.message === "string"
+              ? res.message
+              : "Password updated successfully. Redirecting to login..."
+          );
+          setTimeout(() => navigate("/login", { replace: true }), 1200);
+        },
+        onError: (err) => {
+          const description =
+            err.messages?.length > 1
+              ? err.messages.join(" • ")
+              : err.firstMessage;
+          if (err.messageCode === "BAD_REQUEST") {
+            toast.error(
+              "Session Expired",
+              description ||
+                "Reset token is required or session has expired. Please start again."
+            );
+          } else {
+            toast.error(
+              "Update Failed",
+              description || "Failed to reset password."
+            );
+          }
+        },
+      }
+    );
   };
 
   return (
@@ -114,9 +213,8 @@ export default function ForgotPasswordPage() {
                 onVerifyOtpCode={verifyOtpCode}
                 onSubmit={handleVerifyOtp}
                 onChangeEmail={() => setStep("email")}
-                onResendCode={() => {
-                  toast.success(`New verification code sent to ${email}`);
-                }}
+                onResendCode={() => handleSendOtp()}
+                resendCooldown={cooldown}
               />
             )}
 

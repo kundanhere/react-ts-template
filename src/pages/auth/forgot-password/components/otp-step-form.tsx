@@ -23,6 +23,7 @@ interface IOtpStepFormProps {
   onSubmit: (e?: React.FormEvent) => void;
   onChangeEmail: () => void;
   onResendCode: () => void;
+  resendCooldown?: number;
 }
 
 export function OtpStepForm({
@@ -34,6 +35,7 @@ export function OtpStepForm({
   onSubmit,
   onChangeEmail,
   onResendCode,
+  resendCooldown = 0,
 }: IOtpStepFormProps) {
   return (
     <form
@@ -101,8 +103,8 @@ export function OtpStepForm({
       <div className="space-y-1.5 pt-2">
         <Button
           type="submit"
-          disabled={isLoading}
-          className="bg-primary text-primary-foreground h-10 w-full cursor-pointer gap-2 rounded-xl font-medium shadow-xs transition-all hover:shadow-sm"
+          disabled={isLoading || otpValue.trim().length < 6}
+          className="bg-primary text-primary-foreground h-10 w-full cursor-pointer gap-2 rounded-xl font-medium shadow-xs transition-all hover:shadow-sm disabled:pointer-events-none disabled:opacity-50"
         >
           {isLoading ? "Verifying..." : "Verify Code"}
           <HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />
@@ -114,9 +116,12 @@ export function OtpStepForm({
             variant="ghost"
             size="sm"
             onClick={onResendCode}
-            className="text-muted-foreground hover:text-foreground h-6 cursor-pointer text-xs"
+            disabled={isLoading || resendCooldown > 0}
+            className="text-muted-foreground hover:text-foreground h-6 cursor-pointer text-xs disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Didn&apos;t receive code? Resend
+            {resendCooldown > 0
+              ? `Resend code in ${resendCooldown}s`
+              : "Didn't receive code? Resend"}
           </Button>
         </div>
       </div>

@@ -47,3 +47,35 @@ export type ISessionUser = IAuthUser;
 export type ICurrentUserResponse = IApiResult<ICurrentUserPayload>;
 export type ILoginResponse = IApiResult<ICurrentUserPayload>;
 export type ILoginErrorResponse = IApiResult<Record<string, unknown>>;
+
+// Password Recovery & OTP Types
+export interface IPasswordResetRequestPayload {
+  otp?: string;
+  remainingSeconds?: number;
+}
+
+export interface IPasswordResetRequestReq {
+  email: string;
+}
+
+export type IPasswordResetRequestResponse =
+  IApiResult<IPasswordResetRequestPayload>;
+
+export interface IOtpVerifyReq {
+  identifier: string;
+  code: string;
+  purpose?: string;
+}
+
+export interface IOtpVerifyPayload {
+  verified: boolean;
+  purpose: string;
+}
+
+export type IOtpVerifyResponse = IApiResult<IOtpVerifyPayload>;
+
+export interface IPasswordResetConfirmReq {
+  newPassword: string;
+}
+
+export type IPasswordResetConfirmResponse = IApiResult<Record<string, unknown>>;

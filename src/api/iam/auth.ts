@@ -3,6 +3,11 @@ import {
   ICurrentUserResponse,
   ILoginRequest,
   ILoginResponse,
+  IOtpVerifyReq,
+  IOtpVerifyResponse,
+  IPasswordResetConfirmReq,
+  IPasswordResetConfirmResponse,
+  IPasswordResetRequestResponse,
 } from "@/types";
 import featuredFetch, { CustomError } from "@/utils/api-client";
 
@@ -63,5 +68,47 @@ export const refreshAuthSessionApi = async (): Promise<ILoginResponse> =>
     input: "/iam/auth/refresh",
     init: {
       method: "POST",
+    },
+  });
+
+/**
+ * Requests an OTP code for password recovery.
+ */
+export const passwordResetRequestApi = async (data: {
+  email: string;
+}): Promise<IPasswordResetRequestResponse> =>
+  featuredFetch<IPasswordResetRequestResponse>({
+    input: "/iam/auth/password/reset-request",
+    init: {
+      method: "POST",
+      body: JSON.stringify(data),
+    },
+  });
+
+/**
+ * Verifies OTP code for password recovery. Backend attaches HttpOnly resetToken cookie upon success.
+ */
+export const verifyOtpApi = async (
+  data: IOtpVerifyReq
+): Promise<IOtpVerifyResponse> =>
+  featuredFetch<IOtpVerifyResponse>({
+    input: "/iam/auth/otp/verify",
+    init: {
+      method: "POST",
+      body: JSON.stringify(data),
+    },
+  });
+
+/**
+ * Confirms password reset using HttpOnly resetToken cookie and new password.
+ */
+export const passwordResetConfirmApi = async (
+  data: IPasswordResetConfirmReq
+): Promise<IPasswordResetConfirmResponse> =>
+  featuredFetch<IPasswordResetConfirmResponse>({
+    input: "/iam/auth/password/reset-confirm",
+    init: {
+      method: "POST",
+      body: JSON.stringify(data),
     },
   });

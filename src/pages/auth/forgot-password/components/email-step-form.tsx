@@ -24,6 +24,9 @@ export function EmailStepForm({
   isLoading,
   onSubmit,
 }: IEmailStepFormProps) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const isValidEmail = emailRegex.test(email.trim());
+
   return (
     <form
       onSubmit={onSubmit}
@@ -64,13 +67,18 @@ export function EmailStepForm({
               className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2"
             />
           </div>
+          {email.trim() && !isValidEmail && (
+            <p className="text-destructive text-[11px] font-medium">
+              Please enter a valid email address
+            </p>
+          )}
         </div>
       </div>
 
       <Button
         type="submit"
-        disabled={isLoading}
-        className="bg-primary text-primary-foreground mt-4 h-10 w-full cursor-pointer gap-2 rounded-xl font-medium shadow-xs transition-all hover:shadow-sm"
+        disabled={isLoading || !isValidEmail}
+        className="bg-primary text-primary-foreground mt-4 h-10 w-full cursor-pointer gap-2 rounded-xl font-medium shadow-xs transition-all hover:shadow-sm disabled:pointer-events-none disabled:opacity-50"
       >
         {isLoading ? "Sending Code..." : "Send Verification Code"}
         <HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />

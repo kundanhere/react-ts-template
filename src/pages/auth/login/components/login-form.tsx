@@ -267,8 +267,8 @@ export function LoginForm({
         {/* Submit Button */}
         <Button
           type="submit"
-          disabled={isLoading}
-          className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 w-full cursor-pointer rounded-xl text-sm font-medium shadow-xs transition-all"
+          disabled={isLoading || !identifier.trim() || !password.trim()}
+          className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 w-full cursor-pointer rounded-xl text-sm font-medium shadow-xs transition-all disabled:pointer-events-none disabled:opacity-50"
         >
           {isLoading ? (
             <span className="flex items-center gap-2">

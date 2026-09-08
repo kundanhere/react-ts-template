@@ -2,13 +2,15 @@ import * as React from "react";
 
 import { MinusSignIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { OTPInput, OTPInputContext } from "input-otp";
+import { OTPInput, OTPInputContext, REGEXP_ONLY_DIGITS } from "input-otp";
 
 import { cn } from "@/lib/utils";
 
 function InputOTP({
   className,
   containerClassName,
+  pattern = REGEXP_ONLY_DIGITS,
+  inputMode = "numeric",
   ...props
 }: React.ComponentProps<typeof OTPInput> & {
   containerClassName?: string;
@@ -21,6 +23,8 @@ function InputOTP({
         containerClassName
       )}
       spellCheck={false}
+      pattern={pattern}
+      inputMode={inputMode}
       className={cn("disabled:cursor-not-allowed", className)}
       {...props}
     />
