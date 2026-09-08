@@ -1,13 +1,15 @@
 import * as React from "react";
 
 import {
+  Alert02Icon,
+  Loading03Icon,
   LockKeyIcon,
-  Mail02Icon,
+  UserIcon,
   ViewIcon,
   ViewOffIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -15,42 +17,85 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "@/components/ui/toast";
+import { useLoginMutation } from "@/hooks/use-auth";
 import { cn } from "@/lib/utils";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const navigate = useNavigate();
-  const [email, setEmail] = React.useState("name@example.com");
-  const [password, setPassword] = React.useState("password123");
+  const [identifier, setIdentifier] = React.useState("admin");
+  const [password, setPassword] = React.useState("123#Abc.com");
   const [showPassword, setShowPassword] = React.useState(false);
   const [rememberMe, setRememberMe] = React.useState(true);
-  const [isLoading, setIsLoading] = React.useState(false);
+
+  const loginMutation = useLoginMutation();
+  const isLoading = loginMutation.isPending;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
-      toast.error("Please fill in all credentials");
-      return;
-    }
-
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success("Welcome back! Redirecting to dashboard...");
-      navigate("/dashboard");
-    }, 900);
+    loginMutation.mutate({
+      identifier,
+      password,
+    });
   };
 
   const handleSocialLogin = (provider: string) => {
-    toast.info(`Initiating ${provider} authentication...`);
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success(`Authenticated with ${provider}. Redirecting...`);
-      navigate("/dashboard");
-    }, 1000);
+    toast.info(`${provider} authentication is not configured.`);
+  };
+
+  const renderErrorAlert = () => {
+    if (!loginMutation.error) return null;
+
+    const { error } = loginMutation;
+    const isLocked = error.messageCode === "ACCOUNT_LOCKED";
+    const isInvalid = error.messageCode === "INVALID_CREDENTIALS";
+    const isValidation = error.messageCode === "VALIDATION_ERROR";
+
+    let alertTitle = "Authentication Error";
+    let alertStyle =
+      "border-destructive/40 bg-destructive/10 text-destructive dark:bg-destructive/15";
+
+    if (isLocked) {
+      alertTitle = "Account Locked";
+    } else if (isInvalid) {
+      alertTitle = "Invalid Credentials";
+      alertStyle =
+        "border-amber-500/40 bg-amber-500/10 text-amber-900 dark:bg-amber-500/15 dark:text-amber-200";
+    } else if (isValidation) {
+      alertTitle = "Validation Error";
+    }
+
+    return (
+      <div
+        role="alert"
+        className={cn(
+          "animate-in fade-in-50 slide-in-from-top-1 flex items-start gap-3 rounded-xl border p-3.5 text-xs transition-all",
+          alertStyle
+        )}
+      >
+        <HugeiconsIcon
+          icon={isLocked ? LockKeyIcon : Alert02Icon}
+          className="mt-0.5 size-4 shrink-0"
+        />
+        <div className="flex-1 space-y-0.5">
+          <p className="font-semibold">{alertTitle}</p>
+          {error.messages && error.messages.length > 1 ? (
+            <ul className="text-foreground/80 list-disc space-y-1 pt-1 pl-4 leading-relaxed">
+              {error.messages.map((msg) => (
+                <li key={msg}>{msg}</li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-foreground/80 leading-relaxed">
+              {error.firstMessage ||
+                error.message ||
+                "An unexpected authentication error occurred."}
+            </p>
+          )}
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -108,33 +153,45 @@ export function LoginForm({
           <Separator className="w-full" />
         </div>
         <div className="bg-background text-muted-foreground relative px-3 text-[0.6875rem] font-medium tracking-wider uppercase">
-          or continue with
+          or continue with credentials
         </div>
       </div>
 
+      {/* Error alert banner */}
+      {renderErrorAlert()}
+
       {/* Credentials Form */}
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Email Field */}
+        {/* Identifier Field (Username or Email) */}
         <div className="space-y-1.5">
           <Label
-            htmlFor="email"
+            htmlFor="identifier"
             className="text-foreground/80 text-xs font-medium"
           >
-            Email
+            Username or Email
           </Label>
           <div className="relative">
             <Input
-              id="email"
-              type="email"
-              placeholder="name@example.com"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              id="identifier"
+              name="identifier"
+              type="text"
+              placeholder="admin or superadmin@system.com"
+              value={identifier}
+              onChange={(e) => {
+                setIdentifier(e.target.value);
+                if (loginMutation.isError) {
+                  loginMutation.reset();
+                }
+              }}
               disabled={isLoading}
-              className="border-border/80 bg-muted/30 focus-visible:bg-background h-10 rounded-xl pl-10 text-sm transition-colors"
+              className={cn(
+                "border-border/80 bg-muted/30 focus-visible:bg-background h-10 rounded-xl pl-10 text-sm transition-colors",
+                loginMutation.error?.messageCode === "VALIDATION_ERROR" &&
+                  "border-destructive focus-visible:ring-destructive/30"
+              )}
             />
             <HugeiconsIcon
-              icon={Mail02Icon}
+              icon={UserIcon}
               className="text-muted-foreground pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2"
             />
           </div>
@@ -151,11 +208,16 @@ export function LoginForm({
           <div className="relative">
             <Input
               id="password"
+              name="password"
               type={showPassword ? "text" : "password"}
               placeholder="••••••••"
-              required
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                if (loginMutation.isError) {
+                  loginMutation.reset();
+                }
+              }}
               disabled={isLoading}
               className="border-border/80 bg-muted/30 focus-visible:bg-background h-10 rounded-xl pr-10 pl-10 text-sm transition-colors"
             />
@@ -208,7 +270,17 @@ export function LoginForm({
           disabled={isLoading}
           className="bg-primary text-primary-foreground hover:bg-primary/90 h-10 w-full cursor-pointer rounded-xl text-sm font-medium shadow-xs transition-all"
         >
-          {isLoading ? "Signing in..." : "Sign in"}
+          {isLoading ? (
+            <span className="flex items-center gap-2">
+              <HugeiconsIcon
+                icon={Loading03Icon}
+                className="size-4 animate-spin"
+              />
+              Signing in...
+            </span>
+          ) : (
+            "Sign in"
+          )}
         </Button>
 
         {/* Request Access */}

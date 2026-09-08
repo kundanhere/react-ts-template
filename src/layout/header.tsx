@@ -133,13 +133,7 @@ export function Header() {
           className="mt-2 data-[orientation=vertical]:h-4"
         />
         <ThemeToggle />
-        <User
-          user={{
-            name: "Kundan Gupta",
-            email: "kundang25@gmail.com",
-            avatar: "https://i.pravatar.cc/150?u=a04",
-          }}
-        />
+        <User />
       </div>
     </header>
   );

@@ -34,13 +34,9 @@ import { NavMain } from "@/layout/nav-main";
 import { NavPrimary } from "@/layout/nav-primary";
 import { NavSecondary } from "@/layout/nav-secondary";
 import { NavUser } from "@/layout/nav-user";
+import { useAppStore } from "@/store/use-app-store";
 
 const data = {
-  user: {
-    name: "Kundan Gupta",
-    email: "kundang25@gmail.com",
-    avatar: "https://i.pravatar.cc/150?u=a04",
-  },
   navMain: [
     {
       title: "Home",
@@ -154,6 +150,14 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { user } = useAppStore();
+  const fullName = [user?.firstName, user?.lastName].filter(Boolean).join(" ");
+  const currentUser = {
+    name: fullName || user?.username || "Guest User",
+    email: user?.email || "",
+    avatar: user?.avatarUrl || "",
+  };
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
@@ -189,7 +193,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        <NavUser user={currentUser} />
       </SidebarFooter>
     </Sidebar>
   );

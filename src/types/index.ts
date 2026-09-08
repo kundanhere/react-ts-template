@@ -1,10 +1,10 @@
 // Global types for the app
 
 // API Result
-export interface IApiResult<T = undefined> {
-  paginationInfo: any;
+export interface IApiResult<T = unknown> {
+  paginationInfo?: IPaginationInfo | null;
   status: number;
-  message: string;
+  message: string | string[];
   messageCode: string;
   payload: T;
 }
@@ -30,6 +30,7 @@ export interface IPaginationResponse<T> {
   totalPages: number;
 }
 
+export * from "./auth";
 export * from "./data-table";
 export * from "./iam";
 export * from "./monitoring";

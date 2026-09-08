@@ -37,19 +37,44 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useLogout } from "@/hooks/use-auth";
 import { FeedbackSubmissionDialog } from "@/pages/feedback/components/feedback-submission-dialog";
+import { useAppStore } from "@/store/use-app-store";
 
 export function User({
   user,
 }: {
-  user: {
-    name: string;
-    email: string;
-    avatar: string;
+  user?: {
+    name?: string;
+    email?: string;
+    avatar?: string;
   };
-}) {
+} = {}) {
   const navigate = useNavigate();
+  const handleLogout = useLogout();
+  const { user: storeUser } = useAppStore();
   const [isBugModalOpen, setIsBugModalOpen] = React.useState(false);
+
+  const fullName = [storeUser?.firstName, storeUser?.lastName]
+    .filter(Boolean)
+    .join(" ");
+
+  const displayUser = {
+    name: fullName || storeUser?.username || user?.name || "Guest User",
+    email: storeUser?.email || user?.email || "",
+    avatar: storeUser?.avatarUrl || user?.avatar || "",
+  };
+
+  const getInitials = (name: string) => {
+    if (!name) return "U";
+    const parts = name.trim().split(" ");
+    if (parts.length >= 2) {
+      return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+    }
+    return name.slice(0, 2).toUpperCase();
+  };
+
+  const initials = getInitials(displayUser.name);
 
   return (
     <>
@@ -58,11 +83,8 @@ export function User({
           render={
             <Button variant="ghost" size="icon-lg" className="rounded-full">
               <Avatar size="sm">
-                <AvatarImage
-                  src="https://i.pravatar.cc/150?u=a04"
-                  alt="Kundan Gupta"
-                />
-                <AvatarFallback>KG</AvatarFallback>
+                <AvatarImage src={displayUser.avatar} alt={displayUser.name} />
+                <AvatarFallback>{initials}</AvatarFallback>
               </Avatar>
             </Button>
           }
@@ -74,12 +96,17 @@ export function User({
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar>
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback>KG</AvatarFallback>
+                  <AvatarImage
+                    src={displayUser.avatar}
+                    alt={displayUser.name}
+                  />
+                  <AvatarFallback>{initials}</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-medium">
+                    {displayUser.name}
+                  </span>
+                  <span className="truncate text-xs">{displayUser.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -166,7 +193,7 @@ export function User({
               Help
               <DropdownMenuShortcut>
                 <Tooltip>
-                  <TooltipTrigger>
+                  <TooltipTrigger asChild>
                     <Button
                       variant="outline"
                       size="icon-xs"
@@ -198,10 +225,7 @@ export function User({
               Switch account
               <DropdownMenuShortcut>⇧⌘S</DropdownMenuShortcut>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              variant="destructive"
-              onClick={() => navigate("/login")}
-            >
+            <DropdownMenuItem variant="destructive" onClick={handleLogout}>
               <HugeiconsIcon icon={Logout01Icon} strokeWidth={2} />
               Log out
               <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>

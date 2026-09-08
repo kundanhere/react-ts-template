@@ -1,44 +1,19 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import {
-  IAsyncState,
-  addAsyncCases,
-  createAsyncState,
-} from "@/utils/redux-helpers";
+import { IAuthUser, ISessionUser } from "@/types";
 
-export interface IUser {
-  id?: string;
-  name: string;
-  email?: string;
-}
+export type { ISessionUser, IAuthUser };
+export type IUser = IAuthUser;
 
-export interface IAppState extends IAsyncState<IUser> {
+export interface IAppState {
+  data: IAuthUser | null;
   theme: "light" | "dark" | "system";
 }
 
 const initialState: IAppState = {
-  ...createAsyncState<IUser>(null),
+  data: null,
   theme: "system",
 };
-
-// Async thunk for fetching user profile details asynchronously
-export const fetchUserThunk = createAsyncThunk<IUser, string>(
-  "app/fetchUser",
-  async (userId: string, { rejectWithValue }) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 300));
-      return {
-        id: userId,
-        name: `User ${userId}`,
-        email: `user${userId}@example.com`,
-      };
-    } catch (err: unknown) {
-      return rejectWithValue(
-        err instanceof Error ? err.message : "Failed to fetch user"
-      );
-    }
-  }
-);
 
 export const appSlice = createSlice({
   name: "app",
@@ -56,11 +31,6 @@ export const appSlice = createSlice({
     ) => {
       state.theme = action.payload;
     },
-  },
-  extraReducers: (builder) => {
-    addAsyncCases(builder, fetchUserThunk, (state, payload) => {
-      state.data = payload;
-    });
   },
 });
 

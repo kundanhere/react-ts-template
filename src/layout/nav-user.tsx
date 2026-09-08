@@ -27,6 +27,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import { useLogout } from "@/hooks/use-auth";
 
 export function NavUser({
   user,
@@ -38,7 +39,20 @@ export function NavUser({
   };
 }) {
   const navigate = useNavigate();
+  const handleLogout = useLogout();
   const { isMobile } = useSidebar();
+
+  const getInitials = (name: string) => {
+    if (!name) return "U";
+    const parts = name.trim().split(" ");
+    if (parts.length >= 2) {
+      return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+    }
+    return name.slice(0, 2).toUpperCase();
+  };
+
+  const initials = getInitials(user.name);
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -53,7 +67,7 @@ export function NavUser({
           >
             <Avatar>
               <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback>KG</AvatarFallback>
+              <AvatarFallback>{initials}</AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
               <span className="truncate font-medium">{user.name}</span>
@@ -76,7 +90,7 @@ export function NavUser({
                 <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                   <Avatar>
                     <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback>KG</AvatarFallback>
+                    <AvatarFallback>{initials}</AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-medium">{user.name}</span>
@@ -114,10 +128,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              variant="destructive"
-              onClick={() => navigate("/login")}
-            >
+            <DropdownMenuItem variant="destructive" onClick={handleLogout}>
               <HugeiconsIcon icon={LogoutIcon} strokeWidth={2} />
               Log out
             </DropdownMenuItem>

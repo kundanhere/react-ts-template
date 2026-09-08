@@ -1,19 +1,24 @@
+import { useCurrentAuth } from "@/hooks/use-auth";
+
 import { useAppDispatch, useAppSelector } from "./hooks";
-import { IUser, clearUser, fetchUserThunk, setUser } from "./slices/app-slice";
+import {
+  ISessionUser,
+  clearUser,
+  setThemeMode,
+  setUser,
+} from "./slices/app-slice";
 
 export function useAppStore() {
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.app.data);
-  const status = useAppSelector((state) => state.app.status);
-  const error = useAppSelector((state) => state.app.error);
+  const { user } = useCurrentAuth();
+  const theme = useAppSelector((state) => state.app.theme);
 
   return {
     user,
-    status,
-    error,
-    isLoading: status === "loading",
-    setUser: (userData: IUser | null) => dispatch(setUser(userData)),
+    theme,
+    setUser: (userData: ISessionUser | null) => dispatch(setUser(userData)),
     clearUser: () => dispatch(clearUser()),
-    fetchUser: (userId: string) => dispatch(fetchUserThunk(userId)),
+    setThemeMode: (mode: "light" | "dark" | "system") =>
+      dispatch(setThemeMode(mode)),
   };
 }

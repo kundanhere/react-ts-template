@@ -45,26 +45,31 @@ const InboxPage = lazy(() => import("@/pages/inbox/page"));
 const SupportPage = lazy(() => import("@/pages/support/page"));
 const FeedbackPage = lazy(() => import("@/pages/feedback/page"));
 
-// DashboardProtected wrapper
-const DashboardProtected = () => (
-  <RouteGuard requireAuth redirectTo="/">
-    <DashboardPage />
-  </RouteGuard>
-);
-
 // Route configuration object
 export const routes: IRouteConfig[] = [
   {
     path: "/login",
-    element: <LoginPage />,
+    element: (
+      <RouteGuard guestOnly redirectTo="/">
+        <LoginPage />
+      </RouteGuard>
+    ),
   },
   {
     path: "/forgot-password",
-    element: <ForgotPasswordPage />,
+    element: (
+      <RouteGuard guestOnly redirectTo="/">
+        <ForgotPasswordPage />
+      </RouteGuard>
+    ),
   },
   {
     path: "/",
-    element: <Layout />,
+    element: (
+      <RouteGuard requireAuth redirectTo="/login">
+        <Layout />
+      </RouteGuard>
+    ),
     children: [
       {
         index: true,
@@ -74,7 +79,15 @@ export const routes: IRouteConfig[] = [
       },
       {
         path: "dashboard",
-        element: <DashboardProtected />,
+        element: (
+          <RouteGuard
+            requireAuth
+            requiredModule="Dashboard"
+            requiredAction="view"
+          >
+            <DashboardPage />
+          </RouteGuard>
+        ),
         title: "Overview",
         description: "Protected dashboard page",
       },

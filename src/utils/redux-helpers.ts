@@ -35,7 +35,7 @@ export interface IAsyncThunkLike {
  *
  * @example
  * extraReducers: (builder) => {
- *   addAsyncCases(builder, fetchUserThunk, (state, payload) => {
+ *   addAsyncCases(builder, someAsyncThunk, (state, payload) => {
  *     state.data = payload;
  *   });
  * }
