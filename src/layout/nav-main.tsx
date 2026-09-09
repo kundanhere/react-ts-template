@@ -12,40 +12,42 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-export function NavMain({
-  items,
-}: {
-  items: {
-    title: string;
-    url: string;
-    icon?: React.ReactNode;
-    isActive?: boolean;
-    badge?: string;
-  }[];
-}) {
+export interface INavMainItem {
+  title: string;
+  url?: string | null;
+  icon?: React.ReactNode;
+  isActive?: boolean;
+  badge?: string | number;
+}
+
+export function NavMain({ items }: { items: INavMainItem[] }) {
   const location = useLocation();
 
   return (
     <SidebarGroup>
       <SidebarMenu>
         {items.map((item) => {
+          const hasValidUrl = Boolean(item.url && item.url !== "#");
           const isCurrentActive =
-            item.url === "/"
+            hasValidUrl &&
+            (item.url === "/"
               ? location.pathname === "/"
               : location.pathname === item.url ||
-                location.pathname.startsWith(`${item.url}/`);
+                location.pathname.startsWith(`${item.url}/`));
 
           return (
             <SidebarMenuItem key={item.title}>
               <SidebarMenuButton
                 tooltip={item.title}
-                render={<Link to={item.url} />}
+                render={hasValidUrl ? <Link to={item.url!} /> : undefined}
                 isActive={isCurrentActive}
               >
                 {item.icon}
                 <span>{item.title}</span>
               </SidebarMenuButton>
-              {item.badge && <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>}
+              {item.badge !== undefined && item.badge !== null && (
+                <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
+              )}
             </SidebarMenuItem>
           );
         })}

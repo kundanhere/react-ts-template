@@ -19,6 +19,40 @@ export interface IModule {
   children?: IModule[];
 }
 
+export interface IUserModuleItem {
+  ID: number;
+  name: string;
+  slug: string;
+  description: string | null;
+  path: string | null;
+  icon: string | null;
+  is_active: number;
+  is_system_module: number;
+  parent_id: number | null;
+  group_id: number | null;
+  priority: number;
+  badge?: string | number;
+  children?: IUserModuleItem[];
+}
+
+export interface IUserModuleGroup {
+  ID: string;
+  group_id: number;
+  is_group: boolean;
+  name: string;
+  slug: string;
+  description: string | null;
+  priority: number | null;
+  modules: IUserModuleItem[];
+}
+
+export interface IMyModulesResponse {
+  status: number;
+  messageCode: string;
+  message: string;
+  payload: IUserModuleGroup[];
+}
+
 export interface IGetModulesTableColumnsProps {
   statusCounts: Record<IModule["status"], number>;
   categoryCounts: Record<IModule["category"], number>;

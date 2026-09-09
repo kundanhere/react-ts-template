@@ -175,7 +175,7 @@ export function LoginForm({
               id="identifier"
               name="identifier"
               type="text"
-              placeholder="admin or superadmin@system.com"
+              placeholder="admin"
               value={identifier}
               onChange={(e) => {
                 setIdentifier(e.target.value);

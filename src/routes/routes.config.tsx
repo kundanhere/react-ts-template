@@ -82,12 +82,13 @@ export const routes: IRouteConfig[] = [
         element: (
           <RouteGuard
             requireAuth
-            requiredModule="Dashboard"
+            requiredModule="overview"
             requiredAction="view"
           >
             <DashboardPage />
           </RouteGuard>
         ),
+
         title: "Overview",
         description: "Protected dashboard page",
       },

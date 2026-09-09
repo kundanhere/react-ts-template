@@ -207,6 +207,23 @@ export function useCurrentAuth() {
 }
 
 /**
+ * Evaluates module capability access against the user's ABAC permissions matrix.
+ * Matches the module by its canonical slug (or lowercase equivalent).
+ */
+export function checkModulePermission(
+  access: IUserAccess | undefined | null,
+  moduleSlug: string | undefined | null,
+  action: keyof IModuleAccess = "view"
+): boolean {
+  if (!access || !moduleSlug) return false;
+
+  const perms = access[moduleSlug] ?? access[moduleSlug.toLowerCase()];
+  if (!perms) return false;
+
+  return Boolean(perms.full || perms[action]);
+}
+
+/**
  * Checks whether current user has permission for a given module and action.
  */
 export function useHasPermission(
@@ -214,9 +231,7 @@ export function useHasPermission(
   action: keyof IModuleAccess = "view"
 ): boolean {
   const { access } = useCurrentAuth();
-  const modulePerms = access[moduleName];
-  if (!modulePerms) return false;
-  return Boolean(modulePerms.full || modulePerms[action]);
+  return checkModulePermission(access, moduleName, action);
 }
 
 /**

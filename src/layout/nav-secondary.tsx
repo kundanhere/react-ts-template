@@ -10,15 +10,17 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
+export interface INavSecondaryItem {
+  title: string;
+  url?: string | null;
+  icon: React.ReactNode;
+}
+
 export function NavSecondary({
   items,
   ...props
 }: {
-  items: {
-    title: string;
-    url: string;
-    icon: React.ReactNode;
-  }[];
+  items: INavSecondaryItem[];
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
   const location = useLocation();
 
@@ -27,13 +29,14 @@ export function NavSecondary({
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map((item) => {
-            const isActive = location.pathname === item.url;
+            const hasValidUrl = Boolean(item.url && item.url !== "#");
+            const isActive = hasValidUrl && location.pathname === item.url;
             return (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton
                   tooltip={item.title}
                   size="sm"
-                  render={<Link to={item.url} />}
+                  render={hasValidUrl ? <Link to={item.url!} /> : undefined}
                   isActive={isActive}
                 >
                   {item.icon}

@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 
 import { Navigate, useLocation } from "react-router-dom";
 
-import { useCurrentAuth } from "@/hooks/use-auth";
+import { checkModulePermission, useCurrentAuth } from "@/hooks/use-auth";
 import { IModuleAccess } from "@/types";
 
 export interface IRouteGuardProps {
@@ -46,11 +46,14 @@ export function RouteGuard({
     return <>{children}</>;
   }
 
-  // Show spinner while validating session on cold start or when required permissions are in flight
+  // Check module permission using alias-aware ABAC evaluator
+  const hasAccess = requiredModule
+    ? checkModulePermission(access, requiredModule, requiredAction)
+    : true;
+
+  // Show spinner while validating session on cold start or when permissions query is actively in flight
   const isPermissionsLoading =
-    Boolean(requiredModule) &&
-    isRevalidating &&
-    (!access || !access[requiredModule!]);
+    Boolean(requiredModule) && isRevalidating && !hasAccess;
 
   if (requireAuth && (isLoading || isPermissionsLoading)) {
     return (
@@ -60,20 +63,14 @@ export function RouteGuard({
     );
   }
 
-  // 4. Protected routes with unauthenticated user: redirect to login
+  // Protected routes with unauthenticated user: redirect to login
   if (requireAuth && !isAuthenticated) {
     const loginRedirect = redirectTo || "/login";
     return <Navigate to={loginRedirect} state={{ from: location }} replace />;
   }
 
-  // 4. Authorization check:
-  // If route requires a specific module permission
+  // Authorization check: If route requires a specific module permission
   if (requireAuth && isAuthenticated && requiredModule) {
-    const modulePerms = access[requiredModule];
-    const hasAccess = Boolean(
-      modulePerms?.full || (modulePerms && modulePerms[requiredAction])
-    );
-
     if (!hasAccess) {
       return (
         <div className="flex min-h-[80vh] flex-col items-center justify-center gap-3 p-6 text-center">

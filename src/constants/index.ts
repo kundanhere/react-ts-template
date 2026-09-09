@@ -42,4 +42,13 @@ export const queryKeys = {
     auditLogs: (params?: Record<string, unknown>) =>
       [...queryKeys.monitoring.all, "audit-logs", params] as const,
   },
+  modules: {
+    all: ["modules"] as const,
+    myModules: (variant: string = "group") =>
+      [...queryKeys.modules.all, "myModules", variant] as const,
+    list: (params?: Record<string, unknown>) =>
+      [...queryKeys.modules.all, "list", params] as const,
+    detail: (id: string | number) =>
+      [...queryKeys.modules.all, "detail", String(id)] as const,
+  },
 } as const;

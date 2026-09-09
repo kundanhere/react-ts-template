@@ -68,18 +68,22 @@ export const queryPersister = createAsyncStoragePersister({
 export const queryPersistOptions = {
   persister: queryPersister,
   maxAge: 24 * 60 * 60 * 1000, // 24 hours
-  buster: "v1.2",
+  buster: "v1.4",
   dehydrateOptions: {
     shouldDehydrateQuery: (query: {
       queryKey: readonly unknown[];
       state: { status: string };
     }) => {
       const key = query.queryKey;
+      if (!Array.isArray(key) || query.state.status !== "success") return false;
+
       const isCurrentUser =
-        Array.isArray(key) &&
-        (key.includes("currentUser") ||
-          (key[0] === "auth" && key[1] === "currentUser"));
-      return isCurrentUser && query.state.status === "success";
+        key.includes("currentUser") ||
+        (key[0] === "auth" && key[1] === "currentUser");
+
+      const isMyModules = key[0] === "modules" && key.includes("myModules");
+
+      return isCurrentUser || isMyModules;
     },
   },
 };
