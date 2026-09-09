@@ -9,10 +9,10 @@ import {
   CpuIcon,
   DashboardSquare01Icon,
   GridIcon,
+  HelpCircleIcon,
   Home03Icon,
   InboxIcon,
   LaptopPhoneSyncIcon,
-  Quiz05Icon,
   SentIcon,
   Settings01Icon,
   Shield01Icon,
@@ -35,6 +35,8 @@ import { NavPrimary } from "@/layout/nav-primary";
 import { NavSecondary } from "@/layout/nav-secondary";
 import { NavUser } from "@/layout/nav-user";
 import { useAppStore } from "@/store/use-app-store";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 const data = {
   navMain: [
@@ -137,9 +139,9 @@ const data = {
       icon: <HugeiconsIcon icon={Settings01Icon} strokeWidth={2} />,
     },
     {
-      title: "Support",
+      title: "Get Help",
       url: "/support",
-      icon: <HugeiconsIcon icon={Quiz05Icon} strokeWidth={2} />,
+      icon: <HugeiconsIcon icon={HelpCircleIcon} strokeWidth={2} />,
     },
     {
       title: "Feedback",
@@ -191,6 +193,34 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         />
         <NavPrimary groupLabel="Security & System" items={data.navSystem} />
         <NavSecondary items={data.navSecondary} className="mt-auto" />
+
+        {/* card */}
+        <div className="hidden px-4 pt-5">
+          <Card className="bg-secondary px-4 py-6 shadow-none ring-0">
+            <CardContent className="flex flex-col items-center gap-3 p-0">
+              <img
+                src="/images/cat.png"
+                alt="sidebar-img"
+                width={74}
+                height={74}
+                className="h-20 w-20"
+              />
+              <div className="flex flex-col items-center gap-4">
+                <div>
+                  <p className="text-card-foreground text-center text-sm font-semibold">
+                    Grab Pro Now
+                  </p>
+                  <p className="font-regular text-muted-foreground text-center text-xs">
+                    Customize your admin
+                  </p>
+                </div>
+                <Button className="h-8 w-fit cursor-pointer rounded-xl px-4 py-2 shadow-none">
+                  Get Premium
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={currentUser} />
