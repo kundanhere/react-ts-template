@@ -3,18 +3,15 @@ import {
   CancelCircleIcon,
   CheckmarkCircle01Icon,
   Clock01Icon,
-  CpuIcon,
-  Grid02Icon,
-  Layers01Icon,
+  Folder01Icon,
   MoreHorizontalIcon,
-  Settings01Icon,
   Shield01Icon,
   ShieldCheck,
   Sorting01Icon,
   TextFontIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import type { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef, Row } from "@tanstack/react-table";
 
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
 import { Badge } from "@/components/ui/badge";
@@ -33,19 +30,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/toast";
+import { getModuleIcon } from "@/layout/module-icons";
 import { formatDate } from "@/lib/format";
 import type {
   IGetModulesTableColumnsProps,
   IModule,
+  INavigationGroup,
 } from "@/types/iam/modules";
-
-export const MODULE_CATEGORIES = [
-  "core",
-  "system",
-  "feature",
-  "integration",
-  "governance",
-] as const;
 
 export const MODULE_STATUSES = [
   "active",
@@ -53,31 +44,6 @@ export const MODULE_STATUSES = [
   "maintenance",
   "beta",
 ] as const;
-
-export function getCategoryIcon(category: IModule["category"]) {
-  switch (category) {
-    case "core":
-      return (props: any) => (
-        <HugeiconsIcon icon={CpuIcon} strokeWidth={2} {...props} />
-      );
-    case "system":
-      return (props: any) => (
-        <HugeiconsIcon icon={Layers01Icon} strokeWidth={2} {...props} />
-      );
-    case "feature":
-      return (props: any) => (
-        <HugeiconsIcon icon={Grid02Icon} strokeWidth={2} {...props} />
-      );
-    case "integration":
-      return (props: any) => (
-        <HugeiconsIcon icon={Settings01Icon} strokeWidth={2} {...props} />
-      );
-    case "governance":
-      return (props: any) => (
-        <HugeiconsIcon icon={Shield01Icon} strokeWidth={2} {...props} />
-      );
-  }
-}
 
 export function getStatusIcon(status: IModule["status"]) {
   switch (status) {
@@ -110,9 +76,6 @@ const TextIconComp = (props: any) => (
 const SortingIconComp = (props: any) => (
   <HugeiconsIcon icon={Sorting01Icon} strokeWidth={2} {...props} />
 );
-const ClockIconComp = (props: any) => (
-  <HugeiconsIcon icon={Clock01Icon} strokeWidth={2} {...props} />
-);
 const CheckmarkIconComp = (props: any) => (
   <HugeiconsIcon icon={CheckmarkCircle01Icon} strokeWidth={2} {...props} />
 );
@@ -122,13 +85,37 @@ const ShieldIconComp = (props: any) => (
 const CalendarIconComp = (props: any) => (
   <HugeiconsIcon icon={Calendar01Icon} strokeWidth={2} {...props} />
 );
+const FolderIconComp = (props: any) => (
+  <HugeiconsIcon icon={Folder01Icon} strokeWidth={2} {...props} />
+);
+
+/**
+ * Resolves the effective navigation group for a module.
+ * Child and sub-modules automatically inherit the group of their parent.
+ */
+function getEffectiveGroup(
+  row: Row<IModule>,
+  groups: INavigationGroup[]
+): INavigationGroup | null {
+  let currentRow: Row<IModule> | undefined = row;
+  while (currentRow) {
+    const currentGroupId = currentRow.original.groupId;
+    if (currentGroupId) {
+      const g = groups.find((grp) => grp.id === currentGroupId);
+      if (g) return g;
+    }
+    currentRow = currentRow.getParentRow();
+  }
+  return null;
+}
 
 export function getModulesTableColumns({
   statusCounts,
-  categoryCounts,
   priorityRange,
+  groups = [],
   setRowAction,
   onEditModule,
+  onAssignGroup,
   onUpdateStatus,
   onToggleSystem,
 }: IGetModulesTableColumnsProps): ColumnDef<IModule>[] {
@@ -186,20 +173,31 @@ export function getModulesTableColumns({
         <DataTableColumnHeader column={column} label="Module Name" />
       ),
       cell: ({ row }) => {
-        const { category, description } = row.original;
-        const CategoryIcon = getCategoryIcon(category);
+        const { icon, description, badge } = row.original;
         return (
           <div className="flex items-center gap-2.5">
-            <div className="bg-muted/40 flex size-8 shrink-0 items-center justify-center rounded-lg border">
-              <CategoryIcon className="text-primary size-4" />
+            <div className="bg-primary/10 text-primary flex size-7 shrink-0 items-center justify-center rounded-lg">
+              {getModuleIcon(icon, 2, 16)}
             </div>
-            <div className="flex flex-col">
-              <span className="text-foreground font-medium">
-                {row.getValue("name")}
-              </span>
-              <span className="text-muted-foreground max-w-70 truncate text-xs">
-                {description}
-              </span>
+            <div className="flex min-w-0 flex-col">
+              <div className="flex items-center gap-1.5">
+                <span className="text-foreground text-xs font-medium sm:text-[0.8125rem]">
+                  {row.getValue("name")}
+                </span>
+                {badge && (
+                  <Badge
+                    variant="secondary"
+                    className="h-4 px-1 text-[0.625rem] font-medium"
+                  >
+                    {badge}
+                  </Badge>
+                )}
+              </div>
+              {description && (
+                <span className="text-muted-foreground max-w-70 truncate text-[0.6875rem]">
+                  {description}
+                </span>
+              )}
             </div>
           </div>
         );
@@ -213,50 +211,70 @@ export function getModulesTableColumns({
       enableColumnFilter: true,
     },
     {
+      id: "group",
+      accessorFn: (row) => row.groupId,
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} label="Sidebar Group" />
+      ),
+      cell: ({ row }) => {
+        const isChild = row.depth > 0;
+        const targetGroup = getEffectiveGroup(row, groups);
+        if (!targetGroup) {
+          return (
+            <span className="text-muted-foreground text-xs italic">
+              Unassigned
+            </span>
+          );
+        }
+
+        return (
+          <div className="text-foreground flex items-center gap-1.5 text-xs font-medium">
+            <span>{targetGroup.name}</span>
+            {isChild && (
+              <span className="text-muted-foreground text-[0.625rem] font-normal">
+                (Inherited)
+              </span>
+            )}
+          </div>
+        );
+      },
+      meta: {
+        label: "Sidebar Group",
+        variant: "multiSelect",
+        options: [
+          ...groups.map((grp) => ({
+            label: grp.name,
+            value: grp.id,
+            icon: FolderIconComp,
+          })),
+          { label: "Unassigned", value: "unassigned", icon: FolderIconComp },
+        ],
+        icon: FolderIconComp,
+      },
+      filterFn: (row, _columnId, filterValue) => {
+        if (
+          !filterValue ||
+          !Array.isArray(filterValue) ||
+          filterValue.length === 0
+        )
+          return true;
+        const targetGroup = getEffectiveGroup(row, groups);
+        const currentGroupId = targetGroup?.id || "unassigned";
+        return filterValue.includes(currentGroupId);
+      },
+      enableColumnFilter: true,
+    },
+    {
       id: "route",
       accessorKey: "route",
       header: ({ column }) => (
         <DataTableColumnHeader column={column} label="Route Scope" />
       ),
       cell: ({ row }) => (
-        <div className="bg-muted/60 text-muted-foreground inline-block rounded border px-2 py-1 font-mono text-xs">
+        <div className="bg-muted/60 text-muted-foreground inline-block rounded border px-2 py-0.5 font-mono text-xs">
           {row.getValue("route")}
         </div>
       ),
-      enableColumnFilter: true,
-    },
-    {
-      id: "category",
-      accessorKey: "category",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} label="Category" />
-      ),
-      cell: ({ cell }) => {
-        const category = cell.getValue<IModule["category"]>();
-        if (!category) return null;
-        const Icon = getCategoryIcon(category);
-
-        return (
-          <Badge
-            variant="outline"
-            className="gap-1 py-1 capitalize [&>svg]:size-3.5"
-          >
-            <Icon />
-            {category}
-          </Badge>
-        );
-      },
-      meta: {
-        label: "Category",
-        variant: "multiSelect",
-        options: MODULE_CATEGORIES.map((cat) => ({
-          label: cat.charAt(0).toUpperCase() + cat.slice(1),
-          value: cat,
-          count: categoryCounts[cat] || 0,
-          icon: getCategoryIcon(cat),
-        })),
-        icon: SortingIconComp,
-      },
       enableColumnFilter: true,
     },
     {
@@ -277,8 +295,7 @@ export function getModulesTableColumns({
         label: "Priority",
         variant: "range",
         range: [priorityRange.min, priorityRange.max],
-        unit: "priority",
-        icon: ClockIconComp,
+        icon: SortingIconComp,
       },
       enableColumnFilter: true,
     },
@@ -290,24 +307,35 @@ export function getModulesTableColumns({
       ),
       cell: ({ cell }) => {
         const status = cell.getValue<IModule["status"]>();
-        if (!status) return null;
         const Icon = getStatusIcon(status);
 
-        const variantMap: Record<IModule["status"], string> = {
-          active:
-            "text-emerald-600 border-emerald-500/30 bg-emerald-50/50 dark:bg-emerald-950/20",
-          inactive: "text-muted-foreground border-muted",
-          maintenance:
-            "text-amber-600 border-amber-500/30 bg-amber-50/50 dark:bg-amber-950/20",
-          beta: "text-blue-600 border-blue-500/30 bg-blue-50/50 dark:bg-blue-950/20",
-        };
+        let badgeVariant: "default" | "secondary" | "destructive" | "outline" =
+          "outline";
+        let extraClasses = "";
+
+        if (status === "active") {
+          badgeVariant = "secondary";
+          extraClasses =
+            "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800";
+        } else if (status === "beta") {
+          badgeVariant = "secondary";
+          extraClasses =
+            "bg-sky-50 text-sky-700 dark:bg-sky-950/40 dark:text-sky-300 border-sky-200 dark:border-sky-800";
+        } else if (status === "maintenance") {
+          badgeVariant = "outline";
+          extraClasses =
+            "bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300 border-amber-200 dark:border-amber-800";
+        } else {
+          badgeVariant = "outline";
+          extraClasses = "text-muted-foreground";
+        }
 
         return (
           <Badge
-            variant="outline"
-            className={`gap-1 py-1 capitalize [&>svg]:size-3.5 ${variantMap[status]}`}
+            variant={badgeVariant}
+            className={`gap-1.5 py-0.5 text-xs capitalize ${extraClasses}`}
           >
-            <Icon />
+            <Icon className="size-3.5" />
             {status}
           </Badge>
         );
@@ -331,43 +359,22 @@ export function getModulesTableColumns({
       header: ({ column }) => (
         <DataTableColumnHeader column={column} label="Type" />
       ),
-      cell: ({ row }) => {
-        const isSystem = row.getValue<boolean>("isSystem");
-        return isSystem ? (
-          <Badge
-            variant="secondary"
-            className="border-border gap-1 border text-xs font-normal"
-          >
-            <ShieldIconComp className="text-primary size-3" />
-            System
+      cell: ({ row }) =>
+        row.original.isSystem ? (
+          <Badge variant="secondary" className="border-border border">
+            System Module
           </Badge>
         ) : (
-          <Badge
-            variant="outline"
-            className="text-muted-foreground text-xs font-normal"
-          >
-            Custom
-          </Badge>
-        );
-      },
+          <Badge variant="outline">Custom</Badge>
+        ),
       meta: {
         label: "Type",
-        variant: "multiSelect",
+        variant: "select",
         options: [
-          { label: "System", value: "true", icon: ShieldIconComp },
-          { label: "Custom", value: "false", icon: TextIconComp },
+          { label: "System Module", value: "true" },
+          { label: "Custom", value: "false" },
         ],
         icon: ShieldIconComp,
-      },
-      filterFn: (row, columnId, filterValue) => {
-        if (
-          !filterValue ||
-          !Array.isArray(filterValue) ||
-          filterValue.length === 0
-        )
-          return true;
-        const val = row.getValue<boolean>(columnId);
-        return filterValue.includes(String(val));
       },
       enableColumnFilter: true,
     },
@@ -375,11 +382,18 @@ export function getModulesTableColumns({
       id: "createdAt",
       accessorKey: "createdAt",
       header: ({ column }) => (
-        <DataTableColumnHeader column={column} label="Created At" />
+        <DataTableColumnHeader column={column} label="Registered" />
       ),
-      cell: ({ cell }) => formatDate(cell.getValue<Date>()),
+      cell: ({ cell }) => {
+        const date = cell.getValue<Date>();
+        return (
+          <div className="text-muted-foreground text-xs font-medium">
+            {formatDate(date)}
+          </div>
+        );
+      },
       meta: {
-        label: "Created At",
+        label: "Registered",
         variant: "dateRange",
         icon: CalendarIconComp,
       },
@@ -387,32 +401,75 @@ export function getModulesTableColumns({
     },
     {
       id: "actions",
-      cell: function Cell({ row }) {
+      header: "",
+      cell: ({ row }) => {
+        const module = row.original;
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                aria-label="Open menu"
                 variant="ghost"
-                className="data-[state=open]:bg-muted flex size-8 p-0"
+                size="icon"
+                className="size-8"
+                aria-label="Open menu"
               >
-                <HugeiconsIcon
-                  icon={MoreHorizontalIcon}
-                  strokeWidth={2}
-                  className="size-4"
-                  aria-hidden="true"
-                />
+                <HugeiconsIcon icon={MoreHorizontalIcon} className="size-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-44">
-              <DropdownMenuItem onClick={() => onEditModule?.(row.original)}>
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuItem onClick={() => onEditModule?.(module)}>
                 Edit Module
               </DropdownMenuItem>
+
+              {/* Assign to Group submenu (only available for parent/root modules) */}
+              {row.depth === 0 && (
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>
+                    Assign to Group
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent className="min-w-44">
+                    {groups.map((group) => (
+                      <DropdownMenuItem
+                        key={group.id}
+                        onClick={() => {
+                          onAssignGroup?.(row.original.id, group.id);
+                          toast.success(
+                            `Assigned "${row.original.name}" to "${group.name}"`
+                          );
+                        }}
+                        className="gap-2"
+                      >
+                        {getModuleIcon(group.icon, 2, 14)}
+                        <span className="flex-1 truncate">{group.name}</span>
+                        {row.original.groupId === group.id && (
+                          <span className="text-primary text-[0.625rem] font-bold">
+                            ✓
+                          </span>
+                        )}
+                      </DropdownMenuItem>
+                    ))}
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={() => {
+                        onAssignGroup?.(row.original.id, null);
+                        toast.success(
+                          `Unassigned "${row.original.name}" from group`
+                        );
+                      }}
+                      className="text-muted-foreground"
+                    >
+                      Unassign Group
+                    </DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
+              )}
+
               <DropdownMenuItem
                 onClick={() => onToggleSystem?.(row.original.id)}
               >
                 Toggle {row.original.isSystem ? "Custom" : "System"} Type
               </DropdownMenuItem>
+
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>Change Status</DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>

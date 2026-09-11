@@ -38,9 +38,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     avatar: user?.avatarUrl || "",
   };
 
-  // 1. Identify Primary group (rendered at top, no label)
-  const primaryGroup = React.useMemo(
-    () => moduleGroups.find((g) => g.slug === "primary"),
+  // 1. Identify Main group (rendered at top, no label)
+  // First checks 'main', with 'primary' as a fallback
+  const mainGroup = React.useMemo(
+    () =>
+      moduleGroups.find((g) => g.slug === "main") ??
+      moduleGroups.find((g) => g.slug === "primary"),
     [moduleGroups]
   );
 
@@ -50,28 +53,25 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     [moduleGroups]
   );
 
-  // 3. Center groups: all remaining groups in exact API response order
-  const centerGroups = React.useMemo(
-    () =>
-      moduleGroups.filter(
-        (g) => g.slug !== "primary" && g.slug !== "secondary"
-      ),
-    [moduleGroups]
+  // 3. Primary groups: all remaining groups in exact API response order
+  const primaryGroups = React.useMemo(
+    () => moduleGroups.filter((g) => g !== mainGroup && g !== secondaryGroup),
+    [moduleGroups, mainGroup, secondaryGroup]
   );
 
-  const primaryNavItems = React.useMemo(() => {
-    if (!primaryGroup?.modules?.length) return [];
-    return primaryGroup.modules.map((m) => ({
+  const mainNavItems = React.useMemo(() => {
+    if (!mainGroup?.modules?.length) return [];
+    return mainGroup.modules.map((m) => ({
       title: m.name,
       url: m.path,
       icon: getModuleIcon(m.icon),
       badge: m.badge,
     }));
-  }, [primaryGroup]);
+  }, [mainGroup]);
 
-  const centerNavSections = React.useMemo(
+  const primaryNavSections = React.useMemo(
     () =>
-      centerGroups.map((group) => ({
+      primaryGroups.map((group) => ({
         key: group.ID || group.slug || group.name,
         groupLabel: group.name,
         items: (group.modules || []).map((m) => ({
@@ -87,7 +87,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               : undefined,
         })),
       })),
-    [centerGroups]
+    [primaryGroups]
   );
 
   const secondaryNavItems = React.useMemo(() => {
@@ -135,8 +135,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroup>
         ) : (
           <>
-            {primaryNavItems.length > 0 && <NavMain items={primaryNavItems} />}
-            {centerNavSections.map((section) => (
+            {mainNavItems.length > 0 && <NavMain items={mainNavItems} />}
+            {primaryNavSections.map((section) => (
               <NavPrimary
                 key={section.key}
                 groupLabel={section.groupLabel}

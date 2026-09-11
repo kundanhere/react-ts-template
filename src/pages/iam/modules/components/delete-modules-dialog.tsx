@@ -12,6 +12,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/toast";
 import type { IDeleteModulesDialogProps } from "@/types/iam/modules";
@@ -28,12 +29,14 @@ export function DeleteModulesDialog({
     onDeleteModules?.(ids);
     toast.success(
       modules.length === 1
-        ? "Module deleted"
-        : `${modules.length} modules deleted`
+        ? "Module deleted successfully"
+        : `${modules.length} modules deleted successfully`
     );
     onSuccess?.();
     props.onOpenChange?.(false, {} as any);
   };
+
+  const hasSystemModules = modules.some((m) => m.isSystem);
 
   return (
     <AlertDialog {...props}>
@@ -48,22 +51,72 @@ export function DeleteModulesDialog({
           Delete ({modules.length})
         </AlertDialogTrigger>
       ) : null}
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+      <AlertDialogContent size="default" className="p-0 sm:max-w-md">
+        <AlertDialogHeader className="p-4 pb-2 sm:p-5 sm:pb-3">
+          <AlertDialogTitle>Delete Selected Modules</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete{" "}
-            <span className="text-foreground font-medium">
-              {modules.length === 1
-                ? modules[0]?.name
-                : `${modules.length} modules`}
-            </span>{" "}
-            from the system registration registry.
+            This action cannot be undone. Please confirm removal from the system
+            registry.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onDelete}>Continue</AlertDialogAction>
+
+        <div className="flex flex-col gap-3 px-4 py-2 text-xs sm:px-5 sm:pb-4">
+          <div className="bg-destructive/5 border-destructive/20 flex flex-col gap-2 rounded-lg border p-3">
+            <div className="flex items-center justify-between">
+              <span className="text-destructive text-[0.625rem] font-semibold tracking-wider uppercase">
+                Target Scope ({modules.length})
+              </span>
+              {hasSystemModules && (
+                <Badge
+                  variant="destructive"
+                  className="h-4.5 px-1.5 text-[0.625rem] font-medium"
+                >
+                  Contains System Modules
+                </Badge>
+              )}
+            </div>
+            <p className="text-muted-foreground text-[0.6875rem] leading-relaxed">
+              Permanent removal will remove all associated permission policies
+              and route allocations.
+            </p>
+
+            <div className="mt-1 max-h-24 space-y-1 overflow-y-auto pr-1">
+              {modules.map((m) => (
+                <div
+                  key={m.id}
+                  className="hover:bg-destructive/10 flex items-center justify-between rounded px-2 py-1 text-xs"
+                >
+                  <span className="text-foreground truncate font-medium">
+                    {m.name}
+                  </span>
+                  <div className="flex shrink-0 items-center gap-1.5">
+                    <code className="text-muted-foreground font-mono text-[0.625rem]">
+                      {m.code}
+                    </code>
+                    {m.isSystem && (
+                      <Badge
+                        variant="secondary"
+                        className="px-1 py-0 text-[0.625rem]"
+                      >
+                        sys
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <AlertDialogFooter className="border-t px-4 py-3 sm:px-5">
+          <AlertDialogCancel className="h-8 text-xs">Cancel</AlertDialogCancel>
+          <AlertDialogAction
+            variant="destructive"
+            onClick={onDelete}
+            className="h-8 text-xs"
+          >
+            Delete Permanently
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

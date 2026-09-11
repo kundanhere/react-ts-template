@@ -1,11 +1,12 @@
 import * as React from "react";
 
 import {
+  Add01Icon,
   Cancel01Icon,
   CheckmarkCircle01Icon,
   Delete02Icon,
   Download01Icon,
-  Layers01Icon,
+  Folder01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
@@ -22,18 +23,22 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSeparator as DropdownSeparator,
 } from "@/components/ui/dropdown-menu";
 import { toast } from "@/components/ui/toast";
+import { getModuleIcon } from "@/layout/module-icons";
 import { getSelectedTableRows } from "@/lib/data-table";
 import { exportTableToCSV } from "@/lib/export";
 import type { IModule, IModulesTableActionBarProps } from "@/types/iam/modules";
 
-import { MODULE_CATEGORIES, MODULE_STATUSES } from "./modules-table-columns";
+import { MODULE_STATUSES } from "./modules-table-columns";
 
 export function ModulesTableActionBar({
   table,
+  groups = [],
   onBulkUpdateStatus,
-  onBulkUpdateCategory,
+  onBulkAssignGroup,
+  onCreateGroupFromSelected,
   onBulkDelete,
 }: IModulesTableActionBarProps) {
   const { rowSelection } = table.getState();
@@ -51,23 +56,59 @@ export function ModulesTableActionBar({
     [table]
   );
 
-  const onStatusChange = React.useCallback(
-    (status: IModule["status"]) => {
-      const ids = rows.map((r) => r.original.id);
-      onBulkUpdateStatus?.(ids, status);
-      toast.success(`Updated ${ids.length} modules status to ${status}`);
-    },
-    [rows, onBulkUpdateStatus]
+  const selectedIds = React.useMemo(
+    () => rows.map((r) => r.original.id),
+    [rows]
   );
 
-  const onCategoryChange = React.useCallback(
-    (category: IModule["category"]) => {
-      const ids = rows.map((r) => r.original.id);
-      onBulkUpdateCategory?.(ids, category);
-      toast.success(`Updated ${ids.length} modules category to ${category}`);
-    },
-    [rows, onBulkUpdateCategory]
+  // Only root rows can be assigned to groups; child modules automatically inherit
+  const selectedRootIds = React.useMemo(
+    () => rows.filter((r) => r.depth === 0).map((r) => r.original.id),
+    [rows]
   );
+
+  const onStatusChange = React.useCallback(
+    (status: IModule["status"]) => {
+      onBulkUpdateStatus?.(selectedIds, status);
+      toast.success(
+        `Updated ${selectedIds.length} modules status to ${status}`
+      );
+    },
+    [selectedIds, onBulkUpdateStatus]
+  );
+
+  const onAssignGroup = React.useCallback(
+    (groupId: string | null, groupName?: string) => {
+      if (selectedRootIds.length === 0) {
+        toast.info(
+          "Child modules inherit their parent's group. Select root modules to assign."
+        );
+        return;
+      }
+      onBulkAssignGroup?.(selectedRootIds, groupId);
+      table.toggleAllRowsSelected(false);
+      if (groupId) {
+        toast.success(
+          `Assigned ${selectedRootIds.length} module(s) to "${groupName || "group"}"`
+        );
+      } else {
+        toast.success(
+          `Unassigned ${selectedRootIds.length} module(s) from group`
+        );
+      }
+    },
+    [selectedRootIds, onBulkAssignGroup, table]
+  );
+
+  const handleCreateGroup = React.useCallback(() => {
+    if (selectedRootIds.length === 0) {
+      toast.info(
+        "Child modules inherit their parent's group. Select root modules to create a group."
+      );
+      return;
+    }
+    onCreateGroupFromSelected?.(selectedRootIds);
+  }, [selectedRootIds, onCreateGroupFromSelected]);
 
   const onExport = React.useCallback(() => {
     exportTableToCSV(table, {
@@ -79,11 +120,11 @@ export function ModulesTableActionBar({
   }, [table]);
 
   const onDelete = React.useCallback(() => {
-    const ids = rows.map((r) => r.original.id);
-    onBulkDelete?.(ids);
+    onBulkDelete?.(selectedIds);
     table.toggleAllRowsSelected(false);
-    toast.success(`Deleted ${ids.length} modules`);
-  }, [rows, onBulkDelete, table]);
+    toast.success(`Deleted ${selectedIds.length} modules`);
+  }, [selectedIds, onBulkDelete, table]);
+
   const displayCount = React.useMemo(
     () =>
       rows.filter((r) => r.depth === 0 || !r.getParentRow()?.getIsSelected())
@@ -103,6 +144,48 @@ export function ModulesTableActionBar({
       </ActionBarSelection>
       <ActionBarSeparator />
       <ActionBarGroup>
+        {/* Create Group from Selected */}
+        <ActionBarItem onClick={handleCreateGroup}>
+          <HugeiconsIcon icon={Add01Icon} strokeWidth={2} />
+          Create Group
+        </ActionBarItem>
+
+        {/* Assign to Existing Group */}
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <ActionBarItem>
+              <HugeiconsIcon icon={Folder01Icon} strokeWidth={2} />
+              Assign Group
+            </ActionBarItem>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start" className="min-w-48">
+            <div className="text-muted-foreground px-2 py-1.5 text-[0.6875rem] font-semibold">
+              Select Navigation Group
+            </div>
+            {groups.map((group) => (
+              <DropdownMenuItem
+                key={group.id}
+                onClick={() => onAssignGroup(group.id, group.name)}
+                className="gap-2"
+              >
+                {getModuleIcon(group.icon, 2, 14)}
+                <span className="flex-1 truncate">{group.name}</span>
+                <span className="text-muted-foreground text-[0.625rem] capitalize">
+                  {group.type}
+                </span>
+              </DropdownMenuItem>
+            ))}
+            <DropdownSeparator />
+            <DropdownMenuItem
+              onClick={() => onAssignGroup(null)}
+              className="text-muted-foreground"
+            >
+              Remove from Group (Unassign)
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        {/* Status */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <ActionBarItem>
@@ -122,29 +205,14 @@ export function ModulesTableActionBar({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <ActionBarItem>
-              <HugeiconsIcon icon={Layers01Icon} strokeWidth={2} />
-              Category
-            </ActionBarItem>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            {MODULE_CATEGORIES.map((cat) => (
-              <DropdownMenuItem
-                key={cat}
-                className="capitalize"
-                onClick={() => onCategoryChange(cat)}
-              >
-                {cat}
-              </DropdownMenuItem>
-            ))}
-          </DropdownMenuContent>
-        </DropdownMenu>
+
+        {/* Export */}
         <ActionBarItem onClick={onExport}>
           <HugeiconsIcon icon={Download01Icon} strokeWidth={2} />
           Export
         </ActionBarItem>
+
+        {/* Delete */}
         <ActionBarItem variant="destructive" onClick={onDelete}>
           <HugeiconsIcon icon={Delete02Icon} strokeWidth={2} />
           Delete

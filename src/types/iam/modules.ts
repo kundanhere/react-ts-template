@@ -5,17 +5,32 @@ import type { Table } from "@tanstack/react-table";
 import type { AlertDialog } from "@/components/ui/alert-dialog";
 import type { IDataTableRowAction, IQueryKeys } from "@/types/data-table";
 
+export type NavigationGroupType = "main" | "primary" | "secondary";
+
+export interface INavigationGroup {
+  id: string;
+  name: string;
+  slug: string;
+  type: NavigationGroupType;
+  priority: number;
+  icon?: string;
+  description?: string;
+  moduleIds: string[];
+}
+
 export interface IModule {
   id: string;
   code: string;
   name: string;
   route: string;
+  icon?: string;
   priority: number;
-  category: "core" | "system" | "feature" | "integration" | "governance";
   status: "active" | "inactive" | "maintenance" | "beta";
   isSystem: boolean;
   description: string;
   createdAt: Date;
+  groupId?: string | null;
+  badge?: string | number;
   children?: IModule[];
 }
 
@@ -55,12 +70,13 @@ export interface IMyModulesResponse {
 
 export interface IGetModulesTableColumnsProps {
   statusCounts: Record<IModule["status"], number>;
-  categoryCounts: Record<IModule["category"], number>;
   priorityRange: { min: number; max: number };
+  groups: INavigationGroup[];
   setRowAction: React.Dispatch<
     React.SetStateAction<IDataTableRowAction<IModule> | null>
   >;
   onEditModule?: (module: IModule) => void;
+  onAssignGroup?: (moduleId: string, groupId: string | null) => void;
   onUpdateStatus?: (moduleId: string, status: IModule["status"]) => void;
   onToggleSystem?: (moduleId: string) => void;
 }
@@ -71,24 +87,34 @@ export interface IModulesTableProps {
 
 export interface IModulesTableActionBarProps {
   table: Table<IModule>;
+  groups: INavigationGroup[];
   onBulkUpdateStatus?: (moduleIds: string[], status: IModule["status"]) => void;
-  onBulkUpdateCategory?: (
-    moduleIds: string[],
-    category: IModule["category"]
-  ) => void;
+  onBulkAssignGroup?: (moduleIds: string[], groupId: string | null) => void;
+  onCreateGroupFromSelected?: (moduleIds: string[]) => void;
   onBulkDelete?: (moduleIds: string[]) => void;
 }
 
 export interface IModulesTableToolbarActionsProps {
   table: Table<IModule>;
-  onAddModule?: () => void;
 }
 
 export interface IModuleFormDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   initialValues?: Partial<IModule> | null;
-  onSubmit: (values: Omit<IModule, "id" | "code" | "createdAt">) => void;
+  isChildModule?: boolean;
+  parentModuleName?: string | null;
+  groups: INavigationGroup[];
+  onSubmit: (values: Partial<IModule>) => void;
+}
+
+export interface IGroupFormDialogProps {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  initialValues?: Partial<INavigationGroup> | null;
+  availableModules: IModule[];
+  groups?: INavigationGroup[];
+  onSubmit: (group: Omit<INavigationGroup, "id"> & { id?: string }) => void;
 }
 
 export interface IDeleteModulesDialogProps extends React.ComponentPropsWithoutRef<
