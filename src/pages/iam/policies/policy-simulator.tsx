@@ -14,8 +14,8 @@ import {
   GlobeIcon,
   HelpCircleIcon,
   InformationCircleIcon,
-  Layers01Icon,
   PlayIcon,
+  PolicyIcon,
   RefreshIcon,
   SecurityValidationIcon,
   Settings02Icon,
@@ -35,6 +35,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { DateTimePicker } from "@/components/ui/date-time-picker";
 import {
   Dialog,
   DialogClose,
@@ -269,8 +270,9 @@ export default function PolicySimulatorPage() {
   // Context parameters
   const [resourceId, setResourceId] = useState<string>("");
   const [ipAddress, setIpAddress] = useState<string>("192.168.1.10");
-  const [simulationTime, setSimulationTime] =
-    useState<string>("2025-05-20T10:30");
+  const [simulationTime, setSimulationTime] = useState<string>(
+    "Tomorrow at 09:00 AM"
+  );
   const [advancedOpen, setAdvancedOpen] = useState<boolean>(false);
 
   // Active Policy Sets
@@ -628,10 +630,7 @@ export default function PolicySimulatorPage() {
                                 }`}
                               >
                                 <div className="flex items-center gap-1.5 truncate">
-                                  <HugeiconsIcon
-                                    icon={Layers01Icon}
-                                    size={12}
-                                  />
+                                  <HugeiconsIcon icon={PolicyIcon} size={12} />
                                   <span className="truncate">{p.name}</span>
                                 </div>
                                 {isAttached && (
@@ -653,7 +652,7 @@ export default function PolicySimulatorPage() {
                       >
                         <div className="flex items-center gap-2 truncate">
                           <HugeiconsIcon
-                            icon={Layers01Icon}
+                            icon={PolicyIcon}
                             size={14}
                             className="text-primary/70 shrink-0"
                           />
@@ -710,11 +709,11 @@ export default function PolicySimulatorPage() {
                         <Label className="text-muted-foreground text-[0.6875rem]">
                           Time (Optional)
                         </Label>
-                        <Input
-                          type="datetime-local"
+                        <DateTimePicker
+                          className="w-full p-0"
                           value={simulationTime}
-                          onChange={(e) => setSimulationTime(e.target.value)}
-                          className="h-8 text-xs"
+                          onChange={setSimulationTime}
+                          confirmText="Confirm"
                         />
                       </div>
                     </div>
@@ -749,7 +748,7 @@ export default function PolicySimulatorPage() {
           <div className="flex h-full flex-col gap-6 lg:col-span-8">
             <div className="grid h-full grid-cols-1 gap-6 md:grid-cols-12">
               {/* Step 2: Select Action & Resource Card */}
-              <Card className="flex h-full flex-col justify-between md:col-span-7">
+              <Card className="flex h-full flex-col justify-start md:col-span-7">
                 <CardHeader className="border-b/60 pb-3">
                   <div className="flex items-center gap-2.5">
                     <span className="bg-primary/10 text-primary flex size-6 items-center justify-center rounded-full text-xs font-bold">
@@ -1026,7 +1025,7 @@ export default function PolicySimulatorPage() {
                       className={`flex flex-wrap items-center gap-3 pt-1 text-[0.6875rem] font-medium opacity-80 ${RESULT_SUBTEXT_STYLES[currentResult]}`}
                     >
                       <span className="flex items-center gap-1">
-                        <HugeiconsIcon icon={Layers01Icon} size={13} />
+                        <HugeiconsIcon icon={PolicyIcon} size={13} />
                         Policy: Development Base Policy
                       </span>
                       <span className="opacity-40">•</span>
@@ -1120,7 +1119,7 @@ export default function PolicySimulatorPage() {
                         : "text-muted-foreground hover:text-foreground border-transparent"
                     }`}
                   >
-                    <HugeiconsIcon icon={Layers01Icon} size={14} />
+                    <HugeiconsIcon icon={PolicyIcon} size={14} />
                     Applied Policies ({activePolicies.length})
                   </button>
                   <button

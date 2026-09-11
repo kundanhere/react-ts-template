@@ -404,7 +404,7 @@ export function GroupsManagementView({
 
         {/* Right: Live Sidebar Outcome Preview */}
         {showLivePreview && (
-          <div className="sticky top-16 lg:col-span-5 xl:col-span-4">
+          <div className="sticky top-2 transform-[translateZ(0)] self-start will-change-transform backface-hidden lg:col-span-5 xl:col-span-4">
             <Card className="border-border/70 gap-0 overflow-hidden py-0 shadow-xs">
               <CardHeader className="border-border/60 flex flex-row items-center justify-between space-y-0 border-b px-4 py-3">
                 <div className="flex items-center gap-2.5">

@@ -163,8 +163,8 @@ export function DateTimePicker({
   };
 
   return (
-    <div className={cn("p-1.5 text-left", className)}>
-      <Field className="w-56 gap-2">
+    <div className={cn("w-56 p-1.5 text-left", className)}>
+      <Field className="w-full gap-2">
         <InputGroup>
           <InputGroupInput
             id="date-time-input"
