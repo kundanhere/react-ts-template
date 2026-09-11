@@ -46,14 +46,15 @@ export default function AppearanceTab() {
       id: "zinc" as ThemeColor,
       bg: "bg-zinc-700 dark:bg-zinc-300",
     },
-    { name: "Slate", id: "slate" as ThemeColor, bg: "bg-slate-500" },
-    { name: "Blue", id: "blue" as ThemeColor, bg: "bg-blue-600" },
+    { name: "Stone", id: "stone" as ThemeColor, bg: "bg-stone-500" },
+    { name: "Indigo", id: "indigo" as ThemeColor, bg: "bg-indigo-600" },
     { name: "Violet", id: "violet" as ThemeColor, bg: "bg-violet-600" },
-    { name: "Green", id: "green" as ThemeColor, bg: "bg-green-600" },
+    { name: "Fuchsia", id: "fuchsia" as ThemeColor, bg: "bg-fuchsia-600" },
+    { name: "Cyan", id: "cyan" as ThemeColor, bg: "bg-cyan-500" },
+    { name: "Emerald", id: "emerald" as ThemeColor, bg: "bg-emerald-500" },
     { name: "Orange", id: "orange" as ThemeColor, bg: "bg-orange-500" },
     { name: "Red", id: "red" as ThemeColor, bg: "bg-red-600" },
     { name: "Rose", id: "rose" as ThemeColor, bg: "bg-rose-500" },
-    { name: "Yellow", id: "yellow" as ThemeColor, bg: "bg-yellow-500" },
   ];
 
   return (
@@ -192,7 +193,6 @@ export default function AppearanceTab() {
                           strokeWidth={2.5}
                           className={cn(
                             "size-3 text-white",
-                            c.id === "yellow" && "text-yellow-950",
                             c.id === "zinc" && "text-white dark:text-zinc-950"
                           )}
                         />

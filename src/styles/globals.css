@@ -361,77 +361,52 @@ body {
 .theme-zinc {
   --primary: oklch(0.25 0.01 240);
   --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.955 0.005 240);
+  --secondary-foreground: oklch(0.25 0.01 240);
   --ring: oklch(0.25 0.01 240 / 0.9);
 }
 .dark.theme-zinc,
 .dark .theme-zinc {
   --primary: oklch(0.95 0.01 240);
   --primary-foreground: oklch(0.1 0.01 240);
+  --secondary: oklch(0.25 0.005 240);
+  --secondary-foreground: oklch(0.95 0.01 240);
   --ring: oklch(0.95 0.01 240 / 0.9);
-}
-
-/* Slate Theme */
-.theme-slate {
-  --primary: oklch(0.3 0.03 240);
-  --primary-foreground: oklch(1 0 0);
-  --ring: oklch(0.3 0.03 240 / 0.9);
-}
-.dark.theme-slate,
-.dark .theme-slate {
-  --primary: oklch(0.9 0.03 240);
-  --primary-foreground: oklch(0.1 0.01 240);
-  --ring: oklch(0.9 0.03 240 / 0.9);
-}
-
-/* Blue Theme */
-.theme-blue {
-  --primary: oklch(0.54 0.22 250);
-  --primary-foreground: oklch(1 0 0);
-  --ring: oklch(0.54 0.22 250 / 0.9);
-}
-.dark.theme-blue,
-.dark .theme-blue {
-  --primary: oklch(0.68 0.18 250);
-  --primary-foreground: oklch(1 0 0);
-  --ring: oklch(0.68 0.18 250 / 0.9);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
 }
 
 /* Violet Theme */
 .theme-violet {
   --primary: oklch(0.52 0.22 285);
   --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.95 0.025 285);
+  --secondary-foreground: oklch(0.28 0.12 285);
   --ring: oklch(0.52 0.22 285 / 0.9);
 }
 .dark.theme-violet,
 .dark .theme-violet {
   --primary: oklch(0.66 0.18 285);
   --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.66 0.18 285 / 0.2);
+  --secondary-foreground: oklch(0.9 0.08 285);
   --ring: oklch(0.66 0.18 285 / 0.9);
-}
-
-/* Green Theme */
-.theme-green {
-  --primary: oklch(0.56 0.19 140);
-  --primary-foreground: oklch(1 0 0);
-  --ring: oklch(0.56 0.19 140 / 0.9);
-}
-.dark.theme-green,
-.dark .theme-green {
-  --primary: oklch(0.66 0.18 140);
-  --primary-foreground: oklch(1 0 0);
-  --ring: oklch(0.66 0.18 140 / 0.9);
 }
 
 /* Orange Theme */
 .theme-orange {
   --primary: oklch(0.61 0.19 50);
   --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.955 0.025 50);
+  --secondary-foreground: oklch(0.3 0.1 50);
   --ring: oklch(0.61 0.19 50 / 0.9);
 }
 .dark.theme-orange,
 .dark .theme-orange {
   --primary: oklch(0.69 0.17 50);
   --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.69 0.17 50 / 0.2);
+  --secondary-foreground: oklch(0.9 0.08 50);
   --ring: oklch(0.69 0.17 50 / 0.9);
 }
 
@@ -439,12 +414,16 @@ body {
 .theme-red {
   --primary: oklch(0.52 0.22 25);
   --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.955 0.025 25);
+  --secondary-foreground: oklch(0.3 0.12 25);
   --ring: oklch(0.52 0.22 25 / 0.9);
 }
 .dark.theme-red,
 .dark .theme-red {
   --primary: oklch(0.62 0.19 25);
   --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.62 0.19 25 / 0.2);
+  --secondary-foreground: oklch(0.9 0.08 25);
   --ring: oklch(0.62 0.19 25 / 0.9);
 }
 
@@ -452,26 +431,104 @@ body {
 .theme-rose {
   --primary: oklch(0.55 0.22 5);
   --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.955 0.025 5);
+  --secondary-foreground: oklch(0.3 0.12 5);
   --ring: oklch(0.55 0.22 5 / 0.9);
 }
 .dark.theme-rose,
 .dark .theme-rose {
   --primary: oklch(0.65 0.19 5);
   --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.65 0.19 5 / 0.2);
+  --secondary-foreground: oklch(0.9 0.08 5);
   --ring: oklch(0.65 0.19 5 / 0.9);
 }
 
-/* Yellow Theme */
-.theme-yellow {
-  --primary: oklch(0.72 0.16 85);
-  --primary-foreground: oklch(0.2 0.02 85);
-  --ring: oklch(0.72 0.16 85 / 0.9);
+/* Stone Theme */
+.theme-stone {
+  --primary: oklch(0.28 0.015 60);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.955 0.008 60);
+  --secondary-foreground: oklch(0.26 0.015 60);
+  --ring: oklch(0.28 0.015 60 / 0.9);
 }
-.dark.theme-yellow,
-.dark .theme-yellow {
-  --primary: oklch(0.79 0.15 85);
-  --primary-foreground: oklch(0.1 0.01 85);
-  --ring: oklch(0.79 0.15 85 / 0.9);
+.dark.theme-stone,
+.dark .theme-stone {
+  --primary: oklch(0.92 0.015 60);
+  --primary-foreground: oklch(0.12 0.01 60);
+  --secondary: oklch(0.26 0.01 60);
+  --secondary-foreground: oklch(0.92 0.015 60);
+  --ring: oklch(0.92 0.015 60 / 0.9);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+}
+
+/* Indigo Theme */
+.theme-indigo {
+  --primary: oklch(0.51 0.23 265);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.95 0.025 265);
+  --secondary-foreground: oklch(0.28 0.12 265);
+  --ring: oklch(0.51 0.23 265 / 0.9);
+}
+.dark.theme-indigo,
+.dark .theme-indigo {
+  --primary: oklch(0.67 0.19 265);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.67 0.19 265 / 0.2);
+  --secondary-foreground: oklch(0.9 0.08 265);
+  --ring: oklch(0.67 0.19 265 / 0.9);
+}
+
+/* Fuchsia Theme */
+.theme-fuchsia {
+  --primary: oklch(0.55 0.24 315);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.95 0.03 315);
+  --secondary-foreground: oklch(0.28 0.14 315);
+  --ring: oklch(0.55 0.24 315 / 0.9);
+}
+.dark.theme-fuchsia,
+.dark .theme-fuchsia {
+  --primary: oklch(0.68 0.2 315);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.68 0.2 315 / 0.2);
+  --secondary-foreground: oklch(0.92 0.08 315);
+  --ring: oklch(0.68 0.2 315 / 0.9);
+}
+
+/* Cyan Theme */
+.theme-cyan {
+  --primary: oklch(0.58 0.16 220);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.95 0.025 220);
+  --secondary-foreground: oklch(0.28 0.1 220);
+  --ring: oklch(0.58 0.16 220 / 0.9);
+}
+.dark.theme-cyan,
+.dark .theme-cyan {
+  --primary: oklch(0.72 0.14 220);
+  --primary-foreground: oklch(0.12 0.03 220);
+  --secondary: oklch(0.72 0.14 220 / 0.2);
+  --secondary-foreground: oklch(0.92 0.06 220);
+  --ring: oklch(0.72 0.14 220 / 0.9);
+}
+
+/* Emerald Theme */
+.theme-emerald {
+  --primary: oklch(0.58 0.16 155);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.955 0.02 155);
+  --secondary-foreground: oklch(0.26 0.08 155);
+  --ring: oklch(0.58 0.16 155 / 0.9);
+}
+.dark.theme-emerald,
+.dark .theme-emerald {
+  --primary: oklch(0.68 0.15 155);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.68 0.15 155 / 0.2);
+  --secondary-foreground: oklch(0.9 0.08 155);
+  --ring: oklch(0.68 0.15 155 / 0.9);
 }
 
 /* ========== Density Compact Overrides ========== */

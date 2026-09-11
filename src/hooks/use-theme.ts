@@ -18,14 +18,28 @@ const startViewTransition = (callback: () => void) => {
 export type ThemeColor =
   | "default"
   | "zinc"
-  | "slate"
-  | "blue"
+  | "stone"
+  | "indigo"
   | "violet"
-  | "green"
+  | "fuchsia"
+  | "cyan"
+  | "emerald"
   | "orange"
   | "red"
-  | "rose"
-  | "yellow";
+  | "rose";
+
+export const THEME_COLOR_KEYS: readonly Exclude<ThemeColor, "default">[] = [
+  "zinc",
+  "stone",
+  "indigo",
+  "violet",
+  "fuchsia",
+  "cyan",
+  "emerald",
+  "orange",
+  "red",
+  "rose",
+] as const;
 
 const APPEARANCE_EVENT = "appearance-settings-change";
 
@@ -39,7 +53,15 @@ export function useTheme() {
 
   const getStoredThemeColor = (): ThemeColor => {
     if (typeof window !== "undefined") {
-      return (localStorage.getItem("theme-color") as ThemeColor) || "default";
+      const stored = localStorage.getItem("theme-color") as ThemeColor;
+      if (
+        stored &&
+        (stored === "default" ||
+          THEME_COLOR_KEYS.includes(stored as Exclude<ThemeColor, "default">))
+      ) {
+        return stored;
+      }
+      return "default";
     }
     return "default";
   };
@@ -193,18 +215,7 @@ export function useTheme() {
 
     const applyColor = () => {
       // Remove other theme color classes
-      const colors: ThemeColor[] = [
-        "zinc",
-        "slate",
-        "blue",
-        "violet",
-        "green",
-        "orange",
-        "red",
-        "rose",
-        "yellow",
-      ];
-      colors.forEach((c) => {
+      THEME_COLOR_KEYS.forEach((c) => {
         root.classList.remove(`theme-${c}`);
       });
 
@@ -214,19 +225,8 @@ export function useTheme() {
     };
 
     // Check if the target class is already applied to avoid redundant transition animations
-    const activeColors: ThemeColor[] = [
-      "zinc",
-      "slate",
-      "blue",
-      "violet",
-      "green",
-      "orange",
-      "red",
-      "rose",
-      "yellow",
-    ];
     const currentActiveColor =
-      activeColors.find((c) => root.classList.contains(`theme-${c}`)) ||
+      THEME_COLOR_KEYS.find((c) => root.classList.contains(`theme-${c}`)) ||
       "default";
 
     if (currentActiveColor !== themeColor && !isTransitioning) {
@@ -439,18 +439,7 @@ export function useTheme() {
 
     const applyColorChange = () => {
       // Remove other theme color classes
-      const colors: ThemeColor[] = [
-        "zinc",
-        "slate",
-        "blue",
-        "violet",
-        "green",
-        "orange",
-        "red",
-        "rose",
-        "yellow",
-      ];
-      colors.forEach((c) => {
+      THEME_COLOR_KEYS.forEach((c) => {
         if (root) root.classList.remove(`theme-${c}`);
       });
 
@@ -489,19 +478,8 @@ export function useTheme() {
         Math.max(y, window.innerHeight - y)
       );
 
-      const activeColors: ThemeColor[] = [
-        "zinc",
-        "slate",
-        "blue",
-        "violet",
-        "green",
-        "orange",
-        "red",
-        "rose",
-        "yellow",
-      ];
       const currentActiveColor =
-        activeColors.find((c) => root.classList.contains(`theme-${c}`)) ||
+        THEME_COLOR_KEYS.find((c) => root.classList.contains(`theme-${c}`)) ||
         "default";
 
       const shouldAnimate = currentActiveColor !== newColor;
