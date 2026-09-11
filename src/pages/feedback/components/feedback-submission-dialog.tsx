@@ -218,7 +218,6 @@ export function FeedbackSubmissionDialog({
 
           <DialogBody>
             <div className="flex flex-col gap-4 px-4 py-4 text-xs sm:px-5 sm:pb-5">
-              {/* Context Box matching Save Simulation Scenario pattern */}
               <div className="bg-muted/40 border-border/60 flex flex-col gap-3 rounded-lg border p-3 sm:flex-row sm:items-center sm:justify-between">
                 <div className="space-y-0.5">
                   <span className="text-muted-foreground text-[0.625rem] font-semibold tracking-wider uppercase">

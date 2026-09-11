@@ -43,7 +43,6 @@ interface IErrorBoundaryFallbackProps {
 
 /* ==========================================================================
    1. PAGE LEVEL FALLBACK (Default)
-   - Matches the open, clean design pattern of the 404 page.
    - For route-level failures inside the main Dashboard layout shell.
    ========================================================================== */
 export function PageErrorBoundaryFallback({

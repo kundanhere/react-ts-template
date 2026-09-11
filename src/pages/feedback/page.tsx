@@ -111,10 +111,10 @@ export default function FeedbackPage() {
       }
     >
       <div className="space-y-4">
-        {/* Top KPI Stats (similar to IAM Dashboard / Analytics KPI cards) */}
+        {/* Top KPI Stats */}
         <FeedbackStatsCards feedbacks={feedbacks} />
 
-        {/* Data Table (matching IAM Policies data table architecture with filters, toolbar, action bar) */}
+        {/* Data Table */}
         <FeedbackTable
           feedbacks={feedbacks}
           onUpdateFeedback={handleUpdateFeedback}

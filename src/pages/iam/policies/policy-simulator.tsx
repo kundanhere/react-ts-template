@@ -137,7 +137,7 @@ const getResultDescription = (
   return `This operation has conditional access limits applied under field-level restrictions.`;
 };
 
-// Preset Data Definitions matching reference
+// Preset Data Definitions
 const ROLES = [
   {
     id: "developer",
@@ -358,7 +358,7 @@ export default function PolicySimulatorPage() {
 
   const currentResult = computeDecision();
 
-  // Matrix generation dynamic evaluation matching screenshot
+  // Matrix generation dynamic evaluation
   const getMatrixStatus = (
     service: string,
     action: string
@@ -994,7 +994,7 @@ export default function PolicySimulatorPage() {
             </CardHeader>
 
             <CardContent className="flex flex-col gap-6 pt-5">
-              {/* Decision Banner — matches settings-page border/bg pattern (security-tab.tsx) */}
+              {/* Decision Banner */}
               <div
                 className={`flex flex-wrap items-start justify-between gap-4 rounded-lg border p-4 sm:flex-nowrap ${RESULT_BANNER_STYLES[currentResult]}`}
               >
@@ -1633,7 +1633,7 @@ export default function PolicySimulatorPage() {
                 </div>
               )}
 
-              {/* Tab 4: Effective Permissions — exact access-matrix/page.tsx table pattern */}
+              {/* Tab 4: Effective Permissions */}
               {activeTab === "effective" && (
                 <div className="flex flex-col gap-4">
                   <div>
@@ -1694,7 +1694,7 @@ export default function PolicySimulatorPage() {
                 </div>
               )}
 
-              {/* Tab 5: Deny Overrides — settings passkeys empty state pattern */}
+              {/* Tab 5: Deny Overrides */}
               {activeTab === "deny" && (
                 <div className="flex flex-col gap-4">
                   <div>
