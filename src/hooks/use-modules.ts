@@ -20,8 +20,8 @@ export function useMyModulesQuery(variant: string = "group") {
     queryKey: queryKeys.modules.myModules(variant),
     queryFn: () => getMyModulesApi(variant),
     enabled: isAuthenticated,
-    staleTime: 2 * 60 * 1000, // 2 minutes fresh cache
-    refetchInterval: 2 * 60 * 1000, // 2 minutes refetch interval to keep cache fresh
+    staleTime: 6 * 60 * 1000, // 6 minutes fresh cache
+    refetchInterval: 6 * 60 * 1000, // 6 minutes refetch interval to keep cache fresh
     gcTime: 24 * 60 * 60 * 1000, // 24 hours garbage collection / persistence alignment
     refetchOnWindowFocus: false, // Avoid refetching when switching tabs
     refetchOnReconnect: false, // Avoid refetching on transient reconnects when cache is present

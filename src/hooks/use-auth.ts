@@ -26,7 +26,7 @@ import {
   IPasswordResetRequestPayload,
   IPasswordResetRequestReq,
   IPasswordResetRequestResponse,
-  IUserAccess,
+  IUserCapabilities,
 } from "@/types";
 import { CustomError } from "@/utils/api-client";
 import { queryClient } from "@/utils/query-client";
@@ -183,7 +183,7 @@ export function useCurrentAuth() {
 
   const payload = currentUserQuery.data;
   const user = payload?.user ?? null;
-  const access: IUserAccess = payload?.access ?? {};
+  const capabilities: IUserCapabilities = payload?.capabilities ?? {};
   const roles = user?.roles ?? [];
 
   const isAuthenticated = Boolean(user);
@@ -194,7 +194,7 @@ export function useCurrentAuth() {
 
   return {
     user,
-    access,
+    capabilities,
     roles,
     isAuthenticated,
     isLoading,
@@ -211,13 +211,14 @@ export function useCurrentAuth() {
  * Matches the module by its canonical slug (or lowercase equivalent).
  */
 export function checkModulePermission(
-  access: IUserAccess | undefined | null,
+  capabilities: IUserCapabilities | undefined | null,
   moduleSlug: string | undefined | null,
   action: keyof IModuleAccess = "view"
 ): boolean {
-  if (!access || !moduleSlug) return false;
+  if (!capabilities || !moduleSlug) return false;
 
-  const perms = access[moduleSlug] ?? access[moduleSlug.toLowerCase()];
+  const perms =
+    capabilities[moduleSlug] ?? capabilities[moduleSlug.toLowerCase()];
   if (!perms) return false;
 
   return Boolean(perms.full || perms[action]);
@@ -230,8 +231,8 @@ export function useHasPermission(
   moduleName: string,
   action: keyof IModuleAccess = "view"
 ): boolean {
-  const { access } = useCurrentAuth();
-  return checkModulePermission(access, moduleName, action);
+  const { capabilities } = useCurrentAuth();
+  return checkModulePermission(capabilities, moduleName, action);
 }
 
 /**

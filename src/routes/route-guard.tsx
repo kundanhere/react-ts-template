@@ -23,8 +23,13 @@ export function RouteGuard({
   requiredAction = "view",
 }: IRouteGuardProps) {
   const location = useLocation();
-  const { isAuthenticated, isLoading, isRestoring, isRevalidating, access } =
-    useCurrentAuth();
+  const {
+    isAuthenticated,
+    isLoading,
+    isRestoring,
+    isRevalidating,
+    capabilities,
+  } = useCurrentAuth();
 
   // Storage cache restoration: wait only for local persistence hydration
   if (isRestoring) {
@@ -48,7 +53,7 @@ export function RouteGuard({
 
   // Check module permission using alias-aware ABAC evaluator
   const hasAccess = requiredModule
-    ? checkModulePermission(access, requiredModule, requiredAction)
+    ? checkModulePermission(capabilities, requiredModule, requiredAction)
     : true;
 
   // Show spinner while validating session on cold start or when permissions query is actively in flight

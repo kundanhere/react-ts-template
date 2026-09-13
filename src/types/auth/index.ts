@@ -36,11 +36,11 @@ export interface IModuleAccess {
   full: boolean;
 }
 
-export type IUserAccess = Record<string, IModuleAccess>;
+export type IUserCapabilities = Record<string, IModuleAccess>;
 
 export interface ICurrentUserPayload {
   user: IAuthUser;
-  access: IUserAccess;
+  capabilities: IUserCapabilities;
 }
 
 export type ISessionUser = IAuthUser;
