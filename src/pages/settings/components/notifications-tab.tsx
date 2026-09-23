@@ -192,32 +192,32 @@ export default function NotificationsTab() {
               {integrationsNotif && (
                 <div className="border-border/40 flex flex-wrap items-center gap-3.5 border-t pt-3 pl-11">
                   <img
-                    src="/svg/telegram.svg"
+                    src="/svg/icons/telegram.svg"
                     alt="Telegram"
                     className="size-4.5 shrink-0 object-contain"
                   />
                   <img
-                    src="/svg/slack.svg"
+                    src="/svg/icons/slack.svg"
                     alt="Slack"
                     className="size-4.5 shrink-0 object-contain"
                   />
                   <img
-                    src="/svg/line.svg"
+                    src="/svg/icons/line.svg"
                     alt="LINE"
                     className="size-4.5 shrink-0 object-contain"
                   />
                   <img
-                    src="/svg/whatsapp.svg"
+                    src="/svg/icons/whatsapp.svg"
                     alt="WhatsApp"
                     className="size-4.5 shrink-0 object-contain"
                   />
                   <img
-                    src="/svg/discord.svg"
+                    src="/svg/icons/discord.svg"
                     alt="Discord"
                     className="size-4.5 shrink-0 object-contain"
                   />
                   <img
-                    src="/svg/chat.svg"
+                    src="/svg/icons/chat.svg"
                     alt="Google Chat"
                     className="size-4.5 shrink-0 object-contain"
                   />

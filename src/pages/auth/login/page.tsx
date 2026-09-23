@@ -28,14 +28,14 @@ export default function LoginPage() {
                 className="mb-2 flex flex-col items-center gap-1.5 transition-transform hover:scale-105 lg:hidden"
               >
                 <img
-                  src="https://images.shadcnspace.com/assets/logo/logo-icon-black.svg"
+                  src="/svg/logo-icon-black.svg"
                   alt="Logo"
                   width={38}
                   height={38}
                   className="block size-9 dark:hidden"
                 />
                 <img
-                  src="https://images.shadcnspace.com/assets/logo/logo-icon-white.svg"
+                  src="/svg/logo-icon-white.svg"
                   alt="Logo"
                   width={38}
                   height={38}

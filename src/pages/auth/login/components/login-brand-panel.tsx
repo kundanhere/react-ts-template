@@ -29,7 +29,7 @@ export function LoginBrandPanel() {
           className="inline-flex items-center gap-3 transition-opacity hover:opacity-85"
         >
           <img
-            src="https://images.shadcnspace.com/assets/logo/logo-icon-white.svg"
+            src="/svg/logo-icon-white.svg"
             alt="Logo"
             width={36}
             height={36}
