@@ -2,6 +2,7 @@ import * as React from "react";
 
 import {
   Audit02Icon,
+  BadgeQuestionMarkIcon,
   BellPlusIcon,
   CommandIcon,
   CpuIcon,
@@ -65,7 +66,7 @@ export const ICON_MAP: Record<string, any> = {
   ShieldKeyIcon,
   Audit02Icon,
   Settings01Icon,
-  Quiz05Icon,
+  BadgeQuestionMarkIcon,
   HelpCircleIcon,
   SentIcon,
   CommandIcon,

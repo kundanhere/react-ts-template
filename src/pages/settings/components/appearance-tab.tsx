@@ -46,14 +46,15 @@ export default function AppearanceTab() {
       id: "zinc" as ThemeColor,
       bg: "bg-zinc-700 dark:bg-zinc-300",
     },
-    { name: "Stone", id: "stone" as ThemeColor, bg: "bg-stone-500" },
+    {
+      name: "Bronze",
+      id: "bronze" as ThemeColor,
+      bg: "bg-[#775950] dark:bg-[#b79a8d]",
+    },
     { name: "Indigo", id: "indigo" as ThemeColor, bg: "bg-indigo-600" },
     { name: "Violet", id: "violet" as ThemeColor, bg: "bg-violet-600" },
     { name: "Fuchsia", id: "fuchsia" as ThemeColor, bg: "bg-fuchsia-600" },
-    { name: "Cyan", id: "cyan" as ThemeColor, bg: "bg-cyan-500" },
-    { name: "Emerald", id: "emerald" as ThemeColor, bg: "bg-emerald-500" },
     { name: "Orange", id: "orange" as ThemeColor, bg: "bg-orange-500" },
-    { name: "Red", id: "red" as ThemeColor, bg: "bg-red-600" },
     { name: "Rose", id: "rose" as ThemeColor, bg: "bg-rose-500" },
   ];
 
@@ -88,12 +89,48 @@ export default function AppearanceTab() {
                   : "border-border bg-card"
               }`}
             >
-              <div className="border-border mb-3 flex aspect-16/10 w-full flex-col gap-1 rounded-md border bg-white p-2 shadow-xs">
-                <div className="h-2 w-1/3 rounded bg-slate-200" />
-                <div className="h-2 w-2/3 rounded bg-slate-100" />
-                <div className="mt-auto flex items-center gap-1.5">
-                  <div className="size-4 rounded-full bg-slate-300" />
-                  <div className="h-2 flex-1 rounded bg-slate-200" />
+              <div className="border-border/80 mb-3 flex aspect-16/10 w-full overflow-hidden rounded-md border bg-slate-50 shadow-xs">
+                {/* Mini Sidebar */}
+                <div className="flex w-14 shrink-0 flex-col gap-1.5 border-r border-slate-200/80 bg-slate-100/90 p-1.5">
+                  <div className="flex items-center gap-1">
+                    <div className="bg-primary text-primary-foreground ring-primary/30 flex size-3.5 shrink-0 items-center justify-center rounded-full text-[7px] font-bold ring-1 transition-colors">
+                      U
+                    </div>
+                    <div className="h-1.5 w-6 rounded-full bg-slate-300" />
+                  </div>
+                  <div className="mt-1 flex flex-col gap-1">
+                    <div className="bg-primary/15 flex h-3 w-full items-center gap-1 rounded-[3px] px-1 transition-colors">
+                      <div className="bg-primary size-1.5 rounded-full transition-colors" />
+                      <div className="bg-primary/70 h-1 w-5 rounded transition-colors" />
+                    </div>
+                    <div className="flex h-3 w-full items-center gap-1 px-1">
+                      <div className="size-1.5 rounded-full bg-slate-300" />
+                      <div className="h-1 w-6 rounded bg-slate-300/80" />
+                    </div>
+                    <div className="flex h-3 w-full items-center gap-1 px-1">
+                      <div className="size-1.5 rounded-full bg-slate-300" />
+                      <div className="h-1 w-4 rounded bg-slate-300/80" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mini Main Content Area */}
+                <div className="flex flex-1 flex-col justify-between bg-white p-2">
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <div className="h-2 w-1/3 rounded bg-slate-300/80" />
+                    </div>
+                    <div className="h-1.5 w-4/5 rounded bg-slate-200" />
+                    <div className="h-1.5 w-3/5 rounded bg-slate-100" />
+                  </div>
+
+                  {/* Bottom Action Row */}
+                  <div className="flex items-center gap-1">
+                    <div className="bg-primary text-primary-foreground flex size-3 items-center justify-center rounded-full text-[6px] font-semibold transition-colors">
+                      ★
+                    </div>
+                    <div className="h-1.5 w-8 rounded bg-slate-200" />
+                  </div>
                 </div>
               </div>
               <span className="text-xs font-semibold">Light Mode</span>
@@ -112,12 +149,48 @@ export default function AppearanceTab() {
                   : "border-border bg-card"
               }`}
             >
-              <div className="mb-3 flex aspect-16/10 w-full flex-col gap-1 rounded-md border border-zinc-800 bg-zinc-950 p-2 shadow-xs">
-                <div className="h-2 w-1/3 rounded bg-zinc-800" />
-                <div className="h-2 w-2/3 rounded bg-zinc-900" />
-                <div className="mt-auto flex items-center gap-1.5">
-                  <div className="size-4 rounded-full bg-zinc-800" />
-                  <div className="h-2 flex-1 rounded bg-zinc-800" />
+              <div className="mb-3 flex aspect-16/10 w-full overflow-hidden rounded-md border border-zinc-800 bg-zinc-950 shadow-xs">
+                {/* Mini Sidebar */}
+                <div className="flex w-14 shrink-0 flex-col gap-1.5 border-r border-zinc-800/80 bg-zinc-900/90 p-1.5">
+                  <div className="flex items-center gap-1">
+                    <div className="bg-primary text-primary-foreground ring-primary/30 flex size-3.5 shrink-0 items-center justify-center rounded-full text-[7px] font-bold ring-1 transition-colors">
+                      U
+                    </div>
+                    <div className="h-1.5 w-6 rounded-full bg-zinc-700" />
+                  </div>
+                  <div className="mt-1 flex flex-col gap-1">
+                    <div className="bg-primary/20 flex h-3 w-full items-center gap-1 rounded-[3px] px-1 transition-colors">
+                      <div className="bg-primary size-1.5 rounded-full transition-colors" />
+                      <div className="bg-primary/70 h-1 w-5 rounded transition-colors" />
+                    </div>
+                    <div className="flex h-3 w-full items-center gap-1 px-1">
+                      <div className="size-1.5 rounded-full bg-zinc-800" />
+                      <div className="h-1 w-6 rounded bg-zinc-800" />
+                    </div>
+                    <div className="flex h-3 w-full items-center gap-1 px-1">
+                      <div className="size-1.5 rounded-full bg-zinc-800" />
+                      <div className="h-1 w-4 rounded bg-zinc-800" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Mini Main Content Area */}
+                <div className="flex flex-1 flex-col justify-between bg-zinc-950 p-2">
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between">
+                      <div className="h-2 w-1/3 rounded bg-zinc-700" />
+                    </div>
+                    <div className="h-1.5 w-4/5 rounded bg-zinc-800" />
+                    <div className="h-1.5 w-3/5 rounded bg-zinc-900" />
+                  </div>
+
+                  {/* Bottom Action Row */}
+                  <div className="flex items-center gap-1">
+                    <div className="bg-primary text-primary-foreground flex size-3 items-center justify-center rounded-full text-[6px] font-semibold transition-colors">
+                      ★
+                    </div>
+                    <div className="h-1.5 w-8 rounded bg-zinc-800" />
+                  </div>
                 </div>
               </div>
               <span className="text-xs font-semibold">Dark Mode</span>
@@ -137,15 +210,56 @@ export default function AppearanceTab() {
                   : "border-border bg-card"
               }`}
             >
-              <div className="border-border relative mb-3 flex aspect-16/10 w-full flex-col gap-1 overflow-hidden rounded-md border bg-linear-to-r from-white to-zinc-950 p-2 shadow-xs">
-                <div className="absolute inset-0 flex">
-                  <div className="flex w-1/2 flex-col gap-1 bg-white p-2">
-                    <div className="h-2 w-2/3 rounded bg-slate-200" />
-                    <div className="h-2 w-full rounded bg-slate-100" />
+              <div className="border-border relative mb-3 flex aspect-16/10 w-full overflow-hidden rounded-md border shadow-xs">
+                {/* Left Half: Light Preview */}
+                <div className="flex w-1/2 overflow-hidden border-r border-slate-300/80 bg-slate-50 dark:border-zinc-700">
+                  <div className="flex w-8 shrink-0 flex-col gap-1 border-r border-slate-200/80 bg-slate-100/90 p-1">
+                    <div className="bg-primary text-primary-foreground flex size-2.5 items-center justify-center rounded-full text-[5px] font-bold transition-colors">
+                      U
+                    </div>
+                    <div className="bg-primary/20 mt-1 flex h-2 w-full items-center rounded-xs px-0.5 transition-colors">
+                      <div className="bg-primary size-1 rounded-full transition-colors" />
+                    </div>
+                    <div className="h-1.5 w-full rounded-xs bg-slate-300/80" />
                   </div>
-                  <div className="flex w-1/2 flex-col gap-1 bg-zinc-950 p-2">
-                    <div className="h-2 w-2/3 rounded bg-zinc-800" />
-                    <div className="h-2 w-full rounded bg-zinc-900" />
+                  <div className="flex flex-1 flex-col justify-between bg-white p-1.5">
+                    <div className="space-y-1">
+                      <div className="h-1.5 w-2/3 rounded bg-slate-300/80" />
+                      <div className="h-1 w-full rounded bg-slate-200" />
+                      <div className="h-1 w-4/5 rounded bg-slate-100" />
+                    </div>
+                    <div className="flex items-center gap-1 pt-0.5">
+                      <div className="bg-primary text-primary-foreground flex size-3 items-center justify-center rounded-full text-[6px] font-semibold transition-colors">
+                        ★
+                      </div>
+                      <div className="h-1.5 w-8 rounded bg-slate-200" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Half: Dark Preview */}
+                <div className="flex w-1/2 overflow-hidden bg-zinc-950">
+                  <div className="flex w-8 shrink-0 flex-col gap-1 border-r border-zinc-800/80 bg-zinc-900/90 p-1">
+                    <div className="bg-primary text-primary-foreground flex size-2.5 items-center justify-center rounded-full text-[5px] font-bold transition-colors">
+                      U
+                    </div>
+                    <div className="bg-primary/25 mt-1 flex h-2 w-full items-center rounded-xs px-0.5 transition-colors">
+                      <div className="bg-primary size-1 rounded-full transition-colors" />
+                    </div>
+                    <div className="h-1.5 w-full rounded-xs bg-zinc-800" />
+                  </div>
+                  <div className="flex flex-1 flex-col justify-between bg-zinc-950 p-1.5">
+                    <div className="space-y-1">
+                      <div className="h-1.5 w-2/3 rounded bg-zinc-700" />
+                      <div className="h-1 w-full rounded bg-zinc-800" />
+                      <div className="h-1 w-4/5 rounded bg-zinc-900" />
+                    </div>
+                    <div className="flex items-center gap-1 pt-0.5">
+                      <div className="bg-primary text-primary-foreground flex size-3 items-center justify-center rounded-full text-[6px] font-semibold transition-colors">
+                        ★
+                      </div>
+                      <div className="h-1.5 w-8 rounded bg-zinc-800" />
+                    </div>
                   </div>
                 </div>
               </div>

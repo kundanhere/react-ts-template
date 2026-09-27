@@ -18,26 +18,20 @@ const startViewTransition = (callback: () => void) => {
 export type ThemeColor =
   | "default"
   | "zinc"
-  | "stone"
+  | "bronze"
   | "indigo"
   | "violet"
   | "fuchsia"
-  | "cyan"
-  | "emerald"
   | "orange"
-  | "red"
   | "rose";
 
 export const THEME_COLOR_KEYS: readonly Exclude<ThemeColor, "default">[] = [
   "zinc",
-  "stone",
+  "bronze",
   "indigo",
   "violet",
   "fuchsia",
-  "cyan",
-  "emerald",
   "orange",
-  "red",
   "rose",
 ] as const;
 
