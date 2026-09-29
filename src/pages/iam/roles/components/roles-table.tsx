@@ -117,7 +117,6 @@ export function RolesTable({ queryKeys, onNewRoleClick }: IRolesTableProps) {
   const { table } = useDataTable({
     data: roles,
     columns,
-    pageCount: 1,
     enableAdvancedFilter: false,
     initialState: {
       sorting: [{ id: "userCount", desc: true }],

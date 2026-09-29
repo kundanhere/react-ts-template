@@ -252,7 +252,6 @@ export function UsersTable({ queryKeys }: IUsersTableProps) {
   const { table } = useDataTable({
     data: users,
     columns,
-    pageCount: 1,
     enableAdvancedFilter: false,
     initialState: {
       sorting: [{ id: "createdAt", desc: true }],

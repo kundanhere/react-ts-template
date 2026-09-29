@@ -41,7 +41,8 @@ export function DataTablePagination<TData>({
     >
       <div className="text-muted-foreground flex-1 text-sm whitespace-nowrap">
         {getSelectedTableRows(table).filter((row) => row.depth === 0).length} of{" "}
-        {table.getFilteredRowModel().rows.length} row(s) selected.
+        {table.getRowCount?.() ?? table.getFilteredRowModel().rows.length}{" "}
+        row(s) selected.
       </div>
       <div className="flex flex-col-reverse items-center gap-4 sm:flex-row sm:gap-6 lg:gap-8">
         <div className="flex items-center space-x-2">

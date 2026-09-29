@@ -226,6 +226,14 @@ export function getUsersTableColumns({
         variant: "text",
         icon: TextIconComp,
       },
+      filterFn: (row, _id, value) => {
+        if (!value) return true;
+        const query = String(value).toLowerCase();
+        return (
+          row.original.name.toLowerCase().includes(query) ||
+          row.original.email.toLowerCase().includes(query)
+        );
+      },
       enableColumnFilter: true,
     },
     {

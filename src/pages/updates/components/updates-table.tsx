@@ -121,7 +121,6 @@ export function UpdatesTable({
   const { table } = useDataTable({
     data: updates,
     columns,
-    pageCount: 1,
     initialState: {
       sorting: [{ id: "publishedAt", desc: true }],
       columnPinning: { right: ["actions"] },

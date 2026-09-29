@@ -211,7 +211,6 @@ export function AuditLogsTable({ queryKeys }: IAuditLogsTableProps) {
   const { table } = useDataTable({
     data: logs,
     columns,
-    pageCount: 1,
     enableAdvancedFilter: false,
     initialState: {
       sorting: [{ id: "timestamp", desc: true }],

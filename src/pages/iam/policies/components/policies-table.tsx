@@ -272,7 +272,6 @@ export function PoliciesTable({ queryKeys }: IPoliciesTableProps) {
   const { table } = useDataTable({
     data: policies,
     columns,
-    pageCount: 1,
     enableAdvancedFilter: false,
     initialState: {
       sorting: [{ id: "updatedAt", desc: true }],

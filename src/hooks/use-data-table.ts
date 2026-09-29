@@ -43,18 +43,20 @@ const ARRAY_SEPARATOR = ",";
 const DEBOUNCE_MS = 300;
 const THROTTLE_MS = 50;
 
-export interface IUseDataTableProps<TData>
-  extends
-    Omit<
-      TableOptions<TData>,
-      | "state"
-      | "pageCount"
-      | "getCoreRowModel"
-      | "manualFiltering"
-      | "manualPagination"
-      | "manualSorting"
-    >,
-    Required<Pick<TableOptions<TData>, "pageCount">> {
+export interface IUseDataTableProps<TData> extends Omit<
+  TableOptions<TData>,
+  | "state"
+  | "pageCount"
+  | "getCoreRowModel"
+  | "manualFiltering"
+  | "manualPagination"
+  | "manualSorting"
+> {
+  pageCount?: number;
+  rowCount?: number;
+  manualPagination?: boolean;
+  manualSorting?: boolean;
+  manualFiltering?: boolean;
   initialState?: Omit<Partial<TableState>, "sorting"> & {
     sorting?: IExtendedColumnSort<TData>[];
   };
@@ -74,7 +76,11 @@ export interface IUseDataTableProps<TData>
 export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
   const {
     columns,
-    pageCount = -1,
+    pageCount: propPageCount,
+    rowCount: propRowCount,
+    manualPagination = false,
+    manualSorting = false,
+    manualFiltering = false,
     initialState,
     queryKeys,
     history = "replace",
@@ -279,14 +285,18 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
 
     return Object.entries(filterValues).reduce<ColumnFiltersState>(
       (filters, [key, value]) => {
-        if (value !== null) {
-          let processedValue: unknown;
-          if (Array.isArray(value)) {
-            processedValue = value;
-          } else if (typeof value === "string" && /[^a-zA-Z0-9]/.test(value)) {
-            processedValue = value.split(/[^a-zA-Z0-9]+/).filter(Boolean);
-          } else {
-            processedValue = [value];
+        if (value !== null && value !== undefined) {
+          const column = filterableColumns.find(
+            (col) => (col as any).id === key
+          );
+          const isOptions = !!(column as any)?.meta?.options;
+
+          let processedValue: unknown = value;
+          if (isOptions && !Array.isArray(value)) {
+            processedValue =
+              typeof value === "string"
+                ? value.split(ARRAY_SEPARATOR).filter(Boolean)
+                : [value];
           }
 
           filters.push({
@@ -298,7 +308,7 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
       },
       []
     );
-  }, [filterValues, enableAdvancedFilter]);
+  }, [filterValues, enableAdvancedFilter, filterableColumns]);
 
   const [columnFilters, setColumnFilters] =
     React.useState<ColumnFiltersState>(initialColumnFilters);
@@ -341,7 +351,8 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
     ...tableProps,
     columns,
     initialState,
-    pageCount,
+    pageCount: manualPagination ? (propPageCount ?? -1) : undefined,
+    rowCount: propRowCount,
     state: {
       pagination,
       sorting,
@@ -351,6 +362,54 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
       expanded: sanitizedExpanded,
     },
     defaultColumn: {
+      filterFn: (row, columnId, filterValue) => {
+        if (
+          filterValue == null ||
+          filterValue === "" ||
+          (Array.isArray(filterValue) && filterValue.length === 0)
+        ) {
+          return true;
+        }
+        const rowValue = row.getValue(columnId);
+        if (rowValue == null) return false;
+
+        if (Array.isArray(filterValue)) {
+          // Number range check [min, max]
+          if (
+            filterValue.length === 2 &&
+            typeof filterValue[0] === "number" &&
+            typeof filterValue[1] === "number" &&
+            typeof rowValue === "number"
+          ) {
+            return rowValue >= filterValue[0] && rowValue <= filterValue[1];
+          }
+          // Date range check
+          if (
+            filterValue.length === 2 &&
+            (filterValue[0] instanceof Date ||
+              typeof filterValue[0] === "string") &&
+            (filterValue[1] instanceof Date ||
+              typeof filterValue[1] === "string") &&
+            (rowValue instanceof Date || !isNaN(Date.parse(String(rowValue))))
+          ) {
+            const rowTime = new Date(rowValue as any).getTime();
+            const startTime = new Date(filterValue[0]).getTime();
+            const endTime = new Date(filterValue[1]).getTime();
+            if (!isNaN(startTime) && !isNaN(endTime)) {
+              return rowTime >= startTime && rowTime <= endTime;
+            }
+          }
+          // MultiSelect (includes any of the selected values)
+          return filterValue.some(
+            (val) =>
+              String(rowValue).toLowerCase() === String(val).toLowerCase()
+          );
+        }
+
+        return String(rowValue)
+          .toLowerCase()
+          .includes(String(filterValue).toLowerCase());
+      },
       ...tableProps.defaultColumn,
       enableColumnFilter: false,
     },
@@ -371,9 +430,9 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
     getFacetedMinMaxValues: getFacetedMinMaxValues(),
-    manualPagination: true,
-    manualSorting: true,
-    manualFiltering: true,
+    manualPagination,
+    manualSorting,
+    manualFiltering,
     meta: {
       ...tableProps.meta,
       enableNestedRows,
@@ -386,6 +445,15 @@ export function useDataTable<TData>(props: IUseDataTableProps<TData>) {
       },
     },
   });
+
+  React.useEffect(() => {
+    if (!manualPagination) {
+      const totalPages = table.getPageCount();
+      if (totalPages > 0 && page > totalPages) {
+        setPage(totalPages);
+      }
+    }
+  }, [manualPagination, page, setPage, table]);
 
   return React.useMemo(
     () => ({ table, shallow, debounceMs, throttleMs }),

@@ -132,9 +132,7 @@ export function DataTable<TData>({
     table.options.meta?.enableNestedRows ??
     table.getCanSomeRowsExpand();
 
-  const rows = isNestedEnabled
-    ? table.getExpandedRowModel().rows
-    : table.getRowModel().rows;
+  const rows = table.getRowModel().rows;
 
   const firstContentColumnId = React.useMemo(() => {
     const visibleCols = table.getVisibleFlatColumns();

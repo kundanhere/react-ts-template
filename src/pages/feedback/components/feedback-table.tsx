@@ -184,7 +184,6 @@ export function FeedbackTable({
   const { table } = useDataTable({
     data: feedbacks,
     columns,
-    pageCount: 1,
     enableAdvancedFilter: false,
     initialState: {
       sorting: [{ id: "createdAt", desc: true }],

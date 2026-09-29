@@ -191,6 +191,14 @@ export function getPoliciesTableColumns({
         variant: "text",
         icon: TextIconComp,
       },
+      filterFn: (row, _id, value) => {
+        if (!value) return true;
+        const query = String(value).toLowerCase();
+        return (
+          row.original.name.toLowerCase().includes(query) ||
+          (row.original.description?.toLowerCase().includes(query) ?? false)
+        );
+      },
       enableColumnFilter: true,
     },
     {

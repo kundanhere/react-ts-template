@@ -759,7 +759,6 @@ export function ModulesTable({ queryKeys }: IModulesTableProps) {
   const { table } = useDataTable({
     data: modules,
     columns,
-    pageCount: 1,
     enableAdvancedFilter: false,
     enableNestedRows: true,
     getSubRows: (row) => row.children,

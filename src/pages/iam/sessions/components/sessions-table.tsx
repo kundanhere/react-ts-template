@@ -355,7 +355,6 @@ export function SessionsTable({ queryKeys }: ISessionsTableProps) {
   const { table } = useDataTable({
     data: sessions,
     columns,
-    pageCount: 1,
     enableAdvancedFilter: false,
     initialState: {
       sorting: [{ id: "lastActiveAt", desc: true }],

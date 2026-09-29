@@ -179,7 +179,6 @@ export function ActivityTable({ queryKeys }: IActivityTableProps) {
   const { table } = useDataTable({
     data: activities,
     columns,
-    pageCount: 1,
     enableAdvancedFilter: false,
     initialState: {
       sorting: [{ id: "timestamp", desc: true }],
