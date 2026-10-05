@@ -44,9 +44,16 @@ const UpdatesPage = lazy(() => import("@/pages/updates/page"));
 const InboxPage = lazy(() => import("@/pages/inbox/page"));
 const SupportPage = lazy(() => import("@/pages/support/page"));
 const FeedbackPage = lazy(() => import("@/pages/feedback/page"));
+const WidgetPage = lazy(() => import("@/pages/test/page"));
 
 // Route configuration object
 export const routes: IRouteConfig[] = [
+  {
+    path: "/widget",
+    element: <WidgetPage />,
+    title: "Illustration Demo",
+    description: "Illustration System Test & Demonstration",
+  },
   {
     path: "/login",
     element: (

@@ -32,6 +32,7 @@ import {
 import { HugeiconsIcon } from "@hugeicons/react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import { EmptySearchResultsIllustration } from "@/components/empty";
 import {
   Command,
   CommandEmpty,
@@ -232,10 +233,8 @@ export function SearchForm({
             <CommandList className="max-h-[60vh] py-2 sm:max-h-100">
               <CommandEmpty className="py-8 text-center">
                 <div className="flex flex-col items-center justify-center gap-2">
-                  <div className="bg-muted text-muted-foreground flex size-9 items-center justify-center rounded-lg">
-                    <HugeiconsIcon icon={Search01Icon} size={18} />
-                  </div>
-                  <p className="text-foreground text-xs font-medium">
+                  <EmptySearchResultsIllustration className="mx-auto mb-2 h-24 w-24" />
+                  <p className="text-foreground text-sm font-medium">
                     No matching commands or pages found.
                   </p>
                   <p className="text-muted-foreground text-[0.6875rem]">
@@ -340,7 +339,7 @@ export function SearchForm({
                   />
                 </CommandItem>
 
-                {/* 4. New Module - Purple */}
+                {/* 4. Manage Module - Purple */}
                 <CommandItem
                   value="create new module service endpoint component /iam/modules"
                   onSelect={() => runCommand(() => navigate("/iam/modules"))}
@@ -356,18 +355,12 @@ export function SearchForm({
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="qc-title text-foreground truncate text-xs leading-tight font-semibold transition-colors duration-75">
-                      New Module
+                      Manage Module
                     </div>
                     <div className="text-muted-foreground truncate text-[0.625rem] leading-tight">
                       Service capability
                     </div>
                   </div>
-                  <HugeiconsIcon
-                    icon={Add01Icon}
-                    size={11}
-                    strokeWidth={2.5}
-                    className="qc-add text-muted-foreground/50 xs:block hidden shrink-0 transition-colors duration-75 sm:block"
-                  />
                 </CommandItem>
               </CommandGroup>
 
